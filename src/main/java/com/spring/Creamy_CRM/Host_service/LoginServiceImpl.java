@@ -141,6 +141,8 @@ public class LoginServiceImpl implements LoginService {
 		ZipcodeVO zip_vo = dao_login.selectzipcode(vo.getZipcode());
 		
 		String[] hp = vo.getUser_ph().split("-");
+
+		System.out.println("성별 : "+vo.getUser_gender());
 		
 		req.setAttribute("vo", vo);
 		req.setAttribute("zipcode_vo", zip_vo);
@@ -188,6 +190,9 @@ public class LoginServiceImpl implements LoginService {
 	    String gugun = req.getParameter("modify_gugun");
 	    String address= req.getParameter("modify_address");
 	    
+	    String gender = req.getParameter("gender_radio");
+	    System.out.println("성별 : "+gender);
+	    
 		//비밀번호 암호화
 		String BcryptPw = passwordEncoder.encode(pw);
 		
@@ -225,6 +230,7 @@ public class LoginServiceImpl implements LoginService {
 		vo.setUser_ph(phone);
 		vo.setZipcode(zipcode);
 		vo.setUser_address(address);
+		vo.setUser_gender(gender);
 		
 		int updateCnt = dao_login.updateUserInfo(vo);
 		System.out.println("회원정보 수정 : "+updateCnt);

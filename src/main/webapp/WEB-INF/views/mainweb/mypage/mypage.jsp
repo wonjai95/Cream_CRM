@@ -132,13 +132,34 @@
 							<input type="text" name="modifyp_hp3" class="form-control" id="modifyp_hp3" value="${hp[2]}" required style="margin-left: 3px;">
 	               		</div>
                		</div>
+               		<div style="padding-bottom: 9px; display: flex;">
+	         	 		<div style="padding-left: 5px; padding-bottom: 8px; align-self: center; padding-right: 25px; width: 20%" align="right">성별</div>
+	         	 		<div style="width: 30%;  display: flex;">
+	         	 			<c:if test="${vo.user_gender eq 'M'}">
+		         	 			<div class="form-group" id="g0" style="width: 30%; align-items: center; border: 2px solid green; text-align: center;">
+		                   			<label><input type="radio" name="gender_radio" value="M" style="height: 15px; display: none;" onchange="colorchange(0);">남성</label>
+		                   		</div>	
+		                   		<div class="form-group" id="g1" style="width: 30%; align-items : center;  text-align: center;">
+		                   			<label><input type="radio" name="gender_radio" value="F" style="height: 15px; display: none;" onchange="colorchange(1);">여성</label>
+		               			</div>
+	               			</c:if>
+	               			<c:if test="${vo.user_gender eq 'F'}">
+		         	 			<div class="form-group" id="g2" style="width: 30%; align-items: center;  text-align: center;">
+		                   			<label><input type="radio"  name="gender_radio" value="M" style="height: 15px; display: none;" onchange="colorchange(2);">남성</label>
+		                   		</div>	
+		                   		<div class="form-group" id="g3" style="width: 30%; align-items : center; border: 2px solid green;  text-align: center;">
+		                   			<label><input type="radio" name="gender_radio" value="F" style="height: 15px; display: none;" onchange="colorchange(3);">여성</label>
+		               			</div>
+	               			</c:if>
+	         	 		</div>
+	         	 	</div>
                		
 						
 					<br><br>
 					
                		<!-- ======= 추가입력 ======= -->
                		<div class="member-info" style="padding-left: 5px;"><span style="font-size: 20px;"><b>추가정보 &nbsp;&nbsp;</b></span><span style="font-size: 10px;">선택입력사항</span><br><br></div>
-         			<div style="padding-bottom: 9px; display: flex;">
+         			<!-- <div style="padding-bottom: 9px; display: flex;">
 	         	 		<div style="padding-left: 5px; padding-bottom: 8px; align-self: center; padding-right: 25px; width: 20%" align="right">성별</div>
 	         	 		<div style="width: 30%;  display: flex;">
 	         	 			<div class="form-group" style="width: 50%; align-items: center;">
@@ -151,7 +172,7 @@
 	         	 		<div class="form-group" style="display: none;">
 	                   			<input type="radio" name="gender_radio" value="N" style="height: 15px;" checked>
 	               			</div>
-	         	 		</div>
+	         	 		</div> -->
                		
                		<div class="text-center">
 		              <button type="button" onclick="modifyInfo_Check(1);">회원정보 수정</button>

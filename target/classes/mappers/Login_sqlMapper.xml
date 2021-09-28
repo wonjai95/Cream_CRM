@@ -69,6 +69,7 @@
   		 user_age = #{user_age},
   		 user_birth = #{user_birth},
   		 user_email = #{user_email},
+  		 user_gender = #{user_gender},
   		 user_ph = #{user_ph},
   		 zipcode = #{zipcode},
   		 user_address = #{user_address}
