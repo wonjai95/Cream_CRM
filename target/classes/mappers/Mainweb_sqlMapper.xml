@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--
+	작성자 : 이시현
+	작성일 : 2021.09.15
+	 1. MainwebDAO에서 사용하는 mapper
+-->
+
+  <mapper namespace="com.spring.Creamy_CRM.User_dao.MainwebDAO">
+  
+  	<insert id="insertBooking1" parameterType="com.spring.Creamy_CRM.VO.ReservationVO">
+		INSERT INTO reservation_tbl(res_code, res_state, res_date, res_hour, employee_code, 
+										user_id, res_detail_code, res_regDate, host_code)
+		VALUES ('RS'||res_seq.currval, #{res_state}, #{res_date}, #{res_hour}, #{employee_code}, 
+					#{user_id}, 'RS'||res_seq.currval, SYSDATE, #{host_code})
+	</insert> 
+  
+	<insert id="insertBooking2" parameterType="com.spring.Creamy_CRM.VO.ReservationVO">
+		INSERT INTO reservation_detail_tbl(res_detail_code, res_cnt, res_indiv_request, product_code, res_memo)
+		VALUES ('RS'||res_seq.nextval, #{res_cnt}, #{res_indiv_request}, #{product_code}, null)
+	</insert>
+  
+  
+  
+  
+  
+  
+  
+  </mapper>

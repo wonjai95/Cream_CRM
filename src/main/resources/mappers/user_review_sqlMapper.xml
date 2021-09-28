@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--
+	작성자 : 정지은
+	작성일 : 2021.09.22
+	 고객페이지 리뷰에서 사용하는 mapper
+-->
+  
+  <mapper namespace="com.spring.Creamy_CRM.User_dao.UserReviewDAO">
+  
+  <select id="getReservationList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+	  SELECT r.res_code, h.comp_name, r.res_state, r.res_date
+	    FROM reservation_tbl r
+	    JOIN host_tbl h
+	      ON h.host_code = r.host_code
+	   WHERE user_id = #{user_id}  
+  </select>
+  
+  <select id="getReservationDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  	SELECT * from reservation_detail_tbl d, reservation_tbl r
+	WHERE d.res_detail_code = r.res_detail_code
+	and d.res_detail_code = #{res_code}
+  </select>
+  
+  <insert id="InsertReview" parameterType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	INSERT INTO review_tbl(review_code,user_code,title,content,readCnt,regDate,star,review_img,res_code)
+  	VALUES(review_seq.nextval,#{user_code},#{title},#{content},#{readCnt},#{regDate},#{star},#{review_img},#{res_code})
+  </insert>
+	  
+  <update id="modifyresCheck" parameterType="String">
+  	UPDATE reservation_tbl SET res_review_chk = 'Y'
+  	WHERE res_code = #{res_code}
+  </update>
+  
+  <select id="getMyReviewList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	select * from review_tbl where user_code = #{user_code}
+  	order by review_code desc
+  </select>
+  
+  <select id="getAllReviewList" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	select r.*, u.user_name from review_tbl r, user_tbl u
+	where r.user_code = u.user_code
+  		order by r.regDate DESC
+  </select>
+  
+  <select id="getStoreReviewList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	select r.*, res.employee_code,h.host_code, u.user_name 
+	from review_tbl r, user_tbl u, reservation_tbl res, employee_tbl e, host_tbl h
+	where r.user_code = u.user_code
+	and r.res_code = res.res_code
+	and res.employee_code = e.employee_code
+	and e.host_code = h.host_code
+	and h.host_code = #{host_code}
+	  	order by r.regDate DESC
+  </select>
+  
+  <select id="getUserReservationlist" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  select res.*, de.product_code, p.product_name
+	from reservation_tbl res, user_tbl u, reservation_detail_tbl de, product_tbl p
+	where res.user_id = u.user_id
+	and res.res_detail_code = de.res_detail_code
+	and de.product_code = p.product_code
+	and u.user_code = #{user_code}
+	order by res.res_detail_code desc
+  </select>
+  
+  <select id="getReviewDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	select r.*, u.user_id
+	from review_tbl r, user_tbl u
+	where r.user_code = u.user_code
+  	AND review_code = #{review_code}
+  </select>
+  
+  <update id="plusReadCnt" parameterType="java.util.Map">
+  	update review_tbl set readCnt = #{readcnt}
+  	where review_code = #{review_code}
+  </update>
+  
+  <update id="modify_Review" parameterType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	update review_tbl set
+  	title = #{title},
+  	content = #{content},
+  	star = #{star},
+  	review_img = #{review_img}
+  	where review_code = #{review_code}
+  </update>
+  	
+  
+  </mapper>

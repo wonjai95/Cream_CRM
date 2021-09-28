@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--
+	작성자 : 장현정
+	작성일 : 2021-09-21
+	회원 정보에서 사용하는 mapper
+-->
+  
+  <mapper namespace="com.spring.Creamy_CRM.Host_dao.CRMuserDAO">
+  
+  	<!-- 전체 회원 정보 리스트 출력 -->
+  	<select id="printUsers" resultType="com.spring.Creamy_CRM.VO.userVO">
+  		SELECT *
+  		  FROM user_tbl
+  	</select>
+  	
+  	<!-- 선택된 회원 정보 출력 -->
+  	<select id="getUserInfo" parameterType="String" resultType="com.spring.Creamy_CRM.VO.userVO">
+  		SELECT *
+  		  FROM user_tbl
+  		 WHERE user_code=#{user_code}
+  	</select>
+  	
+  	<!-- 회원 정보 수정 -->
+  	<update id="updateUser" parameterType="com.spring.Creamy_CRM.VO.userVO">
+  		UPDATE user_tbl
+		   SET user_name=#{user_name}, user_memo=#{user_memo}, user_gender=#{user_gender}, user_birth=#{user_birth}, user_age=#{user_age}, user_email=#{user_email}, zipcode=#{zipcode}, user_address=#{user_address}, user_ph=#{user_ph}
+		 WHERE user_code=#{user_code}
+  	</update>
+  	
+  	<!-- 회원별 판매 내역 출력 -->
+  	<select id="userSale" parameterType="String" resultType="com.spring.Creamy_CRM.VO.userVO">
+  		SELECT product_typeOfSales, product_name, product_group_name, product_price, sale_date, payment_option
+  		  FROM user_sale_view
+  		 WHERE user_code=#{user_code}
+  	</select>
+  	
+  	<!-- 회원 삭제 처리(user_tbl) -->
+  	<delete id="deleteUser" parameterType="String">
+  		DELETE 
+  		  FROM user_tbl
+  		 WHERE user_code=#{user_code}
+  	</delete>
+  	
+  	<!-- 회원 삭제 처리(Auth_tbl) -->
+  	<delete id="deleteUserAuth" parameterType="String">
+  		DELETE
+  		  FROM Auth_tbl
+  		 WHERE user_code=#{user_code}
+  	</delete>
+  	
+  </mapper>

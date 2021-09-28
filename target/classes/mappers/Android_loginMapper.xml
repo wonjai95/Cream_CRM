@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.spring.Creamy_CRM.android_DAO.Android_LoginDAO">
+
+	<select id="getPw" parameterType="String" resultType="String">
+		select password from Auth_tbl where ID = #{id}
+	</select>
+	
+	<select id="getAuth" parameterType="String" resultType="String">
+		select authority from Auth_tbl where ID = #{id}
+	</select>
+	
+	<select id="getUserInfo" parameterType="String" resultType="com.spring.Creamy_CRM.VO.userVO">
+		select * from user_tbl where user_id = #{id}
+	</select>
+	
+	<select id="getHostInfo" parameterType="String" resultType="com.spring.Creamy_CRM.VO.HostVO">
+		select * from host_tbl where host_id = #{id}
+	</select>
+	
+	<select id="getEmployeeVO" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		select * from employee_tbl where employee_id = #{id}
+	</select>
+	
+
+</mapper>

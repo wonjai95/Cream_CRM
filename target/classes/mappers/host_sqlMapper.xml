@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--
+	작성자 : 장현정 / 한진원
+	작성일 : 2021-09-20 ~ 2021-09-20
+	product에서 사용하는 mapper
+-->
+  <mapper namespace="com.spring.Creamy_CRM.Host_dao.HostDao">
+  
+  	
+  	<!-- 호스트정보 -->
+  	<select id="selectInfo" parameterType="String" resultType="com.spring.Creamy_CRM.VO.HostVO">
+  		select * from h_c_view where host_code = #{host_code}
+  	</select>
+  	
+  	<select id="getWorkTime" parameterType="String" resultType="com.spring.Creamy_CRM.VO.OperatingScheVO">
+	 	select * from operating_sche_tbl where host_code = #{host_code}
+  	</select>
+  
+  	
+  	<select id="chkScheSet" parameterType="java.util.Map" resultType="int">
+  		select count(*) from operating_sche_tbl where host_code = #{host_code} and operating_day = #{operating_day}
+  	</select>
+	
+	<insert id="setOeratingTime" parameterType="com.spring.Creamy_CRM.VO.OperatingScheVO">
+		insert into operating_sche_tbl(operating_sche_code,host_code,operating_day,open_sche,close_sche) 
+    	values(oper_sche_seq.nextval,#{host_code},#{operating_day},#{open_sche},#{close_sche})
+	</insert>
+	
+	<update id="altOperatingTime" parameterType="com.spring.Creamy_CRM.VO.OperatingScheVO">
+		update operating_sche_tbl set open_sche = #{open_sche}, close_sche = #{close_sche} 
+		where host_code = #{host_code} and operating_day = #{operating_day}
+	</update>
+	
+	<!-- zip코드 존재확인 -->
+	<select id="chkZipcode" parameterType="String" resultType="int">
+		select count(*) from zipcode_tbl where zipcode = #{zipcode}
+	</select>
+	
+	<!-- zip코드 삽입 -->
+	<insert id="insertZipcode" parameterType="com.spring.Creamy_CRM.VO.ZipcodeVO">
+		insert into zipcode_tbl(zipcode,sido,gugun) values(#{zipcode},#{sido},#{gugun})
+	</insert>
+	
+	<!-- 사업자등록 -->
+	<insert id="insertCompany" parameterType="com.spring.Creamy_CRM.VO.HostVO">
+		insert into company_tbl(comp_no,host_code,comp_address,comp_condition,comp_type,zipcode,comp_res) 
+			values('C'||com_seq.nextval,#{host_code},#{comp_address},
+				#{comp_condition},#{comp_type},#{zipcode},#{comp_res})
+	</insert>
+	
+	<!-- 호실 이름 중복확인 -->
+	<select id="chkRoomName" parameterType="java.util.Map" resultType="int">
+		select count(*) from room_setting_tbl where host_code = #{host_code} and room_name = #{room_name}
+	</select>
+	
+	<!-- 호실 등록 -->
+	<insert id="insertRoom" parameterType="com.spring.Creamy_CRM.VO.RoomSettingVO">
+		insert into room_setting_tbl(room_setting_code,room_name,
+			host_code,room_stat,per_price,min_cnt,max_cnt) 
+		values('RSS'||room_setting_seq.nextval,#{room_name},#{host_code},#{room_stat},
+			#{per_price},#{min_cnt},#{max_cnt})
+	</insert>
+	
+	<!-- 호실 리스트 -->
+	<select id="selectRoomList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.RoomSettingVO">
+		select * from room_setting_tbl where host_code = #{host_code}	
+	</select>
+	
+  </mapper>
