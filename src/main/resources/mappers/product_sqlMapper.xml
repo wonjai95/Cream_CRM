@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--
+	작성자 : 장현정 / 한진원
+	작성일 : 2021-09-20 ~ 2021-09-20
+	product에서 사용하는 mapper
+-->
+  
+  
+  <mapper namespace="com.spring.Creamy_CRM.Host_dao.productDAO">
+  	
+  	<!-- 상품 정보 출력 -->
+  	<select id="printProducts" resultType="com.spring.Creamy_CRM.VO.ProductVO">
+  		SELECT *
+  		  FROM product_tbl 
+  	</select>
+  	
+  	<!-- 판매 내역 출력 -->
+  	<select id="getSaleInfo">
+  		SELECT *
+  		  FROM sale_tbl
+  		 WHERE user_code=#{user_code}
+  	</select>
+  	
+  	<!-- 그룹 -->
+  	<!-- 상품 그룹 개수  -->
+  	<select id="productGroupCnt" parameterType="String" resultType="int">
+  		select count(*) from product_group_tbl where host_code = #{host_code}
+  	</select>
+  	
+  	<!-- 그룹 리스트(페이징) -->
+  	<select id="selectProductGroupList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ProductGroupVO">
+  		 select * from(
+  		 	select pg.* ,rownum from (
+  		 		select * from product_group_tbl where host_code = #{host_code} order by product_group_code desc) pg) 
+        where rownum between #{start} and #{end} 
+        
+  	</select>
+  	
+  	<!-- 상품그룹명 중복 확인 -->
+  	<select id="chkProductGroupName" parameterType="java.util.Map" resultType="int">
+		select count(*) from product_group_tbl 
+		where product_group_name = #{product_group_name} and host_code = #{host_code}		
+  	</select>
+  	
+  	<!-- 상품그룹 등록 -->
+  	<insert id="insertProductGroup" parameterType="com.spring.Creamy_CRM.VO.ProductGroupVO">
+  		insert into product_group_tbl(product_group_code,product_group_name,pg_indate,host_code) 
+  			values('PG'||pro_grp_seq.nextval,#{product_group_name},#{pg_indate},#{host_code})
+  	</insert>
+  	
+  	<!-- 상품 그룹 정보 -->
+  	<select id="getProductGroup" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ProductGroupVO">
+  		select * from product_group_tbl where product_group_code = #{product_group_code}
+  	</select>
+  	
+  	<!-- 상품 그룹 수정 -->
+  	<update id="updateProductGroup" parameterType="java.util.Map">
+  		update product_group_tbl set product_group_name = #{product_group_name} 
+  	 	where product_group_code = #{product_group_code}
+  	</update>
+  	
+  	<!-- 상품 그룹 삭제 -->
+  	<delete id="deleteProductGroup" parameterType="String">
+		delete from product_group_tbl where product_group_code = #{product_group_code}
+  	</delete>
+  	
+  	<!-- 상품 그룹 리스트 -->
+  	<select id="getProductGroupList" resultType="com.spring.Creamy_CRM.VO.ProductGroupVO">
+  		select * from product_group_tbl where host_code = #{host_code} order by product_group_name asc
+  	</select>
+  	
+  	
+  	
+  	<!-- 상품 -->
+  	<!-- 상품 개수  -->
+  	<select id="productCnt" parameterType="String" resultType="int">
+  		select count(*) from product_group_tbl pg , product_tbl p 
+		where pg.product_group_code = p.product_group_code and pg.host_code = #{host_code}
+  	</select>
+  	
+  	<!-- 상품 리스트(페이징) -->
+  	<select id="selectProductList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ProductVO">
+  		select * from(
+    		select p.*,rownum from(
+        		select * from p_pg_view where host_code = #{host_code} order by product_code desc) p) 
+    	where rownum between #{start} and #{end} 
+    	
+  	</select>
+  	
+  	<!-- 상품 등록 -->
+  	<insert id="insertProduct" parameterType="com.spring.Creamy_CRM.VO.ProductVO">
+  		insert into product_tbl(product_code,product_name,product_typeOfSales,product_price,product_rentalPeriod, 
+  			product_img,product_indate,product_status,product_content,product_group_code) 
+  		values('PRO'||pro_seq.nextval,#{product_name},#{product_typeOfSales},#{product_price},#{product_rentalPeriod},
+  			#{product_img},#{product_indate},#{product_status},#{product_content},#{product_group_code})
+  	</insert>
+  	
+  	<!-- 상품 상세(수정) -->
+  	<select id="getProduct" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ProductVO">
+  		select * from product_tbl where product_code = #{product_code}
+  	</select>
+  	
+  	<!-- 상품명 중복확인 -->
+  	<select id="chkProductName" parameterType="String" resultType="int">
+  		select count(*) from p_pg_view where product_name = #{product_name} and host_code = #{host_code}
+  	</select>
+  	
+  	<!-- 상품 수정 -->
+  	<update id="updateProduct" parameterType="com.spring.Creamy_CRM.VO.ProductVO">
+  		update product_tbl set product_name = #{product_name}, product_typeOfSales = #{product_typeOfSales}, product_price = #{product_price},  
+  			product_rentalPeriod = #{product_rentalPeriod}, product_img = #{product_img}, product_indate = #{product_indate},
+  			product_status = #{product_status}, product_content = #{product_content}, product_group_code = #{product_group_code} 
+  			where product_code = #{product_code}
+  	</update>
+  	
+  	<!-- 상품 삭제 -->
+  	<delete id="deleteProduct" parameterType="String">
+  		delete from product_tbl where product_code = #{product_code}
+  	</delete>
+  
+  	<!-- 거래처 -->
+  	<!-- 거래처명 중복확인 -->
+  	<select id="chkTradeName" parameterType="java.util.Map" resultType="int">
+  		select count(*) from trade_tbl 
+  		where host_code = #{host_code} and trade_name = #{trade_name}
+  	</select>
+  	<!-- 거래처 등록 -->
+  	<insert id="insertTrade" parameterType="com.spring.Creamy_CRM.VO.TradeVO">
+  		insert into trade_tbl(trade_code,trade_name,trade_indate,host_code) 
+  			values('T'||trade_seq.nextval,#{trade_name},#{trade_indate},#{host_code})
+  	</insert>
+  	
+  	<!-- 거래처 개수  -->
+  	<select id="tradeCnt" parameterType="String" resultType="int">
+  		select count(*) from trade_tbl where host_code = #{host_code}
+  	</select>
+  	
+  	<!-- 거래처 리스트(페이징) -->
+  	<select id="selectTradeList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.TradeVO">
+  		  select * from( 
+  		  	select t.*,rownum from(
+  		  		select * from trade_tbl where host_code = #{host_code} order by trade_code desc) t)
+  		  where rownum between #{start} and #{end}
+  	</select>
+  	
+  	<!-- 거래처 상세(수정) -->
+	<select id="getTrade" parameterType="String" resultType="com.spring.Creamy_CRM.VO.TradeVO">
+		select * from trade_tbl where trade_code = #{trade_code}
+	</select>
+	
+	<!-- 거래처 수정 -->
+	<update id="updateTrade" parameterType="java.util.Map">
+		update trade_tbl set trade_name = #{trade_name} where trade_code = #{trade_code}
+	</update>
+	
+	<!-- 거래처 삭제 -->
+	<delete id="deleteTrade" parameterType="String">
+		delete from trade_tbl where trade_code = #{trade_code}
+	</delete>
+	
+	
+	<!-- 재고 -->
+	<!-- 재고추가 페이지(거래처리스트) -->
+	<select id="getTradeList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.TradeVO">
+		select * from trade_tbl where host_code = #{host_code} order by trade_name asc
+	</select>
+	
+	<!-- 재고명 중복확인 -->
+	<select id="chkStockName" parameterType="java.util.Map" resultType="int">
+		select count(*) from s_t_view where host_code = #{host_code} and stock_name = #{stock_name}
+	</select>
+	
+	<!-- 재고 등록 -->
+	<insert id="insertStock" parameterType="com.spring.Creamy_CRM.VO.StockVO">
+		insert into stock_tbl(stock_code,stock_name,stock_price,stock_brand,
+		 stock_count,stock_indate,stock_status,trade_code) 
+		values('ST'||stock_seq.nextval,#{stock_name},#{stock_price},#{stock_brand}, 
+		 #{stock_count},#{stock_indate},#{stock_status},#{trade_code})
+	</insert>
+	
+	<!-- 재고 개수 -->
+	<select id="stockCnt" parameterType="String" resultType="int">
+		select count(*) from stock_tbl s, trade_tbl t 
+		where s.trade_code = t.trade_code and host_code = #{host_code}
+	</select>
+	
+	<!-- 재고 리스트(페이징) -->
+	<select id="selectStockList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.StockVO">
+		 select * from( 
+		 	select st.*,rownum from( 
+		 		select * from s_t_view where host_code = #{host_code} order by stock_code desc) st)
+		 where rownum between #{start} and #{end}
+	</select>
+	
+	<!-- 재고 상세(수정) -->
+	<select id="getStock" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StockVO">
+		select * from stock_tbl where stock_code = #{stock_code}
+	</select>
+	
+	<!-- 재고 수정 -->
+	<update id="updateStock" parameterType="com.spring.Creamy_CRM.VO.StockVO">
+		update stock_tbl set stock_name = #{stock_name}, stock_price = #{stock_price}, stock_count = #{stock_count}, 
+			stock_brand = #{stock_brand}, stock_status = #{stock_status}, trade_code = #{trade_code} 
+		where stock_code = #{stock_code}
+	</update>
+	
+	<!-- 재고 삭제 -->
+	<delete id="deleteStock" parameterType="String">
+		delete from stock_tbl where stock_code = #{stock_code}
+	</delete>
+	
+
+	
+	
+	<!-- 입출고 개수 -->
+	<select id="stCnt" parameterType="String" resultType="int">
+		select count(*) from s_t_view where host_code = #{host_code}
+	</select>
+	
+	<!-- 입출고리스트 (페이징) -->
+	<select id="selectStList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.S_tVO">
+		 select * from(
+		 	select st.*,rownum from( 
+		 		select * from s_t_view where host_code = #{host_code} order by stock_code desc) st)
+         where rownum between #{start} and #{end}
+	</select>
+	
+	<!-- ajax -->
+	<select id="ajax_getProductByCode" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ProductVO">
+		select * from product_tbl where product_group_code = #{product_group_code}
+	</select>
+
+	<!-- 결제정보 등록 -->  
+	<insert id="addSaleInfo" parameterType="com.spring.Creamy_CRM.VO.userVO"> 
+		INSERT INTO sale_tbl(sale_code, total_payment, sale_date, payment_option, sale_memo, user_code, employee_code, product_code, credit_select, credit_installment)
+		 VALUES('SL'||sale_seq.NEXTVAL, #{total_payment}, #{sale_date}, #{payment_option}, #{sale_memo}, #{user_code}, #{employee_code}, #{product_code}, #{credit_select}, #{credit_installment})
+	</insert>
+	
+	
+	
+  </mapper>

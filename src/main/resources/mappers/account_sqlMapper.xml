@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--
+	작성자 : 
+	작성일 : 
+	account에서 사용하는 mapper
+-->
+  
+  
+  <mapper namespace="com.spring.Creamy_CRM.Host_dao.AccountDAO">
+  	<!-- 작성자 : 주수림, 작성일 : 2021-09-26, 매입매출전표 목록, 등록 mapper -->
+  	<!-- 매입매출 전표 목록 -->
+  	<select id="getSlipList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.AccountVO">
+  		SELECT * FROM slip_tbl ORDER BY slip_regDate DESC
+  	</select>
+  	
+  	<!-- 매입매출 전표 등록 -->	
+  	<insert id="insertSlip" parameterType="com.spring.Creamy_CRM.VO.AccountVO">
+  		INSERT INTO slip_tbl (slip_code, host_code, slip_type, slip_regDate, slip_money, slip_memo)
+  		VALUES ('SLIP'||slip_seq.nextval, #{host_code}, #{slip_type}, #{slip_regDate}, #{slip_money}, #{slip_memo})
+  	</insert>
+  	
+  	<!-- 선택된 유형의 매출전표 조회 -->
+  	<select id="getSelectList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.AccountVO">
+  		SELECT *
+  		  FROM slip_tbl
+  		 WHERE slip_type = #{slip_type}
+  		ORDER BY slip_regdate DESC
+  	</select>
+  	
+  	<!-- 검색어에 따른 매출전표 조회 -->
+  	<select id="getSearchList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.AccountVO">
+  		SELECT *
+  		  FROM slip_tbl
+  		 WHERE slip_memo LIKE '%'||#{search}||'%'
+  		ORDER BY slip_regdate DESC
+  	</select>
+  	
+  	<!-- 매입매출 전표 수정 정보 조회 -->
+  	<select id="getSlipInfo" parameterType="String" resultType="com.spring.Creamy_CRM.VO.AccountVO">
+  		SELECT * 
+  		  FROM slip_tbl 
+  		 WHERE slip_code = #{slip_code}
+  	</select>
+  	
+  	<!-- 매입매출 전표 수정 -->
+  	<update id="updateSlip" parameterType="com.spring.Creamy_CRM.VO.AccountVO">
+  		UPDATE slip_tbl
+  		   SET slip_type = #{slip_type}, slip_regDate = #{slip_regDate}, 
+  		   					slip_money = #{slip_money}, slip_memo = #{slip_memo}
+  		 WHERE slip_code = #{slip_code}
+  	</update>
+  	
+  	<!-- 매입매출 전표 삭제 -->
+  	<delete id="deleteSlip" parameterType="String">
+  		DELETE FROM slip_tbl
+  		 WHERE slip_code = #{slip_code}
+  	</delete>
+  
+  
+  </mapper>
