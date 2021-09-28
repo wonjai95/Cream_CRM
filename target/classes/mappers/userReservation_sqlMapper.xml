@@ -128,6 +128,7 @@
 		    ON rv.res_detail_code = r.res_detail_code
 		 WHERE TO_CHAR(r.res_date, 'YYYY-MM-dd') = #{res_date}
 		   AND r.room_setting_code = #{room_setting_code}
+		   AND r.res_state = '예약완료'
   	</select>
   	
   	<!-- 예약 신청 시간 가능 여부 체크를 위한 뷰 생성 -->

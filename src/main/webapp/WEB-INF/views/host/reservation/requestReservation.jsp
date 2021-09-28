@@ -11,16 +11,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 <title> 예약요청 </title>
 
 <script type="text/javascript">
 	/* requestReservation페이지를 보여주는 기본함수 */
+	
 	$(function() {
+		
+		var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        
 		$.ajax({
-			url : '${pageContext.request.contextPath}/requestReservation',  // 전송페이지 => 컨트롤러/basic1_next
+			url : 'requestList',  // 전송페이지 => 컨트롤러/basic1_next
 			type : 'POST',						// 전송방식('GET', 'POST')
-			dataType : {},						// 요청한 데이터 형식('html', 'xml', 'json', text', 'jsoup')
+			async: false,	
+  			  beforeSend : function(jqXHR, settings) {
+	       		  console.log("beforesend 진행");
+	                 jqXHR.setRequestHeader(header, token);
+	       	  },						// 요청한 데이터 형식('html', 'xml', 'json', text', 'jsoup')
 			success : function(data) {			// 콜백함수 - 전송에 성공했을때의 결과(= basic1_next.jsp)가 data 변수에 전달된다.
 				$('#requestList').html(data);	// .html은 innerHTML과 같다. data 변수명은 내가 임의로 정하기 나름.
 			},				
@@ -53,6 +64,64 @@
 	
 	
 	
+// 검색 진짜
+$("document").ready(function() {	
+	
+	$("select[name=slip_type]").change(function(){
+		
+		var selectType = $("select[name=slip_type] option:selected").val();
+		console.log("selectType : " + selectType);
+		
+		var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        console.log("header : " + header);
+        
+         $.ajax({
+	       	  url : '${pageContext.request.contextPath}/requestReservation',
+	       	  type : "Post",
+	       	  data : "res_state=" + selectType,
+       	  	  async: false,	
+  			  beforeSend : function(jqXHR, settings) {
+	       		  console.log("beforesend 진행");
+	                 jqXHR.setRequestHeader(header, token);
+	       	  },
+	       	  success : function(result) {
+	       		  $("#requestList").html(result);
+	       	  },
+	       	  error : function(error) {
+	       		console.log(error);  
+	       	  }
+         });
+	})
+	
+	$("#Search_content").keyup(function(){
+		var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+		var content = $("#Search_content").val();
+		console.log("content : " + content);
+		
+		$.ajax({
+	       	  url : '${pageContext.request.contextPath}/requestReservation',
+	       	  type : "Post",
+	       	  data : "res_state=" + content,
+     	  	  async: false,	
+			  beforeSend : function(jqXHR, settings) {
+	       		  console.log("beforesend 진행");
+	                 jqXHR.setRequestHeader(header, token);
+	       	  },
+	       	  success : function(result) {
+	       		  $("#requestList").html(result);
+	       	  },
+	       	  error : function(error) {
+	       		console.log(error);  
+	       	  }
+       });
+	})
+	
+	
+	
+});
+	
 	
 	
 </script>
@@ -74,46 +143,31 @@
 	<div class="row">
 	    <div class="col-lg-12">
 	        <div class="ibox-title">
-	            <h5>예약요청 목록을 보여줍니다. 예약코드를 선택해 관리해보세요.</h5>
-	            <br>
-	            <small>*** 테스트 공지 : 현재 보이는 창은 mapper : WHERE NOT res_state IN '서비스 완료' 를 지정해서,
-	            예약 상태가 서비스 완료를 제외한 모든 목록 뿌리기 입니다. 서비스 완료 목록보기는 위에 [예약 조회] 탭으로 ㄱㄱ</small>            
+	            <h5>예약요청 목록을 보여줍니다. 예약코드를 선택해 관리해보세요.</h5>           
 	        </div>
 	    </div>
 <!-- ------------------------------- 테이블표 시작 전 '예약요청' 설명란 끝 -->
 
 <!-- ------------------------------- 테이블표 시작 전 '예약요청' 검색창 시작 -->
-		
-		
-		<div class="col-sm-2">
-			<div class="form-group">
-				<select name="" id="" class="form-control">
-					<option value="1" selected="">예약상태</option>
-					<option value="2">예약완료</option>
-					<option value="3">예약취소</option>
-				</select>
-			</div>
-		</div>
-		
-		<div class="col-sm-2">
-			<div class="form-group">
-				<input type="text" id="res_code" name="res_code" value="${dto.res_code}" placeholder="검색어"
-					class="form-control">
-			</div>
-		</div>
 
-		<!-- <div class="col-sm-2">
-			<div class="form-group">
-				<button class="btn btn-primary dim" type="button">찾기</button>
-				
-				<button type="submit" class="btn btn-primary dim"
-	            		formaction="completeAction" form="requestDetail">
-	            </button>
-				
-				
-				
+		<div class="col-sm-5 m-b-xs" style="width: 30%; ">
+			<select class="form-control-sm form-control input-s-sm inline" name="res_state" style="width: 80%; ">
+				<option value="0">예약상태</option>
+				<option value="예약완료">예약완료</option>
+				<option value="예약취소">예약취소</option>
+			</select>
+		</div>
+		
+		<div class="col-sm-3" style="width: 40%; ">
+			<div class="input-group">
+			<input placeholder="검색어" type="text" id="Search_content" class="form-control form-control-sm">
+			<%-- <input type="text" id="res_code" name="res_code" value="${dto.res_code}" class="form-control"> --%>
+				<span class="input-group-append"> 
+					<input type="button" class="btn btn-sm btn-primary" id="Search_btn" value="검색">
+				</span>
 			</div>
-		</div> -->
+		</div>
+		
 <!-- ------------------------------- 테이블표 시작 전 '예약요청' 검색창 끝 -->
 
 <!-- ------------------------------- 테이블표 시작 -->
@@ -196,8 +250,8 @@
 							
 							<!-- 처음[◀︎◀︎] / 이전 블록[◀︎] /  -->
 							<c:if test="${startPage > pageBlock}">
-								<a href="requestReservation"> [◀︎◀︎] </a>
-								<a href="requestReservation?pageNum=${startPage - pageBlock} "> [◀︎] </a>
+								<a href="reservation"> [◀︎◀︎] </a>
+								<a href="reservation?pageNum=${startPage - pageBlock} "> [◀︎] </a>
 							</c:if>	
 								
 							<!-- 블록 내의 페이지 번호 -->
@@ -207,14 +261,14 @@
 								</c:if>
 								
 								<c:if test="${i != currentPage}">
-									<a href="requestReservation?pageNum=${i} ">[${i}]</a>
+									<a href="reservation?pageNum=${i} ">[${i}]</a>
 								</c:if>
 							</c:forEach>
 							
 							<!-- 다음 블록[▶︎︎] / 마지막[▶︎▶︎︎] /  -->
 							<c:if test="${pageCount > endPage}">
-								<a href="requestReservation?pageNum=${startPage + pageBlock} "> [▶︎︎] </a>
-								<a href="requestReservation?pageNum=${pageCount} "> [▶︎▶︎︎] </a>
+								<a href="reservation?pageNum=${startPage + pageBlock} "> [▶︎︎] </a>
+								<a href="reservation?pageNum=${pageCount} "> [▶︎▶︎︎] </a>
 							</c:if>
 							
 						</c:if>
