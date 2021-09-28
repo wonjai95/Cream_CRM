@@ -16,5 +16,7 @@ public interface MainwebService {
 //======= 회원예약 =======		
 	// 회원예약 등록처리
 	public void insertBooking(HttpServletRequest req, Model model);
-	
+
+	// 결제처리
+	public void add_saleInfo(HttpServletRequest req, Model model);
 }
