@@ -19,7 +19,12 @@ public interface ReservationDAO {
 	public int getRequestCnt();
 	
 	// 예약요청 목록 조회
+	// 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회
 	public List<ReservationVO> getRequestList(Map<String, Object> map);
+	// 2. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약완료) 조회
+	public List<ReservationVO> getRequestComplete(Map<String, Object> map);
+	// 3. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약취소) 조회
+	public List<ReservationVO> getRequestCancel(Map<String, Object> map);
 	
 	// 예약요청 검색목록
 	public List<ReservationVO> requestSearch(String res_code);
@@ -35,8 +40,9 @@ public interface ReservationDAO {
 	public int updateRequest2(ReservationVO vo);
 	
 	// 예약요청 삭제 처리 페이지
-	public int deleteRequest1(String res_code);
-	public int deleteRequest2(String res_detail_code);
+	public int deleteRequest(ReservationVO vo);
+	//public int deleteRequest1(String res_code);
+	//public int deleteRequest2(String res_detail_code);
 	
 	// 서비스 완료처리 페이지
 	public int completeService(ReservationVO vo);

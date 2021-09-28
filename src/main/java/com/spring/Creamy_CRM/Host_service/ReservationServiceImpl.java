@@ -43,6 +43,8 @@ public class ReservationServiceImpl implements ReservationService {
 		requestPage.setPageBlock(10);
 		requestPage.setCnt(dao.getRequestCnt());
 		requestPage.setCurrentPage(req.getParameter("pageNum"));
+		String res_state = req.getParameter("res_state");
+		System.out.println("res_state : " + res_state);
 		
 		System.out.println("==============================");
 		
@@ -50,13 +52,27 @@ public class ReservationServiceImpl implements ReservationService {
 		//String state = "서비스 완료";
 
 		if(requestPage.getCnt() > 0) {
+			System.out.println("getCnt : " + requestPage.getCnt());
 			// 5-2단계. 게시글 목록 조회
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("start", requestPage.getStart());
 			map.put("end", requestPage.getEnd());
 			//map.put("res_state", state);
 			
-			dtos = dao.getRequestList(map);  // dtos대신 list로 매개변수 줘도 무방하다.
+//			if(req.getParameter("res_state").equals("0")) {
+//				System.out.println("res_state 1 : " + req.getParameter("res_state"));
+				// 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회
+				dtos = dao.getRequestList(map);  // dtos대신 list로 매개변수 줘도 무방하다.
+				
+//			} else if(req.getParameter("res_state").equals("예약완료")) {
+//				System.out.println("res_state 2 : " + req.getParameter("res_state"));
+//				// 2. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약완료) 조회
+//				dtos = dao.getRequestComplete(map);
+//			} else if(req.getParameter("res_state").equals("예약취소")) {
+//				System.out.println("res_state 3 : " + req.getParameter("res_state"));
+//				// 3. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약취소) 조회
+//				dtos = dao.getRequestCancel(map);
+//			}			
 		}
 		// 6단계. jsp로 전달하기 위해 request나 session에 처리결과를 저장
 		model.addAttribute("dtos", dtos);			// 리스트 = 게시글 목록
@@ -156,18 +172,24 @@ public class ReservationServiceImpl implements ReservationService {
 	// 예약요청 삭제처리 페이지
 	@Override
 	public void deleteAction(HttpServletRequest req, Model model) {
-		// 3단계. 화면으로부터 입력받은 값(= hidden값, input(비밀번호)값)을 받아온다.
+		System.out.println("deleteAction 시작합니다.");
+		// 3단계. 화면으로부터 입력받은 값(= hidden값)을 받아온다.
+		String res_state = "예약취소";
 		String res_code = req.getParameter("res_code");
-		String res_detail_code = req.getParameter("res_detail_code");
-		System.out.println("res_code : " + res_code);
-		System.out.println("res_detail_code : " + res_detail_code);
 		
-		// 5단계. 게시글 삭제 처리
-		int deleteCnt = dao.deleteRequest1(res_code) + dao.deleteRequest2(res_detail_code);
+		// reservationVO vo 바구니 생성
+		ReservationVO vo = new ReservationVO();
+		
+		vo.setRes_state(res_state);
+		vo.setRes_code(res_code);  // update시, WHERE절에서 key를 비교하기 위해서.
+		
+		System.out.println("res_state : " + res_state);
+		System.out.println("res_code : " + res_code);
+		
+		int deleteCnt = dao.deleteRequest(vo);
 		System.out.println("deleteCnt : " + deleteCnt);
-	
-		// 6단계. jsp로 전달하기 위해 request나 session에 처리결과를 저장
-		model.addAttribute("deleteCnt", deleteCnt);  // deleteCnt = 2
+		
+		model.addAttribute("deleteCnt", deleteCnt);
 	}
 	
 	// 서비스 완료처리 페이지

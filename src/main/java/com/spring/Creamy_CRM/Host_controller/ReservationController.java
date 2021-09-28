@@ -34,14 +34,14 @@ public class ReservationController {
 		service.completeList(req, model);
 		return "host/reservation/reservation";
 	}
-	//예약 요청
+	//예약 요청 페이
 	@RequestMapping("/host/requestReservation")
 	public String requestReservation(HttpServletRequest req, Model model) {
 		logger.info("url -> requestReservation");
 		
-		service.requestList(req, model);
+		//service.requestList(req, model);
 		
-		return "host/reservation/requestList";
+		return "host/reservation/requestReservation";
 	}
 	
 	// 목록

@@ -37,6 +37,7 @@ public class ReservationDAOImpl implements ReservationDAO {
 	}
 
 	// 예약요청 목록 조회
+	// 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회
 	@Override
 	public List<ReservationVO> getRequestList(Map<String, Object> map) {
 		
@@ -44,6 +45,22 @@ public class ReservationDAOImpl implements ReservationDAO {
 		
 		// 방법1. mapper를 호출하는 방식 | 리턴타입이 반드시 List<reservationVO> 이어야함
 		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getRequestList", map);
+		return list;
+	}
+	// 2. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약완료) 조회
+	@Override
+	public List<ReservationVO> getRequestComplete(Map<String, Object> map) {
+		
+		// 방법1. mapper를 호출하는 방식 | 리턴타입이 반드시 List<reservationVO> 이어야함
+		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getRequestComplete", map);
+		return list;
+	}
+	// 3. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약취소) 조회
+	@Override
+	public List<ReservationVO> getRequestCancel(Map<String, Object> map) {
+		
+		// 방법1. mapper를 호출하는 방식 | 리턴타입이 반드시 List<reservationVO> 이어야함
+		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getRequestCancel", map);
 		return list;
 	}
 
@@ -93,20 +110,10 @@ public class ReservationDAOImpl implements ReservationDAO {
 
 	// 예약요청 삭제 처리 페이지
 	@Override
-	public int deleteRequest1(String res_code) {
+	public int deleteRequest(ReservationVO vo) {
 		
 		ReservationDAO dao = sqlSession.getMapper(ReservationDAO.class);
-		int deleteCnt = dao.deleteRequest1(res_code);
-		
-		return deleteCnt;
-	}
-	@Override
-	public int deleteRequest2(String res_detail_code) {
-		
-		ReservationDAO dao = sqlSession.getMapper(ReservationDAO.class);
-		int deleteCnt = dao.deleteRequest2(res_detail_code);
-		
-		return deleteCnt;
+		return dao.deleteRequest(vo);
 	}
 	
 	// 서비스 완료처리 페이지
