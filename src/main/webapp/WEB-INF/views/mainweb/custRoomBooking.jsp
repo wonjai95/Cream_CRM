@@ -151,7 +151,7 @@
                                   <!-- 예약 테이블 끝 -->
                                    <!-- 결제 버튼 시작 -->
                                     <input type="submit" class="btn btn-primary btn-rounded btn-block" 
-                                    	formaction="insertRoomBookingAction" value="예약하기" style="font-size: 26px;">
+                                    	formaction="add_saleInfo" value="결제하기" style="font-size: 26px;">
                                    <!-- 결제 버튼 끝 -->
                                  </div>
                              </div>

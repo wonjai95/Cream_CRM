@@ -371,5 +371,18 @@ public class MainwebController {
 		return "mainweb/mypage/showBookingDetail";
 	}
 
+
+	// ------------------- 회원 결제 페이지 ------------------------
+	//결제 정보 입력 화면
+	@RequestMapping("/add_saleInfo")
+	public String add_saleInfo(HttpServletRequest req, Model model) {
+		logger.info("url -> add_saleInfo");
+		
+		service.add_saleInfo(req, model);
+		
+		return "mainweb/sale/add_saleInfo";
+	}
+		
+	
 }
 	

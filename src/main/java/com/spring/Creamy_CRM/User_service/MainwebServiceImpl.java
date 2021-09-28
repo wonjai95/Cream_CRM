@@ -28,8 +28,8 @@ public class MainwebServiceImpl implements MainwebService {
 	@Override
 	public void insertBooking(HttpServletRequest req, Model model) {
 		System.out.println("insertBooking 시작합니다.");
+		ReservationVO vo = new ReservationVO();
 		
-		String host_code = req.getParameter("host_code");
 		String user_id = (String) req.getSession().getAttribute("id");
 		String res_state = "예약 완료";
 		String employee_code = req.getParameter("employee_code");
@@ -47,8 +47,6 @@ public class MainwebServiceImpl implements MainwebService {
 		int res_hour = Integer.parseInt(hours[0]);
 		
 		// vo에 담기
-		ReservationVO vo = new ReservationVO();
-		vo.setHost_code(host_code);
 		vo.setUser_id(user_id);							// 회원아이디
 		vo.setRes_state(res_state);						// 예약상태(방문?예약중?예약완료?)
 		vo.setRes_date(res_date);						// 예약날짜
@@ -72,6 +70,22 @@ public class MainwebServiceImpl implements MainwebService {
 		System.out.println("insertCnt : " + insertCnt);  // insertCnt = 2
 		
 		model.addAttribute("insertCnt", insertCnt);
+		model.addAttribute("vo", vo);
+		System.out.println("vo.getRes_cnt : " + vo.getRes_cnt());
+	}
+
+	// 결제처리
+	@Override
+	public void add_saleInfo(HttpServletRequest req, Model model) {
+		System.out.println("service => add_saleInfo");
+		
+		String user_id = (String) req.getSession().getAttribute("id");
+		System.out.println("user_id : " + user_id);
+		
+		// 예약 정보 담아오는 vo
+		req.getAttribute("vo");
+		
+		
 	}
 
 	
