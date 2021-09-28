@@ -28,10 +28,7 @@ public class ReservationController {
 	public String reservation(HttpServletRequest req, Model model) {
 		logger.info("url -> reservation");
 		
-		String user_id = req.getParameter("user_id");
-		System.out.println("user_id : " + user_id);
 		
-		service.requestList(req, model);
 		//service.requestSearch(req, model);
 		
 		service.completeList(req, model);
@@ -42,7 +39,19 @@ public class ReservationController {
 	public String requestReservation(HttpServletRequest req, Model model) {
 		logger.info("url -> requestReservation");
 		
-		return "host/reservation/requestReservation";
+		service.requestList(req, model);
+		
+		return "host/reservation/requestList";
+	}
+	
+	// 목록
+	@RequestMapping("/host/requestList")
+	public String requestList(HttpServletRequest req, Model model) {
+		logger.info("url -> requestList");
+		
+		service.requestList(req, model);
+		
+		return "host/reservation/requestList";
 	}
 	//예약 요청 이동
 	@RequestMapping("/host/requestDetails")

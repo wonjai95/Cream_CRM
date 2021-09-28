@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import com.spring.Creamy_CRM.Host_dao.ReservationDAO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.userVO;
+import com.spring.Creamy_CRM.util.Page;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -33,105 +34,42 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public void requestList(HttpServletRequest req, Model model) {
 		System.out.println("서비스 requestList시작합니다.");
+		
 		// 3단계. 화면으로부터 입력받은 값을 받아온다.
 		// 페이징 (변수들)
-		int pageSize = 10;		// 한 페이지당 출력할 글의 갯수
-		int pageBlock = 10;		// 한 블럭당 페이지의 갯수
+		Page requestPage = new Page();
 		
-		int cnt = 0;			// 글 갯수
-		int start = 0;			// 현재(각) 페이지의 시작 글 번호
-		int end = 0;			// 현재(각) 페이지의 마지막 글 번호
-		int number = 0;			// 출력용 글 번호 (글 제목 & 내용이 삭제가 되어도 번호는 바로 이관/대체될 수 있도록)
-		String pageNum = "";	// 페이지 번호
-		int currentPage = 0;	// 현재 페이지 
-		
-		int pageCount = 0;		// 페이지 갯수
-		int startPage = 0;		// 시작 페이지
-		int endPage = 0;		// 마지막 페이지
-		
-		// 5-1단계. 게시글 갯수 조회
-		cnt = dao.getRequestCnt();
-		System.out.println("cnt => " + cnt);
-		
-		pageNum = req.getParameter("pageNum");
-		System.out.println("pageNum => " + pageNum);
-		
-		if(pageNum == null) {
-			pageNum = "1";	// 첫 페이지를 1페이지로 지정한다.
-			System.out.println("pageNum첫페이지 => " + pageNum);
-		}
-		
-		// 글 30건 기준
-		currentPage = Integer.parseInt(pageNum);
-		System.out.println("currentPage : " + currentPage);
-		
-		// 페이지 갯수 p6=(30/5) + (0 = 나머지 페이지)
-		// (페이지 갯수 + 나머지)가 있으면 1페이지를 추가, 그렇지 않으면 0으로 남겨라.
-		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0);
-		
-		// 현재 페이지 시작 글 번호(페이지 별)
-		// start = (currentPage - 1) * pageSize + 1;
-		// 1 = (1 -1) * 5 + 1
-		start = (currentPage - 1) * pageSize + 1;
-		
-		// 현재 페이지 마지막 글 번호(페이지 별)
-		// end = start +  pageSize - 1;
-		// 5 = 1 + 5 - 1
-		end = start + pageSize - 1;
-		
-		System.out.println("start : " + start);
-		System.out.println("end : " + end);
-		
-		// 출력용 글 번호
-		// 예) 30 = 30 - (1 - 1) * 5;  // = 1페이지
-		// number = cnt - (currentPage - 1) * pageSize;
-		number = cnt - (currentPage - 1) * pageSize;
-		
-		System.out.println("number : " + number);
-		System.out.println("pageSize : " + pageSize);
-		
-		// 시작 페이지
-		// 1 = (1 / 3) * 3 + 1;
-		// startPage = (currentPage / pageBlock) * pageBlock + 1;
-		startPage = (currentPage / pageBlock) * pageBlock + 1;
-		if(currentPage % pageBlock == 0) startPage -= pageBlock;
-		
-		System.out.println("startPage : " + startPage);
-		
-		// 마지막 페이지
-		// 3 = 1 + 3 - 1
-		// endPage = startPage + pageBlock - 1;
-		endPage = startPage + pageBlock - 1;
-		if(endPage > pageCount) endPage = pageCount;
-		
-		System.out.println("endPage : " + endPage);
+		requestPage.setPageSize(10);
+		requestPage.setPageBlock(10);
+		requestPage.setCnt(dao.getRequestCnt());
+		requestPage.setCurrentPage(req.getParameter("pageNum"));
 		
 		System.out.println("==============================");
 		
 		List<ReservationVO> dtos = null;
 		//String state = "서비스 완료";
 
-		if(cnt > 0) {
+		if(requestPage.getCnt() > 0) {
 			// 5-2단계. 게시글 목록 조회
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("start", start);
-			map.put("end", end);
+			map.put("start", requestPage.getStart());
+			map.put("end", requestPage.getEnd());
 			//map.put("res_state", state);
 			
 			dtos = dao.getRequestList(map);  // dtos대신 list로 매개변수 줘도 무방하다.
 		}
 		// 6단계. jsp로 전달하기 위해 request나 session에 처리결과를 저장
 		model.addAttribute("dtos", dtos);			// 리스트 = 게시글 목록
-		model.addAttribute("cnt", cnt);			// 글 갯수
-		model.addAttribute("pageNum", pageNum);	// 페이지 번호
-		model.addAttribute("number", number);		// 출력용 글 번호
+		model.addAttribute("cnt", requestPage.getCnt());			// 글 갯수
+		model.addAttribute("pageNum", requestPage.getCurrentPage());	// 페이지 번호
+		model.addAttribute("number", requestPage.getNumber());		// 출력용 글 번호
 
-		if(cnt > 0) {
-			model.addAttribute("startPage", startPage);		// 시작 페이지 
-			model.addAttribute("endPage", endPage);			// 마지막 페이지
-			model.addAttribute("pageBlock", pageBlock);		// 한 블럭당 페이지 갯수
-			model.addAttribute("pageCount", pageCount);		// 페이지 갯수
-			model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		if(requestPage.getCnt() > 0) {
+			model.addAttribute("startPage", requestPage.getStartPage());		// 시작 페이지 
+			model.addAttribute("endPage", requestPage.getEndPage());			// 마지막 페이지
+			model.addAttribute("pageBlock", requestPage.getPageBlock());		// 한 블럭당 페이지 갯수
+			model.addAttribute("pageCount", requestPage.getPageCount());		// 페이지 갯수
+			model.addAttribute("currentPage", requestPage.getCurrentPage());	// 현재 페이지
 		}
 	}
 
@@ -139,10 +77,10 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public void requestSearch(HttpServletRequest req, Model model) {
 		
-		String res_code = req.getParameter("res_code");
-		System.out.println("res_code ==> " + res_code);
+		String res_state = req.getParameter("res_state");
+		System.out.println("res_state ==> " + res_state);
 		
-		List<ReservationVO> dtos = dao.requestSearch(res_code);
+		List<ReservationVO> dtos = dao.requestSearch(res_state);
 		System.out.println("dtos ==> " + dtos);
 		
 		model.addAttribute("dtos", dtos);
@@ -265,99 +203,37 @@ public class ReservationServiceImpl implements ReservationService {
 		System.out.println("서비스 completeList시작합니다.");
 		// 3단계. 화면으로부터 입력받은 값을 받아온다.
 		// 페이징 (변수들)
-		int pageSize = 10;		// 한 페이지당 출력할 글의 갯수
-		int pageBlock = 10;		// 한 블럭당 페이지의 갯수
+		Page completePage = new Page();
 		
-		int cnt = 0;			// 글 갯수
-		int start = 0;			// 현재(각) 페이지의 시작 글 번호
-		int end = 0;			// 현재(각) 페이지의 마지막 글 번호
-		int number = 0;			// 출력용 글 번호 (글 제목 & 내용이 삭제가 되어도 번호는 바로 이관/대체될 수 있도록)
-		String pageNum = "";	// 페이지 번호
-		int currentPage = 0;	// 현재 페이지 
-		
-		int pageCount = 0;		// 페이지 갯수
-		int startPage = 0;		// 시작 페이지
-		int endPage = 0;		// 마지막 페이지
-		
-		// 5-1단계. 게시글 갯수 조회
-		cnt = dao.getCompleteCnt();
-		System.out.println("cnt => " + cnt);
-		
-		pageNum = req.getParameter("pageNum");
-		
-		if(pageNum == null) {
-			pageNum = "1";	// 첫 페이지를 1페이지로 지정한다.
-		}
-		
-		// 글 30건 기준
-		currentPage = Integer.parseInt(pageNum);
-		System.out.println("currentPage : " + currentPage);
-		
-		// 페이지 갯수 p6=(30/5) + (0 = 나머지 페이지)
-		// (페이지 갯수 + 나머지)가 있으면 1페이지를 추가, 그렇지 않으면 0으로 남겨라.
-		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0);
-		
-		// 현재 페이지 시작 글 번호(페이지 별)
-		// start = (currentPage - 1) * pageSize + 1;
-		// 1 = (1 -1) * 5 + 1
-		start = (currentPage - 1) * pageSize + 1;
-		
-		// 현재 페이지 마지막 글 번호(페이지 별)
-		// end = start +  pageSize - 1;
-		// 5 = 1 + 5 - 1
-		end = start + pageSize - 1;
-		
-		System.out.println("start : " + start);
-		System.out.println("end : " + end);
-		
-		// 출력용 글 번호
-		// 예) 30 = 30 - (1 - 1) * 5;  // = 1페이지
-		// number = cnt - (currentPage - 1) * pageSize;
-		number = cnt - (currentPage - 1) * pageSize;
-		
-		System.out.println("number : " + number);
-		System.out.println("pageSize : " + pageSize);
-		
-		// 시작 페이지
-		// 1 = (1 / 3) * 3 + 1;
-		// startPage = (currentPage / pageBlock) * pageBlock + 1;
-		startPage = (currentPage / pageBlock) * pageBlock + 1;
-		if(currentPage % pageBlock == 0) startPage -= pageBlock;
-		
-		System.out.println("startPage : " + startPage);
-		
-		// 마지막 페이지
-		// 3 = 1 + 3 - 1
-		// endPage = startPage + pageBlock - 1;
-		endPage = startPage + pageBlock - 1;
-		if(endPage > pageCount) endPage = pageCount;
-		
-		System.out.println("endPage : " + endPage);
+		completePage.setPageSize(10);
+		completePage.setPageBlock(10);
+		completePage.setCnt(dao.getCompleteCnt());
+		completePage.setCurrentPage(req.getParameter("pageNum"));
 		
 		System.out.println("==============================");
 		
 		List<ReservationVO> cdtos = null;
 
-		if(cnt > 0) {
+		if(completePage.getCnt() > 0) {
 			// 5-2단계. 게시글 목록 조회
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("start", start);
-			map.put("end", end);
+			map.put("start", completePage.getStart());
+			map.put("end", completePage.getEnd());
 			
 			cdtos = dao.getCompleteList(map);  // dtos대신 list로 매개변수 줘도 무방하다.
 		}
 		// 6단계. jsp로 전달하기 위해 request나 session에 처리결과를 저장
 		model.addAttribute("cdtos", cdtos);			// 리스트 = 게시글 목록
-		model.addAttribute("cnt", cnt);			// 글 갯수
-		model.addAttribute("pageNum", pageNum);	// 페이지 번호
-		model.addAttribute("number", number);		// 출력용 글 번호
+		model.addAttribute("ccnt", completePage.getCnt());			// 글 갯수
+		model.addAttribute("cpageNum", completePage.getCurrentPage());	// 페이지 번호
+		model.addAttribute("cnumber", completePage.getNumber());		// 출력용 글 번호
 
-		if(cnt > 0) {
-			model.addAttribute("startPage", startPage);		// 시작 페이지 
-			model.addAttribute("endPage", endPage);			// 마지막 페이지
-			model.addAttribute("pageBlock", pageBlock);		// 한 블럭당 페이지 갯수
-			model.addAttribute("pageCount", pageCount);		// 페이지 갯수
-			model.addAttribute("currentPage", currentPage);	// 현재 페이지
+		if(completePage.getCnt() > 0) {
+			model.addAttribute("cstartPage", completePage.getStartPage());		// 시작 페이지 
+			model.addAttribute("cendPage", completePage.getEndPage());			// 마지막 페이지
+			model.addAttribute("cpageBlock", completePage.getPageBlock());		// 한 블럭당 페이지 갯수
+			model.addAttribute("cpageCount", completePage.getPageCount());		// 페이지 갯수
+			model.addAttribute("ccurrentPage", completePage.getCurrentPage());	// 현재 페이지
 		}
 	}
 

@@ -34,7 +34,8 @@
 <!-- 예약요청 검색목록 출력 -->
   	<select id="requestSearch" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
 		SELECT * FROM reservation_tbl
-		WHERE res_code LIKE '%' || #{res_code, jdbcType=VARCHAR} || '%'
+		 WHERE res_state = #{res_state}
+	  ORDER BY res_code DESC
 	</select>
   	
 <!-- 선택된 회원 정보 출력 -->
@@ -91,6 +92,7 @@
 	<select id="getCompleteCnt" resultType="int">
 	 		SELECT COUNT(*)
 	 		  FROM reservation_tbl
+			 WHERE res_state = '서비스 완료'
  	</select>
 	
 <!-- 예약요청 목록 조회 -->

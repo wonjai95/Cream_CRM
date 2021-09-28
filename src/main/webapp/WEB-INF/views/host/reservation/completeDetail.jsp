@@ -17,20 +17,6 @@
 <title> 예약상세정보 </title>
 
 <script type="text/javascript">
-	
-	function saleService(){		
-		var isTrue = confirm("해당 서비스를 판매처리하시겠습니까?");
-		
-		if(isTrue==true){
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-</script>
-
-<script type="text/javascript">
 
 	$(function() {
 		$.ajax({
@@ -60,10 +46,6 @@
 	        <div class="ibox-title">
 	            <h5>서비스 완료건에 대해 관리합니다.</h5>
 	            
-	            &nbsp;&nbsp;&nbsp;
-	            <button type="submit" class="btn btn-primary btn-lg"
-	            		formaction="saleAction" form="completeDetail" onclick="return saleService();">판매 처리???
-	            </button>
 	            &nbsp;&nbsp;&nbsp;
 	            <button type="button" class="btn btn-primary btn-lg"
 	            		onclick="window.location='reservation'">예약요청목록
