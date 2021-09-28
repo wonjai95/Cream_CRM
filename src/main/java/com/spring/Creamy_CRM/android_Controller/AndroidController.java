@@ -83,13 +83,12 @@ public class AndroidController {
 		
 	}
 	
-	//--------------------------------------
-	//지도 확인중
+	//지도 API
 	@RequestMapping("android/daum")
 	public String daum(HttpServletRequest req) {
 		System.out.println("daum");
 		
-		return "react_test/daum.html";
+		return "react_test/daum_2";
 	}
 
 }

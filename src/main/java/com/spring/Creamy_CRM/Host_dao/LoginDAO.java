@@ -56,6 +56,9 @@ public interface LoginDAO {
 	//사장님 회원가입
 	public int insertHost(HostVO vo);
 	
+	//아이디 중복 체크
+	public int DupIdcheck(String id);
+	
 }
 
 

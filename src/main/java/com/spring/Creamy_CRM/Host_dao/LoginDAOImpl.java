@@ -117,6 +117,11 @@ public class LoginDAOImpl implements LoginDAO {
 	public int insertHost(HostVO vo) {
 		return sqlSession.insert("com.spring.Creamy_CRM.Host_dao.loginDAO.insertHost",vo);
 	}
+
+	@Override
+	public int DupIdcheck(String id) {
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.loginDAO.DupIdcheck",id);
+	}
 	
 
 }
