@@ -44,7 +44,7 @@
          	<div class="col-lg-10">
          	 	<div class="php-email-form">
          	 	
-         		<table class="table" s>
+         		<table class="table">
          			<thead>
          				<tr>
          					<th></th>
@@ -60,7 +60,7 @@
          				 <tr style="border-bottom: #dee2e6 1px solid;">
          				 	<td></td>	
 	                     	<td>${dto.res_code}</td>
-	                        <td><a href="showBookingDetail?res_code=${dto.res_code}" class="client-link" id ="title1">${dto.comp_name}</a></td>
+	                        <td><a href="showBookingDetail?res_code=${dto.res_code}&host_code=${dto.host_code}">${dto.comp_name}</a></td>
 	                        <td> ${dto.res_date} - ${dto.res_hour} 시</td>
 	                        <td> ${dto.res_state}</td>
 	                        <td>

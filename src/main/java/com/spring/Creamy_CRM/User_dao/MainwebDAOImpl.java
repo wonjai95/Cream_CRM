@@ -27,15 +27,28 @@ public class MainwebDAOImpl implements MainwebDAO {
 		MainwebDAO dao = sqlSession.getMapper(MainwebDAO.class);
 		return dao.insertBooking2(vo) + dao.insertBooking1(vo);
 	}
-
+	@Override
 	public int insertBooking2(ReservationVO vo) {
 		// 방법2. 메서드를 활용/호출하는 방식
 		MainwebDAO dao = sqlSession.getMapper(MainwebDAO.class);
 		return dao.insertBooking2(vo);
 	}
 
+	// 고객 예약 상세정보 조회 처리
+	@Override
+	public ReservationVO getBookingDetail(String code) {
+		
+		MainwebDAO dao = sqlSession.getMapper(MainwebDAO.class);
+		return dao.getBookingDetail(code);
+	}
 	
-	
-	
+	// 고객 예약상세정보 내 예약내역취소 처리
+	@Override
+	public int deleteActionByUser(ReservationVO vo) {
+		// SQL(DB) : reservation_tbl 업데이트
+		MainwebDAO dao = sqlSession.getMapper(MainwebDAO.class);
+		return dao.deleteActionByUser(vo);
+	}
+
 	
 }
