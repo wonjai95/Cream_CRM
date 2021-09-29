@@ -16,5 +16,11 @@ public interface MainwebDAO {
 	public int insertBooking1(ReservationVO vo);
 	public int insertBooking2(ReservationVO vo);
 	
+	// 고객 예약상세정보 페이지
+	public ReservationVO getBookingDetail(String code);
+	
+	// 고객 예약상세정보 내 예약내역취소 처리
+	public int deleteActionByUser(ReservationVO vo);
+	
 	
 }

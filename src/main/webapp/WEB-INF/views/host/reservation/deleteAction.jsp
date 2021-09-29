@@ -85,7 +85,7 @@
 		<!-- 예약 취소가 실패라면, -->
 		<c:if test="${deleteCnt == 0}">
 			<script type="text/javascript">
-				errorAlert(deleteError);
+				alert("예약취소에 실패했습니다. 다시 한번 시도해주세요.");
 			</script>
 		</c:if>
 		

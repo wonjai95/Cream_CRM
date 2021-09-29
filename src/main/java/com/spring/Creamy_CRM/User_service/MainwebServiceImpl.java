@@ -73,6 +73,42 @@ public class MainwebServiceImpl implements MainwebService {
 		model.addAttribute("vo", vo);
 		System.out.println("vo.getRes_cnt : " + vo.getRes_cnt());
 	}
+	
+	// 고객 예약상세정보 페이지
+	@Override
+	public void getBookingDetail(HttpServletRequest req, Model model) {
+		String res_code = req.getParameter("res_code");
+		String host_code = req.getParameter("host_code");
+		
+		ReservationVO vo = dao.getBookingDetail(res_code);
+		
+		req.setAttribute("dto", vo);
+		req.setAttribute("res_code", res_code);
+		req.setAttribute("host_code", host_code);
+	}
+	
+	// 고객 예약상세정보 내 예약내역취소 처리
+	@Override
+	public void deleteActionByUser(HttpServletRequest req, Model model) {
+		System.out.println("deleteActionByUser 시작합니다.");
+		// 3단계. 화면으로부터 입력받은 값(= hidden값)을 받아온다.
+		String res_state = "예약취소";
+		String res_code = req.getParameter("res_code");
+		
+		// reservationVO vo 바구니 생성
+		ReservationVO vo = new ReservationVO();
+		
+		vo.setRes_state(res_state);
+		vo.setRes_code(res_code);  // update시, WHERE절에서 key를 비교하기 위해서.
+		
+		System.out.println("res_state : " + res_state);
+		System.out.println("res_code : " + res_code);
+		
+		int deleteCnt = dao.deleteActionByUser(vo);
+		System.out.println("deleteCnt : " + deleteCnt);
+		
+		model.addAttribute("deleteCnt", deleteCnt);
+	}
 
 	// 결제처리
 	@Override
@@ -87,6 +123,9 @@ public class MainwebServiceImpl implements MainwebService {
 		
 		
 	}
+
+	
+	
 
 	
 	

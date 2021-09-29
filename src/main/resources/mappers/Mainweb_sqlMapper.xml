@@ -24,9 +24,21 @@
 	</insert>
   
   
+  <!-- 예약요청 상세정보 조회 -->
+	<select id="getBookingDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">	   
+		SELECT r.res_code, r.host_code, c.comp_res, r.res_state, r.res_date, res_cnt
+	    FROM reservation_tbl r, reservation_detail_tbl rdt, company_tbl c
+        WHERE c.host_code = r.host_code
+         AND rdt.res_detail_code = r.res_detail_code
+	   AND res_code = #{res_code}
+	</select>
   
-  
-  
+  <!-- 예약상세정보 내 예약내역취소 처리 -->
+	<!-- <update id="deleteActionByUser" parameterType="com.spring.Creamy_CRM.VO.ReservationVO">
+			UPDATE reservation_tbl
+			   SET res_state = #{res_state}
+			 WHERE res_code = #{res_code}
+	</update> -->
   
   
   </mapper>
