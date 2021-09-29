@@ -45,3 +45,5 @@
 
   <!-- Template Main JS File -->
   <script src="${path}/resources/bootstrap/js/user_main.js"></script>
+  
+  <script src="${path}/resources/bootstrap/js/jquery-3.1.1.min.js"></script>
