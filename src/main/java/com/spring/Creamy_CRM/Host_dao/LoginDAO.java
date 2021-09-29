@@ -6,9 +6,11 @@
 */
 package com.spring.Creamy_CRM.Host_dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.spring.Creamy_CRM.VO.HostVO;
+import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
@@ -58,6 +60,13 @@ public interface LoginDAO {
 	
 	//아이디 중복 체크
 	public int DupIdcheck(String id);
+	
+	
+	//매장별 예약목록 받아오기
+	public List<ReservationVO> getResListbyStore(String host_code);
+	
+	//오늘날짜의 예약목록 출력
+	public List<ReservationVO> getTodayResListByStore(String host_code);
 	
 }
 

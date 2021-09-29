@@ -7,6 +7,7 @@
 package com.spring.Creamy_CRM.Host_service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
 import com.spring.Creamy_CRM.VO.HostVO;
+import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
 import com.spring.Creamy_CRM.VO.userVO;
 import com.spring.Creamy_CRM.util.EmailChkHandler;
@@ -296,6 +298,24 @@ public class LoginServiceImpl implements LoginService {
 		
 		model.addAttribute("selectcnt",selectcnt);
 		model.addAttribute("id",id);
+	}
+
+	@Override
+	public void HostmainPage(HttpServletRequest req, Model model) {
+		String code = (String) req.getSession().getAttribute("code");
+		
+		//예약된 일정 받아오기
+		List<ReservationVO> res_list = dao_login.getResListbyStore(code);
+		req.setAttribute("res_list", res_list);
+		
+		//오늘 예약인 일정 리스트
+		List<ReservationVO> res_todaylist = dao_login.getTodayResListByStore(code);
+		req.setAttribute("res_today", res_todaylist);
+		//오늘 등록한 회원 리스트
+		
+		
+		
+		
 	}
 
 }

@@ -86,5 +86,24 @@
   		select COUNT(*) from Auth_tbl where id = #{id}
   	</select>
   	
+  	<select id="getResListbyStore" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  		select res.*, u.user_name 
+  		from reservation_tbl res, user_tbl u 
+  		where res.user_id = u.user_id 
+  		and host_code = #{host_code} 
+  		order by res_regdate asc
+  	</select>
+  	
+  	<select id="getTodayResListByStore" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  		select res.*, u.user_name 
+  		from reservation_tbl res, user_tbl u 
+  		where res.user_id = u.user_id 
+  		and host_code = 'U81'
+        and res.res_date = TO_DATE(sysdate,'YY/MM/DD')
+  		order by res_regdate asc
+  	</select>
+  	
+  	
+  	
   
   </mapper>

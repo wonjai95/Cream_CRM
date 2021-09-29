@@ -6,6 +6,7 @@
 */
 package com.spring.Creamy_CRM.Host_dao;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import com.spring.Creamy_CRM.VO.HostVO;
+import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
@@ -121,6 +123,16 @@ public class LoginDAOImpl implements LoginDAO {
 	@Override
 	public int DupIdcheck(String id) {
 		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.loginDAO.DupIdcheck",id);
+	}
+
+	@Override
+	public List<ReservationVO> getResListbyStore(String host_code) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.loginDAO.getResListbyStore",host_code); 
+	}
+
+	@Override
+	public List<ReservationVO> getTodayResListByStore(String host_code) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.loginDAO.getTodayResListByStore",host_code);
 	}
 	
 

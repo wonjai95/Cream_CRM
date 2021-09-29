@@ -31,6 +31,8 @@ public class MainController {
 	public String home(HttpServletRequest req, Model model) {
 		logger.info("url -> host_home");
 		
+		service_login.HostmainPage(req, model);
+		
 		return "host/home";
 	}
 	
@@ -42,6 +44,8 @@ public class MainController {
 		service_login.getHostCode(req, model);
 		
 		System.out.println(req.getSession().getAttribute("code"));
+		
+		service_login.HostmainPage(req, model);
 		
 		return "host/home";
 	}
