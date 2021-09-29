@@ -189,6 +189,10 @@ public class LoginServiceImpl implements LoginService {
 	    String sido = req.getParameter("modify_sido");
 	    String gugun = req.getParameter("modify_gugun");
 	    String address= req.getParameter("modify_address");
+	    String memo = req.getParameter("modify_memo");
+	    
+	    if(memo == null)
+	    	memo = " ";
 	    
 	    String gender = req.getParameter("gender_radio");
 	    System.out.println("성별 : "+gender);
@@ -231,6 +235,7 @@ public class LoginServiceImpl implements LoginService {
 		vo.setZipcode(zipcode);
 		vo.setUser_address(address);
 		vo.setUser_gender(gender);
+		vo.setUser_memo(memo);
 		
 		int updateCnt = dao_login.updateUserInfo(vo);
 		System.out.println("회원정보 수정 : "+updateCnt);

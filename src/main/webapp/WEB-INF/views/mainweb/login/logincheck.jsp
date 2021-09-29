@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../setting.jsp" %>
+<%@ include file="../../setting.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<c:if test="${chk eq 'N'}">
+		<script type="text/javascript">
+			window.location="loginfail";
+		</script>
+	</c:if>
 
 	<c:if test="${authority eq '[ROLE_USER]'}">
 		<script type="text/javascript">
