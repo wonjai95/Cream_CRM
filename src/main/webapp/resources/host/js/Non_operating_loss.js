@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 $("document").ready(function() {
 	
 	var insertDay = '1';
@@ -7,67 +11,40 @@ $("document").ready(function() {
 	if(currentDay == insertDay){
 		alert("insert 해라!");
 	} 
-	/*
-	$("a[href='#tab-2']").click(function(){
-		console.log("탭2 클릭");
-		  
-		  // var header = 'X-CSRF-TOKEN' 아래 방식이 안 될 경우 이거 사용
-		  var header = $("meta[name='_csrf_header']").attr("content");
-	      var token = $("meta[name='_csrf']").attr("content");
-	      
-	      console.log("header : " + header);
-	      console.log("token : " + token);
-	      
-	      $.ajax({
-	         url : "Non_operating_loss",
-	         type : "Post",
-	         beforeSend : function(jqXHR, settings) {
-	            console.log("beforesend 진행");
-	            jqXHR.setRequestHeader(header, token);
-	         },
-	         success : function(result) {
-	            $(".tab-content").html(result);
-	         },
-	         error : function(error) {
-	        	alert("다시 시도해주세요.");
-	         }
-	         
-	      });
-	})
-	*/	
-	// 유형 클릭
-	$("input[name^=slip_type]").click(function() {
-		$("input[name^=slip_type]").css("background", "");
-		$("input[name^=slip_type]").css("color", "");
 		
-		var slip_type = $(this).val();
-		console.log(slip_type);
-		$("#slip_type").val(slip_type);
+	// 유형 클릭
+	$("input[name^=operloss_type]").click(function() {
+		$("input[name^=operloss_type]").css("background", "");
+		$("input[name^=operloss_type]").css("color", "");
+		
+		var operloss_type = $(this).val();
+		console.log(operloss_type);
+		$("#operloss_type").val(operloss_type);
 		$(this).css("background", "#1ab394");
 		$(this).css("color", "white");
 	});
 	
-	$("#insertSGA").click(function() {
+	$("#insertNOL").click(function() {
 		
-		if($("#slip_type").val() == "") {
+		if($("#operloss_type").val() == "") {
 			alert("유형을 선택하세요.");
 			return false;
 		}; 
 		
-		var slip_regDate = $("input[name=slip_regDate]").val();
-		var slip_type = $("#slip_type").val();
-		var slip_money = $("input[name=slip_money]").val();
-		var slip_memo = $("textarea[name=slip_memo]").val();
+		var operloss_regDate = $("input[name=operloss_regDate]").val();
+		var operloss_type = $("#operloss_type").val();
+		var operloss_money = $("input[name=operloss_money]").val();
+		var operloss_memo = $("textarea[name=operloss_memo]").val();
 		
 		var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
         console.log("header : " + header);
         
          $.ajax({
-	       	  url : "insertSlip",
+	       	  url : "insertNOL",
 	       	  type : "Post",
-	       	  data : "slip_regDate=" + slip_regDate + "&slip_type=" + slip_type 
-	       	  			+ "&slip_money=" + slip_money + "&slip_memo=" + slip_memo,
+	       	  data : "operloss_regDate=" + operloss_regDate + "&operloss_type=" + operloss_type 
+	       	  			+ "&operloss_money=" + operloss_money + "&operloss_memo=" + operloss_memo,
        	  	  async: false,	
   			  beforeSend : function(jqXHR, settings) {
 	       		  console.log("beforesend 진행");
@@ -89,8 +66,6 @@ $("document").ready(function() {
          });
 		
 	});
-	
-	
 	
 	$("tr[class^=sga_info]").click(function() {
 		$("tr[class^=sga_info]").css("background", "");

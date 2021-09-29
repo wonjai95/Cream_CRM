@@ -25,7 +25,7 @@ public class AccountVO {
 	
 	// 영업외 손익 테이블
 	private String incidental_PNL_code;			// 영업외손익코드
-	private Date non_operating_profit_regDate;	// 등록일
+	private Date non_operating_loss_regDate;	// 등록일
 	private int non_operating_expenses;			// 비용
 	private int non_operating_profit;			// 수익
 	private int corporate_tax;					// 법인세비 등
@@ -117,10 +117,10 @@ public class AccountVO {
 		this.incidental_PNL_code = incidental_PNL_code;
 	}
 	public Date getNon_operating_profit_regDate() {
-		return non_operating_profit_regDate;
+		return non_operating_loss_regDate;
 	}
 	public void setNon_operating_profit_regDate(Date non_operating_profit_regDate) {
-		this.non_operating_profit_regDate = non_operating_profit_regDate;
+		this.non_operating_loss_regDate = non_operating_profit_regDate;
 	}
 	public int getNon_operating_expenses() {
 		return non_operating_expenses;

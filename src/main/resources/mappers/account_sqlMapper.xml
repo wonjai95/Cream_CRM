@@ -14,7 +14,10 @@
   	<!-- 작성자 : 주수림, 작성일 : 2021-09-26, 매입매출전표 목록, 등록 mapper -->
   	<!-- 매입매출 전표 목록 -->
   	<select id="getSlipList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.AccountVO">
-  		SELECT * FROM slip_tbl ORDER BY slip_regDate DESC
+  		SELECT * FROM slip_tbl 
+  		 WHERE host_code = #{host_code}
+  		   AND slip_type IN ('복리후생비', '수수료비용', '소모품비')
+  		ORDER BY slip_regDate DESC
   	</select>
   	
   	<!-- 매입매출 전표 등록 -->	

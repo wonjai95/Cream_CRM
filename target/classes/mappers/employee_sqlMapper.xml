@@ -27,25 +27,28 @@
 	</select>
 	
 	<!-- 직원 코드 검색 -->
-	<select id="searchCode" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+	<select id="searchCode" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *
 		  FROM employee_tbl
-		 WHERE employee_code = #{employee_code}
+		 WHERE host_code = #{host_code}
+		   AND employee_code = #{employee_code}
 	</select>
 	
 	<!-- 직원 이름 검색 -->
-	<select id="searchName" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+	<select id="searchName" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *
 		  FROM employee_tbl
-		 WHERE employee_name = #{employee_name}
+		 WHERE host_code = #{host_code}
+		   AND employee_name = #{employee_name}
 		ORDER BY employee_code ASC
 	</select>
 	
 	<!-- 직원 부서 검색 -->
-	<select id="searchDep" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+	<select id="searchDep" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *
 		  FROM employee_tbl
-		 WHERE department = #{department}
+		 WHERE host_code = #{host_code}
+		   AND department = #{department}
 		ORDER BY employee_code ASC
 	</select>
 	
@@ -53,7 +56,8 @@
 	<select id="searchCoNa" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *
 		  FROM employee_tbl
-		 WHERE employee_code = #{employee_code}
+		 WHERE host_code = #{host_code}
+		   AND employee_code = #{employee_code}
 		   AND employee_name = #{employee_name}
 	</select>
 	
@@ -61,7 +65,8 @@
 	<select id="searchCoDe" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *
 		  FROM employee_tbl
-		 WHERE employee_code = #{employee_code}
+		 WHERE host_code = #{host_code}
+		   AND employee_code = #{employee_code}
 		   AND department = #{department}
 	</select>
 	
@@ -69,7 +74,8 @@
 	<select id="searchNaDe" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *
 		  FROM employee_tbl
-		 WHERE employee_name = #{employee_name}
+		 WHERE host_code = #{host_code}
+		   AND employee_name = #{employee_name}
 		   AND department = #{department}
 		 ORDER BY employee_code ASC
 	</select>
@@ -78,7 +84,8 @@
 	<select id="searchCoNaDe" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *
 		  FROM employee_tbl
-		 WHERE employee_code = #{employee_code}
+		 WHERE host_code = #{host_code}
+		   AND employee_code = #{employee_code}
 		   AND employee_name = #{employee_name}
 		   AND department = #{department}	
 	</select>
@@ -106,7 +113,7 @@
 		  FROM attendance_tbl
 		 WHERE employee_code = #{empCode}
 		   AND TO_CHAR(attendance_date, 'YYYY-MM') = #{curMonth}
-		ORDER BY attendance_date DESC
+		ORDER BY attendance_date ASC
 	</select>
 	
 	<!-- 직원의 해당 근태 정보 조회 -->

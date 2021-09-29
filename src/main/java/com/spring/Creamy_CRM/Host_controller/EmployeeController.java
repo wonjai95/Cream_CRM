@@ -80,7 +80,7 @@ public class EmployeeController {
 		
 		service.attendanceMonthList(req, model);
 		
-		return "host/employee/employee_attendanceList";
+		return "host/employee/month_attendanceList";
 	}
 	
 	// 직원 근태 수정 페이지

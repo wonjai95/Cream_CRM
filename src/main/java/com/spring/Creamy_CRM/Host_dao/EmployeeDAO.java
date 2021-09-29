@@ -22,13 +22,13 @@ public interface EmployeeDAO {
 	public ArrayList<EmployeeVO> employeeList(String host_code);
 	
 	// 직원 코드 검색
-	public ArrayList<EmployeeVO> searchCode(String employee_code);
+	public ArrayList<EmployeeVO> searchCode(Map<String, Object> map);
 	
 	// 직원명 검색
-	public ArrayList<EmployeeVO> searchName(String employee_name);
+	public ArrayList<EmployeeVO> searchName(Map<String, Object> map);
 	
 	// 부서명 검색
-	public ArrayList<EmployeeVO> searchDep(String department);
+	public ArrayList<EmployeeVO> searchDep(Map<String, Object> map);
 	
 	// 직원 코드 + 직원명 검색
 	public ArrayList<EmployeeVO> searchCoNa(Map<String, Object> map);
