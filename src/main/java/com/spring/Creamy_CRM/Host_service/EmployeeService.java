@@ -15,6 +15,9 @@ public interface EmployeeService {
 	// 직원 목록 조회
 	public void employeeList(HttpServletRequest req, Model model);
 	
+	// 직원 검색
+	public void employeeSearch(HttpServletRequest req, Model model);
+	
 	// 직원 상세 정보
 	public void employeeDetail(HttpServletRequest req, Model model);
 	

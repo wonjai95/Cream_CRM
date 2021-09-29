@@ -1,5 +1,45 @@
 $("document").ready(function() {
 	
+	// 검색 기능
+	$("#search_btn").click(function(){
+		
+		var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        console.log("header : " + header);
+		
+		var searchCode = $("input[id=employee_code]").val();
+		var searchName = $("input[id=employee_name]").val();
+		var searchDep = $("input[id=department]").val();
+		
+		console.log("searchCode : " + searchCode);
+		console.log("searchName : " + searchName);
+		console.log("searchDep : " + searchDep);
+		
+		if(searchCode == "" && searchName == "" && searchDep == ""){
+			alert("검색어를 입력하세요.");
+		} else {
+		
+			$.ajax({
+		       	  url : "employee_searchList",
+		       	  type : "Post",
+		       	  data : "employee_code=" + searchCode + "&employee_name=" + searchName + "&department=" + searchDep,
+	     	  	  async: false,	
+				  beforeSend : function(jqXHR, settings) {
+		       		  console.log("beforesend 진행");
+		                 jqXHR.setRequestHeader(header, token);
+		       	  },
+		       	  success : function(result) {
+		       		  $("#employeeList").html(result);
+		       		  console.log("성공");
+		       		 
+		       	  },
+		       	  error : function(error) {
+		       		console.log(error);  
+		       	  }
+			});
+		}
+	});
+	
 	
 	// 테이블에서 직원 선택시 직원 코드 hidden에 설정
 	$("tr[class^=employee]").click(function() {

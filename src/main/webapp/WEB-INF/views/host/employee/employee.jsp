@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,7 +88,7 @@
 	                   <div class="col-sm-2">
 							<div class="form-group">
 								<br>
-								<button class="btn btn-primary dim" type="button" style="width:100px;">검색</button>
+								<button class="btn btn-primary dim" id="search_btn" type="button" style="width:100px;">검색</button>
 							</div>
 						</div>
 	                </div>
@@ -128,7 +130,7 @@
 		                <th>입사날짜</th>
 		            </tr>
 		            </thead>
-		            <tbody>
+		            <tbody id="employeeList">
 		            	<c:forEach var="dto" items="${dtos}" varStatus="status">
 		            		 <tr class="employee${status.index}">
 			            		  <td id="empCode${status.index}">
