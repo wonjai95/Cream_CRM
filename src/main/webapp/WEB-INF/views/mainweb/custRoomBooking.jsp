@@ -41,7 +41,7 @@
 
         </nav>
         </div>
-        <div class="wrapper wrapper-content">
+        <div class="wrapper wrapper-content">    
            <form action="insertBooking" method="post" id="custBookingForm">
            <sec:csrfInput/>
            <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
@@ -96,7 +96,7 @@
 	                                       </td>
 	                                    </tr>
 	                                 </table>         
-	                            <!-- 예약한 호실에 대한 상세정보 표시 --> 
+	                            <!-- 예약한 호실에 대한 상세정보 표시 res_start, res_end --> 
                                	<div class="col-lg-12" id="roomDetail">
 
 					            </div>              
@@ -147,15 +147,15 @@
                                     <textarea class="form-control" placeholder="필요 시 내용을 입력하세요." rows="3"
                                			name="res_indiv_request" style="margin-top:10px; margin-bottom: 40px;"></textarea>
                            		</div>
-					                 
+
                                   <!-- 예약 테이블 끝 -->
                                    <!-- 결제 버튼 시작 -->
                                     <input type="submit" class="btn btn-primary btn-rounded btn-block" 
-                                    	formaction="add_saleInfo" value="결제하기" style="font-size: 26px;">
+                                    	formaction="salePage" value="예약하기" style="font-size: 26px;">
                                    <!-- 결제 버튼 끝 -->
                                  </div>
                              </div>
-                         </div>
+                         </div>  
                          <!-- ibox 끝 -->
                      </div>
                       <!-- col-lg-6 끝 -->

@@ -40,7 +40,7 @@
         </nav>
         </div>
         <div class="wrapper wrapper-content">
-           <form action="insertBooking" method="post" id="custBookingForm">
+           <form action="add_saleInfo" method="post" id="custBookingForm">
            <sec:csrfInput/>
            <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
            <input type="hidden" id="res_state" name="res_state"> 

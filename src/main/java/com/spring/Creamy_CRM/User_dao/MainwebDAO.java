@@ -17,4 +17,5 @@ public interface MainwebDAO {
 	public int insertBooking2(ReservationVO vo);
 	
 	
+	
 }

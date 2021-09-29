@@ -33,6 +33,7 @@ public class MainwebDAOImpl implements MainwebDAO {
 		MainwebDAO dao = sqlSession.getMapper(MainwebDAO.class);
 		return dao.insertBooking2(vo);
 	}
+
 	
 	
 	
