@@ -48,6 +48,56 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 	
+	// 직원 검색
+	public void employeeSearch(HttpServletRequest req, Model model) {
+		String employee_code = req.getParameter("employee_code");
+		String employee_name = req.getParameter("employee_name");
+		String department = req.getParameter("department");
+		
+		System.out.println("employee_code : " + employee_code);
+		System.out.println("employee_name : " + employee_name);
+		System.out.println("department : " + department);
+		
+		if(employee_code == null || employee_code.equals("")) employee_code = "0";
+		if(employee_name == null || employee_name.equals("")) employee_name = "0";
+		if(department == null || department.equals("")) department = "0";
+		
+		System.out.println("employee_code : " + employee_code);
+		System.out.println("employee_name : " + employee_name);
+		System.out.println("department : " + department);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employee_code", employee_code);
+		map.put("employee_name", employee_name);
+		map.put("department", department);
+		
+		ArrayList<EmployeeVO> searchList = null;
+		if(employee_code != "0" && employee_name == "0" && department == "0") {
+			System.out.println("회원 코드만 입력");
+			searchList = dao.searchCode(employee_code);
+		} else if(employee_code == "0" && employee_name != "0" && department == "0") {
+			System.out.println("이름만 입력");
+			searchList = dao.searchName(employee_name);
+		} else if(employee_code == "0" && employee_name == "0" && department != "0") {
+			System.out.println("부서만 입력");
+			searchList = dao.searchDep(department);
+		} else if(employee_code != "0" && employee_name != "0" && department == "0") {
+			System.out.println("회원코드와 이름 입력");
+			searchList = dao.searchCoNa(map);
+		} else if(employee_code != "0" && employee_name == "0" && department != "0") {
+			System.out.println("회원코드와 부서 입력");
+			searchList = dao.searchCoDe(map);
+		} else if(employee_code == "0" && employee_name != "0" && department != "0") {
+			System.out.println("이름과 부서 입력");
+			searchList = dao.searchNaDe(map);
+		} else {
+			System.out.println("전부 입력");
+			searchList = dao.searchCoNaDe(map);
+		}
+		
+		model.addAttribute("dtos", searchList);
+	}
+	
 	// 직원 상세 정보
 	@Override
 	public void employeeDetail(HttpServletRequest req, Model model) {
