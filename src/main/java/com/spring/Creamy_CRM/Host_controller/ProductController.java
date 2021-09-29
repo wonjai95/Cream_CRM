@@ -238,7 +238,6 @@ public class ProductController {
 		// 결제정보 입력창에서 직원(수납자) 정보 뿌리기
 		service_emp.employeeList(req, model);
 		
-		
 		return "host/product/product_selling";
 	}
 	

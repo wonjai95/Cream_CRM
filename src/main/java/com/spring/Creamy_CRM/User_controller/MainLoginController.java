@@ -131,6 +131,17 @@ public class MainLoginController {
 		
 		return "mainweb/home";
 	}
+	
+	//회원탈퇴 후 로그인 안시키려고 만듬..
+	@RequestMapping("/loginfail")
+	public String loginfail(HttpServletRequest req) {
+		logger.info("url -> loginfail");
+		System.out.println("탈퇴함->로그인 실패");
+		
+		req.getSession().invalidate();
+		
+		return login();
+	}
 		
 	
 }

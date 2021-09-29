@@ -24,6 +24,10 @@ public interface MainwebService {
 	public void deleteActionByUser(HttpServletRequest req, Model model);
 	
 
-	// 결제처리
-	public void add_saleInfo(HttpServletRequest req, Model model);
+	// 예약페이지에서 예약 정보 받아오기
+	public void getResInfo(HttpServletRequest req, Model model);
+	
+	// 예약코드 생성
+	public void createResCD(HttpServletRequest req, Model model);
+	
 }

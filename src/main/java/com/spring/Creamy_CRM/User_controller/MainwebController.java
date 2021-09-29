@@ -7,6 +7,8 @@
 */
 package com.spring.Creamy_CRM.User_controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -17,9 +19,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.Creamy_CRM.Host_controller.MainController;
+import com.spring.Creamy_CRM.Host_service.EmployeeService;
 import com.spring.Creamy_CRM.User_service.MainwebServiceImpl;
+import com.spring.Creamy_CRM.User_service.SaleService;
 import com.spring.Creamy_CRM.User_service.UserReservationServiceImpl;
 import com.spring.Creamy_CRM.User_service.UserReviewServiceImpl;
+import com.spring.Creamy_CRM.VO.EmployeeVO;
 
 @Controller
 public class MainwebController {
@@ -35,6 +40,12 @@ public class MainwebController {
 	
 	@Autowired
 	UserReservationServiceImpl service_custReserve;
+	
+	@Autowired
+	EmployeeService service_emp;
+	
+	@Autowired
+	SaleService service_sale;
 	
 	//홈화면
 	@RequestMapping("/home")
@@ -234,6 +245,13 @@ public class MainwebController {
 		return "mainweb/roomDetail";
 	}	
 	
+	
+	
+	
+	
+	
+	
+	
 	// 호실 예약 처리
 	@RequestMapping("/insertRoomBookingAction")
 	public String insertRoomBookingAction(HttpServletRequest req, Model model) {
@@ -254,6 +272,13 @@ public class MainwebController {
 	      
 	      return "mainweb/insertBooking";
 	}	
+	
+	
+	
+	
+	
+	
+	
 	
 	//결제수단 등록
 	@RequestMapping("/insertPaymentInfo")
@@ -287,13 +312,32 @@ public class MainwebController {
 
 	// ------------------- 회원 결제 페이지 ------------------------
 	//결제 정보 입력 화면
-	@RequestMapping("/add_saleInfo")
-	public String add_saleInfo(HttpServletRequest req, Model model) {
-		logger.info("url -> add_saleInfo");
+	@RequestMapping("/salePage")
+	public String salePage(HttpServletRequest req, Model model) {
+		logger.info("url -> salePage");
 		
-		service.add_saleInfo(req, model);
+		// 회원 예약 정보 받아오기
+		service.getResInfo(req, model);
 		
-		return "mainweb/sale/add_saleInfo";
+		return "mainweb/sale/salePage";
+	}
+	
+	
+	//결제 처리
+	@RequestMapping("/sale_action")
+	public String sale_action(HttpServletRequest req, Model model) {
+		logger.info("url -> sale_action");
+		
+		// 예약 코드(res_code) 생성
+		
+		
+		// 결제정보 입력해서 insert
+		service_sale.insertSaleInfo(req, model);
+		
+		// 회원 예약 정보 insert
+		service.insertBooking(req, model);
+		
+		return "mainweb/sale/sale_action";
 	}
 		
 	

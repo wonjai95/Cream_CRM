@@ -12,11 +12,11 @@
   <mapper namespace="com.spring.Creamy_CRM.User_dao.UserReviewDAO">
   
   <select id="getReservationList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
-	  SELECT r.res_code, h.comp_name, h.host_code, r.res_state, r.res_date
-	    FROM reservation_tbl r
-	    JOIN host_tbl h
-	      ON h.host_code = r.host_code
-	   WHERE user_id = #{user_id}  
+     SELECT r.res_code, h.comp_name, r.res_state, r.res_date, r.res_review_chk
+       FROM reservation_tbl r
+       JOIN host_tbl h
+         ON h.host_code = r.host_code
+      WHERE user_id = #{user_id}  
   </select>
   
   <select id="getReservationDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
@@ -47,14 +47,11 @@
   </select>
   
   <select id="getStoreReviewList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
-  	select r.*, res.employee_code,h.host_code, u.user_name 
-	from review_tbl r, user_tbl u, reservation_tbl res, employee_tbl e, host_tbl h
-	where r.user_code = u.user_code
-	and r.res_code = res.res_code
-	and res.employee_code = e.employee_code
-	and e.host_code = h.host_code
-	and h.host_code = #{host_code}
-	  	order by r.regDate DESC
+	select r.*,res.host_code
+	from review_tbl r, reservation_tbl res
+	where r.res_code = res.res_code
+	and res.host_code = #{host_code}
+	order by r.regDate desc
   </select>
   
   <select id="getUserReservationlist" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">

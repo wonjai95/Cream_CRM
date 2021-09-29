@@ -1,6 +1,5 @@
 package com.spring.Creamy_CRM.Host_service;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +24,7 @@ public interface HostService {
 	RoomSettingVO addRoomAction(HttpServletRequest req, Model model);
 
 	//호실 리스트
-	List<RoomSettingVO> roomList(HttpServletRequest req, Model model);
+	void roomList(HttpServletRequest req, Model model);
 	
 	
 }

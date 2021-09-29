@@ -23,4 +23,5 @@ public interface MainwebDAO {
 	public int deleteActionByUser(ReservationVO vo);
 	
 	
+	
 }

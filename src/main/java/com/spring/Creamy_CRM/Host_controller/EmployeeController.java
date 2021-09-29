@@ -33,6 +33,16 @@ public class EmployeeController {
 		return "host/employee/employee";
 	}
 	
+	// 직원 검색
+	@RequestMapping("host/employee_searchList")
+	public String employee_searchList(HttpServletRequest req, Model model) {
+		logger.info("url -> employee_searchList");
+		
+		service.employeeSearch(req, model);
+		
+		return "host/employee/employee_searchList";
+	}
+	
 	// 직원 상세 정보
 	@RequestMapping("host/employee_detail")
 	public String employee_detail(HttpServletRequest req, Model model) {

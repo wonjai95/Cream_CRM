@@ -21,6 +21,27 @@ public interface EmployeeDAO {
 	// 직원 목록 조회
 	public ArrayList<EmployeeVO> employeeList(String host_code);
 	
+	// 직원 코드 검색
+	public ArrayList<EmployeeVO> searchCode(String employee_code);
+	
+	// 직원명 검색
+	public ArrayList<EmployeeVO> searchName(String employee_name);
+	
+	// 부서명 검색
+	public ArrayList<EmployeeVO> searchDep(String department);
+	
+	// 직원 코드 + 직원명 검색
+	public ArrayList<EmployeeVO> searchCoNa(Map<String, Object> map);
+	
+	// 직원 코드 + 부서명 검색
+	public ArrayList<EmployeeVO> searchCoDe(Map<String, Object> map);
+	
+	// 직원명 + 부서명 검색
+	public ArrayList<EmployeeVO> searchNaDe(Map<String, Object> map);
+	
+	// 직원 코드 + 직원명 + 부서명 검색
+	public ArrayList<EmployeeVO> searchCoNaDe(Map<String, Object> map);
+	
 	// 직원 상제 정보
 	public EmployeeVO getEmployeeDetail(String employee_code);
 	

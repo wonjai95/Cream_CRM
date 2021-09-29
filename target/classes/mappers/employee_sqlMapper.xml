@@ -26,6 +26,63 @@
 		 ORDER BY TO_NUMBER(SUBSTR(employee_code,2)) DESC
 	</select>
 	
+	<!-- 직원 코드 검색 -->
+	<select id="searchCode" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		SELECT *
+		  FROM employee_tbl
+		 WHERE employee_code = #{employee_code}
+	</select>
+	
+	<!-- 직원 이름 검색 -->
+	<select id="searchName" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		SELECT *
+		  FROM employee_tbl
+		 WHERE employee_name = #{employee_name}
+		ORDER BY employee_code ASC
+	</select>
+	
+	<!-- 직원 부서 검색 -->
+	<select id="searchDep" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		SELECT *
+		  FROM employee_tbl
+		 WHERE department = #{department}
+		ORDER BY employee_code ASC
+	</select>
+	
+	<!-- 직원 코드 + 이름 검색 -->
+	<select id="searchCoNa" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		SELECT *
+		  FROM employee_tbl
+		 WHERE employee_code = #{employee_code}
+		   AND employee_name = #{employee_name}
+	</select>
+	
+	<!-- 직원 코드 + 부서 검색 -->
+	<select id="searchCoDe" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		SELECT *
+		  FROM employee_tbl
+		 WHERE employee_code = #{employee_code}
+		   AND department = #{department}
+	</select>
+	
+	<!-- 직원 이름 + 부서 검색 -->
+	<select id="searchNaDe" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		SELECT *
+		  FROM employee_tbl
+		 WHERE employee_name = #{employee_name}
+		   AND department = #{department}
+		 ORDER BY employee_code ASC
+	</select>
+	
+	<!-- 직원 코드 + 이름 + 부서 검색 -->
+	<select id="searchCoNaDe" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		SELECT *
+		  FROM employee_tbl
+		 WHERE employee_code = #{employee_code}
+		   AND employee_name = #{employee_name}
+		   AND department = #{department}	
+	</select>
+	
 	<!-- 직원 상세 정보 조회 -->
 	<select id="getEmployeeDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *

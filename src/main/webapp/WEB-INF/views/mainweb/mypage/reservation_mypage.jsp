@@ -20,7 +20,6 @@
   
   <!-- Mainly scripts -->
 <script src="${path}/resources/bootstrap/js/moment.min.js"></script>
-<script src="${path}/resources/bootstrap/js/jquery-3.1.1.min.js"></script>
 <script src="${path}/resources/bootstrap/js/popper.min.js"></script>
 <script src="${path}/resources/bootstrap/js/bootstrap.js"></script>
 <script src="${path}/resources/bootstrap/js/jquery.metisMenu.js"></script>

@@ -67,7 +67,8 @@
 	
 	<!-- 호실 리스트 -->
 	<select id="selectRoomList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.RoomSettingVO">
-		select * from room_setting_tbl where host_code = #{host_code}	
+		select * from room_setting_tbl where host_code = #{host_code} 
+			order by to_number(substr(room_setting_code,4)) desc
 	</select>
 	
   </mapper>

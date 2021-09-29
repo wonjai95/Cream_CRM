@@ -25,6 +25,8 @@ public class userVO {
 	private String bank_code;
 	private String user_id;
 	private String user_memo;
+	private Date wedding_anniversary;
+	private String car_number;
 	
 	
 	// sale_tbl(결제 테이블)
@@ -393,6 +395,18 @@ public class userVO {
 	}
 	public void setAnnual_leave_usage(String annual_leave_usage) {
 		this.annual_leave_usage = annual_leave_usage;
+	}
+	public Date getWedding_anniversary() {
+		return wedding_anniversary;
+	}
+	public void setWedding_anniversary(Date wedding_anniversary) {
+		this.wedding_anniversary = wedding_anniversary;
+	}
+	public String getCar_number() {
+		return car_number;
+	}
+	public void setCar_number(String car_number) {
+		this.car_number = car_number;
 	}
 
 	

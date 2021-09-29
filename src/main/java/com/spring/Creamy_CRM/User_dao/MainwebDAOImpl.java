@@ -49,8 +49,6 @@ public class MainwebDAOImpl implements MainwebDAO {
 		MainwebDAO dao = sqlSession.getMapper(MainwebDAO.class);
 		return dao.deleteActionByUser(vo);
 	}
-	
-	
-	
+
 	
 }
