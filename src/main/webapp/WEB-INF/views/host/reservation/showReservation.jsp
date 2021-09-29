@@ -89,7 +89,7 @@
 		        </thead>
 		        <tbody id="completeList">
 				<!-- 예약조회 목록이 있다면 -->
-				<c:if test="${cnt > 0}">
+				<c:if test="${ccnt > 0}">
 					<%-- <c:if test="${dto.res_state == '서비스 완' > 0}"> --%>
 					<%-- c:forEach var="작은 바구니 참조변수(임의로 지정하기)" items="${큰 바구니}" --%>
 					<c:forEach var="cdto" items="${cdtos}">
@@ -114,7 +114,7 @@
 				</c:if>
 				
 				<!-- 예약조회 목록이 없다면, -->
-				<c:if test="${cnt == 0}">
+				<c:if test="${ccnt == 0}">
 					<tr>
 						<td colspan="6" align="center">
 							예약요청 목록이 없습니다.
@@ -140,29 +140,29 @@
 				<tr>
 					<th id="arrow" align="center" style="font-size:18px">
 						<!-- 게시글이 있다면, -->
-						<c:if test="${cnt > 0}">
+						<c:if test="${ccnt > 0}">
 							
 							<!-- 처음[◀︎◀︎] / 이전 블록[◀︎] /  -->
-							<c:if test="${startPage > pageBlock}">
-								<a href="showReservation"> [◀︎◀︎] </a>
-								<a href="showReservation?pageNum=${startPage - pageBlock} "> [◀︎] </a>
+							<c:if test="${cstartPage > cpageBlock}">
+								<a href="reservation"> [◀︎◀︎] </a>
+								<a href="reservation?cpageNum=${cstartPage - cpageBlock} "> [◀︎] </a>
 							</c:if>	
 								
 							<!-- 블록 내의 페이지 번호 -->
-							<c:forEach var="i" begin="${startPage}" end="${endPage}">
-								<c:if test="${i == currentPage}">
+							<c:forEach var="i" begin="${cstartPage}" end="${cendPage}">
+								<c:if test="${i == ccurrentPage}">
 									<span><b>[${i}]</b></span>
 								</c:if>
 								
-								<c:if test="${i != currentPage}">
-									<a href="showReservation?pageNum=${i} ">[${i}]</a>
+								<c:if test="${i != ccurrentPage}">
+									<a href="reservation?cpageNum=${i} ">[${i}]</a>
 								</c:if>
 							</c:forEach>
 							
 							<!-- 다음 블록[▶︎︎] / 마지막[▶︎▶︎︎] /  -->
-							<c:if test="${pageCount > endPage}">
-								<a href="showReservation?pageNum=${startPage + pageBlock} "> [▶︎︎] </a>
-								<a href="showReservation?pageNum=${pageCount} "> [▶︎▶︎︎] </a>
+							<c:if test="${cpageCount > cendPage}">
+								<a href="reservation?cpageNum=${cstartPage + cpageBlock} "> [▶︎︎] </a>
+								<a href="reservation?cpageNum=${cpageCount} "> [▶︎▶︎︎] </a>
 							</c:if>
 							
 						</c:if>

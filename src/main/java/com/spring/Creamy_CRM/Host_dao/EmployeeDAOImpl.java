@@ -33,6 +33,48 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return dao.employeeList(host_code);
 	}
 	
+	// 직원 코드 검색
+	public ArrayList<EmployeeVO> searchCode(String employee_code){
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.searchCode(employee_code);
+	}
+	
+	// 직원명 검색
+	public ArrayList<EmployeeVO> searchName(String employee_name){
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.searchName(employee_name);
+	}
+	
+	// 부서명 검색
+	public ArrayList<EmployeeVO> searchDep(String department){
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.searchDep(department);
+	}
+	
+	// 직원 코드 + 직원명 검색
+	public ArrayList<EmployeeVO> searchCoNa(Map<String, Object> map){
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.searchCoNa(map);
+	}
+	
+	// 직원 코드 + 부서명 검색
+	public ArrayList<EmployeeVO> searchCoDe(Map<String, Object> map){
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.searchCoDe(map);
+	}
+	
+	// 직원명 + 부서명 검색
+	public ArrayList<EmployeeVO> searchNaDe(Map<String, Object> map){
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.searchNaDe(map);
+	}
+	
+	// 직원 코드 + 직원명 + 부서명 검색
+	public ArrayList<EmployeeVO> searchCoNaDe(Map<String, Object> map){
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.searchCoNaDe(map);
+	}
+	
 	// 직원 상제 정보
 	@Override
 	public EmployeeVO getEmployeeDetail(String employee_code) {

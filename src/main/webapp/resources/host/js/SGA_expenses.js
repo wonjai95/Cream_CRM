@@ -130,28 +130,36 @@ $("document").ready(function() {
          });
 	})
 	
+	var timeout = null;
+	
 	$("#Search_content").keyup(function(){
-		var header = $("meta[name='_csrf_header']").attr("content");
-        var token = $("meta[name='_csrf']").attr("content");
-		var content = $("#Search_content").val();
-		console.log("content : " + content);
 		
-		$.ajax({
-	       	  url : "slip_Search",
-	       	  type : "Post",
-	       	  data : "search_content=" + content,
-     	  	  async: false,	
-			  beforeSend : function(jqXHR, settings) {
-	       		  console.log("beforesend 진행");
-	                 jqXHR.setRequestHeader(header, token);
-	       	  },
-	       	  success : function(result) {
-	       		  $("#slipList").html(result);
-	       	  },
-	       	  error : function(error) {
-	       		console.log(error);  
-	       	  }
-       });
+		clearTimeout = null;
+		
+		timeout = setTimeout(function(){
+			
+			var header = $("meta[name='_csrf_header']").attr("content");
+		    var token = $("meta[name='_csrf']").attr("content");
+			var content = $("#Search_content").val();
+			console.log("content : " + content);
+			
+			$.ajax({
+		       	  url : "slip_Search",
+		       	  type : "Post",
+		       	  data : "search_content=" + content,
+		 	  	  async: false,
+				  beforeSend : function(jqXHR, settings) {
+		       		  console.log("beforesend 진행");
+		                 jqXHR.setRequestHeader(header, token);
+		       	  },
+		       	  success : function(result) {
+		       		  $("#slipList").html(result);
+		       	  },
+		       	  error : function(error) {
+		       		console.log(error);  
+		       	  }
+		   });
+		}, 900);
 	})
 	
 	/*

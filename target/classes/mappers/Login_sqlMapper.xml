@@ -38,8 +38,8 @@
   	</insert>
   	
   	<insert id="insertUserinfo" parameterType="com.spring.Creamy_CRM.VO.userVO">
-  		INSERT INTO user_tbl(user_code, user_password, user_name, user_birth, user_age, user_email, zipcode, user_address, user_ph, join_date, user_id)
-		VALUES ('U'||user_seq.NEXTVAL, #{user_password}, #{user_name}, #{user_birth}, #{user_age}, #{user_email}, #{zipcode}, #{user_address}, #{user_ph}, sysdate, #{user_id})
+  		INSERT INTO user_tbl(user_code, user_password, user_name, user_birth, user_age, user_email, zipcode, user_address, user_ph, join_date, user_id , user_gender)
+		VALUES ('U'||user_seq.NEXTVAL, #{user_password}, #{user_name}, #{user_birth}, #{user_age}, #{user_email}, #{zipcode}, #{user_address}, #{user_ph}, sysdate, #{user_id}, #{user_gender})
   	</insert>
   	
   	<select id="getUserInfo" parameterType="String" resultType="com.spring.Creamy_CRM.VO.userVO">
@@ -69,6 +69,7 @@
   		 user_age = #{user_age},
   		 user_birth = #{user_birth},
   		 user_email = #{user_email},
+  		 user_gender = #{user_gender},
   		 user_ph = #{user_ph},
   		 zipcode = #{zipcode},
   		 user_address = #{user_address}
@@ -79,6 +80,10 @@
   		INSERT INTO host_tbl(host_code,host_id,host_pw,host_email,host_name,comp_name,host_ph)
   		VALUES('U'||host_seq.NEXTVAL,#{host_id},#{host_pw},#{host_email},#{host_name},#{comp_name},#{host_ph})
   	</insert>
+  	
+  	<select id="DupIdcheck" parameterType="String" resultType="Integer">
+  		select COUNT(*) from Auth_tbl where id = #{id}
+  	</select>
   	
   
   </mapper>

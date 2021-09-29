@@ -1,4 +1,43 @@
 
+function colorchange(num){
+	
+	if(num == 0){
+		$("#g0").css("border","2px solid green");
+		$("#g1").css("border","none");
+		$("#g2").css("border","none");
+		$("#g3").css("border","none");
+	}
+	else if(num == 1){
+		$("#g1").css("border","2px solid green");
+		$("#g0").css("border","none");
+		$("#g2").css("border","none");
+		$("#g3").css("border","none");
+	}
+	else if(num == 2){
+		$("#g2").css("border","2px solid green");
+		$("#g1").css("border","none");
+		$("#g0").css("border","none");
+		$("#g3").css("border","none");
+	}
+	else if(num == 3){
+		$("#g3").css("border","2px solid green");
+		$("#g1").css("border","none");
+		$("#g2").css("border","none");
+		$("#g0").css("border","none");
+	}
+	
+	/*var id = 'g'+ num;
+	alert(id);
+	
+	for(var i = 0; i < 3; i++){
+		var a = 'g'+i;
+		
+		document.getElementById(a).style.border = 'none';
+	}
+	
+	document.getElementById(id).style.border = '2px solid green';*/
+	
+}
 
 //infopwcheck에서 사용하는 메서드
 //비밀번호 확인 성공시 회원정보 수정 페이지로 이동

@@ -52,6 +52,7 @@ public class LoginServiceImpl implements LoginService {
 	    String sido = req.getParameter("sign_sido");
 	    String gugun = req.getParameter("sign_gugun");
 	    String address= req.getParameter("sign_address");
+	    String gender = req.getParameter("sign_gender");
 	    
 		//비밀번호 암호화
 		String BcryptPw = passwordEncoder.encode(pw);
@@ -92,6 +93,7 @@ public class LoginServiceImpl implements LoginService {
 		vo.setUser_ph(phone);
 		vo.setZipcode(zipcode);
 		vo.setUser_address(address);
+		vo.setUser_gender(gender);
 		
 		int userinsertCnt = dao_login.insertUserinfo(vo);
 		System.out.println("회원가입 성공? : "+userinsertCnt);
@@ -139,6 +141,8 @@ public class LoginServiceImpl implements LoginService {
 		ZipcodeVO zip_vo = dao_login.selectzipcode(vo.getZipcode());
 		
 		String[] hp = vo.getUser_ph().split("-");
+
+		System.out.println("성별 : "+vo.getUser_gender());
 		
 		req.setAttribute("vo", vo);
 		req.setAttribute("zipcode_vo", zip_vo);
@@ -186,6 +190,9 @@ public class LoginServiceImpl implements LoginService {
 	    String gugun = req.getParameter("modify_gugun");
 	    String address= req.getParameter("modify_address");
 	    
+	    String gender = req.getParameter("gender_radio");
+	    System.out.println("성별 : "+gender);
+	    
 		//비밀번호 암호화
 		String BcryptPw = passwordEncoder.encode(pw);
 		
@@ -223,6 +230,7 @@ public class LoginServiceImpl implements LoginService {
 		vo.setUser_ph(phone);
 		vo.setZipcode(zipcode);
 		vo.setUser_address(address);
+		vo.setUser_gender(gender);
 		
 		int updateCnt = dao_login.updateUserInfo(vo);
 		System.out.println("회원정보 수정 : "+updateCnt);
@@ -270,6 +278,19 @@ public class LoginServiceImpl implements LoginService {
 		
 		req.setAttribute("insertCnt", insertCnt);
 		
+	}
+
+	//아이디 중복 체크
+	@Override
+	public void IDDupcheck(HttpServletRequest req, Model model) {
+		String id = req.getParameter("user_ID");
+		System.out.println("id : "+id);
+		
+		int selectcnt = dao_login.DupIdcheck(id);
+		System.out.println("중복확인 : "+selectcnt);
+		
+		model.addAttribute("selectcnt",selectcnt);
+		model.addAttribute("id",id);
 	}
 
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../setting.jsp" %>
+<%@ include file="../../setting.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +9,7 @@
 
     <title>INSPINIA | Register</title>
 
-    <link href="${path}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${path}/resources/bootstrap/css/font-awesome.css" rel="stylesheet">
     <link href="${path}/resources/bootstrap/css/custom.css" rel="stylesheet">
-    <link href="${path}/resources/bootstrap/css/animate.css" rel="stylesheet">
-    <link href="${path}/resources/bootstrap/css/style.css" rel="stylesheet">
     <link href="${path}/resources/bootstrap/css/datepicker3.css" rel="stylesheet">
     <script type="text/javascript" src="${path}/resources/host/js/signUp.js" defer></script>
 
@@ -76,7 +72,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
 
-				<a href="signIn_host"><p class="text-muted text-center"><small>고객 회원가입</small></p></a>
+				<a href="signIn"><p class="text-muted text-center"><small>고객 회원가입</small></p></a>
 				
                 <a class="btn btn-sm btn-white btn-block" href="login">Login</a>
             </form>

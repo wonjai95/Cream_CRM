@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../setting.jsp" %>
+<%@ include file="../../setting.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +9,7 @@
 
     <title>INSPINIA | Register</title>
 
-    <link href="${path}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${path}/resources/bootstrap/css/font-awesome.css" rel="stylesheet">
     <link href="${path}/resources/bootstrap/css/custom.css" rel="stylesheet">
-    <link href="${path}/resources/bootstrap/css/animate.css" rel="stylesheet">
-    <link href="${path}/resources/bootstrap/css/style.css" rel="stylesheet">
     <link href="${path}/resources/bootstrap/css/datepicker3.css" rel="stylesheet">
     <script type="text/javascript" src="${path}/resources/host/js/signUp.js" defer></script>
 
@@ -29,14 +25,18 @@
             <h3>Register to Creamy</h3>
             <p>Create account to see it in action.</p>
             <form name="signInform" class="m-t" role="form" action="signInAction" method="post">
+            <input type="hidden" name="hiddenId_dupChk" value="0">
+            
             <sec:csrfInput/>
                 <div class="form-group" style="display: flex;">
                		<div style="width: 20%; align-self: center;">ID </div>
                     <div class="input-group date" style="width: 80%">
                     	<input type="text" name="sign_id" class="form-control" placeholder="ID" required>
-                    	<input type="button" onclick="" class="btn btn-primary btn-xs" style="margin: 2px 4px;" value="중복확인">
+                    	<input type="button" onclick="confirmId();" class="btn btn-primary btn-xs" style="margin: 2px 4px;" value="중복확인">
                     </div>
                 </div>
+                <div id ="div_IDok" style="display:none; font-size: 10px; color:navy; padding-right: 130px;"> 중복확인 성공</div>
+                <div id ="div_ID" style="display:none; font-size: 10px; color: red; padding-right: 95px;"> ! 중복된 아이디. 다시 입력하세요</div>
                 <div class="form-group" style="display: flex;">
                 	<div style="width: 20%; align-self: center;">PW </div>
                     <div style="width: 80%">
@@ -50,33 +50,33 @@
                 <div class="form-group" style="display: flex;">
                 	<div style="width: 20%; align-self: center;">Birth </div>
                     <div class="input-group date" style="width: 80%;">
-                     	<input name="sign_birth1" type="text" class="form-control" placeholder="1999" maxlength="4">
-                     	<input name="sign_birth2" type="text" class="form-control" placeholder="01" maxlength="2">
-                     	<input name="sign_birth3" type="text" class="form-control" placeholder="01" maxlength="2">
+                     	<input name="sign_birth1" type="text" class="form-control" placeholder="1999" maxlength="4" required>
+                     	<input name="sign_birth2" type="text" class="form-control" placeholder="01" maxlength="2" required>
+                     	<input name="sign_birth3" type="text" class="form-control" placeholder="01" maxlength="2" required>
                     </div>
                 </div>
                 <div class="form-group" style="display: flex;">
                 	<div style="width: 20%; align-self: center;">Email </div>
                     <div class="input-group date" style="width: 80%;">
-                     	<input name="sign_Email1" type="text" class="form-control" placeholder="email">
+                     	<input name="sign_Email1" type="text" class="form-control" placeholder="email" required>
                      	<div style="width: 20px; align-self: center;">@</div>
-                     	<input name="sign_Email2" type="text" class="form-control" placeholder="gmail.com">
+                     	<input name="sign_Email2" type="text" class="form-control" placeholder="gmail.com" required>
                     </div>
                 </div>
                 <div class="form-group" style="display: flex;">
                 	<div style="width: 20%; align-self: center;">Phone </div>
                     <div class="input-group date" style="width: 80%;">
-                     	<input name="sign_Phone1" type="text" class="form-control" placeholder="010" onkeyup="nextHp1();" maxlength="3">
+                     	<input name="sign_Phone1" type="text" class="form-control" placeholder="010" onkeyup="nextHp1();" maxlength="3" required>
                      	<div style="width: 20px; align-self: center;">-</div>
-                     	<input name="sign_Phone2" type="text" class="form-control" placeholder="1111" onkeyup="nextHp2();" maxlength="4">
+                     	<input name="sign_Phone2" type="text" class="form-control" placeholder="1111" onkeyup="nextHp2();" maxlength="4" required>
                      	<div style="width: 20px; align-self: center;">-</div>
-                     	<input name="sign_Phone3" type="text" class="form-control" placeholder="1111" maxlength="4">
+                     	<input name="sign_Phone3" type="text" class="form-control" placeholder="1111" maxlength="4" required>
                     </div>
                 </div>
                 <div class="form-group" style="display: flex;">
                 	<div style="width: 20%; align-self: center;"> Address </div>
                     <div class="input-group date" style="width: 80%;">
-                     	<input name="sign_zipcode" id="postcode" type="text" class="form-control" placeholder="postcode">
+                     	<input name="sign_zipcode" id="postcode" type="text" class="form-control" placeholder="postcode" required>
                      	<div style="width: 5px; align-self: center;"></div>
                      	<input type="button" onclick="addressSearch()" class="btn btn-primary btn-xs" style="margin: 2px 4px;" value="주소검색">
                     </div>
@@ -84,16 +84,26 @@
                  <div class="form-group" style="display: flex;">
                 	<div style="width: 20%; align-self: center;"></div>
                     <div class="input-group date" style="width: 80%;">
-                     	<input name="sign_sido" id="sido" type="text" class="form-control" placeholder="sido">
-                     	<input name="sign_gugun" id="sigungu" type="text" class="form-control" placeholder="gu/gun">
+                     	<input name="sign_sido" id="sido" type="text" class="form-control" placeholder="sido" required>
+                     	<input name="sign_gugun" id="sigungu" type="text" class="form-control" placeholder="gu/gun" required>
+                    </div>
+                </div>
+                <div class="form-group" style="display: flex; ">
+                	<div style="width: 20%; align-self: center;"></div>
+                    <div class="input-group date" style="width: 80%;">
+                     	<input name="sign_address" id="detail_address" type="text" class="form-control" placeholder="address" required>
                     </div>
                 </div>
                 <div class="form-group" style="display: flex; margin-bottom: 20px;">
-                	<div style="width: 20%; align-self: center;"></div>
-                    <div class="input-group date" style="width: 80%;">
-                     	<input name="sign_address" id="detail_address" type="text" class="form-control" placeholder="address">
+                	<div style="width: 20%; align-self: center;">성별 </div>
+                    <div class="input-group date" style="width: 20%;">
+                     	<select class="form-control m-b" name="sign_gender">
+                     		<option value="M">남성</option>
+                     		<option value="F">여성</option>
+                     	</select>
                     </div>
                 </div>
+                
                 
                  
                 <div class="form-group" style="margin-bottom: 10px;">

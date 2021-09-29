@@ -33,5 +33,8 @@ public interface LoginService {
 	//로그인 시 세션에 사장님 코드 받아오는 용
 	void getHostCode(HttpServletRequest req, Model model);
 	
+	//회원가입시 아이디 중복체크
+	public void IDDupcheck(HttpServletRequest req, Model model);
+	
 
 }
