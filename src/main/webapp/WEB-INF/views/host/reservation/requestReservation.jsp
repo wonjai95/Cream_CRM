@@ -42,35 +42,13 @@
 	});
 	
 	
-	/* 검색어 search 기능 함수 */
-	$(function() {
-		$('#res_code').keyup(function() {
-			var res_code = $('#res_code').val();  // input태그에서 입력한 키워드
-			
-			$.ajax({
-				url : '${pageContext.request.contextPath}/requestReservation',  // '컨트롤러'/매핑주소
-				type : 'POST',
-				data : 'res_code=' + res_code,
-				success : function(result) {  // 콜백함수
-					$('#requestList').html(result);
-				},
-				error : function() {
-					alert('오류');
-				}
-			});
-	});
-});
-	
-	
-	
-	
-// 검색 진짜
+// 검색기능 함수
 $("document").ready(function() {	
 	
-	$("select[name=slip_type]").change(function(){
+	$("select[name=res_state]").change(function(){
 		
-		var selectType = $("select[name=slip_type] option:selected").val();
-		console.log("selectType : " + selectType);
+		var selectState = $("select[name=res_state] option:selected").val();
+		console.log("selectState : " + selectState);
 		
 		var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
@@ -79,7 +57,7 @@ $("document").ready(function() {
          $.ajax({
 	       	  url : '${pageContext.request.contextPath}/requestReservation',
 	       	  type : "Post",
-	       	  data : "res_state=" + selectType,
+	       	  data : "res_state=" + selectState,
        	  	  async: false,	
   			  beforeSend : function(jqXHR, settings) {
 	       		  console.log("beforesend 진행");
@@ -149,13 +127,13 @@ $("document").ready(function() {
 <!-- ------------------------------- 테이블표 시작 전 '예약요청' 설명란 끝 -->
 
 <!-- ------------------------------- 테이블표 시작 전 '예약요청' 검색창 시작 -->
-
 		<div class="col-sm-5 m-b-xs" style="width: 30%; ">
 			<select class="form-control-sm form-control input-s-sm inline" name="res_state" style="width: 80%; ">
 				<option value="0">예약상태</option>
 				<option value="예약완료">예약완료</option>
 				<option value="예약취소">예약취소</option>
 			</select>
+			<input type="hidden" name="res_state">
 		</div>
 		
 		<div class="col-sm-3" style="width: 40%; ">
