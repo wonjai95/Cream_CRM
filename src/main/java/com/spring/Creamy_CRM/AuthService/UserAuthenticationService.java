@@ -50,7 +50,9 @@ public class UserAuthenticationService implements UserDetailsService {
 								(Integer)Integer.valueOf(map.get("ENABLED").toString()) == 1, 
 								true, true, true, authority
 								,map.get("KEY").toString()
-								,map.get("AUTHORITY").toString(),Integer.parseInt(map.get("ENABLED").toString()));
+								,map.get("AUTHORITY").toString(),
+								Integer.parseInt(map.get("ENABLED").toString()),
+								map.get("LOGIN_CHK").toString());
 		}
 
 }

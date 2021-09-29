@@ -48,6 +48,10 @@
 									<jsp:include page="userReview.jsp" />
 								</div>
 								<div id="tab-2" class="tab-pane">
+									<div class="panel-body">
+										<div class="ibox-content m-b-sm" style="padding-bottom: 0px; margin-bottom: 0px;">
+										</div>
+									</div>
 									<%-- <jsp:include page="reservation.jsp" /> --%>
 								</div>
 
