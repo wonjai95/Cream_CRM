@@ -23,6 +23,7 @@
 </head>
 <sec:csrfInput/>
 <input type="hidden" name="selectDate" value="${selectDate}">
+
 <body class="top-navigation">
 <div class="col-lg-12" id="roomDetail">
 <div class="ibox ">

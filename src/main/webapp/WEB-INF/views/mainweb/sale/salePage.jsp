@@ -37,6 +37,7 @@
   
   <!-- 내가 쓴 js  -->
   <script type="text/javascript" src="${path}/resources/host/js/custBooking.js"></script>
+  <script type="text/javascript" src="${path}/resources/host/js/product_selling.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a24a16f3acffb8fc1ba508e3c65e6c76&libraries=services"></script>
   <!-- =======================================================
   * Template Name: Vlava - v4.3.0
@@ -99,11 +100,31 @@
          <div class="row mt-5 justify-content-center">
          	<div class="col-lg-15">
          	<%-- <form method="post" name="modifyUser" role="form" class="php-email-form">  --%>
-         	 	
+         	 <form action="sale_action" method="post" name="sale_action" class="php-email-form">	
          	 	<div class="row">
-         	 	<form action="#" method="post" name="deleteActionByUser" class="php-email-form">
-         	 	<sec:csrfInput/>
          	 	
+         	 	<sec:csrfInput/>
+	           <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
+	           <input type="hidden" id="res_date" name="res_date">   
+	           <input type="hidden" id="res_memo" name="res_memo">
+	           <input type="hidden" id="host_code" name="host_code" value="${host_code}">
+	           <input type="hidden" id="chkDay">
+	           <input type="hidden" id="comp_res" value="${comp_res}">
+	           <input type="hidden" id="per_price" value="0">
+	           <input type="hidden" id="min_cnt" value="0">
+	           <input type="hidden" id="max_cnt" value="0">
+	           <input type="hidden" id="res_sales" name="res_sales" value="0">
+         	 	
+         	 	
+         	 	<input type="hidden" value="0" name="product_typeOfSales_hidden">
+				<input type="hidden" value="0" name="product_name_hidden">
+				<input type="hidden" value="0" name="product_price_hidden">
+				<input type="hidden" value="0" name="product_rentalPeriod_hidden">
+				<input type="hidden" value="0" name="cash_btn_hidden">
+         	 	
+         	 	
+         	 	
+         	 	<sec:csrfInput/>
          	 	
          			<div class="member-info" style="padding-left: 5px;"><span style="font-size: 20px;"><b>예약 내역</b></span><br><br></div>
          			
@@ -115,23 +136,28 @@
                               <div id="calendar"></div>   
                             </div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                               <input type="text" name="selectTime" id="selectTime" style="display: none">예약 시간 : <span class="timeSelectedInfo">예약시간</span>
+                               <input type="text" name="res_hour" id="selectTime" style="display: none">예약 시간 : ${dto.res_hour} 
                             </div>
+                            
+                            <!-- if체크로 호실인지 담당자인지!????????????????? -->
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                          		<input type="text" name="selectRoom" id="selectRoom" style="display: none">예약 호실 : <span class="roomSelectedInfo">호실</span>
+                          		<input type="text" name="room_setting_code" id="selectRoom" style="display: none">예약 호실 : ${dto.room_setting_code}</span>
+                          		<!-- 예약호실 코드만 가지고 왔음. 예약호실명 가져와야함??????????????????? -->
+                          		
                        	  	</div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                          		<input type="text" name="GuestCount" id="GuestCount" style="display: none">예약 인원 : <span class="roomSelectedInfo">호실</span>
+                          		<input type="text" name="res_cnt" id="GuestCount" style="display: none">예약 인원 : ${dto.res_cnt}</span>
                        	  	</div>
                             <div class="form-group" style="margin-top:30px;">
                                  <span><strong>추가 요청사항</strong></span>
-                                 <textarea class="form-control" placeholder="Your message" rows="3" readonly
-                                    style="margin-top:10px;"></textarea>
+                                 <textarea class="form-control" placeholder="Your message" rows="3"
+                                    style="margin-top:10px;" name="res_indiv_request">${dto.res_indiv_request}</textarea>
                             </div>
                             
                             
                             <div class="ibox-content" style="margin-top: 50px;">
                                <span style="font-size:24px;"><strong>예약한 매장 정보<br><br></strong></span>
+                               					${dto.host_code}
                                <div id="map" style="width: 300; height:200px;"></div>
                                
                                
@@ -152,103 +178,83 @@
                                    
                                    <!-- ------------------------------- 결제정보 시작 -->
 									        
-									                <div class="form-group row">
-									                <label class="col-sm-3 col-form-label">결제 금액</label>
-									                    <div class="col-lg-8" id="total_payment"><input type="hidden" name="total_payment"></div>
-									                </div>
-									                <hr>
-									                <div class="hr-line-dashed"></div>
-									                
-									                <div class="form-group  row">
-									                <label class="col-sm-3 col-form-label">납부 방법</label>
-										                <div class="col-sm-8" name="">  
-										                	<table>   
-										                	<tr><td>
-											                    <input type="button" name="payment_option" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
-											                    <input type="hidden" name="payment_option_hidden" value="0">
-											                    <%--<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
-											                    <input type="button" name="payment_option" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
-											                    <input type="button" name="payment_option" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" >
-											                     --%>
-										                    </td></tr>   
-										                    </table>
-										                 </div>
-										            </div>
-										           
-									                <div class="hr-line-dashed"></div> 
-									                
-									                <div class="form-group row">
-									                <label class="col-sm-3 col-form-label">금융 기관</label>
-								
-									                	<div id="banking" class="col-sm-8" style="display:flex;">
-										                     <div class="col-sm-6">
-										                     <select name="credit_select" id="credit_select" class="form-control">
-																<option value="1" selected="">카드 선택</option>
-									                             <option value="samsung">삼성카드</option> 
-									                             <option value="bc">BC카드</option>
-									                             <option value="kookmin">국민카드</option>
-									                             <option value="hana">하나카드</option>
-									                             <option value="shinhan">신한카드</option>
-									                             <option value="lotte">롯데카드</option>
-									                             <option value="hyundai">현대카드</option>
-									                             <option value="nonghyup">농협카드</option>
-									                             
-								                        	 </select>
-								                        	 </div> 
-								                        	 <div class="col-sm-6">
-										                     <select name="credit_installment" id="credit_installment" class="form-control">
-																<option value="1" selected="">일시불</option>
-									                             <option value="2">2개월</option>
-									                             <option value="3">3개월</option>
-									                             <option value="4">4개월</option>
-									                             <option value="5">5개월</option>
-									                             <option value="6">6개월</option>
-									                             <option value="7">7개월</option>
-									                             <option value="8">8개월</option>
-									                             <option value="9">9개월</option>
-									                             <option value="10">10개월</option>
-									                             <option value="11">11개월</option>
-									                             <option value="12">12개월</option>
-									                             <option value="20">20개월</option>
-									                             <option value="24">24개월</option>
-									                             <option value="36">36개월</option>
-								                        	 </select>
-								                        	 </div> 
-										                </div> 
-										                
-										            </div> 
-									                <div class="hr-line-dashed"></div> 
-									                
-									                <div class="form-group  row">
-									                <label class="col-sm-3 col-form-label">판매 일자</label>
-										                <div class="col-sm-8">
-															<input name="sale_date" type="date" class="form-control">
-										                </div>
-										            </div> 
-										            <input type="hidden" name="sale_date" value="">
-									                <div class="hr-line-dashed"></div>
-									                <div class="form-group  row">
-									                <label class="col-sm-3 col-form-label">수납자</label>
-										                <div class="col-sm-8">
-										                     <select name="employee_name" id="" class="form-control">
-										                     <option value="1" selected="">미지정</option>
-																<c:forEach var="dto_emp" items="${dtos}">
-							 		                            	<option value="${dto_emp.employee_code}">${dto_emp.employee_name}</option> 
-								                            	</c:forEach>
-								                        	 </select>
-								                        </div>   
-										            </div>    
-										            <div class="hr-line-dashed"></div> 
-									                <div class="form-group  row">
-									                <label class="col-sm-3 col-form-label">납부 메모</label>
-										                <div class="col-sm-8">
-										                	<input type="text" name="sale_memo">
-								                        </div>    	
-										            </div>
-									                <div class="hr-line-dashed"></div> 
-									        </div>
-									    </div>
-									</div>
+						                <div class="form-group row">
+						                <label class="col-sm-3 col-form-label">결제 금액</label>
+						                    <div class="col-lg-8" id="total_payment"><input type="hidden" name="total_payment" value="${dto.res_sales}">${dto.res_sales}</div>
+						                </div>
+						                <hr>
+						                <div class="hr-line-dashed"></div>
+						                
+						                <div class="form-group  row">
+						                <label class="col-sm-3 col-form-label">납부 방법</label>
+							                <div class="col-sm-8" name="">  
+							                	<table>   
+							                	<tr><td>
+								                    <input type="button" name="payment_option" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
+								                    <input type="hidden" name="payment_option_hidden" value="0">
+								                    <%--<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
+								                    <input type="button" name="payment_option" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
+								                    <input type="button" name="payment_option" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" >
+								                     --%>
+							                    </td></tr>   
+							                    </table>
+							                 </div>
+							            </div>
+							           
+						                <div class="hr-line-dashed"></div> 
+						                
+						                <div class="form-group row">
+						                <label class="col-sm-3 col-form-label">금융 기관</label>
+					
+						                	<div id="banking" class="col-sm-8" style="display:flex;">
+							                     <div class="col-sm-6">
+							                     <select name="credit_select" id="credit_select" class="form-control">
+													<option value="1" selected="">카드 선택</option>
+						                             <option value="samsung">삼성카드</option> 
+						                             <option value="bc">BC카드</option>
+						                             <option value="kookmin">국민카드</option>
+						                             <option value="hana">하나카드</option>
+						                             <option value="shinhan">신한카드</option>
+						                             <option value="lotte">롯데카드</option>
+						                             <option value="hyundai">현대카드</option>
+						                             <option value="nonghyup">농협카드</option>
+						                             
+					                        	 </select>
+					                        	 </div> 
+					                        	 <div class="col-sm-6">
+							                     <select name="credit_installment" id="credit_installment" class="form-control">
+													<option value="1" selected="">일시불</option>
+						                             <option value="2">2개월</option>
+						                             <option value="3">3개월</option>
+						                             <option value="4">4개월</option>
+						                             <option value="5">5개월</option>
+						                             <option value="6">6개월</option>
+						                             <option value="7">7개월</option>
+						                             <option value="8">8개월</option>
+						                             <option value="9">9개월</option>
+						                             <option value="10">10개월</option>
+						                             <option value="11">11개월</option>
+						                             <option value="12">12개월</option>
+						                             <option value="20">20개월</option>
+						                             <option value="24">24개월</option>
+						                             <option value="36">36개월</option>
+					                        	 </select>
+					                        	 </div> 
+							                </div> 
+							                
+							            </div> 
+						                <div class="hr-line-dashed"></div> 
+						                
+						                <div class="form-group  row">
+						                <label class="col-sm-3 col-form-label">납부 메모</label>
+							                <div class="col-sm-8">
+							                	<input type="text" name="sale_memo">
+					                        </div>    	
+							            </div>
+						                <div class="hr-line-dashed"></div> 
+						        </div>
+						    </div>
+						</div>
 								<!-- ------------------------------- 결제정보 끝 -->
                                    
                                    
@@ -288,7 +294,7 @@
                         
                         
                         
-                    </form>
+                    
                     </div>
                		
 						
@@ -298,17 +304,15 @@
                     <div class="text-center">
 		              <button type="submit" style="font-size: 16px">결제하기</button>
 		            </div>          
-                    </div>
-                    </div>
                         <!-- col-lg-6 끝 -->
 					
-					
+			</form>
+			<!-- sale_action 폼 끝 -->
 					
 					
                		
                		
               
-         	 	</form>
          	 	</div>
          	 </div>
          </div>
@@ -371,7 +375,7 @@
   <script src="${path}/resources/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="${path}/resources/bootstrap/js/glightbox.min.js"></script>
   <script src="${path}/resources/bootstrap/js/isotope.pkgd.min.js"></script>
-  <script src="${path}/resources/bootstrap/js/validate.js"></script>
+ <%--  <script src="${path}/resources/bootstrap/js/validate.js"></script> --%>
   <script src="${path}/resources/bootstrap/js/swiper-bundle.min.js"></script>
 
   <!-- Template Main JS File -->

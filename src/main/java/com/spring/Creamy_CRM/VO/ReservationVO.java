@@ -29,6 +29,7 @@ public class ReservationVO {
 	//고객 예약내역에서 사용할 변수
 	private String comp_name;			//회사명
 	private String product_name;		//서비스(제품)명
+	private String comp_res;			// 호실, 담당자 
 	
 	// 호실 테이블
 	private String room_setting_code;	// 호실 코드
@@ -141,6 +142,12 @@ public class ReservationVO {
 	}
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
+	}
+	public String getComp_res() {
+		return comp_res;
+	}
+	public void setComp_res(String comp_res) {
+		this.comp_res = comp_res;
 	}
 	public String getRes_start() {
 		return res_start;
