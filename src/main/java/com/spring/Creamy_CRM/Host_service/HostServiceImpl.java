@@ -192,10 +192,11 @@ public class HostServiceImpl implements HostService {
 
 	//호실 리스트
 	@Override
-	public List<RoomSettingVO> roomList(HttpServletRequest req, Model model) {
+	public void roomList(HttpServletRequest req, Model model) {
 		String host_code = (String)req.getSession().getAttribute("code");
-		return dao.selectRoomList(host_code);
-	
+		List<RoomSettingVO> list = dao.selectRoomList(host_code);
+		System.out.println("size : " + list.size());
+		model.addAttribute("list",list);
 	}
 	
 	
