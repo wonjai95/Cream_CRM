@@ -42,6 +42,10 @@ public class ReservationVO {
 	
 	private String host_code;			// 사장님 코드
 	
+	
+	//후기에서 사용함
+	private String user_name;		//고객이름
+	
 	public String getRes_code() {
 		return res_code;
 	}
@@ -209,8 +213,12 @@ public class ReservationVO {
 	public void setRes_sales(int res_sales) {
 		this.res_sales = res_sales;
 	}
-	
-	
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
 	
 	
 	
