@@ -34,21 +34,21 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	// 직원 코드 검색
-	public ArrayList<EmployeeVO> searchCode(String employee_code){
+	public ArrayList<EmployeeVO> searchCode(Map<String, Object> map){
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
-		return dao.searchCode(employee_code);
+		return dao.searchCode(map);
 	}
 	
 	// 직원명 검색
-	public ArrayList<EmployeeVO> searchName(String employee_name){
+	public ArrayList<EmployeeVO> searchName(Map<String, Object> map){
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
-		return dao.searchName(employee_name);
+		return dao.searchName(map);
 	}
 	
 	// 부서명 검색
-	public ArrayList<EmployeeVO> searchDep(String department){
+	public ArrayList<EmployeeVO> searchDep(Map<String, Object> map){
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
-		return dao.searchDep(department);
+		return dao.searchDep(map);
 	}
 	
 	// 직원 코드 + 직원명 검색
