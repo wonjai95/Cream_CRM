@@ -15,6 +15,7 @@ $("document").ready(function(){
 		$(this).css("background", "#20c997");
 	});
 	
+	// 수정 버튼 클릭시
 	$("#attendanceUpd_btn").click(function(){
 		
 		var empCode = $("input[name=employee_code]").val();
@@ -28,6 +29,7 @@ $("document").ready(function(){
 		window.open(url, "employee_getAttendanceInfo", "menubar=no, width=800, height=800");
 	});
 	
+	// 삭제 버튼 클릭시
 	$("#attendanceDel_btn").click(function(){
 		
 		var attendanceCode = $("input[name=attendance_code]").val();
@@ -47,9 +49,9 @@ $("document").ready(function(){
 		}
 	});
 	
-	
+	// 월 변경시
 	$("input[id=currentMonth]").change(function(){
-		alert("월 선택");
+		// alert("월 선택");
 		
 		var header = $("meta[name='_csrf_header']").attr("content");
 	    var token = $("meta[name='_csrf']").attr("content");
@@ -60,15 +62,15 @@ $("document").ready(function(){
 		console.log("chanMonth : " + chanMonth);
 		
 		$.ajax({
-			url : "employee_attendanceList",
+			url : "month_attendanceList",
 			type : "Post",
-			data : "employee_code="+empCode+"&currentMonth="+chanMonth,
+			data : "employee_code="+empCode+"&changeMonth="+chanMonth,
 			beforeSend : function(jqXHR, settings) {
 		          console.log("beforesend 진행");
 		          jqXHR.setRequestHeader(header, token);
 		    },
 		    success : function(result){
-		    	$(".attendanceList").html(result);
+		    	$("#monthList").html(result);
 		    },
 		    error : function(error){
 		    	alert("다시 시도해주세요.");

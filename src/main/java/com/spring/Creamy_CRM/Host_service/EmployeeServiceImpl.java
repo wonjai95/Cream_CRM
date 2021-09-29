@@ -45,11 +45,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		ArrayList<EmployeeVO> dtos = dao.employeeList(host_code);
 		
 		model.addAttribute("dtos", dtos);
-		
 	}
 	
 	// 직원 검색
 	public void employeeSearch(HttpServletRequest req, Model model) {
+		String host_code = (String) req.getSession().getAttribute("code");
 		String employee_code = req.getParameter("employee_code");
 		String employee_name = req.getParameter("employee_name");
 		String department = req.getParameter("department");
@@ -62,11 +62,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if(employee_name == null || employee_name.equals("")) employee_name = "0";
 		if(department == null || department.equals("")) department = "0";
 		
+		System.out.println("host_code : " + host_code);
 		System.out.println("employee_code : " + employee_code);
 		System.out.println("employee_name : " + employee_name);
 		System.out.println("department : " + department);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
 		map.put("employee_code", employee_code);
 		map.put("employee_name", employee_name);
 		map.put("department", department);
@@ -74,13 +76,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		ArrayList<EmployeeVO> searchList = null;
 		if(employee_code != "0" && employee_name == "0" && department == "0") {
 			System.out.println("회원 코드만 입력");
-			searchList = dao.searchCode(employee_code);
+			searchList = dao.searchCode(map);
 		} else if(employee_code == "0" && employee_name != "0" && department == "0") {
 			System.out.println("이름만 입력");
-			searchList = dao.searchName(employee_name);
+			searchList = dao.searchName(map);
 		} else if(employee_code == "0" && employee_name == "0" && department != "0") {
 			System.out.println("부서만 입력");
-			searchList = dao.searchDep(department);
+			searchList = dao.searchDep(map);
 		} else if(employee_code != "0" && employee_name != "0" && department == "0") {
 			System.out.println("회원코드와 이름 입력");
 			searchList = dao.searchCoNa(map);
@@ -214,8 +216,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		ArrayList<AttendanceVO> attList = dao.getAttendanceList(map);
 		
 		model.addAttribute("attList", attList);
-		model.addAttribute("employee_code", employee_code);
-		model.addAttribute("currentMonth", changeMonth);
 	}
 	
 	// 수정할 근태 정보 가져오기
@@ -604,7 +604,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	// 근태 등록 처리
 	@Override
 	public void employeeAttendanceAction(HttpServletRequest req, Model model) {
-		String point = null;
 		String employee_code = req.getParameter("employee_code");
 		String employee_in = req.getParameter("employee_in");
 		String employee_out = req.getParameter("employee_out");
