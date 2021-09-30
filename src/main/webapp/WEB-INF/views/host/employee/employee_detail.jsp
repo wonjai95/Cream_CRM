@@ -80,8 +80,16 @@
 				            <tr>
 				            	<td>주소</td>
 				                <td><input type="text" class="form-control" name="employee_address" style="width:50%;" value="${dtos.employee_address}"></td>
-				                <td>연차</td>
-				                <td><input type="text" class="form-control" name="annual_leave_cnt" style="width:25%" value="${dtos.annual_leave_cnt}"></td>
+				                <td>사용연차 / 연차</td>
+				                <td style="width: 35%;">
+				                	<%-- <input type="text" class="form-control" name="useLeaveDay" style="width:20%" value="${useLeaveDay}" readonly> --%>
+				                	<div style="display:inline-block; width:20%;">
+				                	<input type="text" class="form-control" name="useLeaveDay" value="${useLeaveDay}" readonly>
+				                	</div>
+				                	<div style="display:inline-block; width:20%;">
+				                	<input type="text"  class="form-control" name="annual_leave_cnt" value="${dtos.annual_leave_cnt}">
+				                	</div>
+				                </td>
 				            </tr>
 				            
 				            <tr>

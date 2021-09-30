@@ -41,8 +41,15 @@ body {
 			<div class="hr-line-dashed"></div>
 			<div class="form-group  row">
 				<label class="col-sm-2 col-form-label">사용 연차</label>
-				<div class="col-sm-3" style="align-self: center;">
-					${dto.annual_leave_usage} / ${dto.annual_leave_cnt} 일
+				<div class="col-sm-2" style="align-self: center;">
+					${dto.annual_leave_usage} 일
+				</div>
+				
+				<div class="col-sm-1" style="align-self: center;"> / </div>
+				
+				<label class="col-sm-2 col-form-label">남은 연차</label>
+				<div class="col-sm-2" style="align-self: center;">
+					${dto.annual_leave_cnt} 일
 				</div>
 			</div>
 			

@@ -214,5 +214,37 @@ public class AccountServiceImpl implements AccountService {
 		
 		model.addAttribute("NOL", vo);
 	}
+	
+	// 손익계산서
+	public void income_statement(HttpServletRequest req, Model model) {
+		
+	}
+		
+	// 결산
+	public void settlement(HttpServletRequest req, Model model) {
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
+		String currentMonth = req.getParameter("currentMonth");
+		System.out.println("currentMonth : " + currentMonth);
+		
+		Date nowMonth = Date.valueOf(currentMonth);
+		
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("host_code", host_code);
+		map1.put("nowMonth", nowMonth);
+		
+		dao.sumSGA_expenses(map1);
+		
+		// 매출 <- 판매 테이블
+		
+		// 재고관리 <- 기초(전기 기말) / 당기(재고) / 기말(재고실사)
+		
+		// 직원 급여 총합
+		
+		// 판매비와 관리비 테이블 <- 매출전표에서
+		
+		// 영업외손익 <- 매출전표에서
+	}
 
 }

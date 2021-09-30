@@ -172,6 +172,13 @@
 		 WHERE leave_code = #{leave_code}
 	</delete>	
 	
+	<!-- 직원의 사용 휴가 일수 -->
+	<select id="useLeaveDay" parameterType="String" resultType="int">
+		SELECT leave_usage_cnt
+		  FROM leave_tbl
+		 WHERE employee_code = #{employee_code}
+	</select>
+	
 	<!-- 직원의 급여 계약 정보 조회 -->
 	<select id="getContractList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.SalaryContractVO">
 		SELECT *
