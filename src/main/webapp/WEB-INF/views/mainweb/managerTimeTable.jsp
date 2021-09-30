@@ -31,10 +31,10 @@
 		 <!-- 인원 -->
       	<table class="box">		
       		<tr>
-      			<c:if test="${dtos.length == 0}">
+      			<c:if test="${dtos.size() == 0}">
       				예약 가능한 담당자가 없습니다.
       			</c:if>
-      			<c:if test="${dtos.length != 0}">
+      			<c:if test="${dtos.size() != 0}">
 			      	<c:forEach var="dto" items="${dtos}" varStatus="status">
 						<td class="mangTr${status.index}">
 							<button type="button" class="btn btn-outline btn-primary" class="managerBtn" id="managerBtn${status.index}" 

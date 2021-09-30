@@ -1,11 +1,14 @@
 package com.spring.Creamy_CRM.Host_service;
 
 
+import java.util.List; 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.VO.RoomSettingVO;
+
 
 public interface HostService {
 	static final int WEEK = 7;
@@ -17,14 +20,18 @@ public interface HostService {
 	//사업자정보 등록
 	void addCompanyAction(HttpServletRequest req, Model model);
 	
+	//호실 리스트
+	void roomList(HttpServletRequest req, Model model);
+
 	//호실 이름중복확인
 	int chkRoomName(HttpServletRequest req, Model model);
 	
 	//호실 등록
-	RoomSettingVO addRoomAction(HttpServletRequest req, Model model);
-
-	//호실 리스트
-	void roomList(HttpServletRequest req, Model model);
+	//RoomSettingVO addRoomAction(HttpServletRequest req, Model model);
+	int addRoomAction(HttpServletRequest req, Model model);
+	
+	//호실 상세
+	void detailRoom(HttpServletRequest req, Model model);
 	
 	
 }

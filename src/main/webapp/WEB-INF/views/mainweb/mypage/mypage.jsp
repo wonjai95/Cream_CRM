@@ -137,7 +137,7 @@
 	         	 		<div style="width: 30%;  display: flex;">
 	         	 			<c:if test="${vo.user_gender eq 'M'}">
 		         	 			<div class="form-group" id="g0" style="width: 30%; align-items: center; border: 2px solid green; text-align: center;">
-		                   			<label><input type="radio" name="gender_radio" value="M" style="height: 15px; display: none;" onchange="colorchange(0);">남성</label>
+		                   			<label><input type="radio" name="gender_radio" value="M" style="height: 15px; display: none;" onchange="colorchange(0);" checked="checked">남성</label>
 		                   		</div>	
 		                   		<div class="form-group" id="g1" style="width: 30%; align-items : center;  text-align: center;">
 		                   			<label><input type="radio" name="gender_radio" value="F" style="height: 15px; display: none;" onchange="colorchange(1);">여성</label>
@@ -148,7 +148,7 @@
 		                   			<label><input type="radio"  name="gender_radio" value="M" style="height: 15px; display: none;" onchange="colorchange(2);">남성</label>
 		                   		</div>	
 		                   		<div class="form-group" id="g3" style="width: 30%; align-items : center; border: 2px solid green;  text-align: center;">
-		                   			<label><input type="radio" name="gender_radio" value="F" style="height: 15px; display: none;" onchange="colorchange(3);">여성</label>
+		                   			<label><input type="radio" name="gender_radio" value="F" style="height: 15px; display: none;" onchange="colorchange(3);" checked="checked">여성</label>
 		               			</div>
 	               			</c:if>
 	         	 		</div>
@@ -159,22 +159,26 @@
 					
                		<!-- ======= 추가입력 ======= -->
                		<div class="member-info" style="padding-left: 5px;"><span style="font-size: 20px;"><b>추가정보 &nbsp;&nbsp;</b></span><span style="font-size: 10px;">선택입력사항</span><br><br></div>
-         			<!-- <div style="padding-bottom: 9px; display: flex;">
-	         	 		<div style="padding-left: 5px; padding-bottom: 8px; align-self: center; padding-right: 25px; width: 20%" align="right">성별</div>
-	         	 		<div style="width: 30%;  display: flex;">
-	         	 			<div class="form-group" style="width: 50%; align-items: center;">
-	                   			<label><input type="radio" name="gender_radio" value="M" style="height: 15px;">&nbsp;남성</label>
-	                   		</div>	
-	                   		<div class="form-group" style="width: 50%; align-items : center;">
-	                   			<label><input type="radio" name="gender_radio" value="F" style="height: 15px;">&nbsp;여성</label>
-	               			</div>
-	         	 		</div>
-	         	 		<div class="form-group" style="display: none;">
-	                   			<input type="radio" name="gender_radio" value="N" style="height: 15px;" checked>
-	               			</div>
-	         	 		</div> -->
+         			<div style="padding-bottom: 9px; display: flex;">
+	         	 		<div style="padding-left: 5px; padding-bottom: 8px; align-self: center; padding-right: 25px; width: 20%" align="right">자기소개</div>
+						<div class="form-group" style="width: 60%;">
+	                   		<textarea name ="modify_memo" rows="5" cols="10" style="width: 100%; border: 1px solid #ced4da; resize: none;" placeholder="매장에 전달하고 싶은 본인 소개를 해주세요">${vo.user_memo}</textarea>
+	               		</div>
+               		</div>
+               		<div style="padding-top: 9px; padding-bottom: 9px; display: flex;">
+	         	 		<div style="padding-left: 5px; padding-bottom: 8px; align-self: center; padding-right: 25px; width: 20%" align="right">결혼기념일</div>
+						<div class="form-group" style="width: 20%; display: flex; ">
+	                   		<input type="date" name="modify_merry" class="form-control" id="modify_merry" style="margin-right: 3px;">
+	               		</div>
+               		</div>
+               		<div style="display: flex;">
+	         	 		<div style="padding-left: 5px; padding-bottom: 8px; align-self: center; padding-right: 25px; width: 20%" align="right">차량번호</div>
+						<div class="form-group" style="width: 15%; display: flex; margin-right: 20px; ">
+	                   		<input type="text" name="modify_car" class="form-control" value="" style="margin-right: 3px;" maxlength="8">
+	               		</div>
+               		</div>
                		
-               		<div class="text-center">
+               		<div class="text-center" style="margin-top: 25px;">
 		              <button type="button" onclick="modifyInfo_Check(1);">회원정보 수정</button>
 		              <button type="submit">탈퇴</button>
 		            </div>

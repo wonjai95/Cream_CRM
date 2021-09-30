@@ -17,5 +17,13 @@ public class ReactController {
 		
 		return "react_test/reactCheck";
 	}
+	
+	/*
+	 * @RequestMapping("react/host_resdetail") public String
+	 * resdetail(HttpServletRequest req) {
+	 * System.out.println("url -> react_resdetail");
+	 * 
+	 * return "react_test/react_resDetail"; }
+	 */
 
 }

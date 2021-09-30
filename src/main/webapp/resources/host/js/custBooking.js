@@ -263,7 +263,10 @@ $(document).ready(function() {
 		} else if($("#ReserveProductSum").val() == 0) {
 			alert("예약 항목을 선택해주세요!");
 			return false;
-		} 
+		} else if($("#selectManager").val() == "") {
+			alert("담당자를 선택해주세요!");
+			return false;
+		}
 	});
   
   

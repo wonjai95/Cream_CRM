@@ -33,11 +33,16 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler{
 		request.getSession().setAttribute("id", vo.getUsername());
 		System.out.println(vo.getUsername());
 		
+		request.getSession().setAttribute("chk", vo.getLogin_chk());
+		System.out.println("login_check ? :"+vo.getLogin_chk());
+		
+		
 		String msg = authentication.getName() +"님 환영합니다.";
 		System.out.println(msg);
 		request.setAttribute("msg", msg);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/mainweb/logincheck.jsp");
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/mainweb/login/logincheck.jsp");
 		dispatcher.forward(request, response);
 		
 	}

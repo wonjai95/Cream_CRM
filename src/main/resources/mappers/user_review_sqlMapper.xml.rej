@@ -1,0 +1,14 @@
+diff a/src/main/resources/mappers/user_review_sqlMapper.xml b/src/main/resources/mappers/user_review_sqlMapper.xml	(rejected hunks)
+@@ -47,9 +47,10 @@
+   </select>
+   
+   <select id="getStoreReviewList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
+-	select r.*,res.host_code
+-	from review_tbl r, reservation_tbl res
++	select r.*,res.host_code, u.user_name
++	from review_tbl r, reservation_tbl res, user_tbl u
+ 	where r.res_code = res.res_code
++	and r.user_code = u.user_code
+ 	and res.host_code = #{host_code}
+ 	order by r.regDate desc
+   </select>

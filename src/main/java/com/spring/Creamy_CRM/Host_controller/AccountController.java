@@ -49,9 +49,17 @@ public class AccountController {
 		return "host/accounting/SGA_expenses";
 	}
 	
+	// 
+	@RequestMapping("/host/Non_operating_loss")
+	public String Non_operating_loss(HttpServletRequest req, Model model) {
+		logger.info("url -> Non_operating_loss");
+		
+		return "host/accounting/Non_operating_loss";
+	}
+	
 	// 매입매출 등록 처리
 	@RequestMapping("/host/insertSlip")
-	public @ResponseBody String insertSGA_expenses(HttpServletRequest req, Model model) {
+	public @ResponseBody String insertSlip(HttpServletRequest req, Model model) {
 		logger.info("url -> insertSlip");
 	  
 		String strDate = req.getParameter("slip_regDate");
@@ -59,6 +67,32 @@ public class AccountController {
 		String slip_type = req.getParameter("slip_type");
 		int slip_money = Integer.parseInt(req.getParameter("slip_money"));
 		String slip_memo = req.getParameter("slip_memo");
+		String host_code = (String) req.getSession().getAttribute("code");
+		
+		AccountVO vo = new AccountVO();
+		vo.setHost_code(host_code);
+		vo.setSlip_regDate(slip_regDate);
+		vo.setSlip_type(slip_type);
+		vo.setSlip_money(slip_money);
+		vo.setSlip_memo(slip_memo);
+		
+		int insertCnt = dao.insertSlip(vo);
+		System.out.println("insertCnt : " + insertCnt);
+		
+		return Integer.toString(insertCnt);
+		
+	}
+	
+	// 매입매출 등록 처리
+	@RequestMapping("/host/insertNOL")
+	public @ResponseBody String insertNOL(HttpServletRequest req, Model model) {
+		logger.info("url -> insertSlip");
+	   
+		String strDate = req.getParameter("operloss_regDate");
+		Date slip_regDate = Date.valueOf(strDate);
+		String slip_type = req.getParameter("operloss_type");
+		int slip_money = Integer.parseInt(req.getParameter("operloss_money"));
+		String slip_memo = req.getParameter("operloss_memo");
 		String host_code = (String) req.getSession().getAttribute("code");
 		
 		AccountVO vo = new AccountVO();

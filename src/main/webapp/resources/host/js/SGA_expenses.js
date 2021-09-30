@@ -1,4 +1,40 @@
 $("document").ready(function() {
+	
+	var insertDay = '1';
+	var currentDay = new Date().toISOString().slice(8, 10);
+	console.log(currentDay);
+	
+	if(currentDay == insertDay){
+		alert("insert 해라!");
+	} 
+	/*
+	$("a[href='#tab-2']").click(function(){
+		console.log("탭2 클릭");
+		  
+		  // var header = 'X-CSRF-TOKEN' 아래 방식이 안 될 경우 이거 사용
+		  var header = $("meta[name='_csrf_header']").attr("content");
+	      var token = $("meta[name='_csrf']").attr("content");
+	      
+	      console.log("header : " + header);
+	      console.log("token : " + token);
+	      
+	      $.ajax({
+	         url : "Non_operating_loss",
+	         type : "Post",
+	         beforeSend : function(jqXHR, settings) {
+	            console.log("beforesend 진행");
+	            jqXHR.setRequestHeader(header, token);
+	         },
+	         success : function(result) {
+	            $(".tab-content").html(result);
+	         },
+	         error : function(error) {
+	        	alert("다시 시도해주세요.");
+	         }
+	         
+	      });
+	})
+	*/	
 	// 유형 클릭
 	$("input[name^=slip_type]").click(function() {
 		$("input[name^=slip_type]").css("background", "");
@@ -53,6 +89,8 @@ $("document").ready(function() {
          });
 		
 	});
+	
+	
 	
 	$("tr[class^=sga_info]").click(function() {
 		$("tr[class^=sga_info]").css("background", "");

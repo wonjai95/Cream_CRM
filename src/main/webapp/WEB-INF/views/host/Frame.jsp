@@ -55,6 +55,9 @@
                  </ul>
             </li>
             <li>
+                <a href="stock"><i class="fa fa-flask"></i> <span class="nav-label">재고</span><span class="fa arrow"></span></a>
+            </li>
+            <li>
                 <a href="product"><i class="fa fa-flask"></i> <span class="nav-label">상품</span><span class="fa arrow"></span></a>
             </li>
             <li>

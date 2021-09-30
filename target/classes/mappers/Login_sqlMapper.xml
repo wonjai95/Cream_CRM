@@ -13,7 +13,7 @@
   <mapper namespace="com.spring.Creamy_CRM.Host_dao.loginDAO">
   
   	<select id="selectUser" parameterType="String" resultType="java.util.Map">
-  		SELECT id,password,key,authority,enabled
+  		SELECT id,password,key,authority,enabled,login_chk
   		FROM Auth_tbl
   		WHERE id = #{id}
   	</select>
@@ -70,6 +70,7 @@
   		 user_birth = #{user_birth},
   		 user_email = #{user_email},
   		 user_gender = #{user_gender},
+  		 user_memo = #{user_memo},
   		 user_ph = #{user_ph},
   		 zipcode = #{zipcode},
   		 user_address = #{user_address}
@@ -84,6 +85,25 @@
   	<select id="DupIdcheck" parameterType="String" resultType="Integer">
   		select COUNT(*) from Auth_tbl where id = #{id}
   	</select>
+  	
+  	<select id="getResListbyStore" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  		select res.*, u.user_name 
+  		from reservation_tbl res, user_tbl u 
+  		where res.user_id = u.user_id 
+  		and host_code = #{host_code} 
+  		order by res_regdate asc
+  	</select>
+  	
+  	<select id="getTodayResListByStore" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  		select res.*, u.user_name 
+  		from reservation_tbl res, user_tbl u 
+  		where res.user_id = u.user_id 
+  		and host_code = 'U81'
+        and res.res_date = TO_DATE(sysdate,'YY/MM/DD')
+  		order by res_regdate asc
+  	</select>
+  	
+  	
   	
   
   </mapper>

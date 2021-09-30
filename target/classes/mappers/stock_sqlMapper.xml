@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!--
+	작성자 : 
+	작성일 : 
+	account에서 사용하는 mapper
+-->
+  
+  
+ <mapper namespace="com.spring.Creamy_CRM.Host_dao.StockDAO">
+ 	<!-- 재고 목록 -->
+  	<select id="getInvenList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StockVO">
+  		SELECT * 
+  		  FROM s_t_view 
+  		 WHERE host_code = #{host_code}
+  		   AND stock_status = '사용중'
+  	</select>
+ 
+ 
+ 	<!-- 재고실지조사 내역 조회 -->
+  	<select id="getInvenLogList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StockVO">
+  		SELECT * 
+  		  FROM periodic_inventory pi
+  		  JOIN s_t_view sv
+  		    ON pi.stock_code = sv.stock_code
+  		 WHERE sv.host_code = #{host_code}
+  		   AND sv.stock_status = '사용중'
+  	</select>
+ 
+ </mapper>

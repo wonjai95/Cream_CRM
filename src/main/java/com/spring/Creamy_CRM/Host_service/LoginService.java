@@ -36,5 +36,8 @@ public interface LoginService {
 	//회원가입시 아이디 중복체크
 	public void IDDupcheck(HttpServletRequest req, Model model);
 	
+	//홈화면 띄울때 가져올 정보들
+	public void HostmainPage(HttpServletRequest req, Model model);
+	
 
 }
