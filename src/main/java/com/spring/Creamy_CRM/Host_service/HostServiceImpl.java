@@ -37,9 +37,14 @@ public class HostServiceImpl implements HostService {
 		//내정보
 		HostVO hostVo = dao.selectInfo(host_code);
 		System.out.println(hostVo.getHost_code());
-		
 		model.addAttribute("hostVo", hostVo);
 		
+	}
+
+	//영업시간설정탭
+	@Override
+	public void getWorkHours(HttpServletRequest req, Model model) {
+		String host_code = (String) req.getSession().getAttribute("code");
 		//시간설정탭
 		String[] days = { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" };
 		List<String> dayList = new ArrayList<String>();
@@ -60,10 +65,8 @@ public class HostServiceImpl implements HostService {
 			}
 			model.addAttribute("operArray",operArray);
 		}
-		
-		
-		
 	}
+
 
 	// 시간설정
 	@Override
@@ -84,6 +87,7 @@ public class HostServiceImpl implements HostService {
 		String temp = "";
 		String front = "";
 		String back = "";
+		
 		for (int i = 0; i < day.length; i++) {
 			int idx = open[i].indexOf(":");
 			temp = open[i].substring(idx);
@@ -121,7 +125,7 @@ public class HostServiceImpl implements HostService {
 		}
 
 		System.out.println(count + " 개 항목 등록 및 수정");
-		model.addAttribute("count", count);
+		req.setAttribute("count", count);
 	}
 
 	//사업자정보 등록
@@ -158,10 +162,30 @@ public class HostServiceImpl implements HostService {
 	public int chkRoomName(HttpServletRequest req, Model model) {
 		String host_code = (String)req.getSession().getAttribute("code");
 		String room_name = req.getParameter("room_name");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("host_code", host_code);
-		map.put("room_name", room_name);
-		return dao.chkRoomName(map);
+		String room_setting_code = req.getParameter("room_setting_code");
+		
+		RoomSettingVO vo = null;
+		int validationChk = 0;
+		if(room_setting_code != null) {
+			vo = new RoomSettingVO();
+			vo.setRoom_setting_code(room_setting_code);
+			vo = dao.getRoom(vo);
+			
+			if(vo.getRoom_name().equals(room_name)) {
+				validationChk = 1;
+			}
+			
+		}
+		
+		int selectCnt = 0;
+		if(room_setting_code == null || validationChk == 0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("host_code", host_code);
+			map.put("room_name", room_name);
+			selectCnt = dao.chkRoomName(map);
+		}
+		
+		return selectCnt;
 	}
 
 	//호실 확인
@@ -218,8 +242,8 @@ public class HostServiceImpl implements HostService {
 		int cnt = dao.roomCnt(vo);
 		System.out.println("cnt : " + cnt);
 		rPage.setCnt(cnt);
-		rPage.setPageSize(3);
-		rPage.setPageBlock(3);
+		rPage.setPageSize(10);
+		rPage.setPageBlock(5);
 		rPage.setCurrentPage(req.getParameter("pageNum"));
 
 		if (rPage.getCnt() > 0) {
@@ -253,6 +277,35 @@ public class HostServiceImpl implements HostService {
 		vo = dao.getRoom(vo);
 		model.addAttribute("vo",vo);
 	}
+
+	//호실 수정
+	@Override
+	public RoomSettingVO modifyRoom(HttpServletRequest req, Model model) {
+		//String host_code = (String)req.getSession().getAttribute("code");
+		String room_setting_code = req.getParameter("room_setting_code");
+		String room_name = req.getParameter("room_name");
+		String room_stat = req.getParameter("room_stat");
+		String per_price = req.getParameter("per_price");
+		String min_cnt = req.getParameter("min_cnt");
+		String max_cnt = req.getParameter("max_cnt");
+		
+		RoomSettingVO vo = new RoomSettingVO();
+		vo.setRoom_setting_code(room_setting_code);
+		//vo.setHost_code(host_code);
+		vo.setRoom_name(room_name);
+		vo.setRoom_stat(room_stat);
+		vo.setPer_price(Integer.parseInt(per_price));
+		vo.setMin_cnt(Integer.parseInt(min_cnt));
+		vo.setMax_cnt(Integer.parseInt(max_cnt));
+		int cnt = dao.updateRoom(vo);
+		
+		if(cnt != 1) {
+			vo = null;
+		}
+		
+		return vo;
+	}
 	
 
+	
 }

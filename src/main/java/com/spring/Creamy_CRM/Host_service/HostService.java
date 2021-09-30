@@ -14,6 +14,11 @@ public interface HostService {
 	static final int WEEK = 7;
 	//마이페이지 정보
 	void getHostInfo(HttpServletRequest req, Model model);
+
+	//영업시간설정탭
+	void getWorkHours(HttpServletRequest req, Model model);
+	
+	
 	//시간설정
 	void setWorkTime(HttpServletRequest req, Model model);
 	
@@ -32,6 +37,9 @@ public interface HostService {
 	
 	//호실 상세
 	void detailRoom(HttpServletRequest req, Model model);
+	
+	//호실 수정
+	RoomSettingVO modifyRoom(HttpServletRequest req, Model model);
 	
 	
 }
