@@ -308,10 +308,6 @@ public class MainwebController {
       
       return "mainweb/mypage/deleteBooking";
    }
-<<<<<<< HEAD
-=======
-
->>>>>>> dev
 
 
 	// ------------------- 회원 결제 페이지 ------------------------
