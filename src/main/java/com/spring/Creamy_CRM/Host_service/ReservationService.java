@@ -22,6 +22,7 @@ public interface ReservationService {
 	
 	// 예약요청 상세 페이지
 	public void requestDetailAction(HttpServletRequest req, Model model);
+	public void requestDetailAction2(HttpServletRequest req, Model model);
 	
 	// 예약요청 등록처리 페이지
 	//public void insertAction(HttpServletRequest req, Model model);

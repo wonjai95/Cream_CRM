@@ -133,6 +133,27 @@ public class ReservationServiceImpl implements ReservationService {
 		model.addAttribute("udto", uservo);
 		model.addAttribute("dto", vo);
 	}
+	@Override
+	public void requestDetailAction2(HttpServletRequest req, Model model) {
+		// http://localhost:8080/Creamy_CRM/host/requestDetails?res_code=RSD123&res_detail_code=RSD123
+		System.out.println("===== 예약요청 상세페이지 시작합니다 =====");
+		System.out.println("===== 예약요청에 따른 회원정보 =====");
+		String user_id = req.getParameter("user_id");
+		System.out.println("user_id : " + user_id);
+		
+		userVO uservo = dao.getUserInfo(user_id);
+		
+		System.out.println("===== 예약요청 상세정보 =====");
+		String res_code = req.getParameter("res_code");
+		String res_detail_code = req.getParameter("res_detail_code");
+		System.out.println("res_code : " + res_code);
+		System.out.println("res_detail_code : " + res_detail_code);
+		
+		ReservationVO vo = dao.getRequestDetail(res_code);
+		
+		model.addAttribute("udto", uservo);
+		model.addAttribute("dto", vo);
+	}
 
 	// 예약요청 수정처리 페이지
 	@Override

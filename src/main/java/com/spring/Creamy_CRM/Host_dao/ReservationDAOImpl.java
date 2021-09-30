@@ -104,6 +104,12 @@ public class ReservationDAOImpl implements ReservationDAO {
 		//   rs 결과(= sql로부터 가져온 컬럼 값을 getter로 모두 가져옴)
 		// 3. 작은 바구니 리턴
 	}
+	@Override
+	public ReservationVO getRequestDetail2(String num) {
+		
+		ReservationDAO dao = sqlSession.getMapper(ReservationDAO.class);
+		return dao.getRequestDetail2(num);
+	}
 
 	// 예약요청 수정 처리 페이지
 	@Override
