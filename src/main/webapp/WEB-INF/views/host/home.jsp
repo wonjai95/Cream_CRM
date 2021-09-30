@@ -161,15 +161,15 @@
             	 {
                     title: '${vo.user_name}',
                     start: '${vo.res_date}',
-                    url: 'http://localhost:3000/api/host_resdetail?code=${vo.res_code}'
+                    url: 'http://localhost:3000/host_resdetail?code=${vo.res_code}'
                 },
                 </c:forEach>
-                /* {
-                    title: 'Click for Google',
+                {
+                    title: 'home_test',
                     start: new Date(y, m, 28),
                     end: new Date(y, m, 29),
-                    url: 'http://google.com/'
-                } */
+                    url: 'http://localhost:3000/Home'
+                } 
             ]
             , eventClick:function(event) {
                 if(event.url) {

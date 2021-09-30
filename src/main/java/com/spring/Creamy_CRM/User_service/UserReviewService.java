@@ -30,4 +30,7 @@ public interface UserReviewService {
 	//후기 수정 액션
 	public void Modify_reviewAction(HttpServletRequest req, Model model);
 	
+	//검색 결과 list
+	public void reviewSearchList(HttpServletRequest req, Model model);
+	
 }

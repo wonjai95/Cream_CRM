@@ -1,6 +1,7 @@
 package com.spring.Creamy_CRM.User_service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -205,6 +206,73 @@ public class UserReviewServiceImpl implements UserReviewService {
 		System.out.println("후기 수정 성공 : "+modifyCnt);
 		
 	}
+
+	//검색 결과
+	@Override
+	public void reviewSearchList(HttpServletRequest req, Model model) {
+		String option = req.getParameter("option");
+		String keyword = req.getParameter("keyword");
+		String host_code = (String) req.getSession().getAttribute("code");
+		
+		String res_keyword = "%"+keyword+"%";
+		
+		List<ReviewVO> list = new ArrayList<ReviewVO>();
+		//글제목
+		if(option.equals("2")) {
+			System.out.println("title 검색");
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("host_code", host_code);
+			map.put("title", res_keyword);
+			
+			list = dao_review.getReviewSearch_title(map);
+		}
+		
+		//작성자
+		else if(option.equals("3")) {
+			System.out.println("작성자 검색 - "+res_keyword);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("host_code", host_code);
+			map.put("name", res_keyword);
+			
+			list = dao_review.getReviewSearch_user(map);
+			
+		}
+		
+		//등록일
+		else if(option.equals("4")) {
+			System.out.println("등록일 검색 - "+res_keyword);
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("host_code", host_code);
+			map.put("date", res_keyword);
+			
+			list = dao_review.getReviewSearch_date(map);
+		}
+		
+		//리스트 고객 예약내역 불러오는거..
+		String user_code = "";
+		
+		for(ReviewVO vo : list) {
+			user_code += vo.getUser_code() + "-";
+		}
+		String[] user_codearr = user_code.split("-");
+		
+		Map<String, List<ReservationVO>> resmap = new HashMap<String, List<ReservationVO>>();
+		
+		for(String key : user_codearr) {
+			if(resmap.containsKey(key)) {
+			
+			}
+			else {
+				List<ReservationVO> res_list = dao_review.getUserReservationlist(key);
+				resmap.put(key, res_list);
+			}
+		}
+		
+		req.setAttribute("list", list);
+		req.setAttribute("resmap", resmap);
+	
+		
+	}//검색결과 end
 
 
 }

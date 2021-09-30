@@ -29,6 +29,9 @@ public class Android_serviceImpl implements Android_service{
 	Android_LoginDAOImpl dao_Android_login;
 	
 	@Autowired
+	LoginDAOImpl dao_login;
+	
+	@Autowired
 	BCryptPasswordEncoder bcryptPassword;
 	
 
@@ -128,6 +131,95 @@ public class Android_serviceImpl implements Android_service{
 		
 		
 		return map;
+	}
+
+
+	//회원가입
+	@Override
+	public Map<String, Object> Join(HttpServletRequest req) {
+		String id = req.getParameter("id");
+		String pwd = req.getParameter("pwd");
+		String name = req.getParameter("name");
+		String email = req.getParameter("email");
+		String phone = req.getParameter("phone");
+		String birth = req.getParameter("birth");
+		String address = req.getParameter("address");
+		
+		//생일(나이)
+		java.sql.Date date = java.sql.Date.valueOf(birth);
+		String[] years = birth.split("-");
+	    int year = Integer.parseInt(years[0]);
+	    int age = 2021 - year;
+		
+		//비밀번호 암호화
+		String BcryptPw = bcryptPassword.encode(pwd);
+		
+		//이메일 인증 테이블 update
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id",id);
+		map.put("pw", BcryptPw);
+		map.put("Auth", "ROLE_USER");
+		
+		int cnt = dao_login.insertAuth(map);
+		System.out.println("이메일 인증 테이블 update : "+cnt);
+		
+		System.out.println(birth);
+		System.out.println(address);
+		
+		//주소 자르기
+		String[] addressArr = address.split(", ");
+		System.out.println(addressArr[0]);
+		System.out.println(addressArr[1]);
+		String zipcode = addressArr[0];
+		address = addressArr[1];
+		
+		//우편번호 insert
+		Map<String, String> map_zipcode = new HashMap<String, String>();
+		map_zipcode.put("zipcode", zipcode);
+		map_zipcode.put("sido", "-");
+		map_zipcode.put("gugun", "-");
+		
+		//이미 존재하는 우편번호인지 조회
+		int dupcnt = dao_login.getZipcodeCount(map_zipcode);
+		System.out.println("우편번호 cnt : "+dupcnt);
+		
+		//우편번호가 존재하지 않으면 insert
+		if(dupcnt == 0) {
+			int insertCnt = dao_login.insertZipcode(map_zipcode);
+		}
+		
+		//성별 일단 걍 박아버림
+		String gender = "F";
+		
+		userVO vo = new userVO();
+		vo.setUser_id(id);
+		vo.setUser_password(BcryptPw);
+		vo.setUser_name(name);
+		vo.setUser_age(age);
+		vo.setUser_birth(date);
+		vo.setUser_email(email);
+		vo.setUser_ph(phone);
+		vo.setZipcode(zipcode);
+		vo.setUser_address(address);
+		vo.setUser_gender(gender);
+		
+		int userinsertCnt = dao_login.insertUserinfo(vo);
+		System.out.println("회원가입 성공? : "+userinsertCnt);
+		String chk = userinsertCnt == 1?"1":"0";
+		System.out.println(chk);
+		
+		
+		Map<String, Object> re_map = new HashMap<String, Object>();
+		
+		map.put("name",null);
+		map.put("Auth", null);
+		map.put("Host", null);
+		map.put("Employee", null);
+		map.put("data3", chk);
+		map.put("data4", "0");
+		map.put("member", null);
+		
+		return re_map;
 	}
 	
 	

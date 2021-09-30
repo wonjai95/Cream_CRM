@@ -10,30 +10,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
 import com.spring.Creamy_CRM.Host_dao.ProductDAO;
+import com.spring.Creamy_CRM.Host_dao.ProductDAOImpl;
 import com.spring.Creamy_CRM.User_dao.SaleDAO;
+import com.spring.Creamy_CRM.User_dao.SaleDAOImpl;
 import com.spring.Creamy_CRM.VO.userVO;
 
 @Service
 public class SaleServiceImpl implements SaleService {
 
 	@Autowired
-	SaleDAO dao;
+	SaleDAOImpl dao;
 	
 	@Autowired
-	ProductDAO dao_pro;
+	ProductDAOImpl dao_pro;
+	
+	@Autowired
+	LoginDAOImpl dao_login;
+	
 	
 	Date today = new Date(0);
 	
 	
 	// 회원 - 결제(결제 정보 insert)
-	/*
 	@Override
 	public void insertSaleInfo(HttpServletRequest req, Model model) {
 		System.out.println("service ==> insertSaleInfo");
 
 		String user_id = (String) req.getSession().getAttribute("id");
 		System.out.println("user_id : " + user_id);
+		
+		//유저 코드 들고오기
+		String user_code = dao_login.getUserInfo(user_id).getUser_code();
 		
 		int total_payment = Integer.parseInt(req.getParameter("total_payment"));
 		System.out.println("total_payment : " + total_payment);
@@ -45,9 +54,7 @@ public class SaleServiceImpl implements SaleService {
 		String credit_installment = req.getParameter("credit_installment");
 		System.out.println("credit_installment : " + credit_installment);
 		String sale_memo = req.getParameter("sale_memo");
-		String employee_code = req.getParameter("employee_name");
-		String res_code = req.getParameter("res_code");
-		String room_setting_code = req.getParameter("room_setting_code");
+		String employee_code = req.getParameter("employee_code");
 		
 		userVO vo = new userVO();
 		vo.setTotal_payment(total_payment);
@@ -60,17 +67,16 @@ public class SaleServiceImpl implements SaleService {
 		vo.setEmployee_code(employee_code);
 		
 		vo.setUser_id(user_id);
-		vo.setRes_code(res_code);
-		vo.setRoom_setting_code(room_setting_code);
+		vo.setUser_code(user_code);
 		
-		int insertCnt = dao_pro.addSaleInfo(vo);
+		int insertCnt = dao.insertSaleInfo(vo);
 		
-		model.addAttribute("insertCnt_sale", insertCnt);
+		model.addAttribute("insertCnt", insertCnt);
 		model.addAttribute("dto", vo);
-		
+		System.out.println("결제 insertCnt : " + insertCnt);
 		
 	}
-*/
+
 
 
 }

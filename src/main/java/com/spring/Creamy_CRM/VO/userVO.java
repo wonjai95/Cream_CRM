@@ -25,7 +25,7 @@ public class userVO {
 	private String bank_code;
 	private String user_id;
 	private String user_memo;
-	private Date wedding_anniversary;
+	private String wedding_anniversary;
 	private String car_number;
 
 	
@@ -171,20 +171,7 @@ public class userVO {
 	public void setUser_memo(String user_memo) {
 		this.user_memo = user_memo;
 	}
-	public Date getWedding_anniversary() {
-		return wedding_anniversary;
-	}
-	public void setWedding_anniversary(Date wedding_anniversary) {
-		this.wedding_anniversary = wedding_anniversary;
-	}
-	public String getCar_number() {
-		return car_number;
-	}
-	public void setCar_number(String car_number) {
-		this.car_number = car_number;
-	}
-	
-	
+
 	
 	
 	
@@ -416,9 +403,36 @@ public class userVO {
 		this.annual_leave_usage = annual_leave_usage;
 	}
 
+	
+	public String getWedding_anniversary() {
+		return wedding_anniversary;
+	}
+	public void setWedding_anniversary(String wedding_anniversary) {
+		this.wedding_anniversary = wedding_anniversary;
+	}
+	public String getCar_number() {
+		return car_number;
+	}
+	public void setCar_number(String car_number) {
+		this.car_number = car_number;
+
+	}
 
 	
 	
+	// 예약
+	public String getRes_code() {
+		return res_code;
+	}
+	public void setRes_code(String res_code) {
+		this.res_code = res_code;
+	}
+	public String getRoom_setting_code() {
+		return room_setting_code;
+	}
+	public void setRoom_setting_code(String room_setting_code) {
+		this.room_setting_code = room_setting_code;
+	}
 	
 	
 	
