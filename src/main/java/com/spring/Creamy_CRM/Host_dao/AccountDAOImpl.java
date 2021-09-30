@@ -7,6 +7,7 @@
 package com.spring.Creamy_CRM.Host_dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,15 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 	
 	// 선택된 유형의 매출전표 조회
-	public List<AccountVO> getSelectList(String slip_type){
+	public List<AccountVO> getSelectList(Map<String, Object> map){
 		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
-		return dao.getSelectList(slip_type);
+		return dao.getSelectList(map);
 	}
 	
 	// 검색어에 따른 매출전표 조회
-	public List<AccountVO> getSearchList(String search){
+	public List<AccountVO> getSearchList(Map<String, Object> map){
 		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
-		return dao.getSearchList(search);
+		return dao.getSearchList(map);
 	}
 	
 	// 매입매출 전표 수정 페이지
@@ -72,7 +73,18 @@ public class AccountDAOImpl implements AccountDAO {
 		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
 		return dao.getNOLlist(host_code);
 	}
+	
+	// 선택된 유형의 영업외손익 조회
+	public List<AccountVO> getNOLselectList(Map<String, Object> map){
+		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
+		return dao.getNOLselectList(map);
+	}
 
+	// 검색어에 따른 영업외손익 조회
+	public List<AccountVO> getNOLsearchList(Map<String, Object> map){
+		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
+		return dao.getNOLsearchList(map);
+	}
 
 
 }

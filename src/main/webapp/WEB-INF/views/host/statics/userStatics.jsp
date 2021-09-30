@@ -54,7 +54,7 @@
 		<jsp:include page="../navbar.jsp" />
 		<div class="row wrapper border-bottom white-bg page-heading">
 			<div class="col-lg-8">
-				<h2>상품</h2>
+				<h2>통계</h2>
 			</div>
 		</div>
 
@@ -152,14 +152,29 @@
 								                <div class="col-lg-6">
 								                    <div class="ibox ">
 								                        <div class="ibox-title">
-								                            <h5>Line Chart Example
-								                                <small>With custom colors.</small>
+								                            <h5>전체 고객 성비
+								                                <small>여성</small>
 								                            </h5>
 								                        </div>
 								                        <div class="ibox-content">
 								                            <div>
 								                                <!-- <div id="lineChart"></div> -->
 								                                <div id="gauge"></div>
+								                                
+								                                
+								                            </div>
+								                        </div>
+								                    </div>
+								                    <div class="ibox ">
+								                        <div class="ibox-title">
+								                            <h5>전체 고객 성비
+								                                <small>남성</small>
+								                            </h5>
+								                        </div>
+								                        <div class="ibox-content">
+								                            <div>
+								                                <!-- <div id="lineChart"></div> -->
+								                                <div id="gauge2"></div>
 								                                
 								                                
 								                            </div>
@@ -213,13 +228,12 @@
      }); */
 	 
 	 
-	 
 	 c3.generate({
 	     bindto: '#gauge',
 	     data:{
 	         columns: [
 	        	 
-	        	 ['dto.user_gender', 2]
+	        	 ['여성',${f_ratio}]
 	        	 
 	         ],
 
@@ -230,6 +244,23 @@
 
 	     }
 	 });
+     
+	 c3.generate({
+         bindto: '#gauge2',
+         data:{
+	         columns: [
+	        	 
+	        	 ['남성',${m_ratio}]
+	        	 
+	         ],
+
+	         type: 'gauge'
+	     },
+	     color:{
+	         pattern: ['#1ab394', '#BABABA']
+
+	     }
+     });
 	 
 	 
  });

@@ -47,7 +47,7 @@
            <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
            <input type="hidden" id="user_code" name="user_code" value="${sessionScope.code}">
            
-           <input type="hidden" id="res_date" name="res_date">   
+           <input type="hidden" id="res_date" name="res_date" value="${res_date}">   
            <input type="hidden" id="res_memo" name="res_memo">
            <input type="hidden" id="host_code" name="host_code" value="${host_code}">
            <input type="hidden" id="chkDay">
@@ -56,6 +56,8 @@
            <input type="hidden" id="min_cnt" value="0">
            <input type="hidden" id="max_cnt" value="0">
            <input type="hidden" id="res_sales" name="res_sales" value="0">
+           <input type="hidden" id="room_setting_code" name="room_setting_code" value="${room_setting_code}">
+           
                 <div class="row">
                    <!-- col-lg-8  시작 -->
                     <div class="col-lg-6 col-md-12">

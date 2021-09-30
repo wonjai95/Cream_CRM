@@ -28,6 +28,7 @@ $(document).ready(function() {
     // 호실 선택
     $("button[id^=roomBtn]").click(function() {
        var roomClick = $(this).attr('value');
+       console.log("호실 클릭 : " + roomClick);
        var roomName = $(this).text();
        $('#selectRoom').val(roomClick);
        $('.roomSelectedInfo').html(roomName);

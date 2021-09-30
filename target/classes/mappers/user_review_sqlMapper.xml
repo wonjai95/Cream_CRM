@@ -12,7 +12,7 @@
   <mapper namespace="com.spring.Creamy_CRM.User_dao.UserReviewDAO">
   
   <select id="getReservationList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
-	  SELECT r.res_code, h.comp_name, r.res_state, r.res_date, r.res_review_chk
+	  SELECT r.res_code, h.comp_name, r.res_state, r.res_date,r.res_hour, r.res_review_chk
 	    FROM reservation_tbl r
 	    JOIN host_tbl h
 	      ON h.host_code = r.host_code
@@ -47,9 +47,10 @@
   </select>
   
   <select id="getStoreReviewList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
-	select r.*,res.host_code
-	from review_tbl r, reservation_tbl res
+	select r.*,res.host_code,u.user_name
+	from review_tbl r, reservation_tbl res, user_tbl u
 	where r.res_code = res.res_code
+	and res.user_id = u.user_id
 	and res.host_code = #{host_code}
 	order by r.regDate desc
   </select>
@@ -84,6 +85,34 @@
   	review_img = #{review_img}
   	where review_code = #{review_code}
   </update>
+  
+  <select id="getReviewSearch_title" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	select r.* , u.user_name
+	from review_tbl r, user_tbl u, reservation_tbl res
+	where r.user_code = u.user_code
+	and r.res_code = res.res_code
+	and res.host_code = #{host_code}
+	and r.title like #{title}
+  </select>
+  
+  <select id="getReviewSearch_user" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	select r.* , u.user_name
+	from review_tbl r, user_tbl u, reservation_tbl res
+	where r.user_code = u.user_code
+	and r.res_code = res.res_code
+	and res.host_code = #{host_code}
+	and u.user_name like #{name}
+  </select>
+  
+  <select id="getReviewSearch_date" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReviewVO">
+  	select r.* , u.user_name
+	from review_tbl r, user_tbl u, reservation_tbl res
+	where r.user_code = u.user_code
+	and r.res_code = res.res_code
+	and res.host_code = #{host_code}
+	and r.regdate like #{date}
+  </select>
+  
   	
   
   </mapper>

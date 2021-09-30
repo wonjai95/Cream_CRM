@@ -18,15 +18,15 @@ import com.spring.Creamy_CRM.VO.userVO;
 @Repository
 public class SaleDAOImpl implements SaleDAO {
 
-	@Autowired
+	@Autowired    
 	SqlSession sqlSession;
 
 	// 결제정보 등록
 	@Override
-	public int addSaleInfo(userVO vo) {
+	public int insertSaleInfo(userVO vo) {
 		
-		return sqlSession.insert("", vo);
-	}
+		return sqlSession.insert("com.spring.Creamy_CRM.User_dao.SaleDAO.insertSaleInfo", vo);
+	}      
 
 	
 

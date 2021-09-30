@@ -17,6 +17,9 @@ public class SaleVO {
 	private String user_code;
 	private String employee_code;
 	private String product_code;
+	
+	
+	
 	public String getSale_code() {
 		return sale_code;
 	}

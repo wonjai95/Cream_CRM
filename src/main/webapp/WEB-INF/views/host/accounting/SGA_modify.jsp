@@ -15,7 +15,7 @@ body {
 	text-shadow: aqua;
 }
 </style>
-<script type="text/javascript" src="${path}/resources/host/js/SGA_expenses1.js"></script>
+<script type="text/javascript" src="${path}/resources/host/js/SGA_expenses.js"></script>
 </head>
 <body>
 	<div class="ibox-content">

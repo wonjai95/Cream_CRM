@@ -7,7 +7,9 @@
 package com.spring.Creamy_CRM.Host_service;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,7 +41,14 @@ public class AccountServiceImpl implements AccountService {
 		String slip_type = req.getParameter("SGA_type");
 		System.out.println("slip_type : " + slip_type);
 		
-		List<AccountVO> vo = dao.getSelectList(slip_type);
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		map.put("slip_type", slip_type);
+		
+		List<AccountVO> vo = dao.getSelectList(map);
 		
 		model.addAttribute("vo", vo);
 	}
@@ -49,7 +58,14 @@ public class AccountServiceImpl implements AccountService {
 		String search = req.getParameter("search_content");
 		System.out.println("search : " + search);
 		
-		List<AccountVO> vo = dao.getSearchList(search);
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		map.put("search", search);
+		
+		List<AccountVO> vo = dao.getSearchList(map);
 		
 		model.addAttribute("vo", vo);
 	}
@@ -163,6 +179,40 @@ public class AccountServiceImpl implements AccountService {
 		
 		deleteCnt = dao.deleteSlip(slip_code);
 		model.addAttribute("deleteCnt", deleteCnt);
+	}
+	
+	// 유형에 따른 영업외손익 조회
+	public void getNOLselectList(HttpServletRequest req, Model model) {
+		String slip_type = req.getParameter("NOL_type");
+		System.out.println("slip_type : " + slip_type);
+		
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code );
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		map.put("slip_type", slip_type);
+		
+		List<AccountVO> vo = dao.getNOLselectList(map);
+		
+		model.addAttribute("NOL", vo);
+	}
+	
+	// 검색어에 따른 영업외손익 조회
+	public void getNOLsearchList(HttpServletRequest req, Model model){
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
+		String search = req.getParameter("search_content");
+		System.out.println("search : " + search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		map.put("search", search);
+		
+		List<AccountVO> vo = dao.getNOLsearchList(map);
+		
+		model.addAttribute("NOL", vo);
 	}
 
 }

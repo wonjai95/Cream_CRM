@@ -68,6 +68,10 @@ public interface LoginDAO {
 	//오늘날짜의 예약목록 출력
 	public List<ReservationVO> getTodayResListByStore(String host_code);
 	
+	//오늘 등록한 회원 이름 출력
+	public List<userVO> getTodayUserList();
+	
+	
 }
 
 

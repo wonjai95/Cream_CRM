@@ -9,6 +9,7 @@ package com.spring.Creamy_CRM.VO;
 import java.sql.Date;
 
 public class userVO {
+
    
    private String user_code;
    private String user_password;
@@ -403,6 +404,7 @@ public class userVO {
       this.annual_leave_usage = annual_leave_usage;
    }
 
+
    
    public String getWedding_anniversary() {
       return wedding_anniversary;
@@ -415,6 +417,7 @@ public class userVO {
    }
    public void setCar_number(String car_number) {
       this.car_number = car_number;
+
 
    }
 
@@ -438,3 +441,4 @@ public class userVO {
    
    
 }
+

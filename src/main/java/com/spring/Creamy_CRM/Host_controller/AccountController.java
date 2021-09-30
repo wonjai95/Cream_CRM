@@ -40,13 +40,13 @@ public class AccountController {
 	}
 	
 	// 매입매출 전표
-	@RequestMapping("/host/SGA_expenses1")
+	@RequestMapping("/host/SGA_expenses")
 	public String SGA_expenses(HttpServletRequest req, Model model) {
 		logger.info("url -> SGA_expenses");
 	  
 		service.slipList(req, model);
 		
-		return "host/accounting/SGA_expenses1";
+		return "host/accounting/SGA_expenses";
 	}
 	
 	// 
@@ -191,5 +191,24 @@ public class AccountController {
 		return "host/accounting/NOL_deleteAction";
 	}
 	
+	// 영업외손익 유형별 검색
+	@RequestMapping("/host/NOL_List")
+	public String NOL_List(HttpServletRequest req, Model model) {
+		logger.info("url -> NOL_List");
+		
+		service.getNOLselectList(req, model);
+		
+		return "host/accounting/Non_operating_loss_list";
+	}
+	
+	// 검색어에 따른 영업외손익 검색
+	@RequestMapping("/host/NOL_Search")
+	public String NOL_Search(HttpServletRequest req, Model model) {
+		logger.info("url -> NOL_Search");
+		
+		service.getNOLsearchList(req, model);
+		
+		return "host/accounting/Non_operating_loss_list";
+	}
 
 }

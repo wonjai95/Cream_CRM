@@ -50,22 +50,28 @@
 
 <body>
 
-<c:if test="${insertCnt == 3}">
-	<script type="text/javascript">
-		alert("예약 가능한 시간이 아닙니다. 다시 확인해주세요.");
-		window.history.back();
-	</script>
-</c:if>
-<c:if test="${insertCnt == 2}">
-	<script type="text/javascript">
-		alert("부접한한 예약 시간입니다. 다시 확인해주세요.");
-		window.history.back();
-	</script>
-</c:if>
 
-
-
-
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-expand-lg navbar-static-top" role="navigation">
+            <!--<div class="navbar-header">-->
+                <!--<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">-->
+                    <!--<i class="fa fa-reorder"></i>-->
+                <!--</button>-->
+            <a href="#" class="navbar-brand">CREAMY</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-reorder"></i>
+            </button>
+        </nav>
+        </div>    
+       
+        <!-- 회원예약이 실패라면, -->
+		<c:if test="${insertCnt == 0}">
+			<script type="text/javascript">
+				alert("예약에 실패했습니다. 다시 한번 시도해주세요.");
+			</script>
+		</c:if>
+		
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
@@ -118,7 +124,7 @@
          <div class="row mt-5 justify-content-center">
          	<div class="col-lg-15">
          	<%-- <form method="post" name="modifyUser" role="form" class="php-email-form">  --%>
-         	 <form action="sale_action" method="post" name="insertRoomBooking" class="php-email-form">	
+         	 <form action="sale_m_action" method="post" name="insertRoomBooking" class="php-email-form">	
          	 	<div class="row">
          	 	
          	 	<sec:csrfInput/>
@@ -165,12 +171,15 @@
                             </div>
                             
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                          		<input type="text" name="room_setting_code" id="selectRoom" style="display: none" value="${dto.room_setting_code}">예약 호실 : ${dto.res_room}</span>
-                          		<!-- dto.room_setting_code인데 예약호실명이네???? -->
+                          		<input type="text" name="employee_code" id="employee_code" style="display: none" value="${dto.employee_code}">담당자 : ${dto.employee_name}</span>
                        	  	</div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
                           		<input type="number" name="GuestCount" id="GuestCount" style="display: none" value="${dto.res_cnt}">예약 인원 : ${dto.res_cnt}</span>
                        	  	</div>
+                       	  	<div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
+                          		<input type="text" name="product_code" id="product_code" style="display: none" value="${dto.product_code}">상품 명 : ${dto.product_name}</span>
+                       	  	</div>
+                       	  	
                             <div class="form-group" style="margin-top:30px;">
                                  <span><strong>추가 요청사항</strong></span>
                                  <textarea class="form-control" placeholder="Your message" rows="3"

@@ -157,20 +157,27 @@ $("document").ready(function() {
 		   <sec:csrfInput/>
            <input type="hidden" id="pageNum" name="pageNum" value="${pageNum}">
            <input type="hidden" id="user_id" name="user_id" value="${user_id}">
-           <input type="hidden" id="host_code" name="host_code" value="${host_code}">
+           <input type="hidden" id="comp_res" name="comp_res" value="${mdtos.comp_res}">
 		<div class="ibox-content">
 			<div class="table-responsive">
 	        <table class="table table-striped table-bordered table-hover dataTables-example">
 		        <thead>
+		        
 		        <tr>
-		            <th style="text-align:center">예약코드${dto.host_code}</th>
+		            <th style="text-align:center">예약코드</th>
 		            <th style="text-align:center">회원아이디</th>
+		            <%-- <c:if test="${comp_res eq '담당자'}"> --%>
 		            <th style="text-align:center">담당자</th>
+		            <%-- </c:if> --%>
+		            <%-- <c:if test="${comp_res eq '호실'}"> --%>
+		            <!-- <th style="text-align:center">호실12</th> -->
+		            <%-- </c:if> --%>
 		            <th style="text-align:center">상태</th>
 		            <th style="text-align:center">시간</th>
 		            <th style="text-align:center">날짜</th>
 		               
 		        </tr>
+		        
 		        </thead>
 		        <tbody id="requestList">
 				<!-- 예약조회 목록이 있다면 -->
@@ -178,6 +185,7 @@ $("document").ready(function() {
 					<%-- <c:if test="${dto.res_state == '서비스 완' > 0}"> --%>
 					<%-- c:forEach var="작은 바구니 참조변수(임의로 지정하기)" items="${큰 바구니}" --%>
 					<c:forEach var="dto" items="${dtos}">
+						
 						<tr class="gradeX">
 							<td style="text-align:center">
 								<!-- 상세페이지 -->

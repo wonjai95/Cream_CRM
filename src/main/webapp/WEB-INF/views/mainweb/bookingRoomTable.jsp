@@ -29,6 +29,10 @@
 		           		<input type="text" style="display: none" name="min_cnt" value="${dto.min_cnt}">
 		           		<input type="text" style="display: none" name="max_cnt" value="${dto.max_cnt}">
 		           		<input type="hidden" name="selectRoom" value="${dto.room_name}">
+		           		<input type="hidden" name="res_hour" value="${dto.res_hour}">
+		           		
+		           		
+		           		
 		           	</td>
 				</c:forEach>
 			</tr>

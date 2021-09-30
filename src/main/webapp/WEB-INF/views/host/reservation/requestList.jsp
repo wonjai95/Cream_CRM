@@ -9,8 +9,37 @@
 </head>
 <body>
 
-<c:forEach var="dto" items="${dtos}">
-<c:if test="${sessionScope.code == dto.host_code}">
+<c:forEach var="mdto" items="${mdtos}">
+
+<c:if test="${mdto.comp_res eq '담당자'}">
+		
+	<c:if test="${cnt > 0}">
+		<tr class="gradeX">
+			<td style="text-align:center">
+				<!-- 상세페이지 -->
+				<a href="requestDetails?res_code=${mdto.res_code}&user_id=${mdto.user_id}&comp_res=${mdto.comp_res}">${mdto.res_code}</a>
+			</td>
+			
+			<td style="text-align:center">${mdto.user_id}</td>
+			<%-- ${param.dto.user_id} --%>
+			<td style="text-align:center">${mdto.employee_code}</td>
+			
+			<td style="text-align:center">${mdto.res_state}</td>
+			
+			<td style="text-align:center">${mdto.res_hour}시</td>
+			
+			<td style="text-align:center">${mdto.res_date}</td>
+		</tr>
+	</c:if>
+</c:if>
+
+</c:forEach>
+
+
+
+<c:forEach var="rdto" items="${rdtos}">
+
+<c:if test="${rdto.comp_res eq '호실'}">
 
 	<c:if test="${cnt > 0}">
 	<%-- <c:if test="${dto.res_state == '서비스 완' > 0}"> --%>
@@ -19,35 +48,24 @@
 		<tr class="gradeX">
 			<td style="text-align:center">
 				<!-- 상세페이지 -->
-				<a href="requestDetails?res_code=${dto.res_code}&res_detail_code=${dto.res_detail_code}&user_id=${dto.user_id}">${dto.res_code}</a>
+				<a href="requestDetails?res_code=${rdto.res_code}&user_id=${rdto.user_id}&comp_res=${rdto.comp_res}">${rdto.res_code}</a>
 			</td>
 			
-			<td style="text-align:center">${dto.user_id}</td>
+			<td style="text-align:center">${rdto.user_id}</td>
 			<%-- ${param.dto.user_id} --%>
-			<td style="text-align:center">${dto.employee_code}</td>
+			<td style="text-align:center">${rdto.room_name}</td>
 			
-			<td style="text-align:center">${dto.res_state}</td>
+			<td style="text-align:center">${rdto.res_state}</td>
 			
-			<td style="text-align:center">${dto.res_hour}시</td>
+			<td style="text-align:center">${rdto.res_hour}시</td>
 			
-			<td style="text-align:center">${dto.res_date}</td>
+			<td style="text-align:center">${rdto.res_date}</td>
 		</tr>
 	</c:if>
 	
 	<%-- </c:if> --%>
 
 
-
-
-	<c:if test="${cnt == 0}">
-	
-		<tr>
-			<td colspan="6" align="center">
-				예약요청 목록이 없습니다.
-			</td>			
-		</tr>
-	</c:if>
-	
 </c:if>
 </c:forEach>
 				

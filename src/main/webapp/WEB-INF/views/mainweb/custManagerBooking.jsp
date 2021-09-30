@@ -40,7 +40,7 @@
         </nav>
         </div>
         <div class="wrapper wrapper-content">
-           <form action="insertBooking" method="post" id="custBookingForm">
+           <form action="salePage_m" method="post" id="custBookingForm">
            <sec:csrfInput/>
            <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
            <input type="hidden" id="res_state" name="res_state"> 
@@ -174,7 +174,8 @@
 		                                       </table>
 	                                      <!-- 상품 테이블 끝 -->
                                       <!-- 결제 버튼 시작 -->
-                                       <input type="submit" class="btn btn-primary btn-rounded btn-block" value="예약하기" style="font-size: 26px;">
+                                       <input type="submit" class="btn btn-primary btn-rounded btn-block" 
+                                    	 value="예약하기" style="font-size: 26px;">
                                       <!-- 결제 버튼 끝 -->
                                    </div>
                                </div>

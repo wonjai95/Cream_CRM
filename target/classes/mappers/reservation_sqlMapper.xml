@@ -18,14 +18,40 @@
  	</select>
 	
 <!-- 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회 -->
-  	<select id="getRequestList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
-  			<![CDATA[	
-			SELECT *
+<!-- 1-1. 모든 예약요청 목록 중 사장님코드 별 예약종류(comp_res)가 "담당자"인 경우 -->
+  	<select id="getRequestMngList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  			<![CDATA[
+  			SELECT *
 			FROM (SELECT res_code, res_state, res_date, res_hour,
-					 employee_code, user_id, res_detail_code, host_code, rowNum rNum
-					FROM ( SELECT * FROM reservation_tbl
-					WHERE NOT res_state IN '서비스 완료'
-		ORDER BY res_code DESC )
+            		employee_code, user_id, comp_res,
+            		res_cnt, res_indiv_request, product_code, res_memo, res_sales,
+            		res_start, res_end, rowNum rNum
+					FROM ( SELECT *
+							 FROM reservation_tbl r, company_tbl c, reservation_detail_tbl rdt
+                        	WHERE r.host_code = c.host_code
+                        	  AND rdt.res_detail_code = r.res_detail_code
+                        	  AND c.host_code = #{host_code}
+                        	  AND NOT res_state IN '서비스 완료'
+    	ORDER BY res_code DESC )
+				)
+			WHERE rNum >= #{start} AND rNum <= #{end}
+			]]>
+  	</select>
+<!-- 1-2. 모든 예약요청 목록 중 사장님코드 별 예약종류(comp_res)가 "호실"인 경우 --> 	
+  	<select id="getRequestRoomList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  			<![CDATA[
+  			SELECT *
+			FROM (SELECT res_code, res_state, res_date, res_hour,
+					employee_code, user_id, res_regDate, comp_res, room_name,
+					res_cnt, res_indiv_request, product_code, res_memo, res_sales,
+					res_start, res_end, rowNum rNum
+					FROM ( SELECT *
+                      		 FROM reservation_tbl r, company_tbl c, room_setting_tbl rst, reservation_detail_tbl rdt
+                    		WHERE rst.room_setting_code = r.room_setting_code
+                        	  AND rdt.res_detail_code = r.res_detail_code
+                        	  AND c.host_code = #{host_code}
+                        	  AND NOT res_state IN '서비스 완료'
+    	ORDER BY res_code DESC )
 				)
 			WHERE rNum >= #{start} AND rNum <= #{end}
 			]]>

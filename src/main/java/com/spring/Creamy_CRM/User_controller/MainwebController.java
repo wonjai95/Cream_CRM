@@ -52,6 +52,17 @@ public class MainwebController {
    public String home(HttpServletRequest req, Model model) {
       logger.info("url -> home");
       
+//      String comp_res = req.getParameter("com_res");
+//      if(comp_res == null) {
+//    	  // service
+//    	  return "managerbooking";
+//      } else if(comp_res.equals("호실")) {
+//    	 // service
+//    	 return "roombooking";
+//      } else {
+//    	  return "";
+//      }
+      
       return "mainweb/home";
    }
    
@@ -198,12 +209,15 @@ public class MainwebController {
          model.addAttribute("comp_address", req.getParameter("comp_address"));
          model.addAttribute("comp_res", comp_res);
          
+         
          if(comp_res.equals("담당자")) {
             System.out.println("담당자 진입");
             service_custReserve.custManagerBooking(req, model);
             return "mainweb/custManagerBooking";
          } else {
             System.out.println("호실 진입");
+            
+            model.addAttribute("room_setting_code", req.getParameter("room_setting_code"));
             return "mainweb/custRoomBooking";
          }
         
@@ -225,7 +239,7 @@ public class MainwebController {
       
       service_custReserve.bookingManagerTable(req, model);
       return "mainweb/managerTimeTable";
-   }   
+   }
    
    // 회원 예약 가능한 호실 표시
    @RequestMapping("/bookingRoomTable")
@@ -242,27 +256,15 @@ public class MainwebController {
       logger.info("url -> roomTimeTable");
       
       service_custReserve.bookingRoomTimeTable(req, model);
-      return "mainweb/roomDetail";
-   }   
-   
-   
-   
-   
-   
-   
-   
-   
-   // 호실 예약 처리
-   @RequestMapping("/insertRoomBookingAction")
-   public String insertRoomBookingAction(HttpServletRequest req, Model model) {
-      logger.info("url -> insertRoomBookingAction");
       
-      service_custReserve.insertRoomBookingAction(req, model);
-      return "mainweb/insertRoomBookingAction";
-   }   
+      String res_date = (String) req.getAttribute("selectDate");
+      System.out.println("res_date : " + res_date);
+      
+      return "mainweb/roomDetail";
+   }         
    
-   
-   //회원 예약 처리 페이지
+
+   // 담당자 - 회원예약 등록처리
    @RequestMapping("/insertBooking")
       public String insertBooking(HttpServletRequest req, Model model) {
          logger.info("url -> insertBooking");
@@ -272,8 +274,34 @@ public class MainwebController {
          
          return "mainweb/insertBooking";
    }   
+
    
    
+	/*
+	 * 
+	 * 
+	 * 
+	 * // 호실 예약 처리
+	 * 
+	 * @RequestMapping("/insertRoomBookingAction") public String
+	 * insertRoomBookingAction(HttpServletRequest req, Model model) {
+	 * logger.info("url -> insertRoomBookingAction");
+	 * 
+	 * service_custReserve.insertRoomBookingAction(req, model); return
+	 * "mainweb/insertRoomBookingAction"; }
+	 * 
+	 * 
+	 * //회원 예약 처리 페이지
+	 * 
+	 * @RequestMapping("/insertBooking") public String
+	 * insertBooking(HttpServletRequest req, Model model) {
+	 * logger.info("url -> insertBooking");
+	 * 
+	 * service.insertBooking(req, model); logger.info("url -> insertBooking2");
+	 * 
+	 * return "mainweb/insertBooking"; }
+	 * 
+	 */
    
    
    
@@ -310,32 +338,73 @@ public class MainwebController {
    }
 
 
-	// ------------------- 회원 결제 페이지 ------------------------
+	// ------------------- 회원 결제 페이지 (호실 예약 & 결제) ------------------------
 	//결제 정보 입력 화면
-	@RequestMapping("/salePage")
+   @RequestMapping("/salePage")
 	public String salePage(HttpServletRequest req, Model model) {
 		logger.info("url -> salePage");
+		
+		// 예약 시간 확인 action
+		service_custReserve.chkRoomTime(req, model);
 		
 		// 회원 예약 정보 받아오기
 		service.getResInfo(req, model);
 		
-		// 결제정보 입력해서 insert
-		//service_sale.insertSaleInfo(req, model);
-		
-		// 회원 예약 정보 insert
-
-		
-		
 		return "mainweb/sale/salePage";
 	}
-		
-	// 우선은 결제하기 누르면 예약 정보 insert만 하도록 설정!!!!! -- 지금 안씀
+
+	// 결제 처리
 	@RequestMapping("/sale_action")
 	public String sale_action(HttpServletRequest req, Model model) {
 		logger.info("url -> sale_action");
 
+		// 호실 예약 처리
+		service_custReserve.insertRoomBookingAction(req, model);
+		
+		int insertCnt = (int) req.getAttribute("insertCnt");
+		
+		// 예약 불가능
+		if(insertCnt == 0) {
+			insertCnt = 3;
+			model.addAttribute("insertCnt", insertCnt);
+			
+		// 예약 가능
+		} else {
+			// 결제정보 입력해서 insert
+			service_sale.insertSaleInfo(req, model);
+		}
 		return "mainweb/sale/sale_action";
 	}
+	
+	
+	
+	
+	// ------------------- 회원 결제 페이지 (담당자 예약 & 결제) ------------------------
+	@RequestMapping("/salePage_m")
+	public String salePage_m(HttpServletRequest req, Model model) {
+		logger.info("url -> salePage_m");
+		
+		// 회원 예약 정보 받아오기
+		service.getResInfo_m(req, model);
+		
+		return "mainweb/sale/salePage_m";
+	}
+
+	// 결제 처리
+	@RequestMapping("/sale_m_action")
+	public String sale_m_action(HttpServletRequest req, Model model) {
+		logger.info("url -> sale_m_action");
+
+		// 담당자 예약 처리
+		service.insertBooking(req, model);
+		
+		// 결제 처리
+		service_sale.insertSaleInfo(req, model);
+
+		return "mainweb/sale/sale_m_action";
+	}
+	
+	
 	
 }
 	

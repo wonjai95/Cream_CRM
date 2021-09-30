@@ -149,9 +149,9 @@
 	                    </strong>
 	
 	                    <p>
-	                        <%-- ${udto.user_memo} --%>
-	                        안녕하세요. 서울 신림동에 사는 강수현입니다. 사장님이 헤어 펌 잘하신다고 여기저기 소문이 많이 나서 가입합니다.
-	                        잘 부탁드려요~!
+	                        ${udto.user_memo}
+	                        <!-- 안녕하세요. 서울 신림동에 사는 강수현입니다. 사장님이 헤어 펌 잘하신다고 여기저기 소문이 많이 나서 가입합니다.
+	                        잘 부탁드려요~! -->
 	                    </p>
 	                </div>
 	            </div>
@@ -173,12 +173,24 @@
 	                        ${udto.user_id}
 	                    </li>
 	                    <li class="list-group-item">
+	                        <span class="float-right"> 생년월일 : </span>
+	                        ${udto.user_birth}
+	                    </li>
+	                    <li class="list-group-item">
 	                        <span class="float-right"> 성별 : </span>
 	                        ${udto.user_gender}
 	                    </li>
 	                    <li class="list-group-item">
 	                        <span class="float-right"> 휴대폰 : </span>
 	                        ${udto.user_ph}
+	                    </li>
+	                    <li class="list-group-item">
+	                        <span class="float-right"> 결혼기념일 : </span>
+	                        ${udto.wedding_anniversary}
+	                    </li>
+	                    <li class="list-group-item">
+	                        <span class="float-right">차량번호 : </span>
+	                        ${udto.car_number}
 	                    </li>
 	                </ul>
 	                

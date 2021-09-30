@@ -41,4 +41,14 @@ public interface UserReviewDAO {
 	//리뷰 수정하기
 	public int modify_Review(ReviewVO vo);
 	
+	//글제목으로 리뷰 검색
+	public List<ReviewVO> getReviewSearch_title(Map<String, String> map);
+	
+	//작성자로 리뷰 검색
+	public List<ReviewVO> getReviewSearch_user(Map<String, String> map);
+	
+	//등록일로 리뷰 검색
+	public List<ReviewVO> getReviewSearch_date(Map<String, String> map);
+	
+	
 }
