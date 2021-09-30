@@ -177,9 +177,9 @@
 	<!-- 재고 등록 -->
 	<insert id="insertStock" parameterType="com.spring.Creamy_CRM.VO.StockVO">
 		insert into stock_tbl(stock_code,stock_name,stock_price,stock_brand,
-		 stock_count,stock_indate,stock_status,trade_code) 
+		 stock_cnt,stock_indate,stock_status,trade_code) 
 		values('ST'||stock_seq.nextval,#{stock_name},#{stock_price},#{stock_brand}, 
-		 #{stock_count},#{stock_indate},#{stock_status},#{trade_code})
+		 #{stock_cnt},#{stock_indate},#{stock_status},#{trade_code})
 	</insert>
 	
 	<!-- 재고 개수 -->
@@ -203,7 +203,7 @@
 	
 	<!-- 재고 수정 -->
 	<update id="updateStock" parameterType="com.spring.Creamy_CRM.VO.StockVO">
-		update stock_tbl set stock_name = #{stock_name}, stock_price = #{stock_price}, stock_count = #{stock_count}, 
+		update stock_tbl set stock_name = #{stock_name}, stock_price = #{stock_price}, stock_cnt = #{stock_cnt}, 
 			stock_brand = #{stock_brand}, stock_status = #{stock_status}, trade_code = #{trade_code} 
 		where stock_code = #{stock_code}
 	</update>
