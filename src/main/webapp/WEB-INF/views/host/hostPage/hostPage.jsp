@@ -13,16 +13,36 @@
 			$.ajax({
 				type:"get",
 				url:"roomList",
-				success: function(data){
-					$("#rooms").html(data);					
+				success: function(roomList){
+					$("#rooms").html(roomList);
+					/*
+					for (var i = 0; i < roomList.length; i++) {
+						var temp = addHtml(roomList[i]);
+						$("#rooms").append(temp);
+					}
+					*/
 				},
 				error: function(){
 					alert("오류");
 				}
 			});
 		});
-		
 	});
+	
+	/*
+	function addHtml(vo) {
+		return '<tr class="footable-odd">'
+		+ '<td class="footable-visible">&nbsp;&nbsp;'
+		+ '<input type="radio" name="room_setting_code" value="'+ vo.room_setting_code +'">'
+		+ '</td>'
+		+ '<td class="footable-visible"><span>'+ vo.room_name +'</span></td>'
+		+ '<td class="footable-visible"><span>'+ vo.room_stat +'</span></td>'
+		+ '<td class="footable-visible"><span>'+ vo.per_price +'</span></td>'
+		+ '<td class="footable-visible"><span>'+ vo.min_cnt +'</span></td>'
+		+ '<td class="footable-visible"><span>'+ vo.max_cnt +'</span></td>'
+		+ '</tr>';
+	}
+	*/
 </script>
 </head>
 <body>

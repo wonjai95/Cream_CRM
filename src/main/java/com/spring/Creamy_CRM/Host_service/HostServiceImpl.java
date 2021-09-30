@@ -17,7 +17,9 @@ import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.OperatingScheVO;
 import com.spring.Creamy_CRM.VO.RoomSettingVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
+import com.spring.Creamy_CRM.util.Page;
 
+import oracle.net.aso.r;
 import sun.awt.image.PNGImageDecoder.Chromaticities;
 import sun.print.resources.serviceui;
 
@@ -151,22 +153,21 @@ public class HostServiceImpl implements HostService {
 		model.addAttribute("insertCnt",insertCnt);
 	}
 
-	//ㅊ
+	//호실 이름 중복 확인
 	@Override
 	public int chkRoomName(HttpServletRequest req, Model model) {
 		String host_code = (String)req.getSession().getAttribute("code");
 		String room_name = req.getParameter("room_name");
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		map.put("host_code", host_code);
 		map.put("room_name", room_name);
-		
 		return dao.chkRoomName(map);
 	}
 
-	//룸확인
+	//호실 확인
 	@Override
-	public RoomSettingVO addRoomAction(HttpServletRequest req, Model model) {
+	//public RoomSettingVO addRoomAction(HttpServletRequest req, Model model) {
+	public int addRoomAction(HttpServletRequest req, Model model) {
 		String host_code = (String)req.getSession().getAttribute("code");
 		String room_name = req.getParameter("room_name");
 		String room_stat = req.getParameter("room_stat");
@@ -182,27 +183,76 @@ public class HostServiceImpl implements HostService {
 		vo.setMin_cnt(Integer.parseInt(min_cnt));
 		vo.setMax_cnt(Integer.parseInt(max_cnt));
 		
+		/*
 		int cnt = dao.insertRoom(vo);
-		if(cnt != 1) {
+		
+		if(cnt == 1) {
+			vo = dao.getRoom(vo);
+		}else {
 			vo = null;
 		}
 		return vo;
-		
+		*/
+		return dao.insertRoom(vo);
 	}
 
 	//호실 리스트
 	@Override
 	public void roomList(HttpServletRequest req, Model model) {
 		String host_code = (String)req.getSession().getAttribute("code");
-		List<RoomSettingVO> list = dao.selectRoomList(host_code);
-		System.out.println("size : " + list.size());
-		model.addAttribute("list",list);
+		String room_stat = req.getParameter("room_stat");
+		System.out.println("state "  + room_stat);
+		if(room_stat == null || room_stat.equals("0") || req.getAttribute("setNull") != null) {
+			room_stat = null;
+		}
+		System.out.println("pageNum " + req.getParameter("pageNum"));
+		System.out.println("state2 " + room_stat);
+		System.out.println("host_code " + host_code);
+		Page rPage = new Page();
+		RoomSettingVO vo = new RoomSettingVO();
+		List<RoomSettingVO> list = new ArrayList<RoomSettingVO>();
+		vo.setHost_code(host_code);
+		vo.setRoom_stat(room_stat);
+		
+		//페이징
+		int cnt = dao.roomCnt(vo);
+		System.out.println("cnt : " + cnt);
+		rPage.setCnt(cnt);
+		rPage.setPageSize(3);
+		rPage.setPageBlock(3);
+		rPage.setCurrentPage(req.getParameter("pageNum"));
+
+		if (rPage.getCnt() > 0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("host_code", host_code);
+			map.put("room_stat", room_stat);
+			map.put("start", rPage.getStart());
+			map.put("end", rPage.getEnd());
+			list = dao.selectRoomList(map);
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("room_stat", room_stat);
+		model.addAttribute("cnt", rPage.getCnt());
+		model.addAttribute("startPage", rPage.getStartPage());
+		model.addAttribute("endPage", rPage.getEndPage());
+		model.addAttribute("pageBlock", rPage.getPageBlock());
+		model.addAttribute("currentPage", rPage.getCurrentPage());
+		model.addAttribute("pageCount", rPage.getPageCount());
+		
 	}
 	
-	
-	
-	
-	
+	//호실 상세(수정)
+	@Override
+	public void detailRoom(HttpServletRequest req, Model model) {
+		String host_code = (String)req.getSession().getAttribute("code");
+		String room_setting_code = req.getParameter("room_setting_code");
+		RoomSettingVO vo = new RoomSettingVO();
+		vo.setHost_code(host_code);
+		vo.setRoom_setting_code(room_setting_code);
+		vo = dao.getRoom(vo);
+		model.addAttribute("vo",vo);
+	}
 	
 
 }

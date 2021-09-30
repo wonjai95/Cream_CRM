@@ -65,10 +65,55 @@
 			#{per_price},#{min_cnt},#{max_cnt})
 	</insert>
 	
-	<!-- 호실 리스트 -->
-	<select id="selectRoomList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.RoomSettingVO">
-		select * from room_setting_tbl where host_code = #{host_code} 
-			order by to_number(substr(room_setting_code,4)) desc
+	<!-- 호실등록후 리스트에 뿌리기작업, 상세 데이터 -->
+	<sql id="getRoomInfo">
+		select * from room_setting_tbl
+	</sql>
+	
+	<!-- 호실상세 -->
+	<select id="getRoom" parameterType="com.spring.Creamy_CRM.VO.RoomSettingVO" resultType="com.spring.Creamy_CRM.VO.RoomSettingVO">
+		 <include refid="getRoomInfo"/>
+		<where>
+			<!-- 등록후 값 갖고오기 -->
+			<if test="host_code != null and room_name != null">
+				host_code = #{host_code} and room_name = #{room_name}
+			</if>
+			<!-- 상세 -->
+			<if test="room_setting_code != null">
+				room_setting_code = #{room_setting_code}
+			</if>
+		</where>
 	</select>
+	
+	<!-- 호실 개수 -->
+	<select id="roomCnt" parameterType="com.spring.Creamy_CRM.VO.RoomSettingVO" resultType="int">
+		select count(*) from room_setting_tbl 
+		<if test="host_code != null">
+			<where>
+				host_code = #{host_code}
+				<if test="room_stat != null">
+					and room_stat = #{room_stat}
+				</if>
+			</where>
+		</if>
+	</select>
+	
+	<!-- 호실 리스트 -->
+	<select id="selectRoomList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.RoomSettingVO">
+		select * from(
+		select r.*,rownum num from(
+			select * from room_setting_tbl 
+			<if test="host_code != null">
+				<where>
+					host_code = #{host_code}
+					<if test="room_stat != null">
+						and room_stat = #{room_stat}
+					</if>
+				</where>
+			</if>
+			order by to_number(substr(room_setting_code,4)) desc) r)
+        where num between #{start} and #{end}
+	</select>
+	
 	
   </mapper>

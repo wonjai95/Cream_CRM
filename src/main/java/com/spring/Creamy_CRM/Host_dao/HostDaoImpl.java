@@ -75,11 +75,28 @@ public class HostDaoImpl implements HostDao{
 	public int insertRoom(RoomSettingVO vo) {
 		return sqlSession.insert("com.spring.Creamy_CRM.Host_dao.HostDao.insertRoom",vo);
 	}
+	
+	//등록한 호실 정보 or 상세 요청
+	@Override
+	public RoomSettingVO getRoom(RoomSettingVO vo) {
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.HostDao.getRoom",vo);
+	}
 
 	//호실 리스트
 	@Override
-	public List<RoomSettingVO> selectRoomList(String host_code) {
-		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.HostDao.selectRoomList", host_code);
+	public List<RoomSettingVO> selectRoomList(Map<String, Object> map) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.HostDao.selectRoomList", map);
 	}
+
+	//호실 개수
+	@Override
+	public int roomCnt(RoomSettingVO vo) {
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.HostDao.roomCnt", vo);
+	}
+
+	
+	
+	
+	
 	
 }
