@@ -52,7 +52,7 @@ function chkfrom(){
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">수량</label>
 				<div class="col-sm-2">
-					<input type="number" class="form-control" min="0" name="stock_count" value="${vo.stock_count}" required>
+					<input type="number" class="form-control" min="0" name="stock_count" value="${vo.stock_cnt}" required>
 				</div>
 			</div>
 
