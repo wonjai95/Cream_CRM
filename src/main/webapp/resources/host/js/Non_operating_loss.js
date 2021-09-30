@@ -109,6 +109,61 @@ $("document").ready(function() {
 			window.open(url, "NOL_modify", "status=no, width=800, height=600, left="+ popupX + ", top="+ popupY);
 	});
 	
+	// 목록의 option 선택시
+	$("select[name=operloss_type]").change(function(){
+		
+		var selectType = $("select[name=operloss_type] option:selected").val();
+		console.log("selectType : " + selectType);
+		
+		var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        console.log("header : " + header);
+        
+         $.ajax({
+	       	  url : "NOL_List",
+	       	  type : "Post",
+	       	  data : "NOL_type=" + selectType,
+       	  	  async: false,	
+  			  beforeSend : function(jqXHR, settings) {
+	       		  console.log("beforesend 진행");
+	                 jqXHR.setRequestHeader(header, token);
+	       	  },
+	       	  success : function(result) {
+	       		  $("#operlossList").html(result);
+	       	  },
+	       	  error : function(error) {
+	       		console.log(error);  
+	       	  }
+         });
+	})
+	
+	// 검색 버튼 클릭시
+	$("input[id=Search_NOLbtn]").click(function(){
+		alert("검색");
+		
+		var header = $("meta[name='_csrf_header']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+		var content = $("#Search_NOLcontent").val();
+		console.log("content : " + content);
+		
+		$.ajax({
+	       	  url : "NOL_Search",
+	       	  type : "Post",
+	       	  data : "search_content=" + content,
+     	  	  async: false,	
+			  beforeSend : function(jqXHR, settings) {
+	       		  console.log("beforesend 진행");
+	                 jqXHR.setRequestHeader(header, token);
+	       	  },
+	       	  success : function(result) {
+	       		  $("#operlossList").html(result);
+	       	  },
+	       	  error : function(error) {
+	       		console.log(error);  
+	       	  }
+       });
+	});
+	
 	/*
 	$("tr[class^=NOL_info]").click(function() {
 		$("tr[class^=NOL_info]").css("background", "");
@@ -136,120 +191,6 @@ $("document").ready(function() {
 	
 	});
 	*/
-	// slip_modify 수정 submit 클릭시
-	$("#NOL_modifyForm").submit(function() {
-		var slip_type = $("#NOL_type option:selected").val();
-		if(slip_type == "0") {
-			alert("유형을 선택하세요!");
-			return false;
-		}
-		
-	});
-	
-	$("#NOLdeleteBtn").click(function() {
-		var slip_code = $("input[name=NOL_code]").val();
-		if(confirm("삭제하시면 되돌릴 수 없습니다. 삭제 하시겠습니까?")) {
-			console.log("확인");
-			window.location="NOL_deleteAction?NOL_code=" + slip_code;
-		} else {
-			console.log("취소");
-			return false;
-		}
-		
-	});
-	
-	// 목록의 option 선택시
-	$("select[name=slip_type]").change(function(){
-		
-		var selectType = $("select[name=slip_type] option:selected").val();
-		console.log("selectType : " + selectType);
-		
-		var header = $("meta[name='_csrf_header']").attr("content");
-        var token = $("meta[name='_csrf']").attr("content");
-        console.log("header : " + header);
-        
-         $.ajax({
-	       	  url : "slip_List",
-	       	  type : "Post",
-	       	  data : "slip_type=" + selectType,
-       	  	  async: false,	
-  			  beforeSend : function(jqXHR, settings) {
-	       		  console.log("beforesend 진행");
-	                 jqXHR.setRequestHeader(header, token);
-	       	  },
-	       	  success : function(result) {
-	       		  $("#slipList").html(result);
-	       	  },
-	       	  error : function(error) {
-	       		console.log(error);  
-	       	  }
-         });
-	})
-	
-	var timeout = null;
-	
-	$("#Search_content").keyup(function(){
-		
-		clearTimeout = null;
-		
-		timeout = setTimeout(function(){
-			
-			var header = $("meta[name='_csrf_header']").attr("content");
-		    var token = $("meta[name='_csrf']").attr("content");
-			var content = $("#Search_content").val();
-			console.log("content : " + content);
-			
-			$.ajax({
-		       	  url : "slip_Search",
-		       	  type : "Post",
-		       	  data : "search_content=" + content,
-		 	  	  async: false,
-				  beforeSend : function(jqXHR, settings) {
-		       		  console.log("beforesend 진행");
-		                 jqXHR.setRequestHeader(header, token);
-		       	  },
-		       	  success : function(result) {
-		       		  $("#slipList").html(result);
-		       	  },
-		       	  error : function(error) {
-		       		console.log(error);  
-		       	  }
-		   });
-		}, 900);
-	})
-	
-	/*
-	// 검색 버튼 클릭시
-	$("input[id=Search_btn]").click(function(){
-		alert("검색");
-		
-		var header = $("meta[name='_csrf_header']").attr("content");
-        var token = $("meta[name='_csrf']").attr("content");
-		var content = $("#Search_content").val();
-		console.log("content : " + content);
-		
-		$.ajax({
-	       	  url : "slip_Search",
-	       	  type : "Post",
-	       	  data : "search_content=" + content,
-     	  	  async: false,	
-			  beforeSend : function(jqXHR, settings) {
-	       		  console.log("beforesend 진행");
-	                 jqXHR.setRequestHeader(header, token);
-	       	  },
-	       	  success : function(result) {
-	       		  $("#slipList").html(result);
-	       	  },
-	       	  error : function(error) {
-	       		console.log(error);  
-	       	  }
-       });
-	});
-	*/
-	// 창 닫기 클릭
-	$("input[name=detail_close]").click(function() {
-		window.close();
-	});
 	
 	
 });

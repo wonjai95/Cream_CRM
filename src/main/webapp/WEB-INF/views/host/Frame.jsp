@@ -44,7 +44,7 @@
                 <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">회계</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="Accounting">손익계산서</a></li>
-                    <li><a href="SGA_expenses1">판매비와 관리비</a></li>
+                    <li><a href="SGA_expenses">판매비와 관리비</a></li>
                  </ul>
             </li>
             <li>

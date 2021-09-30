@@ -42,4 +42,9 @@ public interface AccountService {
 	// 영업외손익 삭제 처리
 	public void deleteNOL(HttpServletRequest req, Model model);
 	
+	// 유형에 따른 영업외손익 조회
+	public void getNOLselectList(HttpServletRequest req, Model model);
+	
+	// 검색어에 따른 영업외손익 조회
+	public void getNOLsearchList(HttpServletRequest req, Model model);
 }

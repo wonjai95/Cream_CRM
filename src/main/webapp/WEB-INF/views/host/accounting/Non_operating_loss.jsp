@@ -88,10 +88,10 @@
 							</div>
 							<div class="col-sm-3" style="width: 40%;">
 								<div class="input-group">
-									<input placeholder="Search" type="text" id="Search_content"
+									<input placeholder="Search" type="text" id="Search_NOLcontent"
 										class="form-control form-control-sm"> <span
 										class="input-group-append"> <input type="button"
-										class="btn btn-sm btn-primary" id="Search_btn" value="검색">
+										class="btn btn-sm btn-primary" id="Search_NOLbtn" value="검색">
 									</span>
 								</div>
 

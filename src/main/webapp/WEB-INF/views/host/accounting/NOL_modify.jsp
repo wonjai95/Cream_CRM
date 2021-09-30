@@ -6,7 +6,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="${path}/resources/host/js/Non_operating_loss.js"></script>
+<style type="text/css">
+body {
+	background-color: white;
+}
+
+#g_product {
+	text-shadow: aqua;
+}
+</style>
+<script type="text/javascript" >
+$("document").ready(function() {
+
+	$("#NOL_modifyForm").submit(function() {
+		var slip_type = $("#NOL_type option:selected").val();
+		if(slip_type == "0") {
+			alert("유형을 선택하세요!");
+			return false;
+		}
+		
+	});
+	
+	$("#NOLdeleteBtn").click(function() {
+		var slip_code = $("input[name=NOL_code]").val();
+		if(confirm("삭제하시면 되돌릴 수 없습니다. 삭제 하시겠습니까?")) {
+			console.log("확인");
+			window.location="NOL_deleteAction?NOL_code=" + slip_code;
+		} else {
+			console.log("취소");
+			return false;
+		}
+		
+	});
+	
+	// 창 닫기 클릭
+	$("input[name=detail_close]").click(function() {
+		window.close();
+	});
+	
+})
+
+
+</script>
 </head>
 <body>
 	<div class="ibox-content">

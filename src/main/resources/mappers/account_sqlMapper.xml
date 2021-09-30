@@ -27,10 +27,11 @@
   	</insert>
   	
   	<!-- 선택된 유형의 매출전표 조회 -->
-  	<select id="getSelectList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.AccountVO">
+  	<select id="getSelectList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.AccountVO">
   		SELECT *
   		  FROM slip_tbl
-  		 WHERE slip_type = #{slip_type}
+  		 WHERE host_code = #{host_code}
+  		   AND slip_type = #{slip_type}
   		ORDER BY slip_regdate DESC
   	</select>
   	
@@ -38,7 +39,8 @@
   	<select id="getSearchList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.AccountVO">
   		SELECT *
   		  FROM slip_tbl
-  		 WHERE slip_memo LIKE '%'||#{search}||'%'
+  		 WHERE host_code = #{host_code}
+  		   AND slip_memo LIKE '%'||#{search}||'%'
   		ORDER BY slip_regdate DESC
   	</select>
   	
@@ -69,6 +71,24 @@
   		  FROM slip_tbl
   		 WHERE host_code = #{host_code}
   		   AND slip_type IN ('비용', '수익', '법인세등')
+  		 ORDER BY slip_regDate DESC
+  	</select>
+  	
+  	<!-- 선택된 유형의 영업외손익 조회 -->
+  	<select id="getNOLselectList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.AccountVO">
+  		SELECT *
+  		  FROM slip_tbl
+  		 WHERE host_code = #{host_code}
+  		   AND slip_type = #{slip_type}
+  		ORDER BY slip_regDate DESC
+  	</select>
+  	
+  	<!-- 검색어에 따른 영업외손익 조회 -->
+  	<select id="getNOLsearchList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.AccountVO">
+  		SELECT *
+  		  FROM slip_tbl
+  		 WHERE host_code = #{host_code}
+  		   AND slip_memo LIKE '%'||#{search}||'%'
   		 ORDER BY slip_regDate DESC
   	</select>
   
