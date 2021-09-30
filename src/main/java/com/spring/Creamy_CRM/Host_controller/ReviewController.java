@@ -36,6 +36,16 @@ public class ReviewController {
 		
 		return "host/review/userReview_main";
 	}
+	
+	//리뷰 검색
+	@RequestMapping("/host/review_searchlist")
+	public String review_searchlist(HttpServletRequest req, Model model) {
+		logger.info("url -> review_searchlist");
+		
+		service_review.reviewSearchList(req, model);
+		
+		return "host/review/userReview";
+	}
 
 
 }
