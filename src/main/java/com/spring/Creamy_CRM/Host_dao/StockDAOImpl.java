@@ -1,6 +1,7 @@
 package com.spring.Creamy_CRM.Host_dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,29 @@ public class StockDAOImpl implements StockDAO {
 	public List<StockVO> getInvenLogList(String host_code) {
 		StockDAO dao = sqlSession.getMapper(StockDAO.class);
 		return dao.getInvenLogList(host_code);
+	}
+
+	// 재고실사 등록 처리
+	@Override
+	public int insertPeriodicInven(StockVO vo) {
+		StockDAO dao = sqlSession.getMapper(StockDAO.class);
+		return dao.insertPeriodicInven(vo);
+	}
+
+	// 재고실사 검색
+	@Override
+	public List<StockVO> searchPeriodicInven(Map<String, Object> map) {
+		createSearchInvenView(map);
+		
+		StockDAO dao = sqlSession.getMapper(StockDAO.class);
+		return dao.searchPeriodicInven(map);
+	}
+
+	// 재고실사 검색을 위한 뷰 생성
+	@Override
+	public void createSearchInvenView(Map<String, Object> map) {
+		StockDAO dao = sqlSession.getMapper(StockDAO.class);
+		dao.createSearchInvenView(map);
 	}
 
 }

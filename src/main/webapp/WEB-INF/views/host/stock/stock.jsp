@@ -387,11 +387,11 @@ $("docuemnt").ready(function() {
 																					</td>
 									
 																					<td class="text-right footable-visible footable-last-column">
-																						<span class="label label-primary">${stock.stock_indate}</span>
+																						<span>${stock.stock_indate}</span>
 																					</td>
 									
-																					<td class="footable-visible"><span
-																						class="label label-primary">${stock.trade_code}</span>
+																					<td class="footable-visible">
+																						<span>${stock.trade_code}</span>
 																					</td>
 																				</tr>
 																			</c:forEach>

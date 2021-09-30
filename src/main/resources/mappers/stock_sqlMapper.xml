@@ -28,6 +28,47 @@
   		    ON pi.stock_code = sv.stock_code
   		 WHERE sv.host_code = #{host_code}
   		   AND sv.stock_status = '사용중'
+  		 ORDER BY TO_NUMBER(SUBSTR(inven_code, 3)) DESC 
+  		 
   	</select>
- 
+  	
+  	<!-- 재고실사 등록 처리 -->
+  	<insert id="insertPeriodicInven" parameterType="com.spring.Creamy_CRM.VO.StockVO">
+  		INSERT INTO periodic_inventory (inven_code, stock_code, inven_date, indiv_inven_cnt)
+  		VALUES('PI'|| periodic_inven_seq.nextval, #{stock_code}, #{inven_date}, #{indiv_inven_cnt})
+  	</insert>
+  	
+  	<!-- 재고실사 검색을 위한 뷰 생성 -->
+  	<update id="createSearchInvenView" parameterType="String">
+  		${sql}
+  	</update>
+  	
+  	<!-- 재고 실사 검색 -->
+  	<select id="searchPeriodicInven" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.StockVO">
+  		SELECT * 
+  		<choose>
+  			<when test="keyword.equals('') and !inven_date.equals('')">
+  				 FROM searchPeriodicInven_view
+  			    WHERE TO_CHAR(inven_date, 'YYYY-MM') = #{inven_date}
+  			</when>
+  			<when test="!keyword.equals('') and inven_date.equals('')">
+  				 FROM searchPeriodicInven_view
+  			    WHERE inven_code LIKE '%' || #{keyword} || '%'
+  				   OR stock_code LIKE '%' || #{keyword} || '%'
+  				   OR inven_date LIKE '%' || #{keyword} || '%'
+  				   OR indiv_inven_cnt LIKE '%' || #{keyword} || '%'
+  				   OR stock_name LIKE '%' || #{keyword} || '%'
+  			</when>
+  			<when test="!keyword.equals('') and !inven_date.equals('')">
+  				 FROM (SELECT * FROM searchPeriodicInven_view WHERE TO_CHAR(inven_date, 'YYYY-MM') = #{inven_date})
+  				WHERE inven_code LIKE '%' || #{keyword} || '%'
+  				   OR stock_code LIKE '%' || #{keyword} || '%'
+  				   OR inven_date LIKE '%' || #{keyword} || '%'
+  				   OR indiv_inven_cnt LIKE '%' || #{keyword} || '%' 
+  				   OR stock_name LIKE '%' || #{keyword} || '%'
+  			</when>
+  		</choose>
+  			ORDER BY TO_NUMBER(SUBSTR(inven_code, 3)) DESC 
+  	</select>
+  	
  </mapper>

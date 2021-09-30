@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class StockVO {
 
+	private String host_code;
 	private String stock_code;
 	private String stock_name;
 	private int stock_price;
@@ -144,6 +145,12 @@ public class StockVO {
 	}
 	public void setInven_cnt(int inven_cnt) {
 		this.inven_cnt = inven_cnt;
+	}
+	public String getHost_code() {
+		return host_code;
+	}
+	public void setHost_code(String host_code) {
+		this.host_code = host_code;
 	}
 	
 	

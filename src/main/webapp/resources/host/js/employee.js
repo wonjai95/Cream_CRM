@@ -60,6 +60,10 @@ $("document").ready(function() {
 			
 	});
 	
+	$("table").on("click", "tr[class^=employee]", function() {
+		alert("click");
+	});
+	
 	
 	// 테이블에서 직원 더블 클릭시 상세 정보 페이지로 이동
 	$("tr[class^=employee]").dblclick(function(){
@@ -159,6 +163,5 @@ $("document").ready(function() {
 	$("input[name=window_close]").click(function() {
 		window.close();
 	});
-	
 	
 });
