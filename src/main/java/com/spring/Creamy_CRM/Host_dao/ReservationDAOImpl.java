@@ -38,13 +38,24 @@ public class ReservationDAOImpl implements ReservationDAO {
 
 	// 예약요청 목록 조회
 	// 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회
+	// 1-1. 모든 예약요청 목록 중 사장님코드 별 예약종류(comp_res)가 "담당자"인 경우
 	@Override
-	public List<ReservationVO> getRequestList(Map<String, Object> map) {
+	public List<ReservationVO> getRequestMngList(Map<String, Object> map) {
 		
 		//ArrayList<reservationVO> list = null;
 		
 		// 방법1. mapper를 호출하는 방식 | 리턴타입이 반드시 List<reservationVO> 이어야함
-		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getRequestList", map);
+		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getRequestMngList", map);
+		return list;
+	}
+	// 1-2. 모든 예약요청 목록 중 사장님코드 별 예약종류(comp_res)가 "호실"인 경우
+	@Override
+	public List<ReservationVO> getRequestRoomList(Map<String, Object> map) {
+		
+		//ArrayList<reservationVO> list = null;
+		
+		// 방법1. mapper를 호출하는 방식 | 리턴타입이 반드시 List<reservationVO> 이어야함
+		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getRequestRoomList", map);
 		return list;
 	}
 	// 2. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약완료) 조회
