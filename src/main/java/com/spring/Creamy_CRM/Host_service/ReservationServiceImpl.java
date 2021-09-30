@@ -38,13 +38,10 @@ public class ReservationServiceImpl implements ReservationService {
 		// 3단계. 화면으로부터 입력받은 값을 받아온다.
 		// 페이징 (변수들)
 		Page requestPage = new Page();
-		
 		requestPage.setPageSize(10);
 		requestPage.setPageBlock(10);
 		requestPage.setCnt(dao.getRequestCnt());
 		requestPage.setCurrentPage(req.getParameter("pageNum"));
-		String res_state = req.getParameter("res_state");
-		System.out.println("res_state : " + res_state);
 		
 		System.out.println("==============================");
 		

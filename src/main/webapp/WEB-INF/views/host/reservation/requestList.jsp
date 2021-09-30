@@ -8,10 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:if test="${cnt > 0}">
+
+<c:forEach var="dto" items="${dtos}">
+<c:if test="${sessionScope.code == dto.host_code}">
+
+	<c:if test="${cnt > 0}">
 	<%-- <c:if test="${dto.res_state == '서비스 완' > 0}"> --%>
 	<%-- c:forEach var="작은 바구니 참조변수(임의로 지정하기)" items="${큰 바구니}" --%>
-	<c:forEach var="dto" items="${dtos}">
+	
 		<tr class="gradeX">
 			<td style="text-align:center">
 				<!-- 상세페이지 -->
@@ -28,8 +32,25 @@
 			
 			<td style="text-align:center">${dto.res_date}</td>
 		</tr>
-	</c:forEach>
+	</c:if>
+	
 	<%-- </c:if> --%>
+
+
+
+
+	<c:if test="${cnt == 0}">
+	
+		<tr>
+			<td colspan="6" align="center">
+				예약요청 목록이 없습니다.
+			</td>			
+		</tr>
+	</c:if>
+	
 </c:if>
+</c:forEach>
+				
+				
 </body>
 </html>
