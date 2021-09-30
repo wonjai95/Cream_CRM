@@ -37,7 +37,13 @@ public interface HostDao {
 	int insertRoom(RoomSettingVO vo);
 
 	//호실 리스트
-	List<RoomSettingVO> selectRoomList(String host_code);
+	RoomSettingVO getRoom(RoomSettingVO vo);
+	
+	//호스트 개수
+	int roomCnt(RoomSettingVO vo);
+	
+	//호실 리스트
+	List<RoomSettingVO> selectRoomList(Map<String, Object> map);
 	
 	
 }
