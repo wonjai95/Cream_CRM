@@ -67,7 +67,11 @@ public class AccountDAOImpl implements AccountDAO {
 		return dao.deleteSlip(slip_code);
 	}
 
-	
+	// 영업외 손익 목록 조회
+	public List<AccountVO> getNOLlist(String host_code){
+		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
+		return dao.getNOLlist(host_code);
+	}
 
 
 

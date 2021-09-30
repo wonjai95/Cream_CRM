@@ -7,67 +7,40 @@ $("document").ready(function() {
 	if(currentDay == insertDay){
 		alert("insert 해라!");
 	} 
-	/*
-	$("a[href='#tab-2']").click(function(){
-		console.log("탭2 클릭");
-		  
-		  // var header = 'X-CSRF-TOKEN' 아래 방식이 안 될 경우 이거 사용
-		  var header = $("meta[name='_csrf_header']").attr("content");
-	      var token = $("meta[name='_csrf']").attr("content");
-	      
-	      console.log("header : " + header);
-	      console.log("token : " + token);
-	      
-	      $.ajax({
-	         url : "Non_operating_loss",
-	         type : "Post",
-	         beforeSend : function(jqXHR, settings) {
-	            console.log("beforesend 진행");
-	            jqXHR.setRequestHeader(header, token);
-	         },
-	         success : function(result) {
-	            $(".tab-content").html(result);
-	         },
-	         error : function(error) {
-	        	alert("다시 시도해주세요.");
-	         }
-	         
-	      });
-	})
-	*/	
+
 	// 유형 클릭
-	$("input[name^=slip_type]").click(function() {
-		$("input[name^=slip_type]").css("background", "");
-		$("input[name^=slip_type]").css("color", "");
+	$("input[name^=SGA_type]").click(function() {
+		$("input[name^=SGA_type]").css("background", "");
+		$("input[name^=SGA_type]").css("color", "");
 		
-		var slip_type = $(this).val();
-		console.log(slip_type);
-		$("#slip_type").val(slip_type);
+		var SGA_type = $(this).val();
+		console.log(SGA_type);
+		$("#SGA_type").val(SGA_type);
 		$(this).css("background", "#1ab394");
 		$(this).css("color", "white");
 	});
 	
 	$("#insertSGA").click(function() {
 		
-		if($("#slip_type").val() == "") {
+		if($("#SGA_type").val() == "") {
 			alert("유형을 선택하세요.");
 			return false;
 		}; 
 		
-		var slip_regDate = $("input[name=slip_regDate]").val();
-		var slip_type = $("#slip_type").val();
-		var slip_money = $("input[name=slip_money]").val();
-		var slip_memo = $("textarea[name=slip_memo]").val();
+		var SGA_regDate = $("input[name=SGA_regDate]").val();
+		var SGA_type = $("#SGA_type").val();
+		var SGA_money = $("input[name=SGA_money]").val();
+		var SGA_memo = $("textarea[name=SGA_memo]").val();
 		
 		var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
         console.log("header : " + header);
         
          $.ajax({
-	       	  url : "insertSlip",
+	       	  url : "insertSGA",
 	       	  type : "Post",
-	       	  data : "slip_regDate=" + slip_regDate + "&slip_type=" + slip_type 
-	       	  			+ "&slip_money=" + slip_money + "&slip_memo=" + slip_memo,
+	       	  data : "SGA_regDate=" + SGA_regDate + "&SGA_type=" + SGA_type 
+	       	  			+ "&SGA_money=" + SGA_money + "&SGA_memo=" + SGA_memo,
        	  	  async: false,	
   			  beforeSend : function(jqXHR, settings) {
 	       		  console.log("beforesend 진행");
@@ -91,37 +64,56 @@ $("document").ready(function() {
 	});
 	
 	
-	
-	$("tr[class^=sga_info]").click(function() {
-		$("tr[class^=sga_info]").css("background", "");
+	$("table").on("click", "tr[class^=SGA_info]", function() {
+		$("tr[class^=SGA_info]").css("background", "");
 		
 		$(this).css("background", "#20c997");
 		
 	});
 	
-	$("tr[class^=sga_info]").dblclick(function() {
+	$("table").on("dblclick", "tr[class^=SGA_info]", function(){
 		var popUpWidth = 800;
 		var popUpHeight = 800;
 		
 		var thisTr = $(this);
 		var thisTd = $(this).children();
-		var slip_code = thisTd.find("input[name^=slip_code]").val();
-		console.log(slip_code);
+		var SGA_code = thisTd.find("input[name^=slip_code]").val();
+		console.log(SGA_code);
 		
 		var popupX = (window.screen.width/2) - (popUpWidth/2);
 		var popupY = (window.screen.height/2) - (popUpHeight/2);
 		console.log("popupX : " + popupX);
 		console.log("popupY : " + popupY);
 		
-		var url = "slip_modify?slip_code=" + slip_code;
-			window.open(url, "slip_modify", "status=no, width=800, height=600, left="+ popupX + ", top="+ popupY);
-	
+		var url = "SGA_modify?SGA_code=" + SGA_code;
+			window.open(url, "SGA_modify", "status=no, width=800, height=600, left="+ popupX + ", top="+ popupY);
 	});
 	
-	// slip_modify 수정 submit 클릭시
-	$("#slip_modifyForm").submit(function() {
-		var slip_type = $("#slip_type option:selected").val();
-		if(slip_type == "0") {
+	/*
+	$("tr[class^=SGA_info]").dblclick(function() {
+		var popUpWidth = 800;
+		var popUpHeight = 800;
+		
+		var thisTr = $(this);
+		var thisTd = $(this).children();
+		var SGA_code = thisTd.find("input[name^=slip_code]").val();
+		console.log(SGA_code);
+		
+		var popupX = (window.screen.width/2) - (popUpWidth/2);
+		var popupY = (window.screen.height/2) - (popUpHeight/2);
+		console.log("popupX : " + popupX);
+		console.log("popupY : " + popupY);
+		
+		var url = "SGA_modify?SGA_code=" + SGA_code;
+			window.open(url, "SGA_modify", "status=no, width=800, height=600, left="+ popupX + ", top="+ popupY);
+	
+	});
+	*/
+	
+	// SGA_modify 수정 submit 클릭시
+	$("#SGA_modifyForm").submit(function() {
+		var SGA_type = $("#SGA_type option:selected").val();
+		if(SGA_type == "0") {
 			alert("유형을 선택하세요!");
 			return false;
 		}
@@ -129,10 +121,10 @@ $("document").ready(function() {
 	});
 	
 	$("#deleteBtn").click(function() {
-		var slip_code = $("input[name=slip_code]").val();
+		var SGA_code = $("input[name=SGA_code]").val();
 		if(confirm("삭제하시면 되돌릴 수 없습니다. 삭제 하시겠습니까?")) {
 			console.log("확인");
-			window.location="slip_deleteAction?slip_code=" + slip_code;
+			window.location="SGA_deleteAction?SGA_code=" + SGA_code;
 		} else {
 			console.log("취소");
 			return false;
@@ -141,9 +133,9 @@ $("document").ready(function() {
 	});
 	
 	// 목록의 option 선택시
-	$("select[name=slip_type]").change(function(){
+	$("select[name=SGA_type]").change(function(){
 		
-		var selectType = $("select[name=slip_type] option:selected").val();
+		var selectType = $("select[name=SGA_type] option:selected").val();
 		console.log("selectType : " + selectType);
 		
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -151,16 +143,16 @@ $("document").ready(function() {
         console.log("header : " + header);
         
          $.ajax({
-	       	  url : "slip_List",
+	       	  url : "SGA_List",
 	       	  type : "Post",
-	       	  data : "slip_type=" + selectType,
+	       	  data : "SGA_type=" + selectType,
        	  	  async: false,	
   			  beforeSend : function(jqXHR, settings) {
 	       		  console.log("beforesend 진행");
 	                 jqXHR.setRequestHeader(header, token);
 	       	  },
 	       	  success : function(result) {
-	       		  $("#slipList").html(result);
+	       		  $("#SGAList").html(result);
 	       	  },
 	       	  error : function(error) {
 	       		console.log(error);  
@@ -182,7 +174,7 @@ $("document").ready(function() {
 			console.log("content : " + content);
 			
 			$.ajax({
-		       	  url : "slip_Search",
+		       	  url : "SGA_Search",
 		       	  type : "Post",
 		       	  data : "search_content=" + content,
 		 	  	  async: false,
@@ -191,7 +183,7 @@ $("document").ready(function() {
 		                 jqXHR.setRequestHeader(header, token);
 		       	  },
 		       	  success : function(result) {
-		       		  $("#slipList").html(result);
+		       		  $("#SGAList").html(result);
 		       	  },
 		       	  error : function(error) {
 		       		console.log(error);  
@@ -211,7 +203,7 @@ $("document").ready(function() {
 		console.log("content : " + content);
 		
 		$.ajax({
-	       	  url : "slip_Search",
+	       	  url : "SGA_Search",
 	       	  type : "Post",
 	       	  data : "search_content=" + content,
      	  	  async: false,	
@@ -220,7 +212,7 @@ $("document").ready(function() {
 	                 jqXHR.setRequestHeader(header, token);
 	       	  },
 	       	  success : function(result) {
-	       		  $("#slipList").html(result);
+	       		  $("#SGAList").html(result);
 	       	  },
 	       	  error : function(error) {
 	       		console.log(error);  
@@ -235,3 +227,4 @@ $("document").ready(function() {
 	
 	
 });
+

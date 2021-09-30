@@ -9,7 +9,7 @@
 </head>
 <body>
 	<c:forEach var="dto" items="${vo}" varStatus="status">
-		<tr class="sga_info${status.index}">
+		<tr class="SGA_info${status.index}">
 			<td>
 				${dto.slip_regDate}
 			<input type="hidden" name="slip_code${status}" value="${dto.slip_code}">
@@ -20,4 +20,5 @@
 		 </tr>
 	</c:forEach>
 </body>
+
 </html>
