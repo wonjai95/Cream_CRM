@@ -60,9 +60,9 @@ $("document").ready(function() {
 			
 	});
 	
-	$("table").on("click", "tr[class^=employee]", function() {
-		alert("click");
-	});
+//	$("table").on("click", "tr[class^=employee]", function() {
+//		alert("click");
+//	});
 	
 	
 	// 테이블에서 직원 더블 클릭시 상세 정보 페이지로 이동
