@@ -55,7 +55,9 @@ public class MainwebServiceImpl implements MainwebService {
 		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
 		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
 		String res_state = "예약완료";
-		String room_setting_code = req.getParameter("selectRoom");
+		String res_room = req.getParameter("selectRoom");
+		System.out.println("res_room : " + res_room);
+		String room_setting_code = req.getParameter("room_setting_code");
 		System.out.println("room_setting_code : " + room_setting_code);
 		String res_indiv_request = req.getParameter("res_indiv_request");
 		String str_res_date = req.getParameter("selectDate");
@@ -79,6 +81,7 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_state(res_state);
 		System.out.println("vo.getRes_state : " + vo.getRes_state());
 		vo.setRes_cnt(guestCount);
+		vo.setRes_room(res_room);
 		vo.setRoom_setting_code(room_setting_code);
 		vo.setRes_indiv_request(res_indiv_request);
 		vo.setUser_id(user_id);
@@ -86,9 +89,10 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_hour(Integer.parseInt(res_start));
 		vo.setRes_sales(res_sales);
 		vo.setComp_res(comp_res);
-		
+		System.out.println("날짜 : " + vo.getRes_date());
 		
 		model.addAttribute("dto", vo);
+		req.setAttribute("room_setting_code", room_setting_code);
 		
 	}
 	

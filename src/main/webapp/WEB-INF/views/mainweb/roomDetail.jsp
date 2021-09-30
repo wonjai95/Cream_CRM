@@ -22,13 +22,14 @@
 <script type="text/javascript" src="${path}/resources/host/js/bookingRoomTable.js"></script>
 </head>
 <sec:csrfInput/>
-<input type="hidden" name="selectDate" value="${selectDate}">
+<input type="hidden" name="selectDate" value="${res_date}">
 
 <body class="top-navigation">
 <div class="col-lg-12" id="roomDetail">
 <div class="ibox ">
 	<input type="hidden" name="open_sche" value="${open_sche}">
 	<input type="hidden" name="close_sche" value="${close_sche}">
+	<input type="hidden" name="selectRoom" value="${selectRoom}">
     <div class="ibox-title">
         <h5>호실 상세 정보  - 영업시간 : ${open_sche} ~ ${close_sche}</h5>
     </div>
@@ -37,7 +38,7 @@
             <p style="font-size: 14px;">최소/최대 인원수 : ${roomDto.min_cnt} / ${roomDto.max_cnt}</p>
            	<p style="font-size: 14px;">1인당 가격 : <fmt:formatNumber pattern="#,###">${roomDto.per_price}</fmt:formatNumber> 원</p>
            	<hr>
-           	<p style="font-size: 14px;">${selectDate} 해당 호실 예약 현황</p>
+           	<p style="font-size: 14px;">${res_date} 해당 호실 예약 현황</p>
             <c:forEach var="dto" items="${dtos}">
             	<div class='home_div navy-bg'>&nbsp; 예약 완료 :&nbsp; ${dto.res_start} - ${dto.res_end}</div>
             </c:forEach>

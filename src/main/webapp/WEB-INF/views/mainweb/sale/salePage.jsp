@@ -39,6 +39,7 @@
   <script type="text/javascript" src="${path}/resources/host/js/custBooking.js"></script>
   <script type="text/javascript" src="${path}/resources/host/js/product_selling.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a24a16f3acffb8fc1ba508e3c65e6c76&libraries=services"></script>
+  
   <!-- =======================================================
   * Template Name: Vlava - v4.3.0
   * Template URL: https://bootstrapmade.com/vlava-free-bootstrap-one-page-template/
@@ -48,6 +49,23 @@
 </head>
 
 <body>
+
+<c:if test="${insertCnt == 3}">
+	<script type="text/javascript">
+		alert("예약 가능한 시간이 아닙니다. 다시 확인해주세요.");
+		window.history.back();
+	</script>
+</c:if>
+<c:if test="${insertCnt == 2}">
+	<script type="text/javascript">
+		alert("부접한한 예약 시간입니다. 다시 확인해주세요.");
+		window.history.back();
+	</script>
+</c:if>
+
+
+
+
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
@@ -100,14 +118,13 @@
          <div class="row mt-5 justify-content-center">
          	<div class="col-lg-15">
          	<%-- <form method="post" name="modifyUser" role="form" class="php-email-form">  --%>
-         	 <form action="insertRoomBooking" method="post" name="insertRoomBooking" class="php-email-form">	
+         	 <form action="sale_action" method="post" name="insertRoomBooking" class="php-email-form">	
          	 	<div class="row">
          	 	
          	 	<sec:csrfInput/>
 	           <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
-	           <input type="hidden" id="res_date" name="res_date">   
 	           <input type="hidden" id="res_memo" name="res_memo">
-	           <input type="hidden" id="host_code" name="host_code" value="${host_code}">
+	           <input type="hidden" id="host_code" name="host_code" value="${dto.host_code}">
 	           <input type="hidden" id="chkDay">
 	           <input type="hidden" id="comp_res" value="${comp_res}">
 	           <input type="hidden" id="per_price" value="0">
@@ -115,6 +132,13 @@
 	           <input type="hidden" id="max_cnt" value="0">
 	           <input type="hidden" id="res_sales" name="res_sales" value="0">
          	 	<input type="hidden" name="res_code" value="${res_code}">
+         	 	<input type="hidden" name="selectDate" value="${selectDate}">
+         	 	<input type="hidden" name="open_sche" value="${open_sche}">
+         	 	<input type="hidden" name="close_sche" value="${close_sche}">
+         	 	<input type="hidden" name="res_start" value="${dto.res_hour}">
+         	 	<input type="hidden" name="res_end" value="${dto.res_end}">
+         	 	
+         	 	
          	 	
          	 	<input type="hidden" value="0" name="product_typeOfSales_hidden">
 				<input type="hidden" value="0" name="product_name_hidden">
@@ -133,25 +157,24 @@
          				<!-- ibox 시작 -->
                         <div class="ibox col-lg-6">
                             <div class="ibox-content">
-                              <div id="calendar"></div>   
+                              <div id="calendar">
+                              <input type="date" name="res_date" value="${dto.res_date}"></div>   
                             </div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                               <input type="text" name="res_hour" id="selectTime" style="display: none">예약 시간 : ${dto.res_hour} 
+                               <input type="text" name="res_hour" id="selectTime" style="display: none" value="${dto.res_hour}">예약 시간 : ${dto.res_hour} 
                             </div>
                             
-                            <!-- if체크로 호실인지 담당자인지!????????????????? -->
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                          		<input type="text" name="room_setting_code" id="selectRoom" style="display: none">예약 호실 : ${dto.room_setting_code}</span>
-                          		<!-- 예약호실 코드만 가지고 왔음. 예약호실명 가져와야함??????????????????? -->
-                          		
+                          		<input type="text" name="room_setting_code" id="selectRoom" style="display: none" value="${dto.room_setting_code}">예약 호실 : ${dto.res_room}</span>
+                          		<!-- dto.room_setting_code인데 예약호실명이네???? -->
                        	  	</div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                          		<input type="text" name="res_cnt" id="GuestCount" style="display: none">예약 인원 : ${dto.res_cnt}</span>
+                          		<input type="number" name="GuestCount" id="GuestCount" style="display: none" value="${dto.res_cnt}">예약 인원 : ${dto.res_cnt}</span>
                        	  	</div>
                             <div class="form-group" style="margin-top:30px;">
                                  <span><strong>추가 요청사항</strong></span>
                                  <textarea class="form-control" placeholder="Your message" rows="3"
-                                    style="margin-top:10px;" name="res_indiv_request">${dto.res_indiv_request}</textarea>
+                                    style="margin-top:10px;" name="res_indiv_request" value="${dto.res_indiv_request}">${dto.res_indiv_request}</textarea>
                             </div>
                             
                             
