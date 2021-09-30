@@ -42,6 +42,8 @@ public class ReservationServiceImpl implements ReservationService {
 		requestPage.setPageBlock(10);
 		requestPage.setCnt(dao.getRequestCnt());
 		requestPage.setCurrentPage(req.getParameter("pageNum"));
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
 		
 		System.out.println("==============================");
 		
@@ -52,6 +54,7 @@ public class ReservationServiceImpl implements ReservationService {
 			System.out.println("getCnt : " + requestPage.getCnt());
 			// 5-2단계. 게시글 목록 조회
 			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("host_code", host_code);
 			map.put("start", requestPage.getStart());
 			map.put("end", requestPage.getEnd());
 			//map.put("res_state", state);
@@ -71,6 +74,9 @@ public class ReservationServiceImpl implements ReservationService {
 //				dtos = dao.getRequestCancel(map);
 //			}			
 		}
+		
+		System.out.println(requestPage.getCnt());
+		System.out.println(dtos);
 		// 6단계. jsp로 전달하기 위해 request나 session에 처리결과를 저장
 		model.addAttribute("dtos", dtos);			// 리스트 = 게시글 목록
 		model.addAttribute("cnt", requestPage.getCnt());			// 글 갯수

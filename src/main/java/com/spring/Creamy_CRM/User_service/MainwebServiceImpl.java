@@ -151,8 +151,9 @@ public class MainwebServiceImpl implements MainwebService {
 		System.out.println("insertBooking 시작합니다.");
 		ReservationVO vo = new ReservationVO();
 		
+		String host_code = req.getParameter("host_code");
 		String user_id = (String) req.getSession().getAttribute("id");
-		String res_state = "예약 완료";
+		String res_state = "예약완료";
 		String employee_code = req.getParameter("employee_code");
 		int res_cnt = Integer.parseInt(req.getParameter("GuestCount"));
 		String res_indiv_request = req.getParameter("res_indiv_request");
@@ -168,6 +169,7 @@ public class MainwebServiceImpl implements MainwebService {
 		int res_hour = Integer.parseInt(hours[0]);
 		
 		// vo에 담기
+		vo.setHost_code(host_code);
 		vo.setUser_id(user_id);							// 회원아이디
 		vo.setRes_state(res_state);						// 예약상태(방문?예약중?예약완료?)
 		vo.setRes_date(res_date);						// 예약날짜
@@ -179,13 +181,17 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_memo(res_memo);
 		vo.setRes_sales(res_sales);
 		
+		System.out.println("host_code : " + host_code);
 		System.out.println("user_id : " + user_id);
 		System.out.println("res_state : " + res_state);
+		System.out.println("res_date : " + res_date);
 		System.out.println("res_hour : " + res_hour);
 		System.out.println("employee_code : " + employee_code);
 		System.out.println("res_cnt : " + res_cnt);
 		System.out.println("res_indiv_request : " + res_indiv_request);
 		System.out.println("product_code : " + product_code);
+		System.out.println("res_memo : " + res_memo);
+		System.out.println("res_sales : " + res_sales);
 		
 		int insertCnt = dao.insertBooking1(vo);
 		System.out.println("insertCnt : " + insertCnt);  // insertCnt = 2
