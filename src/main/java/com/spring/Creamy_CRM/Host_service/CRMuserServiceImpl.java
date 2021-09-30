@@ -40,12 +40,15 @@ public class CRMuserServiceImpl implements CRMuserService {
 		// 선택한 user_code 넘겨서 값 출력
 		String user_code = req.getParameter("user_code");
 		System.out.println("user_code : " + user_code);
+		String user_id = req.getParameter("user_id");
+		System.out.println("user_id : " + user_id);
 		
 		userVO vo = dao_user.getUserInfo(user_code);
 		
 		System.out.println("dto : " + vo);
 		System.out.println("user_code : " + vo.getUser_code());
 		model.addAttribute("user_code", vo.getUser_code());
+		model.addAttribute("user_id", user_id);
 		req.setAttribute("dto", vo); // 회원 정보 넘겨주기
 	}
 	
@@ -57,11 +60,15 @@ public class CRMuserServiceImpl implements CRMuserService {
 		
 		String user_code = req.getParameter("user_code");
 		System.out.println("user_code : " + user_code);
+		String user_id = req.getParameter("user_id");
+		System.out.println("user_id : " + user_id);
 		
 		list = dao_user.printUsers();
 		
 		System.out.println("dto : " + list);
 		model.addAttribute("dto", list); // 상품 정보 넘겨주기
+		model.addAttribute("user_id", user_id);
+		
 	}
 	
 
@@ -86,6 +93,8 @@ public class CRMuserServiceImpl implements CRMuserService {
 	    String sido = req.getParameter("modify_sido");
 	    String gugun = req.getParameter("modify_gugun");
 	    String address= req.getParameter("modify_address");
+	    String wedding_anniversary = req.getParameter("modify_wedding");
+	    String car_number = req.getParameter("modify_car");
 	    
 		//우편번호 insert
 		Map<String, String> map_zipcode = new HashMap<String, String>();
@@ -116,7 +125,8 @@ public class CRMuserServiceImpl implements CRMuserService {
 		vo.setZipcode(zipcode);
 		vo.setUser_address(address);
 		vo.setUser_ph(user_phone);
-		
+		vo.setWedding_anniversary(wedding_anniversary);
+		vo.setCar_number(car_number);
 		
 		int updateCnt = dao_user.updateUser(vo);
 		System.out.println("updateCnt : " + updateCnt);
@@ -144,30 +154,26 @@ public class CRMuserServiceImpl implements CRMuserService {
 		
 	}   
 
-	// 회원 정보 삭제(user_tbl)
+	// 회원 정보 삭제
 	@Override
 	public void deleteUser(HttpServletRequest req, Model model) {
-		System.out.println("service => deleteUser(user_tbl)");
+		System.out.println("service => deleteUser");
 		
-		String user_code = req.getParameter("user_code");
+		String user_code = (String) req.getAttribute("user_code");
+		String ID = (String) req.getAttribute("user_id");
 		System.out.println("user_code : " + user_code);
+		System.out.println("ID : " + ID);
 		
+		// user_tbl 업데이트
 		int deleteCnt = dao_user.deleteUser(user_code);
 		model.addAttribute("deleteCnt", deleteCnt);
+		
+		// Auth_tbl 업데이트
+		int updateCnt = dao_user.updateAuth(ID);
+		model.addAttribute("updateCnt", updateCnt);
+		model.addAttribute("ID", ID);      
 	}
 
-	// 회원 삭제(Auth_tbl)
-	@Override
-	public void deleteUserAuth(HttpServletRequest req, Model model) {
-		System.out.println("service => deleteUserAuth(Auth_tbl)");
-		
-		String user_code = req.getParameter("user_code");
-		System.out.println("user_code : " + user_code);
-		
-		int deleteCnt = dao_user.deleteUserAuth(user_code);
-		model.addAttribute("deleteCnt", deleteCnt);
-		
-	}
 
 
 }

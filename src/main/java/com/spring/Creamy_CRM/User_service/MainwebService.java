@@ -20,7 +20,7 @@ public interface MainwebService {
 	// 예약페이지에서 예약 정보 받아오기
 	public void getResInfo(HttpServletRequest req, Model model);
 	
-	// 예약코드 생성
-	public void createResCD(HttpServletRequest req, Model model);
+	// 예약코드 생성 - 안쓸 예정
+	//public void createResCD(HttpServletRequest req, Model model);
 	
 }

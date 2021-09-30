@@ -28,13 +28,6 @@ public class SaleDAOImpl implements SaleDAO {
 		return sqlSession.insert("", vo);
 	}
 
-	// 예약코드 생성(결제 처리)
-	@Override
-	public int createResCD(String res_setting_code) {
-		
-		return sqlSession.insert("com.spring.Creamy_CRM.User_dao.SaleDAO.createResCD", res_setting_code);
-	}
-	
 	
 
 	

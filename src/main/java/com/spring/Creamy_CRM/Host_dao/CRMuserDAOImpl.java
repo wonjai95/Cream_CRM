@@ -53,14 +53,15 @@ public class CRMuserDAOImpl implements CRMuserDAO {
 	@Override
 	public int deleteUser(String user_code) {
 
-		return sqlSession.delete("com.spring.Creamy_CRM.Host_dao.CRMuserDAO.deleteUser", user_code);
+		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.CRMuserDAO.deleteUser", user_code);
 	}
 
-	// 회원 삭제(Auth_tbl)
+	// 회원 인증테이블 로그인체크 업데이트
 	@Override
-	public int deleteUserAuth(String user_code) {
+	public int updateAuth(String ID) {
 		
-		return sqlSession.delete("com.spring.Creamy_CRM.Host_dao.CRMuserDAO.deleteUserAuth", user_code);
+		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.CRMuserDAO.deleteAuth", ID);
 	}
+
 
 }

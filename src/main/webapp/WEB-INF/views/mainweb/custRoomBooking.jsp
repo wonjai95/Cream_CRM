@@ -42,14 +42,16 @@
         </nav>
         </div>
         <div class="wrapper wrapper-content">    
-           <form action="insertBooking" method="post" id="custBookingForm">
+           <form action="salePage" method="post" id="custBookingForm">
            <sec:csrfInput/>
            <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
+           <input type="hidden" id="user_code" name="user_code" value="${sessionScope.code}">
+           
            <input type="hidden" id="res_date" name="res_date">   
            <input type="hidden" id="res_memo" name="res_memo">
            <input type="hidden" id="host_code" name="host_code" value="${host_code}">
            <input type="hidden" id="chkDay">
-           <input type="hidden" id="comp_res" value="${comp_res}">
+           <input type="hidden" id="comp_res" name="comp_res" value="${comp_res}">
            <input type="hidden" id="per_price" value="0">
            <input type="hidden" id="min_cnt" value="0">
            <input type="hidden" id="max_cnt" value="0">

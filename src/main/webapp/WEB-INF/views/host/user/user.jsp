@@ -36,11 +36,14 @@ $("document").ready(function() {
       var user_code = thisTd.eq(0).find("input[name^=user]").val();
       var user_name = thisTd.eq(1).find("input[name^=user]").val();
       var user_ph = thisTd.eq(2).find("input[name^=user]").val();
+      var user_id = thisTd.eq(3).find("input[name^=user]").val();
       console.log("user_code : " + user_code);
       
       $("input[name=user_code_hidden]").val(user_code);
       $("input[name=user_name_hidden]").val(user_name);
       $("input[name=user_ph_hidden]").val(user_ph);
+      $("input[name=user_id_hidden]").val(user_id);
+      
       $(this).css("background", "#20c997");
       
    });
@@ -54,25 +57,29 @@ $("document").ready(function() {
 	 	  var user_code = $("input[name=user_code_hidden]").val();
 		  var user_name = $("input[name=user_name_hidden]").val();
 	      var user_ph = $("input[name=user_ph_hidden]").val();
+	      var user_id = $("input[name=user_id_hidden]").val();
+	      
 	      console.log(user_code);
 	      
-	      var url = "modify_user?user_code=" + user_code
+	      var url = "modify_user?user_code=" + user_code + "&user_id=" + user_id
 	      window.open(url, "modify_user", "menubar=no, width=800, height=800");
       }
    });
    
    // 회원 삭제 버튼 클릭
    $("#user_del_btn").click(function() {
-      if($("input[name=user_code_hidden]").val() == 0) {
+      if($("input[name=user_id_hidden]").val() == 0) {
          alert("회원을 선택하세요!");
          return false;
       } else {
          var user_code = $("input[name=user_code_hidden]").val();
          var user_name = $("input[name=user_name_hidden]").val();
          var user_ph = $("input[name=user_ph_hidden]").val();
-         console.log(user_code);
+         var user_id = $("input[name=user_id_hidden]").val();
          
-         var url = "del_user_action?user_code=" + user_code;
+         console.log(user_id);
+         
+         var url = "del_user_action?user_id=" + user_id + "&user_code=" + user_code
             window.open(url, "del_user_action", "menubar=no, width=800, height=800");
       }
    });
@@ -139,6 +146,8 @@ $("document").ready(function() {
 <input type="hidden" value="0" name="user_code_hidden">
 <input type="hidden" value="0" name="user_name_hidden">
 <input type="hidden" value="0" name="user_ph_hidden">
+<input type="hidden" value="0" name="user_id_hidden">
+
 
 <!-- 회원 -->
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -253,6 +262,7 @@ $("document").ready(function() {
 						                <td id="user_code${status.index}">${dto.user_code}<input type="hidden" name="user_code${status.index}" value="${dto.user_code}"></td>
 						                <td id="user_name${status.index}">${dto.user_name}<input type="hidden" name="user_name${status.index}" value="${dto.user_name}"></td>
 						                <td id="user_ph${status.index}">${dto.user_ph}<input type="hidden" name="user_ph${status.index}" value="${dto.user_ph}"></td>
+						                <td id="user_id${status.index}"><input type="hidden" name="user_id${status.index}" value="${dto.user_id}"></td>
 						            </tr>
 						        </c:forEach>
 					            </tbody>

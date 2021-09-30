@@ -30,6 +30,7 @@ body {
 				<label class="col-sm-2 col-form-label">회원코드</label>
 				<div class="col-sm-7">
 					<input type="text" class="form-control" name="modify_code" value="${dto.user_code}">
+					<input type="text" name="user_id" value="${dto.user_id}">
 				</div>
 			</div>
 
@@ -121,7 +122,26 @@ body {
 					<span style="padding-bottom: 13px; font-size: 30px;">&nbsp;-&nbsp;</span>  
 					<input type="text" name="modifyp_hp3" class="form-control" id="name" required style="margin-left: 3px;">
 				</div>
-			</div>      
+			</div>    
+			
+			<div class="hr-line-dashed"></div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">결혼기념일</label>       
+				<div class="col-sm-7" style="width: 80%;"> 
+                  	<input type="date" name="modify_wedding" class="form-control" id="modify_wedding" value="${dto.wedding_anniversary}" required style="margin-right: 3px;">
+                </div>
+			</div>
+			
+			<div class="hr-line-dashed"></div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">차량번호</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" name="modify_car" value="${dto.car_number}">
+				</div>
+			</div>
+			
+			
+			  
 			
 			<div class="hr-line-dashed"></div>
 			<div class="form-group row">

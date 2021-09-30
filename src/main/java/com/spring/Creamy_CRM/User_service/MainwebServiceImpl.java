@@ -43,7 +43,7 @@ public class MainwebServiceImpl implements MainwebService {
 	// 예약페이지에서 예약 정보 받아오기
 	@Override
 	public void getResInfo(HttpServletRequest req, Model model) {
-		System.out.println("service => add_saleInfo - 예약 정보 가져오기");
+		System.out.println("service => getResInfo - 예약 정보 가져오기");
 		
 		String user_id = (String) req.getSession().getAttribute("id");
 		System.out.println("user_id : " + user_id);
@@ -77,6 +77,7 @@ public class MainwebServiceImpl implements MainwebService {
 		
 		vo.setHost_code(host_code);
 		vo.setRes_state(res_state);
+		System.out.println("vo.getRes_state : " + vo.getRes_state());
 		vo.setRes_cnt(guestCount);
 		vo.setRoom_setting_code(room_setting_code);
 		vo.setRes_indiv_request(res_indiv_request);
@@ -86,23 +87,13 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_sales(res_sales);
 		vo.setComp_res(comp_res);
 		
-		// 예약 코드 생성
-		
-		int insertCnt = dao_sale.createResCD(room_setting_code);
-		System.out.println("insertCnt : " + insertCnt);
-		
-		String res_code;
-		
-		if(insertCnt == 1) {
-			res_code = vo.getRes_code();
-		}
-		
 		
 		model.addAttribute("dto", vo);
 		
 	}
 	
 	// 예약코드 생성
+	/*
 	@Override
 	public void createResCD(HttpServletRequest req, Model model) {
 		System.out.println("service => createResCD");
@@ -112,30 +103,59 @@ public class MainwebServiceImpl implements MainwebService {
 		int insertCnt = dao_sale.createResCD(res_setting_code);
 		System.out.println("insertCnt : " + insertCnt);
 		
-		Class cls = res_setting_code.getClass();
-		System.out.println("getClass : " + cls);
-		
 	}
-		
+	*/
 	
-	
-	// 회원예약 등록처리
+	// 회원예약 등록처리(담당자)
 	@Override
 	public void insertBooking(HttpServletRequest req, Model model) {
 		System.out.println("insertBooking 시작합니다.");
-		/*
+		ReservationVO vo = new ReservationVO();
+		
+		String user_id = (String) req.getSession().getAttribute("id");
+		String res_state = "예약 완료";
+		String employee_code = req.getParameter("employee_code");
+		int res_cnt = Integer.parseInt(req.getParameter("GuestCount"));
+		String res_indiv_request = req.getParameter("res_indiv_request");
+		String product_code = req.getParameter("ReserveProduct");
+		String res_memo = req.getParameter("res_memo");
+		int res_sales = Integer.parseInt(req.getParameter("ReserveProductSum"));
+		
+		String selectDate = req.getParameter("selectDate");
+		Date res_date = Date.valueOf(selectDate);
+		
+		String str_hour = req.getParameter("selectTime");
+		String[] hours = str_hour.split(":");
+		int res_hour = Integer.parseInt(hours[0]);
+		
+		// vo에 담기
+		vo.setUser_id(user_id);							// 회원아이디
+		vo.setRes_state(res_state);						// 예약상태(방문?예약중?예약완료?)
+		vo.setRes_date(res_date);						// 예약날짜
+		vo.setRes_hour(res_hour);						// 예약시간
+		vo.setEmployee_code(employee_code);				// 예약담당자
+		vo.setRes_cnt(res_cnt);							// 예약인원수
+		vo.setRes_indiv_request(res_indiv_request);		// 특별요청(추가요청)
+		vo.setProduct_code(product_code);				// 예약한 상품서비스
+		vo.setRes_memo(res_memo);
+		vo.setRes_sales(res_sales);
+		
+		System.out.println("user_id : " + user_id);
+		System.out.println("res_state : " + res_state);
+		System.out.println("res_hour : " + res_hour);
+		System.out.println("employee_code : " + employee_code);
+		System.out.println("res_cnt : " + res_cnt);
+		System.out.println("res_indiv_request : " + res_indiv_request);
+		System.out.println("product_code : " + product_code);
+		
 		int insertCnt = dao.insertBooking1(vo);
 		System.out.println("insertCnt : " + insertCnt);  // insertCnt = 2
 		
 		model.addAttribute("insertCnt", insertCnt);
 		model.addAttribute("vo", vo);
 		System.out.println("vo.getRes_cnt : " + vo.getRes_cnt());
-		*/
 	}
 
-
-
-	
 	
 	
 	

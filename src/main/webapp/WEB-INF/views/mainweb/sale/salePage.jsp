@@ -100,7 +100,7 @@
          <div class="row mt-5 justify-content-center">
          	<div class="col-lg-15">
          	<%-- <form method="post" name="modifyUser" role="form" class="php-email-form">  --%>
-         	 <form action="sale_action" method="post" name="sale_action" class="php-email-form">	
+         	 <form action="insertRoomBooking" method="post" name="insertRoomBooking" class="php-email-form">	
          	 	<div class="row">
          	 	
          	 	<sec:csrfInput/>
@@ -114,7 +114,7 @@
 	           <input type="hidden" id="min_cnt" value="0">
 	           <input type="hidden" id="max_cnt" value="0">
 	           <input type="hidden" id="res_sales" name="res_sales" value="0">
-         	 	
+         	 	<input type="hidden" name="res_code" value="${res_code}">
          	 	
          	 	<input type="hidden" value="0" name="product_typeOfSales_hidden">
 				<input type="hidden" value="0" name="product_name_hidden">
@@ -262,31 +262,6 @@
                                    
                                    
                                    
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
                                </div>
                            </div>
                            <!-- ibox 끝 -->
@@ -300,10 +275,10 @@
 						
 					
 					
-					
                     <div class="text-center">
-		              <button type="submit" style="font-size: 16px">결제하기</button>
-		            </div>          
+		              <button type="submit" style="font-size: 16px">예약하기</button>
+		            </div>
+		         
                         <!-- col-lg-6 끝 -->
 					
 			</form>
