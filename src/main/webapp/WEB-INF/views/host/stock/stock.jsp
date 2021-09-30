@@ -128,6 +128,12 @@ $("docuemnt").ready(function() {
 	
 	}
 	
+	// 재고관리 탭
+	$("#tab-1").click(function() {
+		location.reload();
+	})
+	
+	// 재고실사 탭
 	$("#tab-2").click(function() {
 		var header = $("meta[name='_csrf_header']").attr("content");
 	    var token = $("meta[name='_csrf']").attr("content");
@@ -176,8 +182,7 @@ $("docuemnt").ready(function() {
 					<div class="col-lg-12">
 						<div class="tabs-container">
 							<ul class="nav nav-tabs">
-								<li><a class="nav-link active" data-toggle="tab"
-									href="#tab-1">재고 관리</a></li>
+								<li><a class="nav-link active" data-toggle="tab" id="tab-1" href="#tab-1">재고 관리</a></li>
 								<li><a class="nav-link" data-toggle="tab" id="tab-2" href="#tab-2">재고 실사</a></li>
 										
 							</ul>
@@ -420,14 +425,6 @@ $("docuemnt").ready(function() {
 												</div>
 											</fieldset>
 										</div>
-
-								<div id="tab-2" class="tab-pane">
-								
-								</div>
-
-								<div id="tab-4" class="tab-pane">
-								
-								</div>
 
 							</div>
 						</div>
