@@ -25,14 +25,15 @@ public interface ProductDAO {
 	// 판매 내역 출력
 	public List<SaleVO> getSaleInfo(String user_code);
 	
+	/**************************************************************/
 	// 그룹 개수
 	int productGroupCnt(String host_code);
-	// 그룹 리스트(페이징)
-	List<ProductGroupVO> selectProductGroupList(Map<String, Object> map);
+	// 그룹 목록
+	List<ProductGroupVO> selectProductGroupList(String host_code);
 	// 상품 그룹 정보
-	ProductGroupVO getProductGroup(String product_group_code);
+	ProductGroupVO getProductGroup(ProductGroupVO vo);
 	// 상품 그룹 수정
-	int updateProductGroup(Map<String, Object> map);
+	int updateProductGroup(ProductGroupVO vo);
 	// 상품 그룹 삭제
 	int deleteProductGroup(String product_group_code);
 	// 상품 그룹 리스트
@@ -40,8 +41,8 @@ public interface ProductDAO {
 	
 	// 상품 개수
 	int productCnt(String host_code);
-	// 상품 리스트(페이징)
-	List<P_pgVO> selectProductList(Map<String, Object> map);
+	// 상품 목록
+	List<ProductVO> selectProductList(ProductVO vo);
 	
 	// 상품그룹 등록
 	int insertProductGroup(ProductGroupVO vo);
@@ -57,7 +58,7 @@ public interface ProductDAO {
 	int updateProduct(ProductVO vo);
 	// 상품 삭제
 	int deleteProduct(String product_code);
-
+	/**************************************************************/
 	
 	// 거래처명 중복확인
 	int chkTradeName(Map<String, Object> map);
