@@ -12,17 +12,19 @@ import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
 import com.spring.Creamy_CRM.Host_dao.ProductDAO;
+import com.spring.Creamy_CRM.Host_dao.ProductDAOImpl;
 import com.spring.Creamy_CRM.User_dao.SaleDAO;
+import com.spring.Creamy_CRM.User_dao.SaleDAOImpl;
 import com.spring.Creamy_CRM.VO.userVO;
 
 @Service
 public class SaleServiceImpl implements SaleService {
 
 	@Autowired
-	SaleDAO dao;
+	SaleDAOImpl dao;
 	
 	@Autowired
-	ProductDAO dao_pro;
+	ProductDAOImpl dao_pro;
 	
 	@Autowired
 	LoginDAOImpl dao_login;
@@ -52,7 +54,7 @@ public class SaleServiceImpl implements SaleService {
 		String credit_installment = req.getParameter("credit_installment");
 		System.out.println("credit_installment : " + credit_installment);
 		String sale_memo = req.getParameter("sale_memo");
-		String employee_code = req.getParameter("employee_name");
+		String employee_code = req.getParameter("employee_code");
 		
 		userVO vo = new userVO();
 		vo.setTotal_payment(total_payment);
