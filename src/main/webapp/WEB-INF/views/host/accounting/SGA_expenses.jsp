@@ -24,7 +24,7 @@ label {
 }
 </style>
 <script type="text/javascript"
-	src="${path}/resources/host/js/SGA_expenses1.js"></script>
+	src="${path}/resources/host/js/SGA_expenses.js"></script>
 </head>
 <body>
 	<div id="wrapper">
