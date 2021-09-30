@@ -533,7 +533,7 @@ public class ProductServiceImpl implements ProductService {
 		vo.setStock_name(stock_name);
 		vo.setStock_price(Integer.parseInt(stock_price));
 		vo.setStock_brand(stock_brand);
-		vo.setStock_count(Integer.parseInt(stock_count));
+		vo.setStock_cnt(Integer.parseInt(stock_count));
 		vo.setStock_status(stock_status);
 		vo.setTrade_code(trade_code);
 		vo.setStock_indate(new Date(System.currentTimeMillis()));
@@ -586,7 +586,7 @@ public class ProductServiceImpl implements ProductService {
 			vo.setStock_code(stock_code);
 			vo.setStock_name(stock_name);
 			vo.setStock_price(Integer.parseInt(stock_price));
-			vo.setStock_count(Integer.parseInt(stock_count));
+			vo.setStock_cnt(Integer.parseInt(stock_count));
 			vo.setStock_brand(stock_brand);
 			vo.setStock_status(stock_status);
 			vo.setTrade_code(trade_code);

@@ -383,7 +383,7 @@ $("docuemnt").ready(function() {
 																					<td class="footable-visible"><span>${stock.stock_brand}</span>
 																					</td>
 									
-																					<td class="footable-visible"><span>${stock.stock_count}개</span>
+																					<td class="footable-visible"><span>${stock.stock_cnt}개</span>
 																					</td>
 									
 																					<td class="text-right footable-visible footable-last-column">
