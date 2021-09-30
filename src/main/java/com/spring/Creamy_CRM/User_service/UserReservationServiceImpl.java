@@ -186,7 +186,9 @@ public class UserReservationServiceImpl implements UserReservationService {
 	@Override
 	public void bookingRoomTable(HttpServletRequest req, Model model) {
 		String host_code = req.getParameter("host_code");
+		System.out.println("host_code : " + host_code);
 		String selectDate = req.getParameter("selectDate");
+		System.out.println("selectDate : " + selectDate);
 		List<ReservationVO> dtos = dao.getAvailableRoom(host_code);
 		System.out.println("dtos : " + dtos.size());
 		model.addAttribute("dtos", dtos);
@@ -230,6 +232,8 @@ public class UserReservationServiceImpl implements UserReservationService {
 	// 호실 예약 처리
 	@Override
 	public void insertRoomBookingAction(HttpServletRequest req, Model model) {
+		System.out.println("service ==> insertRoomBookingAction ");
+		
 		String host_code = req.getParameter("host_code");
 		String res_start = req.getParameter("res_start");
 		String res_end = req.getParameter("res_end");
@@ -306,7 +310,8 @@ public class UserReservationServiceImpl implements UserReservationService {
 				insertCnt = 3;
 			}
 		}
-		model.addAttribute("insertCnt", insertCnt);
+		
+		model.addAttribute("insertCnt_room", insertCnt);
 		
 	}
 

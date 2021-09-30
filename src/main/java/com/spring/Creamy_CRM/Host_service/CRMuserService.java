@@ -27,6 +27,4 @@ public interface CRMuserService {
 	// 회원 정보 삭제(user_tbl)
 	public void deleteUser(HttpServletRequest req, Model model);
 	
-	// 회원 삭제(Auth_tbl)
-	public void deleteUserAuth(HttpServletRequest req, Model model);
 }

@@ -19,7 +19,7 @@ public class MainwebDAOImpl implements MainwebDAO {
 	SqlSession sqlSession;
 
 
-//======= 회원예약 =======	
+//======= 회원예약 =======	안하는거
 	// 회원예약 등록처리
 	@Override
 	public int insertBooking1(ReservationVO vo) {

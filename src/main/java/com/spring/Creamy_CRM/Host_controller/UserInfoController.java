@@ -36,13 +36,18 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 	@RequestMapping("/host/user")
 	public String user(HttpServletRequest req, Model model) {
 		logger.info("url -> user");
+
+		String user_code = req.getParameter("user_code");
+		System.out.println("user_code : " + user_code);
+		String user_id = req.getParameter("user_id");
+		System.out.println("user_id : " + user_id);
 		
 		// 회원 목록 출력
 		service_user.printUsers(req, model);
 		
+		model.addAttribute("user_id", user_id);
+		
 		// 회원 선택 하면 해당 회원에 대한 판매 내역 출력(판매 탭) - user_sale
-		String user_code = req.getParameter("user_code");
-		System.out.println("user_code : " + user_code);
 		
 		if(user_code != null) {
 			
@@ -71,8 +76,12 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		
 		String user_code = req.getParameter("user_code");
 		System.out.println("user_code : " + user_code);
+		String user_id = req.getParameter("user_id");
+		System.out.println("user_id : " + user_id);
 		
 		service_user.getUserInfo(req, model);
+		
+		
 		
 		return "host/user/modify_user";
 	}
@@ -82,6 +91,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 	public String modify_user_action(HttpServletRequest req, Model model) {
 		logger.info("url -> modify_user_action");
 		
+		// 수정 처리
 		service_user.modifyUser(req, model);
 		
 		return "host/user/modify_user_action";
@@ -96,30 +106,28 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		return "host/user/mypage";
 	}
 	  
+	
 	// 회원 삭제 처리(user_tbl)
 	@RequestMapping("/host/del_user_action")
 	public String del_user_action(HttpServletRequest req, Model model) {
 		logger.info("url -> del_user_action");
 		
+		String user_code = req.getParameter("user_code");
+		System.out.println("user_code : " + user_code);
+		String user_id = req.getParameter("user_id");
+		System.out.println("user_id : " + user_id);
+		
+		req.setAttribute("user_code", user_code);
+		req.setAttribute("user_id", user_id);
+		
+		// user_tbl 회원 만료일자 추가
 		service_user.deleteUser(req, model);
 		
 		return "host/user/del_user_action";
 	}
 	
-	// 회원 삭제 처리(Auth_tbl)
-	@RequestMapping("/host/del_userAuth_action")
-	public String del_userAuth_action(HttpServletRequest req, Model model) {
-		logger.info("url -> del_userAuth_action");
-		
-		service_user.deleteUserAuth(req, model);
-		
-		return "host/user/del_userAuth_action";
-	}
-		
-	
-	
 	// 회원별 판매 내역 출력
-	/*
+	
 	@RequestMapping("/host/user_sale")
 	public String user_sale(HttpServletRequest req, Model model) {
 		logger.info("url -> user_sale");
@@ -129,7 +137,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		
 		return "host/user/user_sale";
 	}
-	*/
+	
 	
 	
 }

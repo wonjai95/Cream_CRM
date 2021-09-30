@@ -28,6 +28,7 @@
 		           		<input type="text" style="display: none" name="per_price" value="${dto.per_price}">
 		           		<input type="text" style="display: none" name="min_cnt" value="${dto.min_cnt}">
 		           		<input type="text" style="display: none" name="max_cnt" value="${dto.max_cnt}">
+		           		<input type="hidden" name="selectRoom" value="${dto.room_name}">
 		           	</td>
 				</c:forEach>
 			</tr>

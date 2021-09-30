@@ -40,7 +40,7 @@
         </nav>
         </div>
         <div class="wrapper wrapper-content">
-           <form action="add_saleInfo" method="post" id="custBookingForm">
+           <form action="insertBooking" method="post" id="custBookingForm">
            <sec:csrfInput/>
            <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
            <input type="hidden" id="res_state" name="res_state"> 
@@ -48,7 +48,7 @@
            <input type="hidden" id="res_memo" name="res_memo">
            <input type="hidden" id="host_code" name="host_code" value="${host_code}">
            <input type="hidden" id="chkDay">
-           <input type="hidden" id="comp_res" value="${comp_res}">
+           <input type="hidden" id="comp_res" name="comp_res" value="${comp_res}">
            <input type="hidden" id="product_code" name="product_code">
                 <div class="row">
                    <!-- col-lg-8  시작 -->

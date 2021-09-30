@@ -25,7 +25,9 @@ public class SaleServiceImpl implements SaleService {
 	
 	Date today = new Date(0);
 	
+	
 	// 회원 - 결제(결제 정보 insert)
+	/*
 	@Override
 	public void insertSaleInfo(HttpServletRequest req, Model model) {
 		System.out.println("service ==> insertSaleInfo");
@@ -37,14 +39,16 @@ public class SaleServiceImpl implements SaleService {
 		System.out.println("total_payment : " + total_payment);
 		String payment_option = req.getParameter("payment_option_hidden");
 		System.out.println("payment_option  : " + payment_option);
+		
 		String credit_select = req.getParameter("credit_select");
 		System.out.println("credit_select : " + credit_select);
 		String credit_installment = req.getParameter("credit_installment");
 		System.out.println("credit_installment : " + credit_installment);
-		
 		String sale_memo = req.getParameter("sale_memo");
-		
 		String employee_code = req.getParameter("employee_name");
+		String res_code = req.getParameter("res_code");
+		String room_setting_code = req.getParameter("room_setting_code");
+		
 		userVO vo = new userVO();
 		vo.setTotal_payment(total_payment);
 		vo.setPayment_option(payment_option);
@@ -56,15 +60,17 @@ public class SaleServiceImpl implements SaleService {
 		vo.setEmployee_code(employee_code);
 		
 		vo.setUser_id(user_id);
+		vo.setRes_code(res_code);
+		vo.setRoom_setting_code(room_setting_code);
 		
 		int insertCnt = dao_pro.addSaleInfo(vo);
 		
-		model.addAttribute("insertCnt", insertCnt);
+		model.addAttribute("insertCnt_sale", insertCnt);
 		model.addAttribute("dto", vo);
 		
 		
 	}
-
+*/
 
 
 }

@@ -14,6 +14,4 @@ public interface SaleDAO {
 	// 결제정보 등록
 	public int addSaleInfo(userVO vo);
 	
-	// 예약코드 생성(결제 처리)
-	public int createResCD(String res_setting_code);
 }

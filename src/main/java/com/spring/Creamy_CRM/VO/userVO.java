@@ -27,6 +27,7 @@ public class userVO {
 	private String user_memo;
 	private Date wedding_anniversary;
 	private String car_number;
+
 	
 	
 	// sale_tbl(결제 테이블)
@@ -74,6 +75,10 @@ public class userVO {
 	private String employee_type;
 	private String annual_leave_cnt;
 	private String annual_leave_usage;
+	
+	// 예약
+	private String res_code;
+	private String room_setting_code;
 	
 	
 	public String getUser_code() {
@@ -166,6 +171,20 @@ public class userVO {
 	public void setUser_memo(String user_memo) {
 		this.user_memo = user_memo;
 	}
+	public String getWedding_anniversary() {
+		return wedding_anniversary;
+	}
+	public void setWedding_anniversary(String wedding_anniversary) {
+		this.wedding_anniversary = wedding_anniversary;
+	}
+	public String getCar_number() {
+		return car_number;
+	}
+	public void setCar_number(String car_number) {
+		this.car_number = car_number;
+	}
+	
+	
 	
 	
 	
@@ -396,6 +415,7 @@ public class userVO {
 	public void setAnnual_leave_usage(String annual_leave_usage) {
 		this.annual_leave_usage = annual_leave_usage;
 	}
+
 	public Date getWedding_anniversary() {
 		return wedding_anniversary;
 	}
@@ -407,6 +427,7 @@ public class userVO {
 	}
 	public void setCar_number(String car_number) {
 		this.car_number = car_number;
+
 	}
 
 	
