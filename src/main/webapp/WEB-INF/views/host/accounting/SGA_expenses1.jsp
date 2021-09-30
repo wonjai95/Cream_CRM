@@ -24,7 +24,7 @@ label {
 }
 </style>
 <script type="text/javascript"
-	src="${path}/resources/host/js/SGA_expenses.js"></script>
+	src="${path}/resources/host/js/SGA_expenses1.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -73,30 +73,30 @@ label {
 												<sec:csrfInput />
 												<div class="form-group">
 													<label>날짜</label> <input type="date" class="form-control"
-														name="slip_regDate" style="width: 50%;" required>
+														name="SGA_regDate" style="width: 50%;" required>
 												</div>
 
 												<div class="form-group">
 													<label>유형</label><br> <input type="button"
-														class="btn btn-outline btn-primary" name="slip_type1"
-														id="slip_type1" value="복리후생비"> <input
+														class="btn btn-outline btn-primary" name="SGA_type1"
+														id="SGA_type1" value="복리후생비"> <input
 														type="button" class="btn btn-outline btn-primary"
-														name="slip_type2" id="slip_type3" value="소모품비"> <input
+														name="SGA_type2" id="SGA_type2" value="소모품비"> <input
 														type="button" class="btn btn-outline btn-primary"
-														name="slip_type3" id="slip_type4" value="수수료비용"> <input
-														type="text" style="display: none" name="slip_type"
-														id="slip_type">
+														name="SGA_type3" id="SGA_type3" value="수수료비용"> <input
+														type="text" style="display: none" name="SGA_type"
+														id="SGA_type">
 												</div>
 
 												<div class="form-group">
 													<label>금액</label> <input type="text" class="form-control"
-														name="slip_money" style="width: 50%;"
+														name="SGA_money" style="width: 50%;"
 														placeholder="금액을 입력해주세요." required>
 												</div>
 
 												<div class="form-group">
 													<label>메모</label>
-													<textarea class="form-control" name="slip_memo"
+													<textarea class="form-control" name="SGA_memo"
 														style="width: 80%;" placeholder="판매비와 관리비 내용" rows="3"
 														required></textarea>
 												</div>
@@ -117,7 +117,7 @@ label {
 												<div class="col-sm-5 m-b-xs" style="width: 30%;">
 													<select
 														class="form-control-sm form-control input-s-sm inline"
-														name="slip_type" style="width: 80%;">
+														name="SGA_type" style="width: 80%;">
 														<option value="0">유형 선택</option>
 														<option value="복리후생비">복리후생비</option>
 														<option value="수수료비용">수수료비용</option>
@@ -161,9 +161,9 @@ label {
 															<th>메모</th>
 														</tr>
 													</thead>
-													<tbody id="slipList">
+													<tbody id="SGAList">
 														<c:forEach var="dto" items="${dtos}" varStatus="status">
-															<tr class="sga_info${status.index}">
+															<tr class="SGA_info${status.index}">
 																<td>${dto.slip_regDate}<input type="hidden"
 																	name="slip_code${status}" value="${dto.slip_code}">
 																</td>

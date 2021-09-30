@@ -4,13 +4,30 @@
 
 $("document").ready(function() {
 	
-	var insertDay = '1';
-	var currentDay = new Date().toISOString().slice(8, 10);
-	console.log(currentDay);
+	// 1번 탭을  Ajax 발동
+	// var header = 'X-CSRF-TOKEN' 아래 방식이 안 될 경우 이거 사용
+	var header = $("meta[name='_csrf_header']").attr("content");
+    var token = $("meta[name='_csrf']").attr("content");
+    
+    console.log("header : " + header);
+    console.log("token : " + token);
+    
+    $.ajax({
+       url : "Non_operating_loss",
+       type : "Post",
+       beforeSend : function(jqXHR, settings) {
+          console.log("beforesend 진행");
+          jqXHR.setRequestHeader(header, token);
+       },
+       success : function(result) {
+          $("#operlossList").html(result);
+       },
+       error : function(error) {
+      	alert("다시 시도해주세요.");
+       }
+       
+    });
 	
-	if(currentDay == insertDay){
-		alert("insert 해라!");
-	} 
 		
 	// 유형 클릭
 	$("input[name^=operloss_type]").click(function() {
@@ -67,14 +84,40 @@ $("document").ready(function() {
 		
 	});
 	
-	$("tr[class^=sga_info]").click(function() {
-		$("tr[class^=sga_info]").css("background", "");
+	// ajax로 innerhtml한 값들의 경우 자바스크립트 적용이 어렵다... 따라서, on을 이용해서 미래의 즉, 다음 jsp에도 같은 function을 적용 시키는 방법으로 진행
+	$("table").on("click", "tr[class^=NOL_info]", function(){
+		$("tr[class^=NOL_info]").css("background", "");
+		
+		$(this).css("background", "#20c997");
+	});
+	
+	$("table").on("dblclick", "tr[class^=NOL_info]", function(){
+		var popUpWidth = 800;
+		var popUpHeight = 800;
+		
+		var thisTr = $(this);
+		var thisTd = $(this).children();
+		var NOL_code = thisTd.find("input[name^=NOL_code]").val();
+		console.log(NOL_code);
+		
+		var popupX = (window.screen.width/2) - (popUpWidth/2);
+		var popupY = (window.screen.height/2) - (popUpHeight/2);
+		console.log("popupX : " + popupX);
+		console.log("popupY : " + popupY);
+		
+		var url = "NOL_modify?NOL_code=" + NOL_code;
+			window.open(url, "NOL_modify", "status=no, width=800, height=600, left="+ popupX + ", top="+ popupY);
+	});
+	
+	/*
+	$("tr[class^=NOL_info]").click(function() {
+		$("tr[class^=NOL_info]").css("background", "");
 		
 		$(this).css("background", "#20c997");
 		
 	});
 	
-	$("tr[class^=sga_info]").dblclick(function() {
+	$("tr[class^=NOL_info]").dblclick(function() {
 		var popUpWidth = 800;
 		var popUpHeight = 800;
 		
@@ -92,10 +135,10 @@ $("document").ready(function() {
 			window.open(url, "slip_modify", "status=no, width=800, height=600, left="+ popupX + ", top="+ popupY);
 	
 	});
-	
+	*/
 	// slip_modify 수정 submit 클릭시
-	$("#slip_modifyForm").submit(function() {
-		var slip_type = $("#slip_type option:selected").val();
+	$("#NOL_modifyForm").submit(function() {
+		var slip_type = $("#NOL_type option:selected").val();
 		if(slip_type == "0") {
 			alert("유형을 선택하세요!");
 			return false;
@@ -103,11 +146,11 @@ $("document").ready(function() {
 		
 	});
 	
-	$("#deleteBtn").click(function() {
-		var slip_code = $("input[name=slip_code]").val();
+	$("#NOLdeleteBtn").click(function() {
+		var slip_code = $("input[name=NOL_code]").val();
 		if(confirm("삭제하시면 되돌릴 수 없습니다. 삭제 하시겠습니까?")) {
 			console.log("확인");
-			window.location="slip_deleteAction?slip_code=" + slip_code;
+			window.location="NOL_deleteAction?NOL_code=" + slip_code;
 		} else {
 			console.log("취소");
 			return false;
@@ -204,7 +247,7 @@ $("document").ready(function() {
 	});
 	*/
 	// 창 닫기 클릭
-	$("input[name=window_close]").click(function() {
+	$("input[name=detail_close]").click(function() {
 		window.close();
 	});
 	

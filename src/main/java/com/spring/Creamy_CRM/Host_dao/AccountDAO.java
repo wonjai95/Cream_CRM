@@ -33,4 +33,6 @@ public interface AccountDAO {
 	// 매입매출 전표 삭제처리
 	public int deleteSlip(String slip_code);
 	
+	// 영업외 손익 목록 조회
+	public List<AccountVO> getNOLlist(String host_code);
 }
