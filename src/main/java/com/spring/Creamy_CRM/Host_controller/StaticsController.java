@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.Creamy_CRM.Host_service.CRMuserServiceImpl;
+import com.spring.Creamy_CRM.Host_service.StaticsServiceImpl;
 
 @Controller
 public class StaticsController {
@@ -24,6 +25,9 @@ public class StaticsController {
 	@Autowired
 	CRMuserServiceImpl service_user;
 	
+	@Autowired
+	StaticsServiceImpl service_statics;
+	
 	// 회원통계
 	@RequestMapping("host/userStatics")
 	public String userStatics(HttpServletRequest req, Model model) {
@@ -31,7 +35,10 @@ public class StaticsController {
 		
 		// 회원 목록 출력
 		service_user.printUsers(req, model);
-	  
+		
+		//성비 계산
+		service_statics.static_gender_ratio(req, model);
+		
 		return "host/statics/userStatics";
 	}
 	

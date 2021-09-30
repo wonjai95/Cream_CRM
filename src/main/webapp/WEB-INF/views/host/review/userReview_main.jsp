@@ -29,7 +29,7 @@
 
 			<div class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-8">
-					<h2>상품</h2>
+					<h2>후기</h2>
 				</div>
 			</div>
 
@@ -50,6 +50,7 @@
 								<div id="tab-2" class="tab-pane">
 									<div class="panel-body">
 										<div class="ibox-content m-b-sm" style="padding-bottom: 0px; margin-bottom: 0px;">
+											<iframe src="review_react" name="iframe_review"></iframe>
 										</div>
 									</div>
 									<%-- <jsp:include page="reservation.jsp" /> --%>
