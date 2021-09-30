@@ -73,13 +73,11 @@
                 <div class="ibox-content">
                     <div id='external-events'>
                        <p>${res_today[0].res_date} 현황</p>
-                        <div class='home_div navy-bg'>Go to shop and buy some products.</div>
-                        <div class='home_div navy-bg'>Check the new CI from Corporation.</div>
-                        <div class='home_div navy-bg'>Send documents to John.</div>
-                        <div class='home_div navy-bg'>Phone to Sandra.</div>
-                        <div class='home_div navy-bg'>Chat with Michael.</div>
+                       <c:forEach var="user" items="${res_user}">
+                        	<div class='home_div navy-bg'>${user.user_name}</div>
+                        </c:forEach>
                         <p class="m-t" style="border-top: 1px solid gray; padding-top: 5px;">
-                           	인원 : 0명
+                           	인원 : ${res_user.size()}명
                         </p>
                     </div>
                 </div>
@@ -90,12 +88,7 @@
                 </div>
                 <div class="ibox-content">
                     <div id='external-events'>
-                        <p>09/16 현황</p>
-                        <div class='home_div navy-bg'>Go to shop and buy some products.</div>
-                        <div class='home_div navy-bg'>Check the new CI from Corporation.</div>
-                        <div class='home_div navy-bg'>Send documents to John.</div>
-                        <div class='home_div navy-bg'>Phone to Sandra.</div>
-                        <div class='home_div navy-bg'>Chat with Michael.</div>
+                        <p>${res_today[0].res_date} 현황</p>
                         <p class="m-t" style="border-top: 1px solid gray; padding-top: 5px;">
                             합계 : 0원
                         </p>
@@ -168,7 +161,7 @@
             	 {
                     title: '${vo.user_name}',
                     start: '${vo.res_date}',
-                    url: 'http://localhost:3000/api/host_resdetail'
+                    url: 'http://localhost:3000/api/host_resdetail?code=${vo.res_code}'
                 },
                 </c:forEach>
                 /* {
@@ -180,7 +173,7 @@
             ]
             , eventClick:function(event) {
                 if(event.url) {
-                    window.open(event.url,'reactview','width=500, height=700');
+                    window.open(event.url,'reactview','width=500, height=500');
                     return false;
                 }
             }

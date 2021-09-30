@@ -134,6 +134,11 @@ public class LoginDAOImpl implements LoginDAO {
 	public List<ReservationVO> getTodayResListByStore(String host_code) {
 		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.loginDAO.getTodayResListByStore",host_code);
 	}
+
+	@Override
+	public List<userVO> getTodayUserList() {
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.loginDAO.getTodayUserList");
+	}
 	
 
 }
