@@ -22,7 +22,7 @@
   			<![CDATA[	
 			SELECT *
 			FROM (SELECT res_code, res_state, res_date, res_hour,
-					 employee_code, user_id, res_detail_code, rowNum rNum
+					 employee_code, user_id, res_detail_code, host_code, rowNum rNum
 					FROM ( SELECT * FROM reservation_tbl
 					WHERE NOT res_state IN '서비스 완료'
 		ORDER BY res_code DESC )
@@ -122,7 +122,7 @@
   			<![CDATA[	
 			SELECT *
 			FROM (SELECT res_code, res_state, res_date, res_hour,
-					 employee_code, user_id, res_detail_code, rowNum rNum
+					 employee_code, user_id, res_detail_code, host_code, rowNum rNum
 					FROM ( SELECT * FROM reservation_tbl
 					WHERE res_state IN '서비스 완료'
 		ORDER BY res_code DESC )

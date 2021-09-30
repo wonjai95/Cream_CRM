@@ -93,6 +93,7 @@
 					<%-- <c:if test="${dto.res_state == '서비스 완' > 0}"> --%>
 					<%-- c:forEach var="작은 바구니 참조변수(임의로 지정하기)" items="${큰 바구니}" --%>
 					<c:forEach var="cdto" items="${cdtos}">
+					<c:if test="${sessionScope.code == cdto.host_code}">
 						<tr class="gradeX">
 							<td style="text-align:center">
 								<!-- 상세페이지 -->
@@ -109,6 +110,7 @@
 							
 							<td style="text-align:center">${cdto.res_date}</td>
 						</tr>
+					</c:if>
 					</c:forEach>
 					<%-- </c:if> --%>
 				</c:if>
