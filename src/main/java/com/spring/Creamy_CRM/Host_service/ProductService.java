@@ -26,17 +26,20 @@ public interface ProductService {
 	
 	// 결제 정보 insert
 	public void addSaleInfo(HttpServletRequest req, Model model);
+	/**************************************************************************/
 	
 	//상품
 	void product(HttpServletRequest req, Model model);
+	//그룹명 중복 확인
+	int chkGroupName(HttpServletRequest req, Model model);
 	//상품그룹 등록
-	void addProductGroupAction(HttpServletRequest req, Model model);
+	ProductGroupVO addProductGroupAction(HttpServletRequest req, Model model);
 	//상품그룹 상세(수정)
 	void detailProductGroup(HttpServletRequest req, Model model);
 	//상품그룹 수정
-	void modifyProductGroupAction(HttpServletRequest req, Model model);
+	ProductGroupVO modifyProductGroupAction(HttpServletRequest req, Model model);
 	//상품그룹 삭제
-	void deleteProductGroupAction(HttpServletRequest req, Model model);
+	int deleteProductGroupAction(HttpServletRequest req, Model model);
 	
 	//상품 등록 페이지 요청 (상품그룹 데이터)
 	void addProduct(HttpServletRequest req, Model model);
@@ -48,6 +51,12 @@ public interface ProductService {
 	void modifyProductAction(MultipartHttpServletRequest req, Model model);
 	//상품삭제
 	void deleteProductAction(HttpServletRequest req, Model model);
+	
+	
+	
+	/**************************************************************/
+	
+	
 	
 	//거래처 등록
 	void addTradeAction(HttpServletRequest req, Model model);

@@ -55,7 +55,7 @@ public class ProductController {
 	EmployeeService service_emp;
 
 	
-	// 상품관련 페이지 요청
+	// 상품관련요청
 	@RequestMapping("/host/product")
 	public String product(HttpServletRequest req, Model model) {
 		logger.info("url -> product");
@@ -70,14 +70,22 @@ public class ProductController {
 		return "host/product/addProductGroup";
 	}
 
-	// 상품 그룹 페이지요청
+	// 상품 그룹 등록
+	@ResponseBody
 	@RequestMapping("/host/addProductGroupAction")
-	public String addProductGroupAction(HttpServletRequest req, Model model) {
+	public ProductGroupVO addProductGroupAction(HttpServletRequest req, Model model) {
 		logger.info("url -> addProductGroupAction");
-		service.addProductGroupAction(req, model);
-		return "host/product/addProductGroupAction";
+		return service.addProductGroupAction(req, model);
 	}
-
+	
+	//상품 그룹 이름 중복확인
+	@ResponseBody
+	@RequestMapping("/host/chkGroupName")
+	public int chkGroupName(HttpServletRequest req, Model model) {
+		logger.info("url -> chkGroupName");
+		return service.chkGroupName(req, model);
+	}
+	
 	// 상품 그룹 수정 페이지요청
 	@RequestMapping("/host/detailProductGroup")
 	public String detailProductGroup(HttpServletRequest req, Model model) {
@@ -87,19 +95,19 @@ public class ProductController {
 	}
 
 	// 상품 그룹 수정
+	@ResponseBody
 	@RequestMapping("/host/modifyProductGroupAction")
-	public String modifyProductGroupAction(HttpServletRequest req, Model model) {
+	public ProductGroupVO modifyProductGroupAction(HttpServletRequest req, Model model) {
 		logger.info("url -> modifyProductGroupAction");
-		service.modifyProductGroupAction(req, model);
-		return "host/product/modifyProductGroupAction";
+		return service.modifyProductGroupAction(req, model);
 	}
 
 	// 상품 그룹 삭제
+	@ResponseBody
 	@RequestMapping("/host/deleteProductGroupAction")
-	public String deleteProductGroupAction(HttpServletRequest req, Model model) {
+	public int deleteProductGroupAction(HttpServletRequest req, Model model) {
 		logger.info("url -> deleteProductGroupAction");
-		service.deleteProductGroupAction(req, model);
-		return "host/product/deleteProductGroupAction";
+		return service.deleteProductGroupAction(req, model);
 	}
 
 	// 상품등록 페이지요청

@@ -188,7 +188,7 @@ public class HostServiceImpl implements HostService {
 		return selectCnt;
 	}
 
-	//호실 확인
+	//호실 등록
 	@Override
 	//public RoomSettingVO addRoomAction(HttpServletRequest req, Model model) {
 	public int addRoomAction(HttpServletRequest req, Model model) {
