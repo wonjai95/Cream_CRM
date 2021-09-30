@@ -5,9 +5,117 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <title>Insert title here</title>
+<style type="text/css">
+body{background-color: white;}
+</style>
 <script type="text/javascript">
-	
+
+	$(function(){
+		
+		$("#room_name").blur(function() {
+					var room_name = $(this).val();
+					var room_setting_code = $("#room_setting_code").val();
+					
+					if (room_name != "") {
+						$.ajax({
+							type : "get",
+							url : "chkRoomName",
+							data : "room_name=" + room_name + "&room_setting_code=" +room_setting_code,
+							success : function(result) {
+								$("#chkName").css("display", "block").css(
+										"color", "red").css("font-size",
+										"10px");
+								if (result != 0) {
+									$("#chkName").html("호실 이름이 중복되었습니다.");
+									$("#hiddenName").val("0");
+								} else {
+									//$("#chkName").html(room_name + " 은(는) 사용 가능합니다.");
+									$("#chkName").css("display", "none");
+									$("#hiddenName").val(room_name);
+								}
+							},
+							error : function() {
+								alert("오류");
+							}
+
+						});
+					} else {
+						$("#chkName").css("display", "none");
+						$("#hiddenName").val("");
+					}
+
+				});
+		
+		
+		$("#submitForm").click(function() {
+			var frm = $("#frm").serialize();
+			var header = $("meta[name='_csrf_header']").attr("content");
+			var token = $("meta[name='_csrf']").attr("content");
+			
+			if(!$("#room_name").val()){
+				alert("호실 이름을 입력해주세요");
+				return;
+			}else if($("#room_stat").val() == "0"){
+				alert("호실 상태를 선택해주세요");
+				return;
+			}else if(!$("#per_price").val() || isNaN($("#per_price").val())){
+				alert("가격을 올바른 값으로 입력하세요");
+				return;
+			}else if(!$("#min_cnt").val()){
+				alert("최소 인원수를 입력해주세요");
+				return;
+			}else if(!$("#max_cnt").val()){
+				alert("최대 인원수를 입력해주세요");
+				return;
+			}else if($("#hiddenName").val() != $("#room_name").val()){
+				alert("중복확인을 다시하세요");
+				return;
+			}else if($("#hiddenName").val() == "0"){
+				alert("호실 이름이 중복되었습니다");
+				$("#room_name").val("");
+				return;
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "modifyRoom",
+				data : frm,
+				dataType : 'json', // 저게뭔지는모르겠는데 아마 제이슨형식의 데이터타입이 리스판스결과 인듯..
+				beforeSend : function(jqXHR, settings) {
+					jqXHR.setRequestHeader(header, token);
+				},
+				async : false,
+				success : function(response) {
+					var temp = addHtml(response);
+					
+					$(opener.document).find("input[type=radio]:checked").parent().parent().replaceWith(temp);
+					opener.alert("호실수정완료");
+					window.close();
+				},
+				error : function() {
+					alert("에러");
+				}
+			});
+		});
+		
+		function addHtml(vo) {
+			return '<tr class="footable-odd">'
+			+ '<td class="footable-visible">&nbsp;&nbsp;&nbsp;'
+			+ '<input type="radio" name="room_setting_code" value="'+ vo.room_setting_code +'">'
+			+ '</td>'
+			+ '<td class="footable-visible"><span>'+ vo.room_name +'</span></td>'
+			+ '<td class="footable-visible"><span>'+ vo.room_stat +'</span></td>'
+			+ '<td class="footable-visible"><span>'+ vo.per_price +'</span></td>'
+			+ '<td class="footable-visible"><span>'+ vo.min_cnt +'</span></td>'
+			+ '<td class="footable-visible"><span>'+ vo.max_cnt +'</span></td>'
+			+ '</tr>';
+		}
+		
+	});
+
 </script>
 </head>
 <body>
@@ -18,11 +126,11 @@
 		<form id="frm">
 			<!-- <form action="setRoomAction" method="post" onsubmit="return chkform();"> -->
 			<%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
-			<input type="hidden" id="hiddenName">
+			<input type="hidden" id="hiddenName" value="${vo.room_name}">
 			<input type="hidden" name="room_setting_code" id="room_setting_code" value="${vo.room_setting_code}">
 			<div class="form-group">
 				<label>호실 이름</label> <input type="text" class="form-control"
-					name="room_name" id="room_name" value="${vo.room_setting_code}">
+					name="room_name" id="room_name" value="${vo.room_name}">
 			</div>
 			<p class="font-bold" id="chkName" style="display: none;"></p>
 			<div class="form-group">
@@ -63,7 +171,7 @@
 				<div><br></div>
 				<button class="btn btn-sm btn-primary m-t-n-xs" id="submitForm"
 					type="button">
-					<strong>등록</strong>
+					<strong>수정</strong>
 				</button>
 			</div>
 		</form>

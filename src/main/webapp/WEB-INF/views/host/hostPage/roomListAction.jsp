@@ -118,8 +118,8 @@
 			<tbody id = "addRoom">
 				<c:forEach var="item" items="${list}">
 					<tr class="footable-odd">
-						<td class="footable-visible">&nbsp;&nbsp; 
-							<input type="radio"	name="room_setting_code" value="${item.room_setting_code}">
+						<td class="footable-visible">&nbsp;&nbsp;
+							<input type="radio" name="room_setting_code" value="${item.room_setting_code}">
 						</td>
 						<td class="footable-visible"><span>${item.room_name}</span></td>
 						<td class="footable-visible"><span>${item.room_stat}</span></td>

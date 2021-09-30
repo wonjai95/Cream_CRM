@@ -115,5 +115,9 @@
         where num between #{start} and #{end}
 	</select>
 	
-	
+	<!-- 호실수정 -->
+	<update id="updateRoom" parameterType="com.spring.Creamy_CRM.VO.RoomSettingVO">
+		update room_setting_tbl set room_name = #{room_name}, room_stat = #{room_stat} , per_price = #{per_price},
+			min_cnt = #{min_cnt}, max_cnt = #{max_cnt} where room_setting_code = #{room_setting_code}
+	</update>
   </mapper>
