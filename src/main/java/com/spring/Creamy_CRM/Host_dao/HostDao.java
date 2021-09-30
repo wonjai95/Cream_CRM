@@ -45,5 +45,6 @@ public interface HostDao {
 	//호실 리스트
 	List<RoomSettingVO> selectRoomList(Map<String, Object> map);
 	
-	
+	//호실 수정
+	int updateRoom(RoomSettingVO vo);
 }

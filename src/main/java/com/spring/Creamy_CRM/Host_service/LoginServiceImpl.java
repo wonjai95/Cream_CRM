@@ -311,8 +311,10 @@ public class LoginServiceImpl implements LoginService {
 		//오늘 예약인 일정 리스트
 		List<ReservationVO> res_todaylist = dao_login.getTodayResListByStore(code);
 		req.setAttribute("res_today", res_todaylist);
-		//오늘 등록한 회원 리스트
 		
+		//오늘 등록한 회원 리스트
+		List<userVO> res_user = dao_login.getTodayUserList();
+		req.setAttribute("res_user", res_user);
 		
 		
 		

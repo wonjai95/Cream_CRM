@@ -30,4 +30,21 @@ public interface AccountService {
 	// 매입매출 전표 삭제처리
 	public void deleteSlip(HttpServletRequest req, Model model);
 	
+	// 영업외손익 목록 조회
+	public void NOLlist(HttpServletRequest req, Model model);
+	
+	// 엽업외손익 수정 페이지
+	public void getNOLInfo(HttpServletRequest req, Model model);
+	
+	// 영업외손익 수정 처리
+	public void modifyNOL(HttpServletRequest req, Model model);
+	
+	// 영업외손익 삭제 처리
+	public void deleteNOL(HttpServletRequest req, Model model);
+	
+	// 유형에 따른 영업외손익 조회
+	public void getNOLselectList(HttpServletRequest req, Model model);
+	
+	// 검색어에 따른 영업외손익 조회
+	public void getNOLsearchList(HttpServletRequest req, Model model);
 }

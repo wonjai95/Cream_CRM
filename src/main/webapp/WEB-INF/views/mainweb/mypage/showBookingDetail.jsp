@@ -16,7 +16,7 @@
 	<script src="${path}/resources/user/js/modifyUser.js"></script>
 	<script type="text/javascript" src="${path}/resources/host/js/custBooking.js"></script>
 	<script type="text/javascript">
-		function deleteBooking(){		
+		function deleteBooking() {		
 				var isTrue = confirm("해당 예약내역을 취소하시겠습니까?");
 				
 				if(isTrue==true){

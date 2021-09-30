@@ -156,7 +156,7 @@ $("document").ready(function() {
 		<form action="requestReservation" method="post">
 		   <sec:csrfInput/>
            <input type="hidden" id="pageNum" name="pageNum" value="${pageNum}">
-           <input type="hidden" id="user_id" name="user_id" value="${dto.user_id}">
+           <input type="hidden" id="user_id" name="user_id" value="${user_id}">
 		<div class="ibox-content">
 			<div class="table-responsive">
 	        <table class="table table-striped table-bordered table-hover dataTables-example">
@@ -224,6 +224,7 @@ $("document").ready(function() {
 				<tr>
 					<th id="arrow" align="center" style="font-size:18px">
 						<!-- 게시글이 있다면, -->
+						<c:if test="${sessionScope.code == dto.host_code}">
 						<c:if test="${cnt > 0}">
 							
 							<!-- 처음[◀︎◀︎] / 이전 블록[◀︎] /  -->
@@ -249,6 +250,7 @@ $("document").ready(function() {
 								<a href="reservation?pageNum=${pageCount} "> [▶︎▶︎︎] </a>
 							</c:if>
 							
+						</c:if>
 						</c:if>
 					 </th>
 				</tr>

@@ -27,6 +27,19 @@
 				}
 			});
 		});
+		$("#getWorkHours").click(function(){
+			$.ajax({
+				type:"get",
+				url:"getWorkHours",
+				success: function(response){
+					$("#workTimes").html(response);
+				},
+				error: function(){
+					alert("오류");
+				}
+			});
+		});
+		
 	});
 	
 	/*
@@ -69,7 +82,7 @@
 								<li><a class="nav-link" data-toggle="tab" href="#tab-2">
 										사업자정보 </a></li>
 
-								<li><a class="nav-link" data-toggle="tab" href="#tab-3">
+								<li><a class="nav-link" data-toggle="tab" href="#tab-3" id="getWorkHours">
 										영업 시간 설정 </a></li>
 
 								<li><a class="nav-link" data-toggle="tab" href="#tab-4" id="roomList">

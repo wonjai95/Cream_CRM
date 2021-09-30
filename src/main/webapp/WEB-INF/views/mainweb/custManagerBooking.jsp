@@ -174,7 +174,8 @@
 		                                       </table>
 	                                      <!-- 상품 테이블 끝 -->
                                       <!-- 결제 버튼 시작 -->
-                                       <input type="submit" class="btn btn-primary btn-rounded btn-block" value="예약하기" style="font-size: 26px;">
+                                       <input type="submit" class="btn btn-primary btn-rounded btn-block" 
+                                    	formaction="salePage" value="예약하기" style="font-size: 26px;">
                                       <!-- 결제 버튼 끝 -->
                                    </div>
                                </div>

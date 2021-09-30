@@ -36,4 +36,24 @@ public class StockController {
 		return "host/stock/inventory";
 	}
 	
+	
+	// 재고실사 등록 처리
+	@RequestMapping("/host/add_periodic_inven")
+	public String add_periodic_inven(HttpServletRequest req, Model model) {
+		logger.info("url -> add_periodic_inven");
+		
+		service.add_periodic_inven(req, model);
+		return "host/stock/add_periodic_inven";
+	}
+	
+	
+	// 재고실사 검색
+	@RequestMapping("/host/search_periodic_inven")
+	public String search_periodic_inven(HttpServletRequest req, Model model) {
+		logger.info("url -> search_periodic_inven");
+		
+		service.search_periodic_inven(req, model);
+		return "host/stock/search_inventory";
+	}
+	
 }

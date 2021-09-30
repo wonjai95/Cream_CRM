@@ -94,9 +94,10 @@ public class HostDaoImpl implements HostDao{
 		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.HostDao.roomCnt", vo);
 	}
 
-	
-	
-	
-	
+	//호실 수 정
+	@Override
+	public int updateRoom(RoomSettingVO vo) {
+		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.HostDao.updateRoom", vo);
+	}
 	
 }

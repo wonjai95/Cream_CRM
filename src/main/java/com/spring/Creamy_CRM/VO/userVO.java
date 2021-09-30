@@ -171,8 +171,7 @@ public class userVO {
 	public void setUser_memo(String user_memo) {
 		this.user_memo = user_memo;
 	}
-	
-	
+
 	
 	
 	
@@ -403,6 +402,7 @@ public class userVO {
 	public void setAnnual_leave_usage(String annual_leave_usage) {
 		this.annual_leave_usage = annual_leave_usage;
 	}
+
 	
 	public String getWedding_anniversary() {
 		return wedding_anniversary;
@@ -417,7 +417,7 @@ public class userVO {
 		this.car_number = car_number;
 
 	}
-	
+
 	
 	
 	// 예약

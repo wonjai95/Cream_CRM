@@ -12,6 +12,12 @@ public interface StockService {
 	// 재고실사 페이지 
 	public void stock_inven(HttpServletRequest req, Model model);
 	
+	// 재고실사 등록 처리
+	public void add_periodic_inven(HttpServletRequest req, Model model);
+	
+	// 재고 실사 검색
+	public void search_periodic_inven(HttpServletRequest req, Model model);
+	
 	
 	
 }

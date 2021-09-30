@@ -21,4 +21,7 @@ public interface Android_service {
 	
 	//마이페이지 - 고객
 	public Map<String, Object> getUserInfomation(HttpServletRequest req);
+	
+	//회원가입
+	public Map<String, Object> Join(HttpServletRequest req);
 }

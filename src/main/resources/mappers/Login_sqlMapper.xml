@@ -98,9 +98,15 @@
   		select res.*, u.user_name 
   		from reservation_tbl res, user_tbl u 
   		where res.user_id = u.user_id 
-  		and host_code = 'U81'
+  		and host_code = #{host_code}
         and res.res_date = TO_DATE(sysdate,'YY/MM/DD')
-  		order by res_regdate asc
+  		order by res_hour asc
+  	</select>
+  	
+  	<select id="getTodayUserList" resultType="com.spring.Creamy_CRM.VO.userVO">
+  		select *
+		from user_tbl
+		where join_date like TO_DATE(sysdate,'YY/MM/DD')
   	</select>
   	
   	

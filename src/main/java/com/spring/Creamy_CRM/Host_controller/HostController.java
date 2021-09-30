@@ -1,6 +1,6 @@
 package com.spring.Creamy_CRM.Host_controller;
 
-import java.util.List;
+import java.util.List; 
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,13 +28,23 @@ public class HostController {
 		service.getHostInfo(req, model);
 		return "host/hostPage/hostPage";
 	}
-
+	
+	@RequestMapping("/host/getWorkHours")
+	public String getWorkHours(HttpServletRequest req, Model model) {
+		logger.info("url -> getWorkHours");
+		service.getWorkHours(req, model);
+		return "host/hostPage/timeList";
+	}
+	
 	// 시간설정
 	@RequestMapping("/host/setWorkTime")
 	public String setWorkTime(HttpServletRequest req, Model model) {
 		logger.info("url -> setWorkTime");
 		service.setWorkTime(req, model);
-		return "host/hostPage/setWorkTime";
+		if(!req.getAttribute("count").equals("0")) {
+			service.getWorkHours(req, model);
+		}
+		return "host/hostPage/timeList";
 	}
 
 	// 사업자 정보 등록(company)
@@ -95,6 +105,15 @@ public class HostController {
 		logger.info("url -> detailRoom");
 		service.detailRoom(req, model);
 		return "host/hostPage/detailRoom";
+	}
+
+	// 호실 수정
+	@ResponseBody
+	@RequestMapping("/host/modifyRoom")
+	public RoomSettingVO modifyRoom(HttpServletRequest req, Model model) {
+		logger.info("url -> modifyRoom");
+		return service.modifyRoom(req, model);
+		
 	}
 	
 

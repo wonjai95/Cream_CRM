@@ -19,8 +19,8 @@
 	</insert> 
   
 	<insert id="insertBooking2" parameterType="com.spring.Creamy_CRM.VO.ReservationVO">
-		INSERT INTO reservation_detail_tbl(res_detail_code, res_cnt, res_indiv_request, product_code, res_memo)
-		VALUES ('RS'||res_seq.nextval, #{res_cnt}, #{res_indiv_request}, #{product_code}, null)
+		INSERT INTO reservation_detail_tbl(res_detail_code, res_cnt, res_indiv_request, product_code, res_memo, res_sales)
+		VALUES ('RS'||res_seq.nextval, #{res_cnt}, #{res_indiv_request}, #{product_code}, null, #{res_sales})
 	</insert>
   
   
