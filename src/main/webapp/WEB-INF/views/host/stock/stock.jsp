@@ -15,7 +15,7 @@
 </style>
 
 <script type="text/javascript">
-$("docuemnt").ready(function() {
+
 	
 	/************************* 거래처 ****************************/
 	function addTrade() {
@@ -127,7 +127,7 @@ $("docuemnt").ready(function() {
 		}
 	
 	}
-	
+$("docuemnt").ready(function() {	
 	// 재고관리 탭
 	$("#tab-1").click(function() {
 		location.reload();
