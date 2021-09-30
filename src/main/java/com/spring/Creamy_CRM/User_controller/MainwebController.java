@@ -28,7 +28,6 @@ import com.spring.Creamy_CRM.VO.EmployeeVO;
 
 @Controller
 public class MainwebController {
-
    
    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
    
@@ -309,7 +308,10 @@ public class MainwebController {
       
       return "mainweb/mypage/deleteBooking";
    }
+<<<<<<< HEAD
+=======
 
+>>>>>>> dev
 
 
 	// ------------------- 회원 결제 페이지 ------------------------
