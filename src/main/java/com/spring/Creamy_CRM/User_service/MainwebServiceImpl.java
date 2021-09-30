@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.ProductDAO;
+import com.spring.Creamy_CRM.Host_dao.ProductDAOImpl;
 import com.spring.Creamy_CRM.User_dao.MainwebDAOImpl;
 import com.spring.Creamy_CRM.User_dao.SaleDAO;
+import com.spring.Creamy_CRM.User_dao.SaleDAOImpl;
 import com.spring.Creamy_CRM.User_dao.UserReservationDAOImpl;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.userVO;
@@ -33,17 +35,17 @@ public class MainwebServiceImpl implements MainwebService {
 	UserReservationDAOImpl dao_res;
 	
 	@Autowired
-	ProductDAO dao_pro;
+	ProductDAOImpl dao_pro;
 	
 	@Autowired
-	SaleDAO dao_sale;
+	SaleDAOImpl dao_sale;
 	
 //======= 회원예약 =======		
 	
-	// 예약페이지에서 예약 정보 받아오기
+	// 예약페이지에서 예약 정보 받아오기(호실 예약)
 	@Override
 	public void getResInfo(HttpServletRequest req, Model model) {
-		System.out.println("service => getResInfo - 예약 정보 가져오기");
+		System.out.println("service => getResInfo - 호실 예약 정보 가져오기");
 		
 		String user_id = (String) req.getSession().getAttribute("id");
 		System.out.println("user_id : " + user_id);
@@ -95,6 +97,58 @@ public class MainwebServiceImpl implements MainwebService {
 		req.setAttribute("room_setting_code", room_setting_code);
 		
 	}
+	
+	// 예약페이지에서 예약 정보 받아오기(담당자 예약)
+	@Override
+	public void getResInfo_m(HttpServletRequest req, Model model) {
+		System.out.println("service => getResInfo_m - 담당자 예약 정보 가져오기");
+		
+		String user_id = (String) req.getSession().getAttribute("id");
+		System.out.println("user_id : " + user_id);
+		
+		// 예약 페이지에서 예약 정보 담아오기
+		String host_code = req.getParameter("host_code");
+		String res_start = req.getParameter("res_start");
+		System.out.println("res_start : " + res_start);
+		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
+		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
+		String res_state = "예약완료";
+		String res_indiv_request = req.getParameter("res_indiv_request");
+		String str_res_date = req.getParameter("selectDate");
+		System.out.println("str_res_date : " + str_res_date);
+		Date res_date = Date.valueOf(str_res_date);
+		
+		String employee_code = req.getParameter("employee_code");
+		System.out.println("employee_code : " + employee_code);
+		String product_code = req.getParameter("product_code");
+		System.out.println("product_code : " + product_code);
+		   
+		String comp_res = req.getParameter("comp_res");
+		
+		// vo에 담아서 넘겨주기
+		ReservationVO vo = new ReservationVO();
+		
+		vo.setHost_code(host_code);
+		vo.setRes_state(res_state);
+		System.out.println("vo.getRes_state : " + vo.getRes_state());
+		vo.setRes_cnt(guestCount);
+		vo.setRes_indiv_request(res_indiv_request);
+		vo.setUser_id(user_id);
+		vo.setRes_date(res_date);
+		vo.setRes_hour(Integer.parseInt(res_start));
+		vo.setRes_sales(res_sales);
+		vo.setComp_res(comp_res);
+		
+		vo.setEmployee_code(employee_code);
+		vo.setProduct_code(product_code);
+		
+		System.out.println("날짜 : " + vo.getRes_date());
+		
+		model.addAttribute("dto", vo);
+		
+	}
+	
+	
 	
 
 	// 고객 예약상세정보 페이지

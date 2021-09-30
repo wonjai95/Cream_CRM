@@ -338,12 +338,8 @@ public class MainwebController {
    }
 
 
-	// ------------------- 회원 결제 페이지 ------------------------
+	// ------------------- 회원 결제 페이지 (호실 예약 & 결제) ------------------------
 	//결제 정보 입력 화면
-	
-   
-   
-   // 결제 화면
    @RequestMapping("/salePage")
 	public String salePage(HttpServletRequest req, Model model) {
 		logger.info("url -> salePage");
@@ -379,6 +375,36 @@ public class MainwebController {
 		}
 		return "mainweb/sale/sale_action";
 	}
+	
+	
+	
+	
+	// ------------------- 회원 결제 페이지 (담당자 예약 & 결제) ------------------------
+	@RequestMapping("/salePage_m")
+	public String salePage_m(HttpServletRequest req, Model model) {
+		logger.info("url -> salePage_m");
+		
+		// 회원 예약 정보 받아오기
+		service.getResInfo_m(req, model);
+		
+		return "mainweb/sale/salePage_m";
+	}
+
+	// 결제 처리
+	@RequestMapping("/sale_m_action")
+	public String sale_m_action(HttpServletRequest req, Model model) {
+		logger.info("url -> sale_m_action");
+
+		// 담당자 예약 처리
+		service.insertBooking(req, model);
+		
+		// 결제 처리
+		service_sale.insertSaleInfo(req, model);
+
+		return "mainweb/sale/sale_m_action";
+	}
+	
+	
 	
 }
 	

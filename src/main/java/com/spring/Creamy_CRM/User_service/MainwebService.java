@@ -24,8 +24,11 @@ public interface MainwebService {
 	public void deleteActionByUser(HttpServletRequest req, Model model);
 	
 
-	// 예약페이지에서 예약 정보 받아오기
+	// 예약페이지에서 예약 정보 받아오기(호실 예약)
 	public void getResInfo(HttpServletRequest req, Model model);
+	
+	// 예약페이지에서 예약 정보 받아오기(담당자 예약)
+	public void getResInfo_m(HttpServletRequest req, Model model);
 	
 	// 예약코드 생성 - 안쓸 예정
 	//public void createResCD(HttpServletRequest req, Model model);
