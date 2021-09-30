@@ -52,6 +52,17 @@ public class MainwebController {
    public String home(HttpServletRequest req, Model model) {
       logger.info("url -> home");
       
+//      String comp_res = req.getParameter("com_res");
+//      if(comp_res == null) {
+//    	  // service
+//    	  return "managerbooking";
+//      } else if(comp_res.equals("호실")) {
+//    	 // service
+//    	 return "roombooking";
+//      } else {
+//    	  return "";
+//      }
+      
       return "mainweb/home";
    }
    
@@ -262,7 +273,7 @@ public class MainwebController {
    }   
    
    
-   //회원 예약 처리 페이지
+   // 담당자 - 회원예약 등록처리
    @RequestMapping("/insertBooking")
       public String insertBooking(HttpServletRequest req, Model model) {
          logger.info("url -> insertBooking");
