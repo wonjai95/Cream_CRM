@@ -11,7 +11,13 @@
 <head>
 
     <meta charset="utf-8">
+    <meta name="_csrf" content="${_csrf.token}"/>
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+	
+	<script src="../resources/bootstrap/js/jquery-3.1.1.min.js"></script>
+	
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../resources/host/js/review.js"></script>
 
     <title> 후기조회 </title>
 
@@ -50,7 +56,7 @@
 											<div class="row">
 												<div class="col-sm-2">
 													<div class="form-group">
-														<select name="" id="" class="form-control">
+														<select name="" id="search_option" class="form-control">
 															<option value="1" selected="">구분</option>
 															<option value="2">글제목</option>
 															<option value="3">작성자</option>
@@ -60,7 +66,7 @@
 												</div>
 												<div class="col-sm-2">
 													<div class="form-group">
-														<input type="text" id="" name="" value="" placeholder="검색어"
+														<input type="text" id="search_key" name="" value="" placeholder="검색어"
 															class="form-control">
 													</div>
 												</div>
@@ -72,13 +78,15 @@
 												</div>
 											</div>
 										</div>
-										<jsp:include page="userReview.jsp" />
+										<div id="reviewList">
+											<jsp:include page="userReview.jsp" />
+										</div>
 									</div>
 								</div>
 								<div id="tab-2" class="tab-pane">
 									<div class="panel-body">
 										<div class="ibox-content m-b-sm" style="padding-bottom: 0px; margin-bottom: 0px;">
-											<iframe src="review_react" name="iframe_review"></iframe>
+											<!-- <iframe src="review_react" name="iframe_review"></iframe> -->
 										</div>
 									</div>
 									<%-- <jsp:include page="reservation.jsp" /> --%>

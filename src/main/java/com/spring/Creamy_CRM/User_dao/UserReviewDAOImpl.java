@@ -72,5 +72,20 @@ public class UserReviewDAOImpl implements UserReviewDAO {
 	public int modify_Review(ReviewVO vo) {
 		return sqlSession.update("com.spring.Creamy_CRM.User_dao.UserReviewDAO.modify_Review",vo);
 	}
+
+	@Override
+	public List<ReviewVO> getReviewSearch_title(Map<String, String> map) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.User_dao.UserReviewDAO.getReviewSearch_title",map);
+	}
+
+	@Override
+	public List<ReviewVO> getReviewSearch_user(Map<String, String> map) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.User_dao.UserReviewDAO.getReviewSearch_user",map);
+	}
+
+	@Override
+	public List<ReviewVO> getReviewSearch_date(Map<String, String> map) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.User_dao.UserReviewDAO.getReviewSearch_date",map);
+	}
 	
 }
