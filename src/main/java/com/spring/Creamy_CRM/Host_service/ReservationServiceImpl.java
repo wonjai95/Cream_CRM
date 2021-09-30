@@ -44,10 +44,13 @@ public class ReservationServiceImpl implements ReservationService {
 		requestPage.setCurrentPage(req.getParameter("pageNum"));
 		String host_code = (String) req.getSession().getAttribute("code");
 		System.out.println("host_code : " + host_code);
+		String comp_res = req.getParameter("mdto.comp_res");
+		System.out.println("comp_res : " + comp_res);
 		
 		System.out.println("==============================");
 		
-		List<ReservationVO> dtos = null;
+		List<ReservationVO> mdtos = null;
+		List<ReservationVO> rdtos = null;
 		//String state = "서비스 완료";
 
 		if(requestPage.getCnt() > 0) {
@@ -62,7 +65,9 @@ public class ReservationServiceImpl implements ReservationService {
 //			if(req.getParameter("res_state").equals("0")) {
 //				System.out.println("res_state 1 : " + req.getParameter("res_state"));
 				// 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회
-				dtos = dao.getRequestList(map);  // dtos대신 list로 매개변수 줘도 무방하다.
+				mdtos = dao.getRequestMngList(map);
+				//System.out.print(mdtos.comp_res);
+				rdtos = dao.getRequestRoomList(map);  // dtos대신 list로 매개변수 줘도 무방하다.
 				
 //			} else if(req.getParameter("res_state").equals("예약완료")) {
 //				System.out.println("res_state 2 : " + req.getParameter("res_state"));
@@ -75,10 +80,11 @@ public class ReservationServiceImpl implements ReservationService {
 //			}			
 		}
 		
-		System.out.println(requestPage.getCnt());
-		System.out.println(dtos);
+		//System.out.println(requestPage.getCnt());
+		//System.out.println(rdtos);
 		// 6단계. jsp로 전달하기 위해 request나 session에 처리결과를 저장
-		model.addAttribute("dtos", dtos);			// 리스트 = 게시글 목록
+		model.addAttribute("mdtos", mdtos);
+		model.addAttribute("rdtos", rdtos);			// 리스트 = 게시글 목록
 		model.addAttribute("cnt", requestPage.getCnt());			// 글 갯수
 		model.addAttribute("pageNum", requestPage.getCurrentPage());	// 페이지 번호
 		model.addAttribute("number", requestPage.getNumber());		// 출력용 글 번호

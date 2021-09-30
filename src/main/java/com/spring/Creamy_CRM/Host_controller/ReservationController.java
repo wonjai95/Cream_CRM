@@ -28,7 +28,6 @@ public class ReservationController {
 	public String reservation(HttpServletRequest req, Model model) {
 		logger.info("url -> reservation");
 		
-		
 		//service.requestSearch(req, model);
 		
 		service.completeList(req, model);
@@ -50,6 +49,18 @@ public class ReservationController {
 		logger.info("url -> requestList");
 		
 		service.requestList(req, model);
+//      String comp_res = req.getParameter("comp_res");
+//      if(comp_res.equals("담당자")) {
+//    	  // service
+//    	  return "managerbooking";
+//      } else if(comp_res.equals("호실")) {
+//    	 // service.requestList(req, model);
+//    	 return "roombooking";
+//      } else {
+//    	  return "";
+//      }
+		
+		
 		
 		return "host/reservation/requestList";
 	}
@@ -58,9 +69,22 @@ public class ReservationController {
 	public String requestDetails(HttpServletRequest req, Model model) {
 		logger.info("url -> requestDetails");
 		
-		service.requestDetailAction(req, model);
+		String user_id = req.getParameter("user_id");
+		System.out.println("user_id : " + user_id);
+		String res_code = req.getParameter("res_code");
+		System.out.println("res_code : " + res_code);
+		String comp_res = req.getParameter("comp_res");
+		System.out.println("comp_res : " + comp_res);
 		
-		return "host/reservation/requestDetails";
+		if(comp_res.equals("담당자")) {
+			service.requestDetailAction(req, model);
+			return "host/reservation/requestDetails";
+		} else if(comp_res.equals("호실")) {
+			// service.requestList(req, model);
+			return "roombooking";
+		} else {
+			return "/";
+		}	
 	}
 	//예약 요청 상세페이지
 	@RequestMapping("/host/requestDetail")
