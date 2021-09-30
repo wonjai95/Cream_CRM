@@ -12,6 +12,6 @@ import com.spring.Creamy_CRM.VO.userVO;
 public interface SaleDAO {
 
 	// 결제정보 등록
-	public int addSaleInfo(userVO vo);
+	public int insertSaleInfo(userVO vo);
 	
 }

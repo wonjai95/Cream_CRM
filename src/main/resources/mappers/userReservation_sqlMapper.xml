@@ -120,7 +120,7 @@
   		 ORDER BY res_start 
   	</select>
   	
-  	<!-- 예약 신청 시간 가능 여부 체크 -->
+  	<!-- 예약 신청 시간 가능 여부 체크 => 해당 날짜에 해당 방코드가 예약이 있으면 카운트됨. 0이 아님 -->
   	<select id="chkRoomBooking" parameterType="java.util.Map" resultType="Integer">
   		SELECT COUNT(*)
 		  FROM res_timetable_view rv

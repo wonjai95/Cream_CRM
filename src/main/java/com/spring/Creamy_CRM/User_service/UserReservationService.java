@@ -37,4 +37,7 @@ public interface UserReservationService {
 	
 	// 호실 예약 처리
 	public void insertRoomBookingAction(HttpServletRequest req, Model model);
+	
+	// 예약 시간 확인 처리
+	public void chkRoomTime(HttpServletRequest req, Model model);
 }
