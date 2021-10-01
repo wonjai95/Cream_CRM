@@ -219,14 +219,14 @@ public class MainwebServiceImpl implements MainwebService {
 		String employee_code = req.getParameter("employee_code");
 		int res_cnt = Integer.parseInt(req.getParameter("GuestCount"));
 		String res_indiv_request = req.getParameter("res_indiv_request");
-		String product_code = req.getParameter("ReserveProduct");
+		String product_code = req.getParameter("product_code");
 		String res_memo = req.getParameter("res_memo");
-		int res_sales = Integer.parseInt(req.getParameter("ReserveProductSum"));
+		int res_sales = Integer.parseInt(req.getParameter("total_payment"));
 		
-		String selectDate = req.getParameter("selectDate");
+		String selectDate = req.getParameter("res_date");
 		Date res_date = Date.valueOf(selectDate);
 		
-		String str_hour = req.getParameter("selectTime");
+		String str_hour = req.getParameter("res_hour");
 		String[] hours = str_hour.split(":");
 		int res_hour = Integer.parseInt(hours[0]);
 		
@@ -236,7 +236,7 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_state(res_state);						// 예약상태(방문?예약중?예약완료?)
 		vo.setRes_date(res_date);						// 예약날짜
 		vo.setRes_hour(res_hour);						// 예약시간
-		vo.setEmployee_code(employee_code);				// 예약담당자
+		vo.setEmployee_code(employee_code);			// 예약담당자
 		vo.setRes_cnt(res_cnt);							// 예약인원수
 		vo.setRes_indiv_request(res_indiv_request);		// 특별요청(추가요청)
 		vo.setProduct_code(product_code);				// 예약한 상품서비스
