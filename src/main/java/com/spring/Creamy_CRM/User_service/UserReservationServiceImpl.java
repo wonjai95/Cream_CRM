@@ -251,7 +251,6 @@ public class UserReservationServiceImpl implements UserReservationService {
 		System.out.println("res_room : " + res_room);
 		String room_setting_code = req.getParameter("room_setting_code");
 		System.out.println("room_setting_code : " + room_setting_code);
-		System.out.println("getAttribute : " + req.getAttribute("room_setting_code"));
 		String res_indiv_request = req.getParameter("res_indiv_request");
 		String user_id = req.getParameter("user_id"); 
 		String str_res_date = req.getParameter("res_date");
@@ -303,6 +302,7 @@ public class UserReservationServiceImpl implements UserReservationService {
 		System.out.println("guestCount : " + guestCount);
 		String res_state = "예약완료";
 		String room_setting_code = req.getParameter("room_setting_code");
+		System.out.println("room_setting_code : " + room_setting_code);
 		String res_indiv_request = req.getParameter("res_indiv_request");
 		String user_id = req.getParameter("user_id"); 
 		String str_res_date = req.getParameter("selectDate");
