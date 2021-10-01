@@ -163,6 +163,9 @@ public class HostServiceImpl implements HostService {
 		String host_code = (String)req.getSession().getAttribute("code");
 		String room_name = req.getParameter("room_name");
 		String room_setting_code = req.getParameter("room_setting_code");
+		if(room_setting_code.equals("undefined") || room_setting_code.equals("")) {
+			room_setting_code = null;
+		}
 		
 		RoomSettingVO vo = null;
 		int validationChk = 0;

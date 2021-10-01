@@ -117,13 +117,21 @@ public class ProductController {
 		service.addProduct(req, model);
 		return "host/product/addProduct";
 	}
+	
+	//상품명 중복확인
+	@ResponseBody
+	@RequestMapping("/host/chkProductName")
+	public int chkProductName(HttpServletRequest req, Model model) {
+		logger.info("url -> chkProductName");
+		return service.chkProductName(req, model);
+	}
 
 	// 상품등록
+	@ResponseBody
 	@RequestMapping("/host/addProductAction")
-	public String addProductAction(MultipartHttpServletRequest req, Model model) {
+	public ProductVO addProductAction(MultipartHttpServletRequest req, Model model) {
 		logger.info("url -> addProductAction");
-		service.addProductAction(req, model);
-		return "host/product/addProductAction";
+		return service.addProductAction(req, model);
 	}
 
 	// 상품상세(수정)
@@ -135,20 +143,29 @@ public class ProductController {
 	}
 
 	// 상품수정
+	@ResponseBody
 	@RequestMapping("/host/modifyProductAction")
-	public String modifyProductAction(MultipartHttpServletRequest req, Model model) {
+	public ProductVO modifyProductAction(MultipartHttpServletRequest req, Model model) {
 		logger.info("url -> modifyProductAction");
-		service.modifyProductAction(req, model);
-		return "host/product/modifyProductAction";
+		return service.modifyProductAction(req, model);
 	}
 
 	// 상품삭제
+	@ResponseBody
 	@RequestMapping("/host/deleteProductAction")
-	public String deleteProductAction(HttpServletRequest req, Model model) {
+	public int deleteProductAction(HttpServletRequest req, Model model) {
 		logger.info("url -> deleteProductAction");
-		service.deleteProductAction(req, model);
-		return "host/product/deleteProductAction";
+		return service.deleteProductAction(req, model);
 	}
+	
+	//상품 검색
+	@ResponseBody
+	@RequestMapping("/host/selectProductByQuery")
+	public List<ProductVO> selectProductByQuery(HttpServletRequest req, Model model) {
+		logger.info("url -> selectProductByQuery");
+		return service.selectProductByQuery(req, model);
+	}
+	
 
 	// 거래처 추가 페이지요청
 	@RequestMapping("/host/addTrade")
@@ -259,6 +276,7 @@ public class ProductController {
 		
 		return "host/product/selling_action";
 	}    
+	
 	    
 	
 
