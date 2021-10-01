@@ -41,7 +41,6 @@ public class SaleServiceImpl implements SaleService {
 		String user_id = (String) req.getSession().getAttribute("id");
 		System.out.println("user_id : " + user_id);
 		
-		//유저 코드 들고오기
 		String user_code = dao_login.getUserInfo(user_id).getUser_code();
 		
 		int total_payment = Integer.parseInt(req.getParameter("total_payment"));
@@ -55,6 +54,7 @@ public class SaleServiceImpl implements SaleService {
 		System.out.println("credit_installment : " + credit_installment);
 		String sale_memo = req.getParameter("sale_memo");
 		String employee_code = req.getParameter("employee_code");
+		String product_code = req.getParameter("product_code");
 		
 		userVO vo = new userVO();
 		vo.setTotal_payment(total_payment);
@@ -68,6 +68,7 @@ public class SaleServiceImpl implements SaleService {
 		
 		vo.setUser_id(user_id);
 		vo.setUser_code(user_code);
+		vo.setProduct_code(product_code);
 		
 		int insertCnt = dao.insertSaleInfo(vo);
 		
