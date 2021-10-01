@@ -92,6 +92,7 @@ public class StockServiceImpl implements StockService {
 	// 재고실사 등록 처리
 	@Override
 	public void add_periodic_inven(HttpServletRequest req, Model model) {
+		// 재고목록 개수를 구해서 그만큼 insertPeriodicInven를 하는 for문을 돌림.
 		int indexChk = Integer.parseInt(req.getParameter("cnt"));
 		System.out.println("indexChk : " + indexChk);
 		
