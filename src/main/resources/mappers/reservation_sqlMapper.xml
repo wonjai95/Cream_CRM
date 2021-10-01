@@ -93,15 +93,18 @@
 <!-- 예약요청 상세정보 조회 -->
 	<select id="getRequestDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
 			SELECT *
-			  FROM reservation_tbl, reservation_detail_tbl rdt
-			 WHERE res_code = #{res_code}
-			   AND rdt.res_detail_code = #{res_detail_code}
+			  FROM reservation_tbl r, company_tbl c, reservation_detail_tbl rdt
+			 WHERE rdt.res_detail_code = r.res_detail_code
+			   AND c.host_code = #{host_code}
+			   AND r.res_code = #{res_code}			   
 	</select>
 	<select id="getRequestDetail2" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
 			SELECT *
-			  FROM reservation_tbl, reservation_detail_tbl rdt
-			 WHERE res_code = #{res_code}
-			   AND rdt.res_detail_code = #{res_detail_code}
+			  FROM reservation_tbl r, company_tbl c, room_setting_tbl rst, reservation_detail_tbl rdt
+			 WHERE rst.room_setting_code = r.room_setting_code
+			   AND rdt.res_detail_code = r.res_detail_code
+			   AND c.host_code = #{host_code}
+			   AND r.res_code = #{res_code}
 	</select>
 	
 <!-- 예약요청 수정처리 -->
@@ -142,21 +145,57 @@
 			 WHERE res_state = '서비스 완료'
  	</select>
 	
-<!-- 예약요청 목록 조회 -->
-  	<select id="getCompleteList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
-  			<![CDATA[	
+<!-- 서비스완료 목록 조회 -->
+<!-- 1. 예약상태가 "서비스 완료"인 예약 목록 조회
+	1-1. 모든 "서비스 완료" 예약 목록 중 사장님코드 별 예약종류(comp_res)가 "담당자"인 경우 -->
+	<select id="getCompleteMngList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  			<![CDATA[
 			SELECT *
-			FROM (SELECT res_code, res_state, res_date, res_hour,
-					 employee_code, user_id, res_detail_code, host_code, rowNum rNum
-					FROM ( SELECT * FROM reservation_tbl
-					WHERE res_state IN '서비스 완료'
-		ORDER BY res_code DESC )
+			  FROM (SELECT res_code, res_state, res_date, res_hour,
+            		employee_code, user_id, res_detail_code, res_regDate, comp_res, rowNum rNum
+					FROM ( SELECT * FROM reservation_tbl r, company_tbl c
+                        	WHERE r.host_code = c.host_code
+                        	  AND c.host_code = #{host_code}
+                        	  AND res_state IN '서비스 완료'
+    	ORDER BY res_code DESC )
+				)
+			WHERE rNum >= #{start} AND rNum <= #{end}
+			]]>
+  	</select>
+<!-- 1. 예약상태가 "서비스 완료"인 예약 목록 조회
+	1-2. 모든 "서비스 완료" 예약 목록 중 사장님코드 별 예약종류(comp_res)가 "호실"인 경우 -->
+  	<select id="getCompleteRoomList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  			<![CDATA[
+			SELECT *
+			  FROM (SELECT res_code, res_state, res_date, res_hour,
+					employee_code, user_id, res_detail_code, res_regDate, comp_res, room_name, rowNum rNum
+					FROM ( SELECT *
+                      		 FROM reservation_tbl r, company_tbl c, room_setting_tbl rst
+                    		WHERE rst.room_setting_code = r.room_setting_code
+                        	  AND c.host_code = #{host_code}
+                        	  AND res_state IN '서비스 완료'
+    	ORDER BY res_code DESC )
 				)
 			WHERE rNum >= #{start} AND rNum <= #{end}
 			]]>
   	</select>
   	
-  	
+<!-- 예약조회 상세정보 조회 -->
+	<select id="getCompleteDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+			SELECT *
+			  FROM reservation_tbl r, company_tbl c, reservation_detail_tbl rdt
+			 WHERE rdt.res_detail_code = r.res_detail_code
+			   AND c.host_code = #{host_code}
+			   AND r.res_code = #{res_code}			   
+	</select>
+	<select id="getCompleteDetail2" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+			SELECT *
+			  FROM reservation_tbl r, company_tbl c, room_setting_tbl rst, reservation_detail_tbl rdt
+			 WHERE rst.room_setting_code = r.room_setting_code
+			   AND rdt.res_detail_code = r.res_detail_code
+			   AND c.host_code = #{host_code}
+			   AND r.res_code = #{res_code}
+	</select> 	
   	
   	
   	

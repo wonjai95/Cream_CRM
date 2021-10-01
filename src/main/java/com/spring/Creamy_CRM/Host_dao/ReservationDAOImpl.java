@@ -93,10 +93,13 @@ public class ReservationDAOImpl implements ReservationDAO {
 	
 	// 예약요청 상세 페이지, 수정 상세 페이지
 	@Override
-	public ReservationVO getRequestDetail(String num) {
+	public ReservationVO getRequestDetail(Map<String, Object> map) {
 		
-		ReservationDAO dao = sqlSession.getMapper(ReservationDAO.class);
-		return dao.getRequestDetail(num);
+		ReservationVO dao = sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getRequestDetail", map);
+		return dao;
+		
+//		ReservationDAO dao = sqlSession.getMapper(ReservationDAO.class);
+//		return dao.getRequestDetail(num);
 		
 		// 결과가 존재한다면,
 		// 1. 작은 바구니(BoardVO) 생성
@@ -105,10 +108,13 @@ public class ReservationDAOImpl implements ReservationDAO {
 		// 3. 작은 바구니 리턴
 	}
 	@Override
-	public ReservationVO getRequestDetail2(String num) {
+	public ReservationVO getRequestDetail2(Map<String, Object> map) {
 		
-		ReservationDAO dao = sqlSession.getMapper(ReservationDAO.class);
-		return dao.getRequestDetail2(num);
+		ReservationVO dao = sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getRequestDetail2", map);
+		return dao;
+		
+//		ReservationDAO dao = sqlSession.getMapper(ReservationDAO.class);
+//		return dao.getRequestDetail2(num);
 	}
 
 	// 예약요청 수정 처리 페이지
@@ -150,15 +156,35 @@ public class ReservationDAOImpl implements ReservationDAO {
 		return dao.getCompleteCnt();
 	}
 
-	// 예약요청 목록 조회
+	// 서비스완료 목록 조회
+	// 1. 예약상태가 "서비스 완료"인 예약 목록 조회
+	// 1-1. 모든 "서비스 완료" 예약 목록 중 사장님코드 별 예약종류(comp_res)가 "담당자"인 경우
 	@Override
-	public List<ReservationVO> getCompleteList(Map<String, Object> map) {
-
-		//ArrayList<reservationVO> list = null;
+	public List<ReservationVO> getCompleteMngList(Map<String, Object> map) {
 		
-		// 방법1. mapper를 호출하는 방식 | 리턴타입이 반드시 List<reservationVO> 이어야함
-		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getCompleteList", map);
+		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getCompleteMngList", map);
 		return list;
+	}
+	// 1-2. 모든 "서비스 완료" 예약 목록 중 사장님코드 별 예약종류(comp_res)가 "호실"인 경우
+	@Override
+	public List<ReservationVO> getCompleteRoomList(Map<String, Object> map) {
+		
+		List<ReservationVO> list = sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getCompleteRoomList", map);
+		return list;
+	}
+
+	// 예약조회 상세 페이지, 수정 상세 페이지
+	@Override
+	public ReservationVO getCompleteDetail(Map<String, Object> map) {
+		
+		ReservationVO dao = sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getCompleteDetail", map);
+		return dao;
+	}
+	@Override
+	public ReservationVO getCompleteDetail2(Map<String, Object> map) {
+		
+		ReservationVO dao = sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.ReservationDAO.getCompleteDetail2", map);
+		return dao;
 	}
 
 	
