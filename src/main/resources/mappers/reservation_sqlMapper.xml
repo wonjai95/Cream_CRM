@@ -22,14 +22,10 @@
   	<select id="getRequestMngList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
   			<![CDATA[
   			SELECT *
-			FROM (SELECT res_code, res_state, res_date, res_hour,
-            		employee_code, user_id, comp_res,
-            		res_cnt, res_indiv_request, product_code, res_memo, res_sales,
-            		res_start, res_end, rowNum rNum
-					FROM ( SELECT *
-							 FROM reservation_tbl r, company_tbl c, reservation_detail_tbl rdt
+			  FROM (SELECT res_code, res_state, res_date, res_hour,
+            		employee_code, user_id, res_detail_code, res_regDate, comp_res, rowNum rNum
+					FROM ( SELECT * FROM reservation_tbl r, company_tbl c
                         	WHERE r.host_code = c.host_code
-                        	  AND rdt.res_detail_code = r.res_detail_code
                         	  AND c.host_code = #{host_code}
                         	  AND NOT res_state IN '서비스 완료'
     	ORDER BY res_code DESC )
@@ -41,14 +37,11 @@
   	<select id="getRequestRoomList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
   			<![CDATA[
   			SELECT *
-			FROM (SELECT res_code, res_state, res_date, res_hour,
-					employee_code, user_id, res_regDate, comp_res, room_name,
-					res_cnt, res_indiv_request, product_code, res_memo, res_sales,
-					res_start, res_end, rowNum rNum
+			  FROM (SELECT res_code, res_state, res_date, res_hour,
+					employee_code, user_id, res_detail_code, res_regDate, comp_res, room_name, rowNum rNum
 					FROM ( SELECT *
-                      		 FROM reservation_tbl r, company_tbl c, room_setting_tbl rst, reservation_detail_tbl rdt
+                      		 FROM reservation_tbl r, company_tbl c, room_setting_tbl rst
                     		WHERE rst.room_setting_code = r.room_setting_code
-                        	  AND rdt.res_detail_code = r.res_detail_code
                         	  AND c.host_code = #{host_code}
                         	  AND NOT res_state IN '서비스 완료'
     	ORDER BY res_code DESC )
