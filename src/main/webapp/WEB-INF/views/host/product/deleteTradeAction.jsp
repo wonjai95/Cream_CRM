@@ -19,7 +19,7 @@
 		<c:if test="${deleteCnt == 1}">
 			<script type="text/javascript">
 				alert("거래처 삭제를 완료하였습니다.");
-				window.location = "product";
+				window.location = "stock";
 			</script>
 		</c:if>
 		

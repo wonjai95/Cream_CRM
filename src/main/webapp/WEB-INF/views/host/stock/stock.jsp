@@ -127,11 +127,35 @@
 		}
 	
 	}
+	
 $("docuemnt").ready(function() {	
 	// 재고관리 탭
 	$("#tab-1").click(function() {
 		location.reload();
 	})
+	
+	// 재고실사 탭
+	$("#tab-3").click(function() {
+		var header = $("meta[name='_csrf_header']").attr("content");
+	    var token = $("meta[name='_csrf']").attr("content");
+	    
+	    $.ajax({
+	  	  url : "inven_inout",
+	  	  type : "Post",
+	  	  beforeSend : function(jqXHR, settings) {
+	  		  console.log("beforesend 진행");
+	            jqXHR.setRequestHeader(header, token);
+	  	  },
+	  	  success : function(result) {
+	  		  $(".panel-body").html(result);
+	  	  },
+	  	  error : function(error) {
+	  		console.log(error);  
+	  		$(".panel-body").html("입출고 관리 페이지가 현재 작동하지 않습니다.");
+	  	  }
+	    });
+	});
+	
 	
 	// 재고실사 탭
 	$("#tab-2").click(function() {
@@ -153,6 +177,36 @@ $("docuemnt").ready(function() {
 	  		$(".panel-body").html("재고 실사 페이지가 현재 작동하지 않습니다.");
 	  	  }
 	    });
+	});
+	
+	// 검색 
+	$("#stockSearchBtn").click(function() {
+		var keyword = $("#stockKeyword").val();
+		if(keyword == "" || keyword == null) {
+			alert("검색어를 입력하세요!");
+			return false;
+		} else {
+			var header = $("meta[name='_csrf_header']").attr("content");
+		    var token = $("meta[name='_csrf']").attr("content");
+		    
+		    $.ajax({
+		  	  url : "search_stock",
+		  	  type : "Post",
+		  	  data : "keyword=" + keyword,
+		  	  beforeSend : function(jqXHR, settings) {
+		  		  console.log("beforesend 진행");
+		            jqXHR.setRequestHeader(header, token);
+		  	  },
+		  	  success : function(result) {
+		  		  $(".stockContent").html(result);
+		  	  },
+		  	  error : function(error) {
+		  		console.log(error);  
+		  		$(".stockContent").html("재고 목록 검색이 작동하지 않습니다.");
+		  	  }
+		    });
+		}
+		
 	})
 
 })	
@@ -183,6 +237,7 @@ $("docuemnt").ready(function() {
 						<div class="tabs-container">
 							<ul class="nav nav-tabs">
 								<li><a class="nav-link active" data-toggle="tab" id="tab-1" href="#tab-1">재고 관리</a></li>
+								<li><a class="nav-link" data-toggle="tab" id="tab-3" href="#tab-3">입출고 관리</a></li>
 								<li><a class="nav-link" data-toggle="tab" id="tab-2" href="#tab-2">재고 실사</a></li>
 										
 							</ul>
@@ -193,34 +248,14 @@ $("docuemnt").ready(function() {
 												<div class="row">
 													<div class="col-sm-2">
 														<div class="form-group">
-															<select name="" id="" class="form-control">
-																<option value="1" selected="selected">판매 여부</option>
-																<option value="2">판매중</option>
-																<option value="3">판매중지</option>
-															</select>
-														</div>
-													</div>
-									
-													<div class="col-sm-2">
-														<div class="form-group">
-															<select name="" id="" class="form-control">
-																<option value="1" selected="selected">판매 형태</option>
-																<option value="2">기간제</option>
-																<option value="3">대여형</option>
-															</select>
-														</div>
-													</div>
-									
-													<div class="col-sm-2">
-														<div class="form-group">
-															<input type="text" id="" name="" value="" placeholder="검색어"
+															<input type="text" id="stockKeyword" name="stockKeyword" value="" placeholder="재고목록 검색"
 																class="form-control">
 														</div>
 													</div>
 									
 													<div class="col-sm-2">
 														<div class="form-group">
-															<button class="btn btn-primary dim" type="button">찾기</button>
+															<button class="btn btn-primary dim" type="button" id="stockSearchBtn">검색</button>
 														</div>
 													</div>
 												</div>
@@ -229,7 +264,7 @@ $("docuemnt").ready(function() {
 											<fieldset>
 												<div class="wrapper wrapper-content">
 													<div class="row">
-														<div class="col-lg-3 animated fadeInRight">
+														<div class="col-lg-3 animated fadeInRight" style="width: 30%">
 															<form action="deleteTradeAction" method="post"
 																onsubmit="return deleteTrade();">
 																<input type="hidden" name="${_csrf.parameterName}"
@@ -300,7 +335,7 @@ $("docuemnt").ready(function() {
 																</tfoot>
 															</table>
 														</div>
-														<div class="col-lg-9 animated fadeInRight">
+														<div class="col-lg-9 animated fadeInRight" style="width: 70%">
 									
 															<div class="ibox-content" style="margin: 0px; padding: 0px;">
 									
@@ -340,19 +375,11 @@ $("docuemnt").ready(function() {
 																				</th>
 									
 																				<th class="text-right footable-visible footable-last-column">
-																					<span class="footable-sort-indicator">매입가</span>
-																				</th>
-																				
-																				<th class="text-right footable-visible footable-last-column">
 																					<span class="footable-sort-indicator">재고브랜드</span>
 																				</th>
 																				
 																				<th class="text-right footable-visible footable-last-column">
 																					<span class="footable-sort-indicator">수량</span>
-																				</th>
-									
-																				<th class="text-right footable-visible footable-last-column">
-																					<span class="footable-sort-indicator">입고 날짜</span>
 																				</th>
 									
 																				<th class="text-right footable-visible footable-last-column">
@@ -362,7 +389,7 @@ $("docuemnt").ready(function() {
 																			</tr>
 																		</thead>
 									
-																		<tbody>
+																		<tbody class="stockContent">
 									
 																			<c:forEach var="stock" items="${stockList}">
 																				<tr class="footable-odd">
@@ -377,18 +404,12 @@ $("docuemnt").ready(function() {
 																					<td class="footable-visible"><span>${stock.stock_name}</span>
 																					</td>
 									
-																					<td class="footable-visible"><span>${stock.stock_price}</span>
-																					</td>
-									
 																					<td class="footable-visible"><span>${stock.stock_brand}</span>
 																					</td>
 									
 																					<td class="footable-visible"><span>${stock.stock_cnt}개</span>
 																					</td>
 									
-																					<td class="text-right footable-visible footable-last-column">
-																						<span>${stock.stock_indate}</span>
-																					</td>
 									
 																					<td class="footable-visible">
 																						<span>${stock.trade_code}</span>

@@ -25,5 +25,21 @@ public class ReactController {
 	 * 
 	 * return "react_test/react_resDetail"; }
 	 */
+	
+	
+	@RequestMapping("react/emp_react_before")
+	public String emp_react_before(HttpServletRequest req) {
+		System.out.println("url -> emp_react_before");
+		
+		return "react_test/emp_react_before";
+	}
+	
+	@RequestMapping("react/emp_react_test1")
+	public String emp_react_test1(HttpServletRequest req) {
+		System.out.println("url -> emp_react_test1");
+		
+		return "react_test/employee";
+	}
+	
 
 }

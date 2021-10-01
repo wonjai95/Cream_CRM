@@ -52,4 +52,32 @@ public class StockDAOImpl implements StockDAO {
 		dao.createSearchInvenView(map);
 	}
 
+	// 입출고 현황 내역
+	@Override
+	public List<StockVO> getInvenInOutList(String host_code) {
+		StockDAO dao = sqlSession.getMapper(StockDAO.class);
+		return dao.getInvenInOutList(host_code);
+	}
+
+	// 입고 등록
+	@Override
+	public int addInvenIn(StockVO vo) {
+		StockDAO dao = sqlSession.getMapper(StockDAO.class);
+		return dao.addInvenIn(vo);
+	}
+
+	// 재고 검색
+	@Override
+	public List<StockVO> searchStockList(Map<String, Object> map) {
+		StockDAO dao = sqlSession.getMapper(StockDAO.class);
+		return dao.searchStockList(map);
+	}
+
+	// 재고 검색
+	@Override
+	public List<StockVO> searchInoutList(Map<String, Object> map) {
+		StockDAO dao = sqlSession.getMapper(StockDAO.class);
+		return dao.searchInoutList(map);
+	}
+
 }

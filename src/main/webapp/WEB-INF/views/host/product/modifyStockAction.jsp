@@ -20,7 +20,7 @@
 			<script type="text/javascript">
 				alert("재고수정을 완료하였습니다.");
 				self.close();
-				opener.location = "product";
+				opener.location = "stock";
 			</script>
 		</c:if>
 		

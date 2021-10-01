@@ -444,16 +444,12 @@ public class ProductServiceImpl implements ProductService {
 	public void addStockAction(HttpServletRequest req, Model model) {
 		String host_code = (String) req.getSession().getAttribute("code");
 		String stock_name = req.getParameter("stock_name");
-		String stock_price = req.getParameter("stock_price");
 		String stock_brand = req.getParameter("stock_brand");
-		String stock_count = req.getParameter("stock_count");
 		String stock_status = req.getParameter("stock_status");
 		String trade_code = req.getParameter("trade_code");
 		StockVO vo = new StockVO();
 		vo.setStock_name(stock_name);
-		vo.setStock_price(Integer.parseInt(stock_price));
 		vo.setStock_brand(stock_brand);
-		vo.setStock_cnt(Integer.parseInt(stock_count));
 		vo.setStock_status(stock_status);
 		vo.setTrade_code(trade_code);
 		vo.setStock_indate(new Date(System.currentTimeMillis()));
@@ -486,7 +482,6 @@ public class ProductServiceImpl implements ProductService {
 	public void modifyStockAction(HttpServletRequest req, Model model) {
 		String stock_code = req.getParameter("stock_code");
 		String stock_name = req.getParameter("stock_name");
-		String stock_price = req.getParameter("stock_price");
 		String stock_count = req.getParameter("stock_count");
 		String stock_brand = req.getParameter("stock_brand");
 		String stock_status = req.getParameter("stock_status");
@@ -505,7 +500,6 @@ public class ProductServiceImpl implements ProductService {
 			vo = new StockVO();
 			vo.setStock_code(stock_code);
 			vo.setStock_name(stock_name);
-			vo.setStock_price(Integer.parseInt(stock_price));
 			vo.setStock_cnt(Integer.parseInt(stock_count));
 			vo.setStock_brand(stock_brand);
 			vo.setStock_status(stock_status);
