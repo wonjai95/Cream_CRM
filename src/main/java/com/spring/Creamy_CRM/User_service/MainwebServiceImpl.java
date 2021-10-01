@@ -7,6 +7,7 @@
 package com.spring.Creamy_CRM.User_service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.spring.Creamy_CRM.Host_dao.EmployeeDAOImpl;
 import com.spring.Creamy_CRM.Host_dao.ProductDAO;
 import com.spring.Creamy_CRM.Host_dao.ProductDAOImpl;
 import com.spring.Creamy_CRM.User_dao.MainwebDAOImpl;
 import com.spring.Creamy_CRM.User_dao.SaleDAO;
 import com.spring.Creamy_CRM.User_dao.SaleDAOImpl;
 import com.spring.Creamy_CRM.User_dao.UserReservationDAOImpl;
+import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
@@ -39,6 +42,9 @@ public class MainwebServiceImpl implements MainwebService {
 	
 	@Autowired
 	SaleDAOImpl dao_sale;
+	
+	@Autowired
+	EmployeeDAOImpl dao_emp;
 	
 //======= 회원예약 =======		
 	
@@ -122,11 +128,9 @@ public class MainwebServiceImpl implements MainwebService {
 		Date res_date = Date.valueOf(str_res_date);
 		
 		// selectManager 10/1일 11:00 수정부분
-		String employee_code = req.getParameter("selectManager");
-		System.out.println("employee_code : " + employee_code);
-		String product_code = req.getParameter("product_code");
-		System.out.println("product_code : " + product_code);
-		   
+		String employee_name = req.getParameter("selectManager");
+		System.out.println("employee_name : " + employee_name);
+		
 		String comp_res = req.getParameter("comp_res");
 		
 		// vo에 담아서 넘겨주기
@@ -143,8 +147,24 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_sales(res_sales);
 		vo.setComp_res(comp_res);
 		
+		vo.setEmployee_name(employee_name);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		map.put("employee_name", employee_name);
+		
+		// 직원명으로 직원코드 가져오기
+		String employee_code = dao_emp.searchCodeByName(map).getEmployee_code();
+		System.out.println("employee_code : " + employee_code);
 		vo.setEmployee_code(employee_code);
+		
+		// 상품코드로 상품명 가져와서 페이지에 뿌리기
+		String product_code = req.getParameter("product_code");
+		System.out.println("product_code : " + product_code);
 		vo.setProduct_code(product_code);
+		String product_name = dao_pro.getProduct(product_code).getProduct_name();
+		System.out.println("product_name : " + product_name);
+		vo.setProduct_name(product_name);
 		
 		System.out.println("날짜 : " + vo.getRes_date());
 		
@@ -236,7 +256,7 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_state(res_state);						// 예약상태(방문?예약중?예약완료?)
 		vo.setRes_date(res_date);						// 예약날짜
 		vo.setRes_hour(res_hour);						// 예약시간
-		vo.setEmployee_code(employee_code);			// 예약담당자
+		vo.setEmployee_code(employee_code);				// 예약담당자
 		vo.setRes_cnt(res_cnt);							// 예약인원수
 		vo.setRes_indiv_request(res_indiv_request);		// 특별요청(추가요청)
 		vo.setProduct_code(product_code);				// 예약한 상품서비스

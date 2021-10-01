@@ -15,6 +15,7 @@ import com.spring.Creamy_CRM.VO.LeaveVO;
 import com.spring.Creamy_CRM.VO.SalaryContractVO;
 import com.spring.Creamy_CRM.VO.SalaryVO;
 import com.spring.Creamy_CRM.VO.WorkingHoursVO;
+import com.spring.Creamy_CRM.VO.userVO;
 
 public interface EmployeeDAO {
 
@@ -26,6 +27,9 @@ public interface EmployeeDAO {
 	
 	// 직원명 검색
 	public ArrayList<EmployeeVO> searchName(Map<String, Object> map);
+	
+	// 직원이름에 따른 직원코드
+	public EmployeeVO searchCodeByName(Map<String, Object> map);
 	
 	// 부서명 검색
 	public ArrayList<EmployeeVO> searchDep(Map<String, Object> map);

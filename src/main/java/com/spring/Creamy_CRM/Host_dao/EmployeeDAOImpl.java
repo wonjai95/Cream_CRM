@@ -45,6 +45,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return dao.searchName(map);
 	}
 	
+	// 직원이름에 따른 직원코드
+	@Override
+	public EmployeeVO searchCodeByName(Map<String, Object> map) {
+		
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.EmployeeDAO.searchCodeByName", map);
+	}
+
 	// 부서명 검색
 	public ArrayList<EmployeeVO> searchDep(Map<String, Object> map){
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
@@ -308,7 +315,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
 		return dao.updateSalaryContract(vo);
 	}
-
 	
 
 	
