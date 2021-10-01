@@ -56,6 +56,9 @@ public interface UserReservationDAO {
 	// 예약 신청 시간 가능 여부 체크를 위한 뷰 생성
 	public void createRoomBookingView(Map<String, Object> map);
 	
+	// 이름, 사장코드로 room_setting_code 가져오기
+	public String getRoomCodeByName(Map<String, Object> map);
+	
 	
 	
 }

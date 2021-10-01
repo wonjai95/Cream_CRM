@@ -36,8 +36,8 @@ public interface ReservationDAO {
 	public userVO getUserInfo(String user_id);
 		
 	// 예약요청 상세 페이지, 수정 상세 페이지
-	public ReservationVO getRequestDetail(String num);
-	public ReservationVO getRequestDetail2(String num);
+	public ReservationVO getRequestDetail(Map<String, Object> map);
+	public ReservationVO getRequestDetail2(Map<String, Object> map);
 	
 	// 예약요청 수정 처리 페이지
 	public int updateRequest1(ReservationVO vo);
@@ -55,11 +55,16 @@ public interface ReservationDAO {
 	// 예약조회 목록 갯수 구하기
 	public int getCompleteCnt();
 	
-	// 예약요청 목록 조회
-	public List<ReservationVO> getCompleteList(Map<String, Object> map);
+	// 서비스완료 목록 조회
+	// 1. 예약상태가 "서비스 완료"인 예약 목록 조회
+	// 1-1. 모든 "서비스 완료" 예약 목록 중 사장님코드 별 예약종류(comp_res)가 "담당자"인 경우
+	public List<ReservationVO> getCompleteMngList(Map<String, Object> map);
+	// 1-2. 모든 "서비스 완료" 예약 목록 중 사장님코드 별 예약종류(comp_res)가 "호실"인 경우
+	public List<ReservationVO> getCompleteRoomList(Map<String, Object> map);
 	
 	// 예약조회 상세 페이지, 수정 상세 페이지
-	//public void reservationVO getCompleteDetail(int num);
+	public ReservationVO getCompleteDetail(Map<String, Object> map);
+	public ReservationVO getCompleteDetail2(Map<String, Object> map);
 		
 	
 }

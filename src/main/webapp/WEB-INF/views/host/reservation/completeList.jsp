@@ -17,7 +17,7 @@
 		<tr class="gradeX">
 			<td style="text-align:center">
 				<!-- 상세페이지 -->
-				<a href="requestDetails?res_code=${mdto.res_code}&res_detail_code=${mdto.res_detail_code}&user_id=${mdto.user_id}&comp_res=${mdto.comp_res}">${mdto.res_code}</a>
+				<a href="completeDetails?res_code=${mdto.res_code}&res_detail_code=${mdto.res_detail_code}&user_id=${mdto.user_id}&comp_res=${mdto.comp_res}">${mdto.res_code}</a>
 			</td>
 			
 			<td style="text-align:center">${mdto.user_id}</td>
@@ -48,7 +48,7 @@
 		<tr class="gradeX">
 			<td style="text-align:center">
 				<!-- 상세페이지 -->
-				<a href="requestDetails?res_code=${rdto.res_code}&res_detail_code=${rdto.res_detail_code}&user_id=${rdto.user_id}&comp_res=${rdto.comp_res}">${rdto.res_code}</a>
+				<a href="completeDetails?res_code=${rdto.res_code}&res_detail_code=${rdto.res_detail_code}&user_id=${rdto.user_id}&comp_res=${rdto.comp_res}">${rdto.res_code}</a>
 			</td>
 			
 			<td style="text-align:center">${rdto.user_id}</td>

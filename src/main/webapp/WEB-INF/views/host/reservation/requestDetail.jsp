@@ -206,22 +206,23 @@
 	</div>
 <!-- ------------------------------- 회원정보 끝 -->
 	
-<!-- ------------------------------- 예약등록표 시작 -->
+<!-- ------------------------------- 예약상세정보 조회(담당자) 시작 -->
+<c:if test="${mdto.comp_res eq '담당자'}">
 	<div class="col-sm-8">
 	    <div class="ibox ">
 	        <div class="ibox-title">
 	            <h3>예약 상세</h3>
-	            <small>예약 코드 : ${dto.res_code}</small>
+	            <small>예약 코드 : ${mdto.res_code}</small>
 	        </div>
 	        <div class="ibox-content">
 <!-- form -->	<form action="" method="post" id="requestDetail">
 				<sec:csrfInput/>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-				<input type="hidden" id="res_code" name="res_code" value="${dto.res_code}">
-				<input type="hidden" id="user_id" name="user_id" value="${dto.user_id}">
-				<input type="hidden" id="res_review_chk" name="res_review_chk" value="${dto.res_review_chk}">
-				<input type="hidden" id="product_code" name="product_code" value="${dto.product_code}">
-				<input type="hidden" id="res_detail_code" name="res_detail_code" value="${dto.res_detail_code}">
+				<input type="hidden" id="res_code" name="res_code" value="${mdto.res_code}">
+				<input type="hidden" id="user_id" name="user_id" value="${mdto.user_id}">
+				<input type="hidden" id="res_review_chk" name="res_review_chk" value="${mdto.res_review_chk}">
+				<input type="hidden" id="product_code" name="product_code" value="${mdto.product_code}">
+				<input type="hidden" id="res_detail_code" name="res_detail_code" value="${mdto.res_detail_code}">
 	                <!-- 예약 테이블 시작 -->
                     <table class="box">
                      <!-- 예약 상태 -->
@@ -238,7 +239,7 @@
                            </div>
                            <div class="col-lg-3" style="margin-top:15px; color: black">
                          <%-- <input type="text" name="selectType" id="selectType" style="display: none">형태 : <span class="stateSelectedInfo">${dto.res_state}</span> --%>
-                         <input type="text" name="res_state" id="selectState" value="${dto.res_state}">
+                         <input type="text" name="res_state" id="selectState" value="${mdto.res_state}">
                       </div>
                       <div class="hr-line-dashed"></div>
                         </td>
@@ -252,7 +253,7 @@
                         <td class="dashed">
                            <!-- 날짜 -->
                            <div class="col-lg-3" style="margin-top:15px; color: black">
-                              <input type="date" id="res_date" name="res_date" value="${dto.res_date}"  readonly>
+                              <input type="date" id="res_date" name="res_date" value="${mdto.res_date}"  readonly>
                            </div>
                       <div class="hr-line-dashed"></div>
                         </td>
@@ -289,50 +290,11 @@
                            </div>
                       <div class="col-lg-3" style="margin-top:15px; color: black">
                          <%-- <input type="text" name="selectTime" id="selectTime" value="${dto.res_hour}" style="display: none">선택 시간 : <span class="timeSelectedInfo">${dto.res_hour}</span> --%>
-			         	 <input type="text" name="res_hour" id="selectTime" value="${dto.res_hour}">
+			         	 <input type="text" name="res_hour" id="selectTime" value="${mdto.res_hour}">
                       </div>
                       <div class="hr-line-dashed"></div>
                         </td>
                      </tr>
-                     
-                     
-   
-                     <%-- <!-- 호실 -->
-                     <tr>
-                        <td><strong>호실</strong></td>
-                     </tr>
-                     <tr>
-                        <td>
-                           <div style="display:inline-block">
-                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn1"
-                                 value="1실" style="margin: 10px">1실</button>
-                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn2"
-                                  value="2실" style="margin: 10px">2실</button>
-                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn3"
-                                  value="3실" style="margin: 10px">3실</button>
-                           </div>
-<!-- sql에서는 varchar(4)로 되어있어서 한글까지 넣으려면 sql을 다시 수정해야한다. -->
-                           <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                         <input type="text" name="selectRoom" id="selectRoom" style="display: none">호실 : <span class="roomSelectedInfo">${dto.res_room}호실</span>
-                         <input type="text" name="res_room" id="selectRoom" value="${dto.res_room}">
-                      </div>
-                      
-                      <div class="form-group row"><label class="col-lg-2 col-form-label">호실</label>
-
-					        <div class="col-sm-4"><select class="form-control m-b" name="room">
-					            <option>A301호</option>
-					            <option>A302호</option>
-					            <option>A303호</option>
-					            <option>A304호</option>
-					            <option>A305호</option>
-					            <option>A306호</option>
-					            <option>A307호</option>
-					        </select></div>
-					    </div>
-  				
-  						<div class="hr-line-dashed"></div> 
-                        </td>
-                     </tr> --%>
    
                      <!-- 인원 -->
                      <tr>
@@ -346,7 +308,7 @@
                               </div>
                               <div class="col-2">
                                  <!-- <input type="text" id="GuestCount" name="GuestCount" maxlength="4" class="form-control text-center" value="0" readonly /> -->
-                                 <input type="text" id="GuestCount" name="res_cnt" maxlength="4" class="form-control text-center" value="${dto.res_cnt}" readonly>
+                                 <input type="text" id="GuestCount" name="res_cnt" maxlength="4" class="form-control text-center" value="${mdto.res_cnt}" readonly>
                               </div>
                               <div class="col-3">
                                  <input type="button" id="GuestCountPlus" name="GuestCountPlus" class="btn btn-primary" value="＋" />
@@ -365,31 +327,49 @@
                         <td>
                            <div style="display:inline-block">
                               <button type="button" class="btn btn-outline btn-primary" class="managerBtn" id="managerBtn1" 
-                                 value="정지은" style="margin: 10px">정지은</button>
+                                 value="E181" style="margin: 10px">정원제</button>
                               <button type="button" class="btn btn-outline btn-primary" class="managerBtn" id="managerBtn2" 
-                                 value="한진원" style="margin: 10px">한진원</button>
+                                 value="E201" style="margin: 10px">이시현</button>
                               <button type="button" class="btn btn-outline btn-primary" class="managerBtn" id="managerBtn3"
-                                 value="이시현" style="margin: 10px">이시현</button>
-                              <button type="button" class="btn btn-outline btn-primary" class="managerBtn" id="managerBtn3"
-                                 value="E4" style="margin: 10px">장현정</button>
+                                 value="E202" style="margin: 10px">주수림</button>
                            </div>
                            <div class="col-lg-3" style="margin-top:15px; color: black">
                                <%-- <input type="text" name="selectManager" id="selectManager" style="display: none">담당자 : <span class="managerSelectedInfo">${dto.employee_code}</span> --%>
-                               <input type="text" name="employee_code" id="selectManager" value="${dto.employee_code}">
+                               <input type="text" name="employee_code" id="selectManager" value="${mdto.employee_code}">
                            </div>
+                         <div class="hr-line-dashed"></div>   
+							</td>
+						</tr>  
+						
+						<!-- 금액 -->
+						<tr>
+							<td><span><strong>금액</strong></span></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="col-4" style="margin-top:15px;">
+									<input type="text" id="priceTotal" name="res_sales" 
+									class="form-control text-center" value="${mdto.res_sales} 원" />
+								</div>
+						<div class="hr-line-dashed"></div>   
+							</td>
+						</tr>
                            
-                           <!-- 고객의 추가 요청사항 -->
-                           <div class="form-group" style="margin-top:30px;">
-                         <span><strong>추가 요청사항</strong></span>
-                         <textarea class="form-control" rows="3"
-                         			name="res_indiv_request" style="margin-top:10px; color: black">
-                         			${dto.res_indiv_request}
-                         </textarea>
-    <!-- textarea 다시 체크해 볼 것! -->
-                     </div>
-                     <div class="hr-line-dashed"></div>   
-                        </td>
-                     </tr>
+                         <!-- 고객의 추가 요청사항 -->
+	                     <tr>
+	                        <td><span><strong>추가 요청사항</strong></span></td>
+	                     </tr>
+	                     <tr>
+	                        <td>
+								<div class="form-group" style="margin-top:15px;">
+								<textarea class="form-control" rows="3"
+	                         			name="res_indiv_request" style="margin-top:10px; color: black">
+	                         			${mdto.res_indiv_request}
+								</textarea>
+	                     		</div>
+	                     <div class="hr-line-dashed"></div>   
+	                        </td>
+	                     </tr>
                      
                      
                      
@@ -402,7 +382,7 @@
                      
 			         <div class="col-lg-12" style="margin-top:15px; color: black">
 			         	<input type="text" id="res_memo" name="res_memo"
-			         			value="${dto.res_memo}" class="form-control">
+			         			value="${mdto.res_memo}" class="form-control">
 			         </div>
 			  				<div class="hr-line-dashed"></div>  
 			                     </td>
@@ -415,8 +395,198 @@
 				                
 				        </div>
 				    </div>
-				</div>
-<!-- ------------------------------- 예약등록표 끝 -->
+				</c:if>
+<!-- ------------------------------- 예약상세정보 조회(담당자) 끝 -->
+
+<!-- ------------------------------- 예약상세정보 조회(호실) 시작 -->
+<c:if test="${rdto.comp_res eq '호실'}">
+	<div class="col-sm-8">
+	    <div class="ibox ">
+	        <div class="ibox-title">
+	            <h3>예약 상세</h3>
+	            <small>예약 코드 : ${rdto.res_code}</small>
+	        </div>
+	        <div class="ibox-content">
+<!-- form -->	<form action="" method="post" id="requestDetail">
+				<sec:csrfInput/>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+				<input type="hidden" id="res_code" name="res_code" value="${rdto.res_code}">
+				<input type="hidden" id="user_id" name="user_id" value="${rdto.user_id}">
+				<input type="hidden" id="res_review_chk" name="res_review_chk" value="${rdto.res_review_chk}">
+				<input type="hidden" id="product_code" name="product_code" value="${rdto.product_code}">
+				<input type="hidden" id="res_detail_code" name="res_detail_code" value="${rdto.res_detail_code}">
+	                <!-- 예약 테이블 시작 -->
+                    <table class="box">
+                     <!-- 예약 상태 -->
+                     <tr>
+                        <td><strong>예약상태</strong></td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <div style="display:inline-block">
+                              <button type="button" class="btn btn-outline btn-primary" class="typeBtn" id="stateBtn1"
+                                 style="margin: 10px" value="예약신청">예약신청</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="typeBtn" id="stateBtn2"
+                                 style="margin: 10px" value="예약중">예약중</button>
+                           </div>
+                           <div class="col-lg-3" style="margin-top:15px; color: black">
+                         <%-- <input type="text" name="selectType" id="selectType" style="display: none">형태 : <span class="stateSelectedInfo">${dto.res_state}</span> --%>
+                         <input type="text" name="res_state" id="selectState" value="${rdto.res_state}">
+                      </div>
+                      <div class="hr-line-dashed"></div>
+                        </td>
+                     </tr>
+                     
+                     
+                     <tr>
+                        <td><strong>날짜</strong>
+                     </tr>
+                     <tr>
+                        <td class="dashed">
+                           <!-- 날짜 -->
+                           <div class="col-lg-3" style="margin-top:15px; color: black">
+                              <input type="date" id="res_date" name="res_date" value="${rdto.res_date}"  readonly>
+                           </div>
+                      <div class="hr-line-dashed"></div>
+                        </td>
+                     </tr>
+                     
+                     
+                     <tr>
+                        <td><strong>시간</strong><br></td>
+                     </tr>
+                     <tr>
+                        <td class="dashed">
+                           <!-- 시간 -->
+                           
+                      <div class="col-lg-12" style="margin-top:15px; color: black">
+                         <%-- <input type="text" name="selectTime" id="selectTime" value="${dto.res_hour}" style="display: none">선택 시간 : <span class="timeSelectedInfo">${dto.res_hour}</span> --%>
+			         	 <input type="text" name="res_start" id="selectTime" value="${rdto.res_start}">
+			         	 ~
+			         	 <input type="text" name="res_end" id="selectTime" value="${rdto.res_end}">
+                      </div>
+                      <div class="hr-line-dashed"></div>
+                        </td>
+                     </tr>
+                     
+                     
+   
+                     <!-- 호실 -->
+                     <tr>
+                        <td><strong>호실</strong></td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <!-- <div style="display:inline-block">
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn1"
+                                 value="301호" style="margin: 10px">301호</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn2"
+                                  value="302호" style="margin: 10px">302호</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn3"
+                                  value="303호" style="margin: 10px">303호</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn1"
+                                 value="304호" style="margin: 10px">304호</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn2"
+                                  value="305호" style="margin: 10px">305호</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn3"
+                                  value="306호" style="margin: 10px">306호</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn1"
+                                 value="307호" style="margin: 10px">307호</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn2"
+                                  value="308호" style="margin: 10px">308호</button>
+                              <button type="button" class="btn btn-outline btn-primary" class="roomBtn" id="roomBtn3"
+                                  value="309호" style="margin: 10px">309호</button>
+                           </div> -->
+                           <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
+                         <input type="text" name="room_name" id="selectRoom" style="display: none"><span class="roomSelectedInfo">${rdto.room_name}</span>
+                         <%-- <input type="text" name="room_name" id="selectRoom" value="${rdto.room_name}"> --%>
+                      </div>
+  				
+  						<div class="hr-line-dashed"></div> 
+                        </td>
+                     </tr>
+   
+                     <!-- 인원 -->
+                     <tr>
+                        <td><strong>인원</strong></td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <div class="row" style="margin-top:15px; color: black">
+                              <div class="col-3" style="width: auto;">
+                                 <input type="button" id="GuestCountMinus" name="GuestCountMinus" class="btn btn-primary" value="－" />
+                              </div>
+                              <div class="col-4">
+                                 <!-- <input type="text" id="GuestCount" name="GuestCount" maxlength="4" class="form-control text-center" value="0" readonly /> -->
+                                 <input type="text" id="GuestCount" name="res_cnt" maxlength="4" class="form-control text-center" value="${rdto.res_cnt}" readonly>
+                              </div>
+                              <div class="col-3">
+                                 <input type="button" id="GuestCountPlus" name="GuestCountPlus" class="btn btn-primary" value="＋" />
+                              </div>
+                              <div class="offset-1"></div>
+                           </div>
+                     <div class="hr-line-dashed"></div>   
+                        </td>
+                     </tr>
+                     
+                     <!-- 금액 -->
+                     <tr>
+                        <td><span><strong>금액</strong></span></td>
+                     </tr>
+                     <tr>
+                        <td>
+							<div class="col-4" style="margin-top:15px;">
+							<input type="text" id="priceTotal" name="res_sales" 
+							class="form-control text-center" value="${rdto.res_sales} 원" />
+                     		</div>
+                     <div class="hr-line-dashed"></div>   
+                        </td>
+                     </tr>
+                     
+                     <!-- 고객의 추가 요청사항 -->
+                     <tr>
+                        <td><span><strong>추가 요청사항</strong></span></td>
+                     </tr>
+                     <tr>
+                        <td>
+							<div class="form-group" style="margin-top:15px;">
+							<textarea class="form-control" rows="3"
+                         			name="res_indiv_request" style="margin-top:10px; color: black">
+                         			${rdto.res_indiv_request}
+							</textarea>
+                     		</div>
+                     <div class="hr-line-dashed"></div>   
+                        </td>
+                     </tr>
+                     
+                     <!-- 직원 기타메모 -->
+                     <tr>
+                        <td><strong>담당자 기타메모</strong></td>
+                     </tr>
+                     <tr>
+                        <td>
+                     
+			         <div class="col-lg-12" style="margin-top:15px; color: black">
+			         	<input type="text" id="res_memo" name="res_memo"
+			         			value="${rdto.res_memo}" class="form-control">
+			         </div>
+			  				<div class="hr-line-dashed"></div>  
+			                     </td>
+			                     </tr>
+                  		</table>                             
+						<!-- 예약 테이블 끝 -->
+						</form>
+		                </div>
+				                
+				                
+				        </div>
+				    </div>
+				</c:if>
+
+
+
+<!-- ------------------------------- 예약상세정보 조회(호실) 끝 -->
+			</div>
 			</div>  
 			</div>    
 		</div>

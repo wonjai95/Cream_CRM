@@ -81,7 +81,6 @@ public class ProductServiceImpl implements ProductService {
 		List<ProductGroupVO> productGroupList = dao.selectProductGroupList(host_code);
 		//상품 목록
 		List<ProductVO> productList = dao.selectProductList(vo);
-			
 		model.addAttribute("productGroupList", productGroupList);
 		model.addAttribute("productList", productList);
 	}
@@ -92,6 +91,9 @@ public class ProductServiceImpl implements ProductService {
 		String host_code = (String)req.getSession().getAttribute("code");
 		String product_group_name = req.getParameter("product_group_name");
 		String product_group_code = req.getParameter("product_group_code");
+		if(product_group_code.equals("undefined") || product_group_code.equals("")) {
+			product_group_code = null;
+		}
 		
 		int validationChk = 0;
 		if(product_group_code != null) {
@@ -182,11 +184,43 @@ public class ProductServiceImpl implements ProductService {
 		List<ProductGroupVO> list = dao.getProductGroupList(host_code);
 		model.addAttribute("list", list);
 	}
+	
+	//상품명 중복확인
+	@Override
+	public int chkProductName(HttpServletRequest req, Model model) {
+		String host_code = (String)req.getSession().getAttribute("code");
+		String product_name = req.getParameter("product_name");
+		String product_code = req.getParameter("product_code");
+		System.out.println(product_code + "d");
+		if(product_code.equals("undefined") || product_code.equals("")) {
+			product_code = null;
+		}
+		
+		int validationChk = 0;
+		if(product_code != null) {
+			ProductVO vo = new ProductVO();
+			vo.setProduct_code(product_code);
+			vo = dao.getProduct(vo);
+			if(vo.getProduct_name().equals(product_name)) {
+				validationChk = 1;
+			}
+			
+		}
+		
+		int selectCnt = 0;
+		if(product_code == null || validationChk == 0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("host_code", host_code);
+			map.put("product_name", product_name);
+			selectCnt = dao.chkProductName(map);
+		}
+		return selectCnt;
+	}
 
 	// 상품등록
 	@Override
-	public void addProductAction(MultipartHttpServletRequest req, Model model) {
-		String host_code = (String) req.getSession().getAttribute("code");
+	public ProductVO addProductAction(MultipartHttpServletRequest req, Model model) {
+		String host_code = (String)req.getSession().getAttribute("code");
 		String product_name = req.getParameter("product_name");
 		String product_typeOfSales = req.getParameter("product_typeOfSales");
 		String product_price = req.getParameter("product_price");
@@ -195,68 +229,52 @@ public class ProductServiceImpl implements ProductService {
 		String product_content = req.getParameter("product_content");
 		String product_group_code = req.getParameter("product_group_code");
 		MultipartFile file = req.getFile("product_img");
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("product_name", product_name);
-		map.put("host_code", host_code);
-		int selectCnt = dao.chkProductName(map);
-		ProductVO vo = null;
-
-		if (selectCnt != 1) {
-			vo = new ProductVO();
-			if (file.getOriginalFilename().equals("") || file.getOriginalFilename() == null) {
-				vo.setProduct_img("null");
-			} else {
-				vo.setProduct_img(file.getOriginalFilename());
-			}
-
-			if (product_typeOfSales.equals("서비스")) {
-				vo.setProduct_rentalPeriod(0);
-			} else {
-				vo.setProduct_rentalPeriod(Integer.parseInt(product_rentalPeriod));
-			}
-			vo.setProduct_name(product_name);
-			vo.setProduct_typeOfSales(product_typeOfSales);
-			vo.setProduct_price(Integer.parseInt(product_price));
-			vo.setProduct_indate(new Date(System.currentTimeMillis()));
-			vo.setProduct_status(product_status);
-			vo.setProduct_content(product_content);
-			vo.setProduct_group_code(product_group_code);
-			int insertCnt = dao.insertProduct(vo);
-
-			if (insertCnt == 1) {
-				if (file.getOriginalFilename().equals("") || file.getOriginalFilename() == null) {
-					System.out.println("파일 이미지 선택 안함");
-				} else {
-					System.out.println(file.getOriginalFilename());
-					String saveDir = req.getSession().getServletContext()
-							.getRealPath("/resources/images/productImage/");
-					System.out.println(saveDir);
-					// ↓ 경로조심 자신 프로젝트 경로
-					String realDir = "D:\\Dev88\\workspace\\Creamy\\src\\main\\webapp\\resources\\images\\productImage\\";
-					try {
-						file.transferTo(new File(saveDir + file.getOriginalFilename()));
-						FileInputStream fis = new FileInputStream(saveDir + file.getOriginalFilename());
-						FileOutputStream fos = new FileOutputStream(realDir + file.getOriginalFilename());
-
-						int i = 0;
-						while ((i = fis.read()) != -1) {
-							fos.write(i);
-						}
-						fis.close();
-						fos.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-						System.out.println(e.getMessage());
-					}
+		System.out.println("fileName : " + file.getOriginalFilename());
+		ProductVO vo = new ProductVO();
+		
+		if (!file.getOriginalFilename().equals("") && file.getOriginalFilename() != null) {
+			String saveDir = req.getSession().getServletContext()
+					.getRealPath("/resources/images/productImage/");
+			System.out.println(saveDir);
+			// ↓ 경로조심 자신 프로젝트 경로
+			String realDir = "D:\\Dev88\\workspace\\Creamy\\src\\main\\webapp\\resources\\images\\productImage\\";
+			try {
+				file.transferTo(new File(saveDir + file.getOriginalFilename()));
+				FileInputStream fis = new FileInputStream(saveDir + file.getOriginalFilename());
+				FileOutputStream fos = new FileOutputStream(realDir + file.getOriginalFilename());
+				int i = 0;
+				while ((i = fis.read()) != -1) {
+					fos.write(i);
 				}
+				fis.close();
+				fos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
-			model.addAttribute("insertCnt", insertCnt);
-		} else {
-			model.addAttribute("selectCnt", selectCnt);
-			return;
 		}
+		
+		if (product_rentalPeriod != null) {
+			vo.setProduct_rentalPeriod(Integer.parseInt(product_rentalPeriod));
+		}
+		vo.setProduct_name(product_name);
+		vo.setProduct_typeOfSales(product_typeOfSales);
+		vo.setProduct_price(Integer.parseInt(product_price));
+		vo.setProduct_indate(new Date(System.currentTimeMillis()));
+		vo.setProduct_img(file.getOriginalFilename());
+		vo.setProduct_status(product_status);
+		vo.setProduct_content(product_content);
+		vo.setProduct_group_code(product_group_code);
+		int insertCnt = dao.insertProduct(vo);
 
+		if (insertCnt != 1) {
+			vo = null;
+		}else {
+			vo.setHost_code(host_code);
+			vo = dao.getProduct(vo);
+		}
+		
+		return vo;
 	}
 
 	// 상품상세(수정)
@@ -265,15 +283,17 @@ public class ProductServiceImpl implements ProductService {
 		String product_code = req.getParameter("product_code");
 		String host_code = (String) req.getSession().getAttribute("code");
 		List<ProductGroupVO> list = dao.getProductGroupList(host_code);
-		ProductVO vo = dao.getProduct(product_code);
+		
+		ProductVO vo = new ProductVO();
+		vo.setProduct_code(product_code);
+		vo = dao.getProduct(vo);
 		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 	}
 
 	// 상품수정
 	@Override
-	public void modifyProductAction(MultipartHttpServletRequest req, Model model) {
-		String host_code = (String) req.getSession().getAttribute("code");
+	public ProductVO modifyProductAction(MultipartHttpServletRequest req, Model model) {
 		String product_code = req.getParameter("product_code");
 		String product_name = req.getParameter("product_name");
 		String product_typeOfSales = req.getParameter("product_typeOfSales");
@@ -283,85 +303,106 @@ public class ProductServiceImpl implements ProductService {
 		String product_content = req.getParameter("product_content");
 		String product_group_code = req.getParameter("product_group_code");
 		MultipartFile file = req.getFile("product_img");
+		System.out.println("fileName : " + file.getOriginalFilename());
 		ProductVO vo = new ProductVO();
-
-		int selectCnt = 0;
-		ProductVO getVo = dao.getProduct(product_code);
-		if (!product_name.equals(getVo.getProduct_name())) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("product_name", product_name);
-			map.put("host_code", host_code);
-			selectCnt = dao.chkProductName(map);
-		}
-
-		if (selectCnt != 1) {
-			if (file.getOriginalFilename().equals("") || file.getOriginalFilename() == null) {
-				String hiddenImg = req.getParameter("hiddenImg");
-				vo.setProduct_img(hiddenImg);
-			} else {
+		
+		if(!file.getOriginalFilename().equals("") && file.getOriginalFilename() != null) {
+			String saveDir = req.getSession().getServletContext()
+					.getRealPath("/resources/images/productImage/");
+			// ↓ 경로조심 자신 프로젝트 경로
+			String realDir = "D:\\Dev88\\workspace\\Creamy\\src\\main\\webapp\\resources\\images\\productImage\\";
+			try {
+				file.transferTo(new File(saveDir + file.getOriginalFilename()));
+				FileInputStream fis = new FileInputStream(saveDir + file.getOriginalFilename());
+				FileOutputStream fos = new FileOutputStream(realDir + file.getOriginalFilename());
+				int i = 0;
+				while ((i = fis.read()) != -1) {
+					fos.write(i);
+				}
 				vo.setProduct_img(file.getOriginalFilename());
+				fis.close();
+				fos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
-			if (product_typeOfSales.equals("서비스")) {
-				vo.setProduct_rentalPeriod(0);
-			} else {
+		}
+			if(product_rentalPeriod != null) {
 				vo.setProduct_rentalPeriod(Integer.parseInt(product_rentalPeriod));
 			}
-
 			vo.setProduct_code(product_code);
 			vo.setProduct_name(product_name);
 			vo.setProduct_typeOfSales(product_typeOfSales);
 			vo.setProduct_price(Integer.parseInt(product_price));
 			vo.setProduct_indate(new Date(System.currentTimeMillis()));
+			vo.setProduct_img(file.getOriginalFilename());
 			vo.setProduct_status(product_status);
 			vo.setProduct_content(product_content);
 			vo.setProduct_group_code(product_group_code);
 
 			int updateCnt = dao.updateProduct(vo);
-			if (updateCnt == 1) {
-				if (file.getOriginalFilename().equals("") || file.getOriginalFilename() == null) {
-					System.out.println("사진선택안함(기존사진 선택)");
-				} else {
-					String saveDir = req.getSession().getServletContext()
-							.getRealPath("/resources/images/productImage/");
-					// ↓ 경로조심 자신 프로젝트 경로
-					String realDir = "D:\\Dev88\\workspace\\Creamy\\src\\main\\webapp\\resources\\images\\productImage\\";
-					try {
-						file.transferTo(new File(saveDir + file.getOriginalFilename()));
-						FileInputStream fis = new FileInputStream(saveDir + file.getOriginalFilename());
-						FileOutputStream fos = new FileOutputStream(realDir + file.getOriginalFilename());
-
-						int i = 0;
-						while ((i = fis.read()) != -1) {
-							fos.write(i);
-						}
-						vo.setProduct_img(file.getOriginalFilename());
-						fis.close();
-						fos.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-						System.out.println(e.getMessage());
-					}
-				}
+			
+			if (updateCnt != 1) {
+				vo = null;
+			}else {
+				vo = dao.getProduct(vo);
 			}
-			model.addAttribute("updateCnt", updateCnt);
-		} else {
-			model.addAttribute("selectCnt", selectCnt);
-			return;
-		}
+		return vo;
 	}
 
 	// 상품 삭제
 	@Override
-	public void deleteProductAction(HttpServletRequest req, Model model) {
+	public int deleteProductAction(HttpServletRequest req, Model model) {
 		String product_code = req.getParameter("product_code");
-		ProductVO vo = dao.getProduct(product_code);
-		if (vo != null) {
-			int deleteCnt = dao.deleteProduct(product_code);
-			model.addAttribute("deleteCnt", deleteCnt);
-		}
-		model.addAttribute("vo", vo);
+		System.out.println(product_code);
+		/*
+		ProductVO vo = new ProductVO();
+		vo.setHost_code(product_code);
+		vo = dao.getProduct(vo);
+		*/
+		return dao.deleteProduct(product_code);
 	}
-
+	
+	// 상품 검색
+	@Override
+	public List<ProductVO> selectProductByQuery(HttpServletRequest req, Model model) {
+		String product_name = req.getParameter("product_name");
+		String product_typeOfSales = req.getParameter("product_typeOfSales");
+		String product_status = req.getParameter("product_status");
+		String product_group_code = req.getParameter("product_group_code");
+		String host_code = (String)req.getSession().getAttribute("code");
+		ProductVO vo = new ProductVO();
+		if(product_group_code.equals("null")) {
+			product_group_code = null;
+		}
+		if(product_typeOfSales.equals("null")) {
+			product_typeOfSales = null;
+		}
+		if(product_status.equals("null")) {
+			product_status = null;
+		}
+		if(product_name.equals("null")) {
+			product_name = null;
+		}
+		
+		System.out.println("product_name " + product_name);
+		System.out.println("product_typeOfSales " +product_typeOfSales);
+		System.out.println("product_status " +product_status);
+		System.out.println("product_group_code " +product_group_code);
+		vo.setProduct_name(product_name);
+		vo.setProduct_typeOfSales(product_typeOfSales);
+		vo.setProduct_status(product_status);
+		vo.setProduct_group_code(product_group_code);
+		vo.setHost_code(host_code);
+		List<ProductVO> list = dao.selectProductListByQuery(vo);
+		for (int i = 0; i < list.size(); i++) {
+			ProductVO vo2 = list.get(i);
+			System.out.println(vo2.getProduct_name());
+		}
+		return list;
+	}
+	
+	/****************************************************************************/
 	// 거래처 등록
 	@Override
 	public void addTradeAction(HttpServletRequest req, Model model) {

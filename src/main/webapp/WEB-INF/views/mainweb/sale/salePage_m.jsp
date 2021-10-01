@@ -170,14 +170,14 @@
                                <input type="text" name="res_hour" id="selectTime" style="display: none" value="${dto.res_hour}">예약 시간 : ${dto.res_hour} 
                             </div>
                             
-                            <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black"> <!-- 담당자 : employee_name 에서 employee_code 로 변경 -->
-                          		<input type="text" name="employee_code" id="employee_code" style="display: none" value="${dto.employee_code}">담당자 : ${dto.employee_code}</span>
+                            <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black"> 
+                          		<input type="text" name="employee_code" id="employee_code" style="display: none" value="${dto.employee_code}">담당자 : ${dto.employee_name}</span>
                        	  	</div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
                           		<input type="number" name="GuestCount" id="GuestCount" style="display: none" value="${dto.res_cnt}">예약 인원 : ${dto.res_cnt}</span>
                        	  	</div>
-                       	  	<div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black"> <!-- 상품 명 : product_name 에서 product_code 로 변경 -->
-                          		<input type="text" name="product_code" id="product_code" style="display: none" value="${dto.product_code}">상품 명 : ${dto.product_code}</span>
+                       	  	<div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black"> 
+                          		<input type="text" name="product_code" id="product_code" style="display: none" value="${dto.product_code}">상품 명 : ${dto.product_name}</span>
                        	  	</div>
                        	  	
                             <div class="form-group" style="margin-top:30px;">

@@ -26,11 +26,12 @@ body{background-color: white;}
 		$("#room_name").blur(
 				function() {
 					var room_name = $(this).val();
+					var room_setting_code = $("#room_setting_code").val();
 					if (room_name != "") {
 						$.ajax({
 							type : "get",
 							url : "chkRoomName",
-							data : "room_name=" + room_name,
+							data : "room_name=" + room_name + "&room_setting_code=" +room_setting_code,
 							success : function(result) {
 								$("#chkName").css("display", "block").css(
 										"color", "red").css("font-size",

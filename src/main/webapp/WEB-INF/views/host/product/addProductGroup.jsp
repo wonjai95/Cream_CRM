@@ -18,11 +18,12 @@ body {
 		$(function() {
 			$("#product_group_name").blur(function() {
 						var product_group_name = $(this).val();
+						var product_group_code = $("#product_group_code").val();
 						if (product_group_name != "") {
 							$.ajax({
 								type : "get",
 								url : "chkGroupName",
-								data : "product_group_name=" + product_group_name,
+								data : "product_group_name=" + product_group_name +"&product_group_code="+product_group_code,
 								success : function(result) {
 									$("#chkName").css("display", "block").css(
 											"color", "red").css("font-size",

@@ -29,7 +29,9 @@
 <div class="ibox ">
 	<input type="hidden" name="open_sche" value="${open_sche}">
 	<input type="hidden" name="close_sche" value="${close_sche}">
+	<input type="hidden" name="room_setting_code" value="${room_setting_code}">
 	<input type="hidden" name="selectRoom" value="${selectRoom}">
+	
     <div class="ibox-title">
         <h5>호실 상세 정보  - 영업시간 : ${open_sche} ~ ${close_sche}</h5>
     </div>
@@ -40,7 +42,7 @@
            	<hr>
            	<p style="font-size: 14px;">${res_date} 해당 호실 예약 현황</p>
             <c:forEach var="dto" items="${dtos}">
-            	<div class='home_div navy-bg'>&nbsp; 예약 완료 :&nbsp; ${dto.res_start} - ${dto.res_end}</div>
+            	<div class='home_div navy-bg'>&nbsp; 예약 완료 :&nbsp; ${dtos.res_start} - ${dtos.res_end}</div>
             </c:forEach>
             <br>
 				<p class="m-t" style="border-top: 1px solid gray; padding-top: 15px; display: flex; margin-bottom: 10px;">

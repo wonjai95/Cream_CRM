@@ -43,14 +43,18 @@ public interface ProductService {
 	
 	//상품 등록 페이지 요청 (상품그룹 데이터)
 	void addProduct(HttpServletRequest req, Model model);
+	//상품명 중복확인
+	int chkProductName(HttpServletRequest req, Model model);
 	//상품등록
-	void addProductAction(MultipartHttpServletRequest req, Model model);
+	ProductVO addProductAction(MultipartHttpServletRequest req, Model model);
 	//상품상세(수정)
 	void detailProduct(HttpServletRequest req, Model model);
 	//상품수정
-	void modifyProductAction(MultipartHttpServletRequest req, Model model);
+	ProductVO modifyProductAction(MultipartHttpServletRequest req, Model model);
 	//상품삭제
-	void deleteProductAction(HttpServletRequest req, Model model);
+	int deleteProductAction(HttpServletRequest req, Model model);
+	//상품 리스트
+	List<ProductVO> selectProductByQuery(HttpServletRequest req, Model model);
 	
 	
 	

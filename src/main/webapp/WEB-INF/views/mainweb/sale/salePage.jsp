@@ -161,7 +161,7 @@
                               <input type="date" name="res_date" value="${dto.res_date}"></div>   
                             </div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                               <input type="text" name="res_hour" id="selectTime" style="display: none" value="${dto.res_hour}">예약 시간 : ${dto.res_hour} 
+                               <input type="text" name="res_hour" id="selectTime" style="display: none" value="${dto.res_hour}">예약 시간 : ${dto.res_hour} 시
                             </div>
                             
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">

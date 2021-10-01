@@ -48,11 +48,9 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		model.addAttribute("user_id", user_id);
 		
 		// 회원 선택 하면 해당 회원에 대한 판매 내역 출력(판매 탭) - user_sale
-		
 		if(user_code != null) {
 			
 			// 회원별 판매 목록 출력(수정중)
-			service_user.userSale(req, model);
 			
 		} else {
 			
@@ -80,8 +78,6 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		System.out.println("user_id : " + user_id);
 		
 		service_user.getUserInfo(req, model);
-		
-		
 		
 		return "host/user/modify_user";
 	}
@@ -127,13 +123,14 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 	}
 	
 	// 회원별 판매 내역 출력
-	
 	@RequestMapping("/host/user_sale")
 	public String user_sale(HttpServletRequest req, Model model) {
 		logger.info("url -> user_sale");
 		
+		String user_code = req.getParameter("user_code");
+		System.out.println("user_code : " + user_code);
 		
-		
+		service_user.userSale(req, model);
 		
 		return "host/user/user_sale";
 	}

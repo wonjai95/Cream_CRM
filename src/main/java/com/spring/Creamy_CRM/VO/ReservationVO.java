@@ -42,6 +42,7 @@ public class ReservationVO {
 	
 	private String host_code;			// 사장님 코드
 	
+	private String employee_name;		// 직원명
 	
 	//후기에서 사용함
 	private String user_name;		//고객이름
@@ -218,6 +219,12 @@ public class ReservationVO {
 	}
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
+	}
+	public String getEmployee_name() {
+		return employee_name;
+	}
+	public void setEmployee_name(String employee_name) {
+		this.employee_name = employee_name;
 	}
 	
 	

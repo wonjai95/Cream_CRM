@@ -110,9 +110,15 @@ public class ProductDAOImpl implements ProductDAO {
 
 	// 상품 상세(수정)
 	@Override
-	public ProductVO getProduct(String product_code) {
-		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.productDAO.getProduct", product_code);
+	public ProductVO getProduct(ProductVO vo) {
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.productDAO.getProduct", vo);
 	}
+	
+	// 상품코드로 상품 정보 가져오기
+	@Override
+   public ProductVO getProductOne(String product_code) {
+      return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.productDAO.getProductOne", product_code);
+   }
 
 	// 상품 수정
 	@Override
@@ -131,6 +137,13 @@ public class ProductDAOImpl implements ProductDAO {
 	public int deleteProduct(String product_code) {
 		return sqlSession.delete("com.spring.Creamy_CRM.Host_dao.productDAO.deleteProduct", product_code);
 	}
+	
+	//상품 검색
+	@Override
+	public List<ProductVO> selectProductListByQuery(ProductVO vo) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.productDAO.selectProductListByQuery", vo);
+	}
+	
 
 	// 거래처명 중복 확인
 	@Override

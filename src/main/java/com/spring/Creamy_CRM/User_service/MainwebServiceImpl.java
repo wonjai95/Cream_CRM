@@ -7,6 +7,7 @@
 package com.spring.Creamy_CRM.User_service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.spring.Creamy_CRM.Host_dao.EmployeeDAOImpl;
 import com.spring.Creamy_CRM.Host_dao.ProductDAO;
 import com.spring.Creamy_CRM.Host_dao.ProductDAOImpl;
 import com.spring.Creamy_CRM.User_dao.MainwebDAOImpl;
 import com.spring.Creamy_CRM.User_dao.SaleDAO;
 import com.spring.Creamy_CRM.User_dao.SaleDAOImpl;
 import com.spring.Creamy_CRM.User_dao.UserReservationDAOImpl;
+import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
@@ -39,6 +42,9 @@ public class MainwebServiceImpl implements MainwebService {
 	
 	@Autowired
 	SaleDAOImpl dao_sale;
+	
+	@Autowired
+	EmployeeDAOImpl dao_emp;
 	
 //======= 회원예약 =======		
 	
@@ -59,8 +65,15 @@ public class MainwebServiceImpl implements MainwebService {
 		String res_state = "예약완료";
 		String res_room = req.getParameter("selectRoom");
 		System.out.println("res_room : " + res_room);
-		String room_setting_code = req.getParameter("room_setting_code");
+		
+		// 방이름, 사장코드로 room_setting_code 가져오기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		map.put("room_name", res_room);
+		String room_setting_code = dao_res.getRoomCodeByName(map);
 		System.out.println("room_setting_code : " + room_setting_code);
+
+		
 		String res_indiv_request = req.getParameter("res_indiv_request");
 		String str_res_date = req.getParameter("selectDate");
 		System.out.println("str_res_date : " + str_res_date);
@@ -94,7 +107,6 @@ public class MainwebServiceImpl implements MainwebService {
 		System.out.println("날짜 : " + vo.getRes_date());
 		
 		model.addAttribute("dto", vo);
-		req.setAttribute("room_setting_code", room_setting_code);
 		
 	}
 	
@@ -122,11 +134,9 @@ public class MainwebServiceImpl implements MainwebService {
 		Date res_date = Date.valueOf(str_res_date);
 		
 		// selectManager 10/1일 11:00 수정부분
-		String employee_code = req.getParameter("selectManager");
-		System.out.println("employee_code : " + employee_code);
-		String product_code = req.getParameter("product_code");
-		System.out.println("product_code : " + product_code);
-		   
+		String employee_name = req.getParameter("selectManager");
+		System.out.println("employee_name : " + employee_name);
+		
 		String comp_res = req.getParameter("comp_res");
 		
 		// vo에 담아서 넘겨주기
@@ -143,8 +153,24 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_sales(res_sales);
 		vo.setComp_res(comp_res);
 		
+		vo.setEmployee_name(employee_name);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		map.put("employee_name", employee_name);
+		
+		// 직원명으로 직원코드 가져오기
+		String employee_code = dao_emp.searchCodeByName(map).getEmployee_code();
+		System.out.println("employee_code : " + employee_code);
 		vo.setEmployee_code(employee_code);
+		
+		// 상품코드로 상품명 가져와서 페이지에 뿌리기
+		String product_code = req.getParameter("product_code");
+		System.out.println("product_code : " + product_code);
 		vo.setProduct_code(product_code);
+		String product_name = dao_pro.getProductOne(product_code).getProduct_name();
+		System.out.println("product_name : " + product_name);
+		vo.setProduct_name(product_name);
 		
 		System.out.println("날짜 : " + vo.getRes_date());
 		
@@ -167,6 +193,7 @@ public class MainwebServiceImpl implements MainwebService {
 		req.setAttribute("res_code", res_code);
 		req.setAttribute("host_code", host_code);
 	}
+	
 	
 	// 고객 예약상세정보 내 예약내역취소 처리
 	@Override
@@ -219,14 +246,14 @@ public class MainwebServiceImpl implements MainwebService {
 		String employee_code = req.getParameter("employee_code");
 		int res_cnt = Integer.parseInt(req.getParameter("GuestCount"));
 		String res_indiv_request = req.getParameter("res_indiv_request");
-		String product_code = req.getParameter("ReserveProduct");
+		String product_code = req.getParameter("product_code");
 		String res_memo = req.getParameter("res_memo");
-		int res_sales = Integer.parseInt(req.getParameter("ReserveProductSum"));
+		int res_sales = Integer.parseInt(req.getParameter("total_payment"));
 		
-		String selectDate = req.getParameter("selectDate");
+		String selectDate = req.getParameter("res_date");
 		Date res_date = Date.valueOf(selectDate);
 		
-		String str_hour = req.getParameter("selectTime");
+		String str_hour = req.getParameter("res_hour");
 		String[] hours = str_hour.split(":");
 		int res_hour = Integer.parseInt(hours[0]);
 		
@@ -262,13 +289,5 @@ public class MainwebServiceImpl implements MainwebService {
 		model.addAttribute("vo", vo);
 		System.out.println("vo.getRes_cnt : " + vo.getRes_cnt());
 	}
-
-	
-
-	
-	
-	
-	
-	
 	
 }

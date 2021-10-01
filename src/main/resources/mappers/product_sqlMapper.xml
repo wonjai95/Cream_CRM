@@ -98,32 +98,81 @@
   	<insert id="insertProduct" parameterType="com.spring.Creamy_CRM.VO.ProductVO">
   		insert into product_tbl(product_code,product_name,product_typeOfSales,product_price,product_rentalPeriod, 
   			product_img,product_indate,product_status,product_content,product_group_code) 
-  		values('PRO'||pro_seq.nextval,#{product_name},#{product_typeOfSales},#{product_price},#{product_rentalPeriod},
-  			#{product_img},#{product_indate},#{product_status},#{product_content},#{product_group_code})
+  		values('PRO'||pro_seq.nextval,#{product_name},#{product_typeOfSales},#{product_price}, 
+  			#{product_rentalPeriod, jdbcType=NUMERIC},#{product_img},#{product_indate},
+  				#{product_status},#{product_content},#{product_group_code})
   	</insert>
   	
-  	<!-- 상품 상세(수정) -->
-  	<select id="getProduct" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ProductVO">
-  		select * from product_tbl where product_code = #{product_code}
+
+  	<!-- 상품코드로 상품 정보 가져오기 -->
+  	<select id="getProductOne" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ProductVO">
+        select * from product_tbl where product_code = #{product_code}
+     </select>
+
+  	<!-- 상품 상세 -->
+  	<select id="getProduct" parameterType="com.spring.Creamy_CRM.VO.ProductVO" resultType="com.spring.Creamy_CRM.VO.ProductVO">
+  		select * from p_pg_view 
+  		<where>
+  			<if test="host_code != null and product_name != null">
+  				host_code = #{host_code} and product_name = #{product_name}
+  			</if>
+  			<if test="product_code != null">
+  				product_code = #{product_code}
+  			</if>
+  		</where>
+  		order by to_number(substr(product_code,3)) 
   	</select>
+
   	
   	<!-- 상품명 중복확인 -->
-  	<select id="chkProductName" parameterType="String" resultType="int">
-  		select count(*) from p_pg_view where product_name = #{product_name} and host_code = #{host_code}
+  	<select id="chkProductName" parameterType="java.util.Map" resultType="int">
+  		select count(*) from p_pg_view where host_code = #{host_code} and product_name = #{product_name}
   	</select>
   	
   	<!-- 상품 수정 -->
   	<update id="updateProduct" parameterType="com.spring.Creamy_CRM.VO.ProductVO">
-  		update product_tbl set product_name = #{product_name}, product_typeOfSales = #{product_typeOfSales}, product_price = #{product_price},  
-  			product_rentalPeriod = #{product_rentalPeriod}, product_img = #{product_img}, product_indate = #{product_indate},
-  			product_status = #{product_status}, product_content = #{product_content}, product_group_code = #{product_group_code} 
-  			where product_code = #{product_code}
+  		update product_tbl 
+  			<set>
+  				product_name = #{product_name}, product_typeOfSales = #{product_typeOfSales}, 
+  				product_price = #{product_price}, product_indate = #{product_indate}, 
+  				product_status = #{product_status}, product_content = #{product_content}, 
+  				product_group_code = #{product_group_code}
+  				<if test="product_rentalPeriod != null">
+  					,product_rentalPeriod = #{product_rentalPeriod}
+  				</if>
+  				<if test="product_img != ''">
+  					,product_img = #{product_img}
+  				</if>
+  			</set>
+  		 	<where>
+  		 		product_code = #{product_code}
+  		 	</where>
   	</update>
   	
   	<!-- 상품 삭제 -->
   	<delete id="deleteProduct" parameterType="String">
   		delete from product_tbl where product_code = #{product_code}
   	</delete>
+  	
+  	<!-- 상품 검색 -->
+  	<select id="selectProductListByQuery" parameterType="com.spring.Creamy_CRM.VO.ProductVO" resultType="com.spring.Creamy_CRM.VO.ProductVO">
+  		select * from p_pg_view where host_code = #{host_code}
+  			
+			<if test="product_group_code != null">
+  				and product_group_code = #{product_group_code}
+  			</if>
+  			<if test="product_typeOfSales != null">
+  				and product_typeOfSales = #{product_typeOfSales}
+  			</if>
+  			<if test="product_status != null">
+  				and product_status = #{product_status}
+  			</if>
+  			<if test="product_name != null">
+	  			and product_name like '%'||#{product_name}||'%'
+	  		</if>
+  			
+  		order by to_number(substr(product_code,4)) desc
+  	</select>
   
   	<!-- 거래처 -->
   	<!-- 거래처명 중복확인 -->

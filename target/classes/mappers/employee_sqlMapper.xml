@@ -43,6 +43,14 @@
 		ORDER BY employee_code ASC
 	</select>
 	
+	<!-- 직원이름에 따른 직원코드-->
+	<select id="searchCodeByName" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+		SELECT *
+		  FROM employee_tbl
+		 WHERE host_code = #{host_code}
+		   AND employee_name = #{employee_name}
+	</select>
+	
 	<!-- 직원 부서 검색 -->
 	<select id="searchDep" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
 		SELECT *
