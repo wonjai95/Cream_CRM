@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+	// ********** !! 현재 이 페이지 사용 X !! 재고는 stock 폴더안의 stock.jsp **********
+
 	/************************* 거래처 ****************************/
 	function addTrade() {
 		var url = "addTrade";

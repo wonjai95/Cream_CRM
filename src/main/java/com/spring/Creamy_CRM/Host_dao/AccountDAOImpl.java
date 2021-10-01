@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.Creamy_CRM.VO.AccountVO;
+import com.spring.Creamy_CRM.VO.Income_statementVO;
 
 @Repository
 public class AccountDAOImpl implements AccountDAO {
@@ -84,6 +85,17 @@ public class AccountDAOImpl implements AccountDAO {
 	public List<AccountVO> getNOLsearchList(Map<String, Object> map){
 		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
 		return dao.getNOLsearchList(map);
+	}
+	
+	// 손익계산서 조회
+	public List<Income_statementVO> getIncome_statement(String host_code){
+		return null;
+	}
+	
+	// 매입매출전표에서 복리후생비, 소모품비, 수수료비용 합계
+	public int[] sumSGA_expenses(Map<String, Object> map) {
+		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
+		return dao.sumSGA_expenses(map);
 	}
 
 

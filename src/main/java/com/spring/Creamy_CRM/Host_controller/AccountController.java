@@ -210,5 +210,15 @@ public class AccountController {
 		
 		return "host/accounting/Non_operating_loss_list";
 	}
+	
+	// 결산 탭
+	@RequestMapping("/host/settlement")
+	public String settlement(HttpServletRequest req, Model model) {
+		logger.info("url -> settlement");
+		
+		// service.settlement(req, model);
+		
+		return "host/accounting/settlement";
+	}
 
 }

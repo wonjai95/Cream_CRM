@@ -91,6 +91,16 @@
   		   AND slip_memo LIKE '%'||#{search}||'%'
   		 ORDER BY slip_regDate DESC
   	</select>
+  	
+  	<!-- 매입매출전표에서 복리후생비, 소모품비, 수수료비용 합계 -->
+  	<select id="sumSGA_expenses" parameterType="java.util.Map" resultType="int">
+  		SELECT SUM(slip_tbl)
+  		  FROM slip_tbl
+  		 WHERE host_code = #{host_code}
+  		   AND TO_DATE(slip_regDate, 'YYYY-MM') = #{nowMonth}
+  		 
+  		
+  	</select>
   
   
   </mapper>

@@ -14,6 +14,7 @@ public class ProductVO {
 	private String product_status;			//제품 품절 여부
 	private String product_content;			//제품 설명  
 	private String product_group_code;		//제품 그룹코드
+	private String host_code;
 	
 	public String getProduct_code() {
 		return product_code;
@@ -74,6 +75,12 @@ public class ProductVO {
 	}
 	public void setProduct_group_code(String product_group_code) {
 		this.product_group_code = product_group_code;
+	}
+	public String getHost_code() {
+		return host_code;
+	}
+	public void setHost_code(String host_code) {
+		this.host_code = host_code;
 	}
 	
 }

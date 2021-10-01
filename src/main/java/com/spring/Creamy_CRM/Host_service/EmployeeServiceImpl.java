@@ -103,14 +103,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 	// 직원 상세 정보
 	@Override
 	public void employeeDetail(HttpServletRequest req, Model model) {
-		
 		String employee_code = req.getParameter("employee_code");
 		System.out.println("employee_code : " + employee_code);
 		
 		// 직원 상세 정보 가져오기
 		EmployeeVO dtos = dao.getEmployeeDetail(employee_code);
 		
+		// 직원의 사용 휴가 일수
+		int useLeaveDay = 0;
+		
+		int[] useDay = dao.useLeaveDay(employee_code);
+		System.out.println("useDay : " + useDay);
+		
+		for(int i = 0; i<useDay.length; i++) {
+			useLeaveDay += useDay[i];
+		}
+		System.out.println("useLeaveDay : " + useLeaveDay);
+		
 		model.addAttribute("dtos", dtos);
+		model.addAttribute("useLeaveDay", useLeaveDay);
 	}
 	
 	// 직원 상세 정보 수정 처리
@@ -766,7 +777,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		String strStartDate = req.getParameter("leave_start");
 		String strEndDate = req.getParameter("leave_end");
 		int leave_total_days = Integer.parseInt(req.getParameter("leave_total_days"));
-		String leave_memo = req.getParameter("leave_memo");
+		String leave_memo = req.getParameter("etc_memo");
 		String employee_ph1 = req.getParameter("employee_ph1");
 		String employee_ph2 = req.getParameter("employee_ph2");
 		String employee_ph3 = req.getParameter("employee_ph3");

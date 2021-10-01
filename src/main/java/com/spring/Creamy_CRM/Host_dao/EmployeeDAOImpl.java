@@ -145,6 +145,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return dao.deleteLeave(leave_code);
 	}
 	
+	// 직원 사용 휴가 일수
+	public int[] useLeaveDay(String employee_code) {
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.useLeaveDay(employee_code);
+	}
+	
 	// 직원의 급여 계약 정보
 	@Override
 	public ArrayList<SalaryContractVO> getContractList(String employee_code){

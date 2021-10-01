@@ -19,6 +19,19 @@
   		   AND stock_status = '사용중'
   	</select>
  
+ 	<!-- 재고관리 검색 -->
+ 	<select id="searchStockList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.StockVO">
+ 		 SELECT * 
+ 		   FROM (SELECT sv.host_code, s.* 
+ 		    	   FROM s_t_view sv
+		 		   JOIN stock_tbl s
+		 		     ON sv.stock_code = s.stock_code
+		 		  WHERE sv.host_code = #{host_code}
+		 		  ORDER BY s.stock_code DESC)
+		  WHERE stock_name LIKE '%' || #{keyword} || '%'
+		     OR stock_brand LIKE '%' || #{keyword} || '%'
+		     OR trade_code LIKE '%' || #{keyword} || '%'
+ 	</select>
  
  	<!-- 재고실지조사 내역 조회 -->
   	<select id="getInvenLogList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StockVO">
@@ -27,8 +40,7 @@
   		  JOIN s_t_view sv
   		    ON pi.stock_code = sv.stock_code
   		 WHERE sv.host_code = #{host_code}
-  		   AND sv.stock_status = '사용중'
-  		 ORDER BY TO_NUMBER(SUBSTR(inven_code, 3)) DESC 
+  		 ORDER BY inven_date DESC, TO_NUMBER(SUBSTR(inven_code, 3)) DESC 
   		 
   	</select>
   	
@@ -70,5 +82,41 @@
   		</choose>
   			ORDER BY TO_NUMBER(SUBSTR(inven_code, 3)) DESC 
   	</select>
+  	
+  	<!-- 입출고 현황 내역 -->
+  	<select id="getInvenInOutList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StockVO">
+  		SELECT * 
+  		  FROM s_t_view sv
+  		  JOIN stock_detail_tbl sd
+  		    ON sv.stock_code = sd.stock_code
+  		 WHERE sv.host_code = #{host_code} 
+  		 ORDER BY sd.stock_indate DESC, TO_NUMBER(SUBSTR(sd.stock_detail_code,3)) DESC
+  	</select>
+  	
+  	<!-- 입고 등록 -->
+  	<insert id="addInvenIn" parameterType="com.spring.Creamy_CRM.VO.StockVO">
+  		INSERT INTO stock_detail_tbl(stock_detail_code, stock_code, stock_pur_cnt, stock_pur_price, stock_indate, stock_pur_cal)
+		VALUES ('SD'||stock_detail_seq.nextval, #{stock_code}, #{stock_pur_cnt}, #{stock_pur_price}, #{stock_indate}, #{stock_pur_cal})
+  	</insert>
+  	
+	 <!-- 입출고 검색 -->
+ 	<select id="searchInoutList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.StockVO">
+ 		 SELECT * 
+ 		   FROM (SELECT sv.host_code, s.*, 
+ 		   				sd.stock_detail_code, sd.stock_pur_cnt, sd.stock_pur_price, sd.stock_indate 
+ 		    	   FROM s_t_view sv
+		 		   JOIN stock_tbl s
+		 		     ON sv.stock_code = s.stock_code
+		 		   JOIN stock_detail_tbl sd
+		 		     ON sd.stock_code = s.stock_code
+		 		  WHERE sv.host_code = #{host_code}
+		 		  ORDER BY sd.stock_indate DESC ,sd.stock_detail_code DESC)
+		  WHERE stock_name LIKE '%' || #{keyword} || '%'
+		     OR stock_brand LIKE '%' || #{keyword} || '%'
+		     OR stock_detail_code LIKE '%' || #{keyword} || '%'
+		     OR stock_pur_cnt LIKE '%' || #{keyword} || '%'
+		     OR stock_pur_price LIKE '%' || #{keyword} || '%'
+		     OR stock_code LIKE '%' || #{keyword} || '%'
+ 	</select>
   	
  </mapper>

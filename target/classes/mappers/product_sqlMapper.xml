@@ -31,13 +31,10 @@
   		select count(*) from product_group_tbl where host_code = #{host_code}
   	</select>
   	
-  	<!-- 그룹 리스트(페이징) -->
-  	<select id="selectProductGroupList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ProductGroupVO">
-  		 select * from(
-  		 	select pg.* ,rownum from (
-  		 		select * from product_group_tbl where host_code = #{host_code} order by product_group_code desc) pg) 
-        where rownum between #{start} and #{end} 
-        
+  	<!-- 그룹 리스트 -->
+  	<select id="selectProductGroupList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ProductGroupVO">
+		select * from product_group_tbl where host_code = #{host_code} 
+		 order by to_number(substr(product_group_code,3)) desc
   	</select>
   	
   	<!-- 상품그룹명 중복 확인 -->
@@ -53,12 +50,21 @@
   	</insert>
   	
   	<!-- 상품 그룹 정보 -->
-  	<select id="getProductGroup" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ProductGroupVO">
-  		select * from product_group_tbl where product_group_code = #{product_group_code}
+  	<select id="getProductGroup" parameterType="com.spring.Creamy_CRM.VO.ProductGroupVO" resultType="com.spring.Creamy_CRM.VO.ProductGroupVO">
+  		select * from product_group_tbl 
+  		<where>
+  			<if test="host_code != null and product_group_name != null">
+  				host_code = #{host_code} and product_group_name = #{product_group_name}
+  			</if>
+  			<if test="product_group_code != null">
+  				product_group_code = #{product_group_code}
+  			</if>
+  		</where>
+  		
   	</select>
   	
   	<!-- 상품 그룹 수정 -->
-  	<update id="updateProductGroup" parameterType="java.util.Map">
+  	<update id="updateProductGroup" parameterType="com.spring.Creamy_CRM.VO.ProductGroupVO">
   		update product_group_tbl set product_group_name = #{product_group_name} 
   	 	where product_group_code = #{product_group_code}
   	</update>
@@ -82,14 +88,11 @@
 		where pg.product_group_code = p.product_group_code and pg.host_code = #{host_code}
   	</select>
   	
-  	<!-- 상품 리스트(페이징) -->
-  	<select id="selectProductList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ProductVO">
-  		select * from(
-    		select p.*,rownum from(
-        		select * from p_pg_view where host_code = #{host_code} order by product_code desc) p) 
-    	where rownum between #{start} and #{end} 
-    	
-  	</select>
+  	<!-- 상품 리스트  -->
+  	<select id="selectProductList" parameterType="com.spring.Creamy_CRM.VO.ProductVO" resultType="com.spring.Creamy_CRM.VO.ProductVO">
+		select * from p_pg_view where host_code = #{host_code} 
+		 order by to_number(substr(product_code,4)) desc
+	</select>
   	
   	<!-- 상품 등록 -->
   	<insert id="insertProduct" parameterType="com.spring.Creamy_CRM.VO.ProductVO">
@@ -176,10 +179,8 @@
 	
 	<!-- 재고 등록 -->
 	<insert id="insertStock" parameterType="com.spring.Creamy_CRM.VO.StockVO">
-		insert into stock_tbl(stock_code,stock_name,stock_price,stock_brand,
-		 stock_cnt,stock_indate,stock_status,trade_code) 
-		values('ST'||stock_seq.nextval,#{stock_name},#{stock_price},#{stock_brand}, 
-		 #{stock_cnt},#{stock_indate},#{stock_status},#{trade_code})
+		  INSERT INTO stock_tbl(stock_code, stock_name, stock_brand, stock_status, trade_code) 
+		  VALUES ('ST'||stock_seq.nextval, #{stock_name}, #{stock_brand}, #{stock_status}, #{trade_code})
 	</insert>
 	
 	<!-- 재고 개수 -->
@@ -192,7 +193,8 @@
 	<select id="selectStockList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.StockVO">
 		 select * from( 
 		 	select st.*,rownum from( 
-		 		select * from s_t_view where host_code = #{host_code} order by stock_code desc) st)
+		 		select * from s_t_view where host_code = #{host_code} and stock_status NOT LIKE '삭제' 
+		 		order by stock_code desc) st)
 		 where rownum between #{start} and #{end}
 	</select>
 	
@@ -203,15 +205,17 @@
 	
 	<!-- 재고 수정 -->
 	<update id="updateStock" parameterType="com.spring.Creamy_CRM.VO.StockVO">
-		update stock_tbl set stock_name = #{stock_name}, stock_price = #{stock_price}, stock_cnt = #{stock_cnt}, 
+		update stock_tbl set stock_name = #{stock_name}, stock_cnt = #{stock_cnt}, 
 			stock_brand = #{stock_brand}, stock_status = #{stock_status}, trade_code = #{trade_code} 
 		where stock_code = #{stock_code}
 	</update>
 	
 	<!-- 재고 삭제 -->
-	<delete id="deleteStock" parameterType="String">
-		delete from stock_tbl where stock_code = #{stock_code}
-	</delete>
+	<update id="deleteStock" parameterType="String">
+		UPDATE stock_tbl 
+		   SET stock_status = '삭제' 
+		 WHERE stock_code = #{stock_code}
+	</update>
 	
 
 	

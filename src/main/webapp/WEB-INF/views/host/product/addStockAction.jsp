@@ -21,7 +21,7 @@
 			<script type="text/javascript">
 				alert("재고를 등록 하였습니다.");
 				self.close();
-				opener.window.location = "product";
+				opener.window.location = "stock";
 			</script>
 		</c:if>
 

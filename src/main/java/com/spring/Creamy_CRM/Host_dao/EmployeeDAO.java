@@ -75,6 +75,9 @@ public interface EmployeeDAO {
 	// 직원 휴가 삭제
 	public int deleteLeave(String leave_code);
 	
+	// 직원 사용 휴가 일수
+	public int[] useLeaveDay(String employee_code);
+	
 	// 직원의 급여 계약 정보
 	public ArrayList<SalaryContractVO> getContractList(String employee_code);
 	

@@ -54,16 +54,16 @@ public class ProductDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.productDAO.productCnt", host_code);
 	}
 
-	// 그룹 리스트(페이징)
+	// 상품 그룹 목록
 	@Override
-	public List<ProductGroupVO> selectProductGroupList(Map<String, Object> map) {
-		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.productDAO.selectProductGroupList", map);
+	public List<ProductGroupVO> selectProductGroupList(String host_code) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.productDAO.selectProductGroupList", host_code);
 	}
 
-	// 상품 리스트(페이징)
+	// 상품 목록
 	@Override
-	public List<P_pgVO> selectProductList(Map<String, Object> map) {
-		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.productDAO.selectProductList", map);
+	public List<ProductVO> selectProductList(ProductVO vo) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.productDAO.selectProductList", vo);
 	}
 
 	// 상품그룹명 중복 확인
@@ -92,14 +92,14 @@ public class ProductDAOImpl implements ProductDAO {
 
 	// 상품 그룹 정보
 	@Override
-	public ProductGroupVO getProductGroup(String product_group_code) {
-		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.productDAO.getProductGroup", product_group_code);
+	public ProductGroupVO getProductGroup(ProductGroupVO vo) {
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.productDAO.getProductGroup", vo);
 	}
 
 	// 상품 그룹 수정
 	@Override
-	public int updateProductGroup(Map<String, Object> map) {
-		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.productDAO.updateProductGroup", map);
+	public int updateProductGroup(ProductGroupVO vo) {
+		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.productDAO.updateProductGroup", vo);
 	}
 
 	// 상품 그룹 삭제

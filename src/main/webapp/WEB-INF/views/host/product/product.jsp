@@ -124,30 +124,45 @@
 			return false;
 		}
 	}
-
-	function dddd(code){
+	
+	//ajax
+	$(function(){
 		
-		var header = $("meta[name='_csrf_header']").attr("content");
-		var token = $("meta[name='_csrf']").attr("content");
-		
-		$.ajax({
-			type:"post",
-			url:"dddd",
-			data: "code=" + code,
-			beforeSend: function(jqXHR, settings){
-				jqXHR.setRequestHeader(header,token);
-			},
-			success: function(list){
-				
-			},
-			error: function(){
-				alert("오류");
+		$("#deleteGroupBtn").click(function(){
+			var value = $("#groupList input[type=radio]:checked").val();
+			if(value == null){
+				alert("그룹을 선택하세요");
+				return;
 			}
+			var deleteGroupFrm = $("#deleteGroupFrm").serialize();
+			var header = $("meta[name='_csrf_header']").attr("content");
+			var token = $("meta[name='_csrf']").attr("content");
 			
+			$.ajax({
+				type : "post",
+				url : "deleteProductGroupAction",
+				data : deleteGroupFrm,
+				dataType : 'json',
+				beforeSend : function(jqXHR, settings) {
+					jqXHR.setRequestHeader(header, token);
+				},
+				async : false,
+				success : function(response) {
+					if(response != 0){
+						alert("삭제하였습니다");
+						$("#groupList input[type=radio]:checked").parent().parent().remove();
+					}else{
+						alert("삭제 실패, 잠시후 다시 시도해주세요");
+					}
+				},
+				error : function() {
+					alert("에러");
+				}
+			});
 		});
 		
-	}
-
+	});
+	
 	
 </script>
 </head>
@@ -177,10 +192,8 @@
 							<ul class="nav nav-tabs">
 								<li><a class="nav-link active" data-toggle="tab"
 									href="#tab-1">상품 관리</a></li>
-								<li><a class="nav-link" data-toggle="tab" href="#tab-2">재고
-										관리</a></li>
-								<li><a class="nav-link" data-toggle="tab" href="#tab-4">입출고
-										현황</a></li>
+								<li><a class="nav-link" data-toggle="tab" 
+									href="#tab-2">호실 등록</a></li>
 							</ul>
 							<div class="tab-content">
 								<div id="tab-1" class="tab-pane active">
@@ -225,10 +238,11 @@
 										<div class="wrapper wrapper-content">
 											<div class="row">
 												<div class="col-lg-3 animated fadeInRight">
-													<form action="deleteProductGroupAction" method="post"
-														onsubmit="return deleteProductGroup();">
-														<input type="hidden" name="${_csrf.parameterName}"
-															value="${_csrf.token}">
+													<form id="deleteGroupFrm">
+													<!-- <form action="deleteProductGroupAction" method="post"
+														onsubmit="return deleteProductGroup();"> -->
+														<%-- <input type="hidden" name="${_csrf.parameterName}"
+															value="${_csrf.token}"> --%>
 														<div id="p_group">
 															<div>
 																<button type="button" class="btn btn-primary dim"
@@ -239,7 +253,7 @@
 																	onclick="detailProductGroup();">그룹수정</button>
 															</div>
 															<div>
-																<button type="submit" class="btn btn-primary dim">그룹삭제</button>
+																<button type="button" id="deleteGroupBtn" class="btn btn-primary dim">그룹삭제</button>
 															</div>
 														</div>
 
@@ -261,7 +275,7 @@
 																</tr>
 															</thead>
 
-															<tbody>
+															<tbody id = "groupList">
 																<c:forEach var="productGroup"
 																	items="${productGroupList}">
 																	<tr class="footable-odd">
@@ -271,7 +285,7 @@
 																		</td>
 
 																		<td class="footable-visible">
-																		<a href="#" onclick="dddd('${productGroup.product_group_code}');">
+																		<a href="${productGroup.product_group_code}">
 																			<span>${productGroup.product_group_name}</span>
 																		</a>
 																		</td>
@@ -281,28 +295,6 @@
 														</table>
 
 													</form>
-													<table>
-														<tfoot>
-															<tr>
-																<td colspan="6" class="footable-visible">
-																	<ul class="pagination float-right">
-																		<li class="footable-page-arrow disabled"><a
-																			data-page="first" href="#first">«</a></li>
-																		<li class="footable-page-arrow disabled"><a
-																			data-page="prev" href="#prev">‹</a></li>
-																		<li class="footable-page active"><a data-page="0"
-																			href="#">1</a></li>
-																		<li class="footable-page"><a data-page="1"
-																			href="#">2</a></li>
-																		<li class="footable-page-arrow"><a
-																			data-page="next" href="#next">›</a></li>
-																		<li class="footable-page-arrow"><a
-																			data-page="last" href="#last">»</a></li>
-																	</ul>
-																</td>
-															</tr>
-														</tfoot>
-													</table>
 												</div>
 												<div class="col-lg-9 animated fadeInRight">
 
@@ -412,28 +404,6 @@
 																</tbody>
 															</table>
 														</form>
-														<table>
-															<tfoot>
-																<tr>
-																	<td colspan="6" class="footable-visible">
-																		<ul class="pagination float-right">
-																			<li class="footable-page-arrow disabled"><a
-																				data-page="first" href="#first">«</a></li>
-																			<li class="footable-page-arrow disabled"><a
-																				data-page="prev" href="#prev">‹</a></li>
-																			<li class="footable-page active"><a
-																				data-page="0" href="#">1</a></li>
-																			<li class="footable-page"><a data-page="1"
-																				href="#">2</a></li>
-																			<li class="footable-page-arrow"><a
-																				data-page="next" href="#next">›</a></li>
-																			<li class="footable-page-arrow"><a
-																				data-page="last" href="#last">»</a></li>
-																		</ul>
-																	</td>
-																</tr>
-															</tfoot>
-														</table>
 													</div>
 												</div>
 											</div>
@@ -443,10 +413,6 @@
 
 								<div id="tab-2" class="tab-pane">
 									<jsp:include page="stock.jsp" />
-								</div>
-
-								<div id="tab-4" class="tab-pane">
-									<jsp:include page="inputOutputStatus.jsp" />
 								</div>
 
 							</div>

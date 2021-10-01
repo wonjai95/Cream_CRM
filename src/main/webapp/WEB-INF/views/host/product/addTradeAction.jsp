@@ -21,7 +21,7 @@
 			<script type="text/javascript">
 				alert("거래처등록 완료");
 				self.close();
-				opener.window.location = "product";
+				opener.window.location = "stock";
 			</script>
 		</c:if>
 		

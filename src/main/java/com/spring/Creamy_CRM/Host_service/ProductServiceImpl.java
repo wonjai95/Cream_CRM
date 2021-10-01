@@ -28,6 +28,7 @@ import com.spring.Creamy_CRM.Host_dao.ProductDAOImpl;
 import com.spring.Creamy_CRM.VO.P_pgVO;
 import com.spring.Creamy_CRM.VO.ProductGroupVO;
 import com.spring.Creamy_CRM.VO.ProductVO;
+import com.spring.Creamy_CRM.VO.RoomSettingVO;
 import com.spring.Creamy_CRM.VO.S_tVO;
 import com.spring.Creamy_CRM.VO.SaleVO;
 import com.spring.Creamy_CRM.VO.StockVO;
@@ -74,187 +75,106 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void product(HttpServletRequest req, Model model) {
 		String host_code = (String) req.getSession().getAttribute("code");
-		System.out.println("host_code : " + host_code);
-		Map<String, Object> map = null;
-		List<ProductGroupVO> productGroupList = null;
-		List<P_pgVO> productList = null;
-		List<TradeVO> tradeList = null;
-		List<StockVO> stockList = null;
-		List<S_tVO> stList = null; //입출고 (재고 + 거래처) 리스트
-		Page productGroupPage = new Page();
-		Page productPage = new Page();
-		Page tradePage = new Page();
-		Page stockPage = new Page();
-		Page stPage = new Page();
-
-		// 상품그룹 페이지
-		productGroupPage.setCnt(dao.productGroupCnt(host_code));
-		productGroupPage.setPageSize(10);
-		productGroupPage.setPageBlock(5);
-		productGroupPage.setCurrentPage(req.getParameter("pageNum"));
-
-		if (productGroupPage.getCnt() > 0) {
-			map = new HashMap<String, Object>();
-			map.put("host_code", host_code);
-			map.put("start", productGroupPage.getStart());
-			map.put("end", productGroupPage.getEnd());
-			productGroupList = dao.selectProductGroupList(map);
-		}
-
-		// 상품 페이지
-		productPage.setCnt(dao.productCnt(host_code));
-		productPage.setPageSize(10);
-		productPage.setPageBlock(5);
-		productPage.setCurrentPage(req.getParameter("pageNum"));
-
-		if (productPage.getCnt() > 0) {
-			map = new HashMap<String, Object>();
-			map.put("host_code", host_code);
-			map.put("start", productPage.getStart());
-			map.put("end", productPage.getEnd());
-			productList = dao.selectProductList(map);
-		}
-
-		// 거래처 페이지
-		tradePage.setCnt(dao.tradeCnt(host_code));
-		tradePage.setPageSize(10);
-		tradePage.setPageBlock(5);
-		tradePage.setCurrentPage(req.getParameter("pageNum"));
-
-		if (tradePage.getCnt() > 0) {
-			map = new HashMap<String, Object>();
-			map.put("host_code", host_code);
-			map.put("start", tradePage.getStart());
-			map.put("end", tradePage.getEnd());
-			tradeList = dao.selectTradeList(map);
-		}
-
-		// 재고 페이지 
-		stockPage.setCnt(dao.stockCnt(host_code)); 
-		stockPage.setPageSize(10);
-		stockPage.setPageBlock(5);
-		stockPage.setCurrentPage(req.getParameter("pageNum"));
-
-		if (stockPage.getCnt() > 0) {
-			map = new HashMap<String, Object>();
-			map.put("host_code", host_code);
-			map.put("start", stockPage.getStart());
-			map.put("end", stockPage.getEnd());
-			stockList = dao.selectStockList(map);
-		}
-		
-		//입출고 현황
-		stPage.setCnt(dao.stCnt(host_code)); 
-		stPage.setPageSize(10);
-		stPage.setPageBlock(5);
-		stPage.setCurrentPage(req.getParameter("pageNum"));
-
-		if (stockPage.getCnt() > 0) {
-			map = new HashMap<String, Object>();
-			map.put("host_code", host_code);
-			map.put("start", stPage.getStart());
-			map.put("end", stPage.getEnd());
-			stList = dao.selectStList(map);
-		}
-		
-		
-		model.addAttribute("stList", stList);
-		model.addAttribute("stockList", stockList);
-		model.addAttribute("tradeList", tradeList);
+		ProductVO vo = new ProductVO();
+		vo.setHost_code(host_code);
+		//상품그룹 목록
+		List<ProductGroupVO> productGroupList = dao.selectProductGroupList(host_code);
+		//상품 목록
+		List<ProductVO> productList = dao.selectProductList(vo);
+			
 		model.addAttribute("productGroupList", productGroupList);
 		model.addAttribute("productList", productList);
+	}
 
+	//그룹명 중복 확인
+	@Override
+	public int chkGroupName(HttpServletRequest req, Model model) {
+		String host_code = (String)req.getSession().getAttribute("code");
+		String product_group_name = req.getParameter("product_group_name");
+		String product_group_code = req.getParameter("product_group_code");
 		
+		int validationChk = 0;
+		if(product_group_code != null) {
+			ProductGroupVO vo = new ProductGroupVO();
+			vo.setProduct_group_code(product_group_code);
+			vo = dao.getProductGroup(vo);
+			
+			if(vo.getProduct_group_name().equals(product_group_name)) {
+				validationChk = 1;
+			}
+			
+		}
 		
-		/*
-		model.addAttribute("productGroupPageCnt", productGroupPage.getCnt());
-		model.addAttribute("productGroupPageNumber", productGroupPage.getNumber());
-		model.addAttribute("productGroupPageStartPage", productGroupPage.getStartPage());
-		model.addAttribute("productGroupPageEndPage", productGroupPage.getEndPage());
-		model.addAttribute("productGroupPagePageBlock", productGroupPage.getPageBlock());
-		model.addAttribute("productGroupPageCurrentPage", productGroupPage.getCurrentPage());
-		model.addAttribute("productGroupPagePageCount", productGroupPage.getPageCount());
-
-		model.addAttribute("productPageCnt", productPage.getCnt());
-		model.addAttribute("productPageNumber", productPage.getNumber());
-		model.addAttribute("productPageStratPage", productPage.getStartPage());
-		model.addAttribute("productPageEndPage", productPage.getEndPage());
-		model.addAttribute("productPagePageBlock", productPage.getPageBlock());
-		model.addAttribute("productPagePageCurrentPage", productPage.getCurrentPage());
-		model.addAttribute("productPagePageCount", productPage.getPageCount());
-		 */
+		int selectCnt = 0;
+		if(product_group_code == null || validationChk == 0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("host_code", host_code);
+			map.put("product_group_name", product_group_name);
+			selectCnt = dao.chkProductGroupName(map);
+		}
+		
+		return selectCnt;
 	}
 
 	// 상품그룹 등록
 	@Override
-	public void addProductGroupAction(HttpServletRequest req, Model model) {
+	public ProductGroupVO addProductGroupAction(HttpServletRequest req, Model model) {
 		String product_group_name = req.getParameter("product_group_name");
 		String host_code = (String) req.getSession().getAttribute("code");
-		ProductGroupVO vo = null;
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("product_group_name", product_group_name);
-		map.put("host_code", host_code);
-		int selectCnt = dao.chkProductGroupName(map);
-
-		if (selectCnt != 1) {
-			vo = new ProductGroupVO();
-			vo.setProduct_group_name(product_group_name);
-			vo.setPg_indate(new Date(System.currentTimeMillis()));
-			vo.setHost_code(host_code);
-			int insertCnt = dao.insertProductGroup(vo);
-			model.addAttribute("insertCnt", insertCnt);
+		
+		ProductGroupVO vo = new ProductGroupVO();
+		vo.setProduct_group_name(product_group_name);
+		vo.setPg_indate(new Date(System.currentTimeMillis()));
+		vo.setHost_code(host_code);
+		
+		int insertCnt = dao.insertProductGroup(vo);
+		System.out.println(insertCnt);
+		if(insertCnt != 1) {
+			vo = null;
+		}else {
+			vo = dao.getProductGroup(vo);
 		}
-		model.addAttribute("selectCnt", selectCnt);
+		return vo;	
 	}
 
-	// 상품그룹 상세(수정)
+	// 상품그룹 상세
 	@Override
 	public void detailProductGroup(HttpServletRequest req, Model model) {
 		String product_group_code = req.getParameter("product_group_code");
-		ProductGroupVO vo = dao.getProductGroup(product_group_code);
+		ProductGroupVO vo = new ProductGroupVO();
+		vo.setProduct_group_code(product_group_code);
+		vo = dao.getProductGroup(vo);
 		model.addAttribute("vo", vo);
 	}
 
 	// 상품그룹 수정
 	@Override
-	public void modifyProductGroupAction(HttpServletRequest req, Model model) {
+	public ProductGroupVO modifyProductGroupAction(HttpServletRequest req, Model model) {
 		String product_group_code = req.getParameter("product_group_code");
 		String product_group_name = req.getParameter("product_group_name");
-		String host_code = (String) req.getSession().getAttribute("code");
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		ProductGroupVO vo = dao.getProductGroup(product_group_code);
-		int selectCnt = 0;
-
-		if (!product_group_name.equals(vo.getProduct_group_name())) {
-			map.put("product_group_name", product_group_name);
-			map.put("host_code", host_code);
-			selectCnt = dao.chkProductGroupName(map);
-			map.clear();
+		
+		ProductGroupVO vo = new ProductGroupVO();
+		vo.setProduct_group_code(product_group_code);
+		vo.setProduct_group_name(product_group_name);
+		int updateCnt = dao.updateProductGroup(vo);
+		
+		if(updateCnt == 1) {
+			vo = dao.getProductGroup(vo);
+		}else {
+			vo = null;
 		}
-
-		if (selectCnt != 1) {
-			map.put("product_group_code", product_group_code);
-			map.put("product_group_name", product_group_name);
-			int updateCnt = dao.updateProductGroup(map);
-			model.addAttribute("updateCnt", updateCnt);
-		}
-		model.addAttribute("selectCnt", selectCnt);
+		
+		return vo;
 	}
 
 	// 상품 그룹 삭제
 	@Override
-	public void deleteProductGroupAction(HttpServletRequest req, Model model) {
+	public int deleteProductGroupAction(HttpServletRequest req, Model model) {
 		String product_group_code = req.getParameter("product_group_code");
-		ProductGroupVO vo = dao.getProductGroup(product_group_code);
-		if (vo != null) {
-			int deleteCnt = dao.deleteProductGroup(product_group_code);
-			model.addAttribute("deleteCnt", deleteCnt);
-		}
-		model.addAttribute("vo", vo);
+		return dao.deleteProductGroup(product_group_code);
 	}
 
+	/*********************상품**************************************************/
 	// 상품 등록 페이지 요청 (상품그룹 데이터)
 	@Override
 	public void addProduct(HttpServletRequest req, Model model) {
@@ -524,16 +444,12 @@ public class ProductServiceImpl implements ProductService {
 	public void addStockAction(HttpServletRequest req, Model model) {
 		String host_code = (String) req.getSession().getAttribute("code");
 		String stock_name = req.getParameter("stock_name");
-		String stock_price = req.getParameter("stock_price");
 		String stock_brand = req.getParameter("stock_brand");
-		String stock_count = req.getParameter("stock_count");
 		String stock_status = req.getParameter("stock_status");
 		String trade_code = req.getParameter("trade_code");
 		StockVO vo = new StockVO();
 		vo.setStock_name(stock_name);
-		vo.setStock_price(Integer.parseInt(stock_price));
 		vo.setStock_brand(stock_brand);
-		vo.setStock_cnt(Integer.parseInt(stock_count));
 		vo.setStock_status(stock_status);
 		vo.setTrade_code(trade_code);
 		vo.setStock_indate(new Date(System.currentTimeMillis()));
@@ -566,7 +482,6 @@ public class ProductServiceImpl implements ProductService {
 	public void modifyStockAction(HttpServletRequest req, Model model) {
 		String stock_code = req.getParameter("stock_code");
 		String stock_name = req.getParameter("stock_name");
-		String stock_price = req.getParameter("stock_price");
 		String stock_count = req.getParameter("stock_count");
 		String stock_brand = req.getParameter("stock_brand");
 		String stock_status = req.getParameter("stock_status");
@@ -585,7 +500,6 @@ public class ProductServiceImpl implements ProductService {
 			vo = new StockVO();
 			vo.setStock_code(stock_code);
 			vo.setStock_name(stock_name);
-			vo.setStock_price(Integer.parseInt(stock_price));
 			vo.setStock_cnt(Integer.parseInt(stock_count));
 			vo.setStock_brand(stock_brand);
 			vo.setStock_status(stock_status);

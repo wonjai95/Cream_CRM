@@ -21,7 +21,7 @@
 			<script type="text/javascript">
 				alert("거래처 수정을 완료하였습니다.");
 				self.close();
-				opener.document.location = "product";
+				opener.document.location = "stock";
 			</script>
 		</c:if>
 		
