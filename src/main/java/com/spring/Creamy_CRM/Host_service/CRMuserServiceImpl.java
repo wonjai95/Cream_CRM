@@ -144,7 +144,7 @@ public class CRMuserServiceImpl implements CRMuserService {
 		
 		// 선택한 user_name 넘겨서 값 출력
 		String user_code = req.getParameter("user_code");
-		System.out.println("user_name : " + user_code);
+		System.out.println("user_code : " + user_code);
 		
 		List<userVO> list = new ArrayList<userVO>();
 		

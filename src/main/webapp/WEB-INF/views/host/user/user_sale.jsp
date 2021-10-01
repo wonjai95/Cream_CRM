@@ -53,13 +53,15 @@
 		<c:forEach var="dto" items="${dto}">
 		<tbody>
 			<tr class="footable-odd" style="">
-				<td class="footable-visible"><input type="hidden" name="product_typeOfSales" value="${dto.product_typeOfSales}">${dto.product_typeOfSales}</td>
-				<td class="footable-visible"><input type="hidden" name="product_name" value="${dto.product_name}">${dto.product_name}</td>
-				<td class="footable-visible"><input type="hidden" name="product_group_name" value="${dto.product_group_name}">${dto.product_group_name}</td>
-				<td class="footable-visible"><input type="hidden" name="product_price" value="${dto.product_price}">${dto.product_price}</td>
-				<td class="footable-visible"><input type="hidden" name="sale_date" value="${dto.sale_date}">${dto.sale_date}</td>
-				<td class="footable-visible"><input type="hidden" name="payment_option" value="${dto.payment_option}">${dto.payment_option}</td>
-				<td class="footable-visible">카카오</td>
+				<c:if test="${user_code != null}">
+					<td class="footable-visible"><input type="hidden" name="product_typeOfSales" value="${dto.product_typeOfSales}">${dto.product_typeOfSales}</td>
+					<td class="footable-visible"><input type="hidden" name="product_name" value="${dto.product_name}">${dto.product_name}</td>
+					<td class="footable-visible"><input type="hidden" name="product_group_name" value="${dto.product_group_name}">${dto.product_group_name}</td>
+					<td class="footable-visible"><input type="hidden" name="product_price" value="${dto.product_price}">${dto.product_price}</td>
+					<td class="footable-visible"><input type="hidden" name="sale_date" value="${dto.sale_date}">${dto.sale_date}</td>
+					<td class="footable-visible"><input type="hidden" name="payment_option" value="${dto.payment_option}">${dto.payment_option}</td>
+					<td class="footable-visible"><input type="hidden" name="credit_select" value="${dto.credit_select}">${dto.credit_select}</td>
+				</c:if>
 			</tr>   
 			
 		</tbody>

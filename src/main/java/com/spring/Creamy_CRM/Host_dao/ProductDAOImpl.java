@@ -113,6 +113,12 @@ public class ProductDAOImpl implements ProductDAO {
 	public ProductVO getProduct(ProductVO vo) {
 		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.productDAO.getProduct", vo);
 	}
+	
+	// 상품코드로 상품 정보 가져오기
+	@Override
+   public ProductVO getProductOne(String product_code) {
+      return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.productDAO.getProductOne", product_code);
+   }
 
 	// 상품 수정
 	@Override

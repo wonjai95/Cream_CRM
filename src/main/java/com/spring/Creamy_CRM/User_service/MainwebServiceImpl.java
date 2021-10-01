@@ -168,7 +168,7 @@ public class MainwebServiceImpl implements MainwebService {
 		String product_code = req.getParameter("product_code");
 		System.out.println("product_code : " + product_code);
 		vo.setProduct_code(product_code);
-		String product_name = dao_pro.getProduct(product_code).getProduct_name();
+		String product_name = dao_pro.getProductOne(product_code).getProduct_name();
 		System.out.println("product_name : " + product_name);
 		vo.setProduct_name(product_name);
 		

@@ -46,6 +46,11 @@ $("document").ready(function() {
       
       $(this).css("background", "#20c997");
       
+      
+      // 회원별 판매 내역 출력
+	   var url = "user_sale?user_code=" + user_code
+	   window.open(url, "user_sale", "menubar=no, width=800, height=800");
+      
    });
    
    // 회원 정보 수정 버튼 클릭
@@ -115,6 +120,12 @@ $("document").ready(function() {
       }
    }); 
    
+   
+	
+	
+	
+	
+	
    
    // 창 닫기 클릭
    $("input[name=window_close]").click(function() {
@@ -244,10 +255,11 @@ $("document").ready(function() {
 								
 								<div class="ibox">
 				                    <div class="ibox-content">
-								
 								<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 600px;">
 								<div class="scroll_content" style="overflow: hidden; width: auto; height: 600px;">
-				                <table id="rowClick" class="table table-hover" data-page-size="15">
+				                
+								<table id="rowClick" class="table table-hover" data-page-size="15">
+								
 								<thead>
 					            <tr>
 					                <th>회원코드</th>
@@ -267,10 +279,10 @@ $("document").ready(function() {
 						        </c:forEach>
 					            </tbody>
 								</table>
- 									
-								<div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 79.0514px;"></div>
+ 								<div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 79.0514px;"></div>
 					            <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-				                </div>
+				                
+								</div>
 								</div>
 								</div>
 								</div>
