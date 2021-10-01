@@ -40,6 +40,7 @@
   		SELECT *
   		  FROM slip_tbl
   		 WHERE host_code = #{host_code}
+  		   AND slip_type IN ('복리후생비', '수수료비용', '소모품비')
   		   AND slip_memo LIKE '%'||#{search}||'%'
   		ORDER BY slip_regdate DESC
   	</select>
@@ -88,6 +89,7 @@
   		SELECT *
   		  FROM slip_tbl
   		 WHERE host_code = #{host_code}
+  		   AND slip_type IN ('비용', '수익', '법인세등')
   		   AND slip_memo LIKE '%'||#{search}||'%'
   		 ORDER BY slip_regDate DESC
   	</select>
