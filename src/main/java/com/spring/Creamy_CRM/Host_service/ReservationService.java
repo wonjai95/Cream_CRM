@@ -41,7 +41,8 @@ public interface ReservationService {
 	public void completeList(HttpServletRequest req, Model model);
 	
 	// 예약조회 상세 페이지
-	//public void completeDetailAction(HttpServletRequest req, Model model);
+	public void completeDetailAction(HttpServletRequest req, Model model);
+	public void completeDetailAction2(HttpServletRequest req, Model model);
 	
 	// 예약조회 처리 페이지
 	//public void profitPutAction(HttpServletRequest req, Model model);

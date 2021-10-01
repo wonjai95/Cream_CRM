@@ -30,7 +30,7 @@ public class ReservationController {
 		
 		//service.requestSearch(req, model);
 		
-		service.completeList(req, model);
+		//service.completeList(req, model);
 		return "host/reservation/reservation";
 	}
 	//예약 요청 페이
@@ -81,7 +81,7 @@ public class ReservationController {
 			return "host/reservation/requestDetails";
 		} else if(comp_res.equals("호실")) {
 			service.requestDetailAction2(req, model);
-			return "roombooking...";
+			return "host/reservation/requestDetails";
 		} else {
 			return "/";
 		}	
@@ -118,7 +118,7 @@ public class ReservationController {
 		
 		return "host/reservation/deleteAction";
 	}
-	//예약 취소
+	//서비스 완료 처리
 	@RequestMapping("/host/completeAction")
 	public String completeAction(HttpServletRequest req, Model model) {
 		logger.info("url -> completeAction");
@@ -132,18 +132,50 @@ public class ReservationController {
 	public String showReservation(HttpServletRequest req, Model model) {
 		logger.info("url -> showReservation");
 		
-		service.completeList(req, model);
+		//service.completeList(req, model);
 		
 		return "host/reservation/showReservation";
+	}
+	// 목록
+	@RequestMapping("/host/completeList")
+	public String completeList(HttpServletRequest req, Model model) {
+		logger.info("url -> completeList");
+		
+		service.completeList(req, model);
+//      String comp_res = req.getParameter("comp_res");
+//      if(comp_res.equals("담당자")) {
+//    	  // service
+//    	  return "managerbooking";
+//      } else if(comp_res.equals("호실")) {
+//    	 // service.requestList(req, model);
+//    	 return "roombooking";
+//      } else {
+//    	  return "";
+//      }
+		
+		return "host/reservation/completeList";
 	}
 	//예약 조회 이동
 	@RequestMapping("/host/completeDetails")
 	public String completeDetails(HttpServletRequest req, Model model) {
 		logger.info("url -> completeDetails");
 		
-		service.requestDetailAction(req, model);
+		String user_id = req.getParameter("user_id");
+		System.out.println("user_id : " + user_id);
+		String res_code = req.getParameter("res_code");
+		System.out.println("res_code : " + res_code);
+		String comp_res = req.getParameter("comp_res");
+		System.out.println("comp_res : " + comp_res);
 		
-		return "host/reservation/completeDetails";
+		if(comp_res.equals("담당자")) {
+			service.completeDetailAction(req, model);
+			return "host/reservation/completeDetails";
+		} else if(comp_res.equals("호실")) {
+			service.completeDetailAction2(req, model);
+			return "host/reservation/completeDetails";
+		} else {
+			return "/";
+		}	
 	}
 	//예약 요청 상세페이지
 	@RequestMapping("/host/completeDetail")
