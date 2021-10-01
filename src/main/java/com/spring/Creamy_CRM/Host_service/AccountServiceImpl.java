@@ -234,7 +234,7 @@ public class AccountServiceImpl implements AccountService {
 		map1.put("host_code", host_code);
 		map1.put("nowMonth", nowMonth);
 		
-		dao.sumSGA_expenses(map1);
+		int[] sumExpenses = dao.sumSGA_expenses(map1);
 		
 		// 매출 <- 판매 테이블
 		

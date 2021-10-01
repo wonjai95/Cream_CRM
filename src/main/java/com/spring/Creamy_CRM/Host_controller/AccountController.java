@@ -216,7 +216,7 @@ public class AccountController {
 	public String settlement(HttpServletRequest req, Model model) {
 		logger.info("url -> settlement");
 		
-		service.settlement(req, model);
+		// service.settlement(req, model);
 		
 		return "host/accounting/settlement";
 	}
