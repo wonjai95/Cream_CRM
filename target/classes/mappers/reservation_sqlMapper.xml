@@ -104,6 +104,12 @@
 			 WHERE res_code = #{res_code}
 			   AND rdt.res_detail_code = #{res_detail_code}
 	</select>
+	<select id="getRequestDetail2" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+			SELECT *
+			  FROM reservation_tbl, reservation_detail_tbl rdt
+			 WHERE res_code = #{res_code}
+			   AND rdt.res_detail_code = #{res_detail_code}
+	</select>
 	
 <!-- 예약요청 수정처리 -->
 	<update id="updateRequest1" parameterType="com.spring.Creamy_CRM.VO.ReservationVO">

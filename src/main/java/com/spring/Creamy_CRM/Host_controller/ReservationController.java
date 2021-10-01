@@ -80,8 +80,8 @@ public class ReservationController {
 			service.requestDetailAction(req, model);
 			return "host/reservation/requestDetails";
 		} else if(comp_res.equals("호실")) {
-			// service.requestList(req, model);
-			return "roombooking";
+			service.requestDetailAction2(req, model);
+			return "roombooking...";
 		} else {
 			return "/";
 		}	

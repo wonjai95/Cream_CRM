@@ -37,6 +37,7 @@ public interface ReservationDAO {
 		
 	// 예약요청 상세 페이지, 수정 상세 페이지
 	public ReservationVO getRequestDetail(String num);
+	public ReservationVO getRequestDetail2(String num);
 	
 	// 예약요청 수정 처리 페이지
 	public int updateRequest1(ReservationVO vo);
