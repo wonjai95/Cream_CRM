@@ -29,14 +29,17 @@
   	<!-- 회원 정보 수정 -->
   	<update id="updateUser" parameterType="com.spring.Creamy_CRM.VO.userVO">
   		UPDATE user_tbl
-		   SET user_name=#{user_name}, user_memo=#{user_memo}, user_gender=#{user_gender}, user_birth=#{user_birth}, user_age=#{user_age}, user_email=#{user_email}, zipcode=#{zipcode}, user_address=#{user_address}, user_ph=#{user_ph}
+		   SET user_name=#{user_name}, user_memo=#{user_memo}, user_gender=#{user_gender}, 
+		   		user_birth=#{user_birth}, user_age=#{user_age}, user_email=#{user_email}, 
+		   		zipcode=#{zipcode}, user_address=#{user_address}, user_ph=#{user_ph},
+		   		wedding_anniversary=#{wedding_anniversary}, car_number=#{car_number} 
 		 WHERE user_code=#{user_code}
 		   AND expire_date IS NULL
   	</update>
   	
   	<!-- 회원별 판매 내역 출력 -->
   	<select id="userSale" parameterType="String" resultType="com.spring.Creamy_CRM.VO.userVO">
-  		SELECT product_typeOfSales, product_name, product_group_name, product_price, sale_date, payment_option
+  		SELECT product_typeOfSales, product_name, product_group_name, product_price, sale_date, payment_option, credit_select
   		  FROM user_sale_view
   		 WHERE user_code=#{user_code}
   	</select>
