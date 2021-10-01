@@ -352,12 +352,11 @@ public class MainwebController {
 		// 예약 불가능
 		if(chkScheNull.equals("3")) {
 			model.addAttribute("insertCnt", 3);
-			req.getSession().removeAttribute("chkScheNull");
 		} else {
 			// 회원 예약 정보 받아오기
 			service.getResInfo(req, model);
 		}
-		
+		req.getSession().removeAttribute("chkScheNull");
 		return "mainweb/sale/salePage";
 	}
 
