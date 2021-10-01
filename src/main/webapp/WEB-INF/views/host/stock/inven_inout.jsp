@@ -123,7 +123,7 @@
 	
 										<tbody class="search_result">
 											<c:forEach var="dto2" items="${dtos_inout}" varStatus="status2">
-												<tr class="footable-odd" class="inven_list${status2.index}">
+												<tr class="footable-odd" id="inven_list${status2.index}">
 													<td class="footable-visible">
 														<span>${dto2.stock_detail_code}</span>
 														<input type="text" name="inven_code${status2.index}" id="inven_code${status2.index}" 

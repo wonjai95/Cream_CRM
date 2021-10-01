@@ -216,6 +216,7 @@ public class UserReservationServiceImpl implements UserReservationService {
 		map.put("operating_day", selectDay); 	// 일 ~ 토 : 0~6
 		
 		HostVO vo = dao.getOperatingInfo(map);
+		System.out.println("open_sche : " + vo.getOpen_sche());
 		
 		ReservationVO roomVO = dao.getRoomInfo(selectRoom);
 		
@@ -312,73 +313,80 @@ public class UserReservationServiceImpl implements UserReservationService {
 		
 		String open_sche = req.getParameter("open_sche");
 		String close_sche = req.getParameter("close_sche");
-		  
-		int openTime = Integer.parseInt(open_sche.split(":")[0]);
-		System.out.println("openTime : " + openTime);
-		int closeTime = Integer.parseInt(close_sche.split(":")[0]);
 		
-		ReservationVO vo = new ReservationVO();
-		vo.setHost_code(host_code);
-		vo.setRes_state(res_state);
-		vo.setRes_cnt(guestCount);
-		vo.setRoom_setting_code(room_setting_code);
-		vo.setRes_indiv_request(res_indiv_request);
-		vo.setUser_id(user_id);
-		vo.setRes_date(resDate);
-		vo.setRes_hour(Integer.parseInt(res_start));
-		vo.setRes_sales(res_sales);
+		int use_time = Integer.parseInt(req.getParameter("use_time"));
+		System.out.println("use_time : " +use_time); 
+		if(use_time <= 0) {
+			System.out.println("sche null");
+			req.getSession().setAttribute("insertCnt", 3);
+		} else {
 		
-		
-		// 예약 성공 여부
-		int insertCnt = 0;
-		
-		// 예약 시작 시간 >= 예약 종료시간 || 영업 시작 시간 > 예약 시작 시간 || 영업 종료 시간 < 예약 종료시간
-		if(Integer.parseInt(res_start) >= Integer.parseInt(res_end) || 
-				openTime > Integer.parseInt(res_start) || 
-				closeTime < Integer.parseInt(res_end)) {
-			insertCnt = 2;
+			int openTime = Integer.parseInt(open_sche.split(":")[0]);
+			System.out.println("openTime : " + openTime);
+			int closeTime = Integer.parseInt(close_sche.split(":")[0]);
 			
-		// 예약 시작 시간 < 예약 종료시간
-		}  else {
-			res_start = res_start + ":00";
-			res_end = res_end + ":00";
-			vo.setRes_start(res_start);
-			vo.setRes_end(res_end);
+			ReservationVO vo = new ReservationVO();
+			vo.setHost_code(host_code);
+			vo.setRes_state(res_state);
+			vo.setRes_cnt(guestCount);
+			vo.setRoom_setting_code(room_setting_code);
+			vo.setRes_indiv_request(res_indiv_request);
+			vo.setUser_id(user_id);
+			vo.setRes_date(resDate);
+			vo.setRes_hour(Integer.parseInt(res_start));
+			vo.setRes_sales(res_sales);
 			
-			// 예약 신청 시간 가능 여부 체크를 위한 뷰 생성를 생성해서, 그 뷰와 reservation_tbl를 조인
-			// => count(*) = 0이면 예약 가능
-			// 예약 신청 시간 가능 여부 체크를 위한 뷰 생성 sql문
-			String sql = "CREATE OR REPLACE VIEW res_timetable_view " 
-							+ "AS "
-							+ "SELECT * "
-							+ "FROM reservation_detail_tbl "
-							+ "WHERE TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') BETWEEN TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) AND TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) "
-							+ "OR TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi') BETWEEN TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) AND TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) "
-							+ "OR TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) BETWEEN TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') AND TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi') " 
-							+ "OR TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) BETWEEN TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') AND TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi')";
 			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("sql", sql);         
-			map.put("res_date", resDate);
-			map.put("room_setting_code", room_setting_code);
-			// 예약 신청 시간 가능 여부 체크
-			int chk = dao.chkRoomBooking(map);
-			System.out.println("chk : " + chk);
+			// 예약 성공 여부
+			int insertCnt = 0;
 			
-			// 예약 가능
-			if(chk == 0) {
-				insertCnt = 1;
-			} else {
-				insertCnt = 3;
+			// 예약 시작 시간 >= 예약 종료시간 || 영업 시작 시간 > 예약 시작 시간 || 영업 종료 시간 < 예약 종료시간
+			if(Integer.parseInt(res_start) >= Integer.parseInt(res_end) || 
+					openTime > Integer.parseInt(res_start) || 
+					closeTime < Integer.parseInt(res_end)) {
+				insertCnt = 2;
+				
+			// 예약 시작 시간 < 예약 종료시간
+			}  else {
+				res_start = res_start + ":00";
+				res_end = res_end + ":00";
+				vo.setRes_start(res_start);
+				vo.setRes_end(res_end);
+				
+				// 예약 신청 시간 가능 여부 체크를 위한 뷰 생성를 생성해서, 그 뷰와 reservation_tbl를 조인
+				// => count(*) = 0이면 예약 가능
+				// 예약 신청 시간 가능 여부 체크를 위한 뷰 생성 sql문
+				String sql = "CREATE OR REPLACE VIEW res_timetable_view " 
+								+ "AS "
+								+ "SELECT * "
+								+ "FROM reservation_detail_tbl "
+								+ "WHERE TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') BETWEEN TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) AND TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) "
+								+ "OR TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi') BETWEEN TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) AND TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) "
+								+ "OR TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) BETWEEN TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') AND TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi') " 
+								+ "OR TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) BETWEEN TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') AND TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi')";
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("sql", sql);         
+				map.put("res_date", resDate);
+				map.put("room_setting_code", room_setting_code);
+				// 예약 신청 시간 가능 여부 체크
+				int chk = dao.chkRoomBooking(map);
+				System.out.println("chk : " + chk);
+				
+				// 예약 가능
+				if(chk == 0) {
+					insertCnt = 1;
+				} else {
+					insertCnt = 3;
+				}
 			}
+	
+			model.addAttribute("insertCnt", insertCnt);
+			model.addAttribute("dto", vo);
+			model.addAttribute("open_sche", open_sche);
+			model.addAttribute("close_sche", close_sche);
+		
 		}
-
-		model.addAttribute("insertCnt", insertCnt);
-		model.addAttribute("dto", vo);
-		model.addAttribute("open_sche", open_sche);
-		model.addAttribute("close_sche", close_sche);
-	
 	}
-	
 
 }

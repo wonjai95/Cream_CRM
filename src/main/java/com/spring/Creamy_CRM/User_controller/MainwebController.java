@@ -347,8 +347,17 @@ public class MainwebController {
 		// 예약 시간 확인 action
 		service_custReserve.chkRoomTime(req, model);
 		
-		// 회원 예약 정보 받아오기
-		service.getResInfo(req, model);
+		int insertCnt = (int) req.getSession().getAttribute("insertCnt");
+		System.out.println("insertCnt : " + insertCnt);
+		// 예약 불가능
+		if(insertCnt == 3) {
+			insertCnt = 3;
+			model.addAttribute("insertCnt", insertCnt);
+			req.getSession().removeAttribute("insertCnt");
+		} else {
+			// 회원 예약 정보 받아오기
+			service.getResInfo(req, model);
+		}
 		
 		return "mainweb/sale/salePage";
 	}
@@ -360,19 +369,9 @@ public class MainwebController {
 
 		// 호실 예약 처리
 		service_custReserve.insertRoomBookingAction(req, model);
+		// 결제정보 입력해서 insert
+		service_sale.insertSaleInfo(req, model);
 		
-		int insertCnt = (int) req.getAttribute("insertCnt");
-		
-		// 예약 불가능
-		if(insertCnt == 0) {
-			insertCnt = 3;
-			model.addAttribute("insertCnt", insertCnt);
-			
-		// 예약 가능
-		} else {
-			// 결제정보 입력해서 insert
-			service_sale.insertSaleInfo(req, model);
-		}
 		return "mainweb/sale/sale_action";
 	}
 	
