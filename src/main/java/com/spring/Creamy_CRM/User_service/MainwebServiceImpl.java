@@ -108,9 +108,12 @@ public class MainwebServiceImpl implements MainwebService {
 		
 		// 예약 페이지에서 예약 정보 담아오기
 		String host_code = req.getParameter("host_code");
-		String res_start = req.getParameter("res_start");
-		System.out.println("res_start : " + res_start);
-		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
+		String STRres_hour = req.getParameter("selectTime");
+		// res_hour 10/1일 11:00 수정부분
+		int res_hour = Integer.parseInt(STRres_hour.split(":")[0]);
+		System.out.println("res_hour : " + res_hour);
+		// ReserveProductSum 10/1일 11:00 수정부분
+		int res_sales = Integer.parseInt(req.getParameter("ReserveProductSum"));
 		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
 		String res_state = "예약완료";
 		String res_indiv_request = req.getParameter("res_indiv_request");
@@ -118,7 +121,8 @@ public class MainwebServiceImpl implements MainwebService {
 		System.out.println("str_res_date : " + str_res_date);
 		Date res_date = Date.valueOf(str_res_date);
 		
-		String employee_code = req.getParameter("employee_code");
+		// selectManager 10/1일 11:00 수정부분
+		String employee_code = req.getParameter("selectManager");
 		System.out.println("employee_code : " + employee_code);
 		String product_code = req.getParameter("product_code");
 		System.out.println("product_code : " + product_code);
@@ -135,7 +139,7 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_indiv_request(res_indiv_request);
 		vo.setUser_id(user_id);
 		vo.setRes_date(res_date);
-		vo.setRes_hour(Integer.parseInt(res_start));
+		vo.setRes_hour(res_hour);
 		vo.setRes_sales(res_sales);
 		vo.setComp_res(comp_res);
 		
