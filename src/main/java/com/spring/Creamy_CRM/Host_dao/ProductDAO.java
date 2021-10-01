@@ -53,13 +53,18 @@ public interface ProductDAO {
 	// 상품 등록
 	int insertProduct(ProductVO vo);
 	// 상품 상세(수정)
-	ProductVO getProduct(String product_code);
+	ProductVO getProduct(ProductVO vo);
+  
 	// 상품코드로 상품 정보 가져오기
 	public ProductVO getProductOne(String product_code);
+
+
 	// 상품 수정
 	int updateProduct(ProductVO vo);
 	// 상품 삭제
 	int deleteProduct(String product_code);
+	//검색 
+	List<ProductVO> selectProductListByQuery(ProductVO vo);
 	/**************************************************************/
 	
 	// 거래처명 중복확인
