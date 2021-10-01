@@ -77,6 +77,7 @@ $(document).ready(function() {
     	
     	if(startTime != "" && endTime != "") {
     		calTime = parseInt(endTime) - parseInt(startTime);
+    		$("#use_time").val(calTime);
     		if(calTime <= 0) {
     			alert("시간을 다시 입력해주세요.");
     			$("input[name=res_start]").val("");
@@ -100,6 +101,7 @@ $(document).ready(function() {
     	
     	if(startTime != "" && endTime != "") {
     		calTime = parseInt(endTime) - parseInt(startTime);
+    		$("#use_time").val(calTime);
     		if(calTime <= 0) {
     			alert("시간을 다시 입력해주세요.");
     			$("input[name=res_start]").val("");

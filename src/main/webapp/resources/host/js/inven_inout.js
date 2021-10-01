@@ -2,6 +2,7 @@ $("document").ready(function() {
 	// 재고 탭 더블 클릭시 입고 탭 오픈
 	$("body").on("dblclick", "tr[name^=inven_inout]", function() {
 		$("tr[name^=inven_inout]").css("background", "");
+		$("tr[id^=inven_list]").css("background", "");
 		
 		var thisTr = $(this);
 		var thisTd = $(this).children();
@@ -16,6 +17,15 @@ $("document").ready(function() {
 		$(this).css("background", "#20c997");
 	});
 	
+	
+	// 재고상세 tr 더블클릭 시 상세 페이지 팝업창(상세 페이지에서 수정, 삭제)
+	$("body").on("dblclick", "tr[id^=inven_list]", function() {
+		$("tr[id^=inven_list]").css("background", "");
+		
+		$(this).css("background", "#20c997");
+		$("tr[name^=inven_inout]").css("background", "");
+		
+	});
 	
 	// 검색
 	$("body").on("click", "#invenSearchBtn", function() {
