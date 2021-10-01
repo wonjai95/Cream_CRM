@@ -151,5 +151,12 @@
   		VALUES('RS'||res_seq.nextval, #{res_cnt}, #{res_indiv_request}, #{res_sales}, #{res_start}, #{res_end})
   	</insert>
   	
+  	<!-- 방이름, 사장코드로 room_setting_code 가져오기 -->
+  	<select id="getRoomCodeByName" parameterType="java.util.Map" resultType="String">
+  		SELECT room_setting_code 
+  		  FROM room_setting_tbl
+  		 WHERE room_name = #{room_name}
+  		   AND host_code = #{host_code}
+  	</select>
   	
   </mapper>

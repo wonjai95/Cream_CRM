@@ -259,6 +259,10 @@ public class MainwebController {
       
       String res_date = (String) req.getAttribute("selectDate");
       System.out.println("res_date : " + res_date);
+      model.addAttribute("res_date", res_date);
+      String room_setting_code = (String)req.getAttribute("room_setting_code");
+      System.out.println("room_setting_code : " + room_setting_code);
+      model.addAttribute("room_setting_code", room_setting_code);
       
       return "mainweb/roomDetail";
    }         

@@ -118,6 +118,13 @@ public class UserReservationDAOImpl implements UserReservationDAO {
 		dao.createRoomBookingView(map);
 	}
 
+	// 이름, 사장코드로 room_setting_code 가져오기
+	@Override
+	public String getRoomCodeByName(Map<String, Object> map) {
+		
+		return sqlSession.selectOne("com.spring.Creamy_CRM.User_dao.UserReservationDAO.getRoomCodeByName", map);
+	}
+
 	
 	
 	

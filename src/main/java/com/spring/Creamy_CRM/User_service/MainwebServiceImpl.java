@@ -65,8 +65,15 @@ public class MainwebServiceImpl implements MainwebService {
 		String res_state = "예약완료";
 		String res_room = req.getParameter("selectRoom");
 		System.out.println("res_room : " + res_room);
-		String room_setting_code = req.getParameter("room_setting_code");
+		
+		// 방이름, 사장코드로 room_setting_code 가져오기
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		map.put("room_name", res_room);
+		String room_setting_code = dao_res.getRoomCodeByName(map);
 		System.out.println("room_setting_code : " + room_setting_code);
+
+		
 		String res_indiv_request = req.getParameter("res_indiv_request");
 		String str_res_date = req.getParameter("selectDate");
 		System.out.println("str_res_date : " + str_res_date);
@@ -100,7 +107,6 @@ public class MainwebServiceImpl implements MainwebService {
 		System.out.println("날짜 : " + vo.getRes_date());
 		
 		model.addAttribute("dto", vo);
-		req.setAttribute("room_setting_code", room_setting_code);
 		
 	}
 	
@@ -187,6 +193,7 @@ public class MainwebServiceImpl implements MainwebService {
 		req.setAttribute("res_code", res_code);
 		req.setAttribute("host_code", host_code);
 	}
+	
 	
 	// 고객 예약상세정보 내 예약내역취소 처리
 	@Override
@@ -282,13 +289,5 @@ public class MainwebServiceImpl implements MainwebService {
 		model.addAttribute("vo", vo);
 		System.out.println("vo.getRes_cnt : " + vo.getRes_cnt());
 	}
-
-	
-
-	
-	
-	
-	
-	
 	
 }
