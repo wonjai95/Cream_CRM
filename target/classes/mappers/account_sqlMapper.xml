@@ -97,8 +97,9 @@
   		SELECT SUM(slip_tbl)
   		  FROM slip_tbl
   		 WHERE host_code = #{host_code}
-  		   AND slip_type IN ('복리후생비', '소모품비', '수수료비용')
   		   AND TO_DATE(slip_regDate, 'YYYY-MM') = #{nowMonth}
+  		 
+  		
   	</select>
   
   
