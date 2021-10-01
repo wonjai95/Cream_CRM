@@ -316,11 +316,12 @@ public class UserReservationServiceImpl implements UserReservationService {
 		
 		int use_time = Integer.parseInt(req.getParameter("use_time"));
 		System.out.println("use_time : " +use_time); 
+		
 		if(use_time <= 0) {
 			System.out.println("sche null");
-			req.getSession().setAttribute("insertCnt", 3);
+			req.getSession().setAttribute("chkScheNull", "3");
 		} else {
-		
+			req.getSession().setAttribute("chkScheNull", "1");
 			int openTime = Integer.parseInt(open_sche.split(":")[0]);
 			System.out.println("openTime : " + openTime);
 			int closeTime = Integer.parseInt(close_sche.split(":")[0]);
