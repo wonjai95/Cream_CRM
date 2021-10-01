@@ -346,14 +346,13 @@ public class MainwebController {
 		
 		// 예약 시간 확인 action
 		service_custReserve.chkRoomTime(req, model);
+		String chkScheNull = (String) req.getSession().getAttribute("chkScheNull");
+		System.out.println("chkScheNull : " + chkScheNull);
 		
-		int insertCnt = (int) req.getSession().getAttribute("insertCnt");
-		System.out.println("insertCnt : " + insertCnt);
 		// 예약 불가능
-		if(insertCnt == 3) {
-			insertCnt = 3;
-			model.addAttribute("insertCnt", insertCnt);
-			req.getSession().removeAttribute("insertCnt");
+		if(chkScheNull.equals("3")) {
+			model.addAttribute("insertCnt", 3);
+			req.getSession().removeAttribute("chkScheNull");
 		} else {
 			// 회원 예약 정보 받아오기
 			service.getResInfo(req, model);
