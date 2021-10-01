@@ -82,24 +82,40 @@ public class StockServiceImpl implements StockService {
 		stockList = dao.getInvenList(host_code);
 		invenList = dao.getInvenLogList(host_code);
 		
+		int cnt = stockList.size();
+		
 		model.addAttribute("dtos", stockList);
 		model.addAttribute("dtos_inven", invenList);
+		model.addAttribute("cnt", cnt);
 	}
 
 	// 재고실사 등록 처리
 	@Override
 	public void add_periodic_inven(HttpServletRequest req, Model model) {
-		int indiv_inven_cnt = Integer.parseInt(req.getParameter("indiv_inven_cnt"));
-		String stock_code = req.getParameter("stock_code");
-		Date inven_date = new Date(System.currentTimeMillis());
+		int indexChk = Integer.parseInt(req.getParameter("cnt"));
+		System.out.println("indexChk : " + indexChk);
 		
-		StockVO vo = new StockVO();
-		vo.setIndiv_inven_cnt(indiv_inven_cnt);
-		vo.setStock_code(stock_code);
-		vo.setInven_date(inven_date);
+		int insertCnt = 0;
 		
-		int insertCnt = dao.insertPeriodicInven(vo);
-		System.out.println("insertCnt : " + insertCnt);
+		if(indexChk != 0) {
+			for(int i=0; i<indexChk; i++) {
+				String strIndivCnt = "indiv_inven_cnt" + i;
+				String strStockCode = "stock_code" + i;
+				
+				int indiv_inven_cnt = Integer.parseInt(req.getParameter(strIndivCnt));
+				String stock_code = req.getParameter(strStockCode);
+				Date inven_date = new Date(System.currentTimeMillis());
+				
+				StockVO vo = new StockVO();
+				vo.setIndiv_inven_cnt(indiv_inven_cnt);
+				vo.setStock_code(stock_code);
+				vo.setInven_date(inven_date);
+				
+				insertCnt = dao.insertPeriodicInven(vo);
+				System.out.println("insertCnt[i]: " + insertCnt + " - " + i);
+			}
+		}
+		
 		
 		model.addAttribute("insertCnt", insertCnt);
 	}
@@ -122,8 +138,8 @@ public class StockServiceImpl implements StockService {
 						"    ON s.trade_code = t.trade_code " + 
 						"  JOIN periodic_inventory pi " + 
 						"    ON pi.stock_code = s.stock_code " + 
-						" WHERE t.host_code = '" + host_code + "' " +
-						"   AND s.stock_status = '사용중'";
+						" WHERE t.host_code = '" + host_code + "' ";
+//						"   AND s.stock_status = '사용중'";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyword", keyword);
@@ -136,7 +152,74 @@ public class StockServiceImpl implements StockService {
 		
 	}
 
-	
+	// 입출고 현황 페이지 
+	@Override
+	public void inven_inout(HttpServletRequest req, Model model) {
+		String host_code = (String) req.getSession().getAttribute("code");
+		List<StockVO> invenList = null;
+		List<StockVO> invenInOutList = null;
+		
+		invenList = dao.getInvenList(host_code);
+		invenInOutList = dao.getInvenInOutList(host_code);
+		
+		model.addAttribute("dtos", invenList);
+		model.addAttribute("dtos_inout", invenInOutList);
+	}
+
+	// 입고 등록 처리
+	@Override
+	public void add_invenInout_action(HttpServletRequest req, Model model) {
+		String stock_code = req.getParameter("stock_code");
+		int stock_pur_cnt = Integer.parseInt(req.getParameter("stock_pur_cnt"));
+		int stock_pur_price = Integer.parseInt(req.getParameter("stock_pur_price"));
+		String strDate = req.getParameter("stock_indate");
+		Date stock_indate = Date.valueOf(strDate);
+		System.out.println("stock_indate : " + stock_indate);
+		int stock_pur_cal = Integer.parseInt(req.getParameter("stock_pur_cal"));
+		
+		StockVO vo = new StockVO();
+		vo.setStock_code(stock_code);
+		vo.setStock_pur_cnt(stock_pur_cnt);
+		vo.setStock_pur_price(stock_pur_price);
+		vo.setStock_indate(stock_indate);
+		vo.setStock_pur_cal(stock_pur_cal);
+		
+		int insertCnt = dao.addInvenIn(vo);
+		
+		model.addAttribute("insertCnt", insertCnt);
+		
+	}
+
+	// 재고관리 검색
+	@Override
+	public void search_stock(HttpServletRequest req, Model model) {
+		String keyword = req.getParameter("keyword");
+		String host_code = (String) req.getSession().getAttribute("code");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("keyword", keyword);
+		map.put("host_code", host_code);
+		
+		List<StockVO> list = dao.searchStockList(map);
+		
+		model.addAttribute("stockList", list);
+	}
+
+
+	// 입출고 검색
+	@Override
+	public void search_inout(HttpServletRequest req, Model model) {
+		String keyword = req.getParameter("keyword");
+		String host_code = (String) req.getSession().getAttribute("code");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("keyword", keyword);
+		map.put("host_code", host_code);
+		
+		List<StockVO> list = dao.searchInoutList(map);
+		
+		model.addAttribute("inoutList", list);
+	}
 	
 
 }

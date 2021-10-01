@@ -26,7 +26,16 @@ public class StockController {
 		service.stock_manage(req, model);
 		return "host/stock/stock";
 	}
-
+	
+	// 재고관리  검색
+	@RequestMapping("/host/search_stock")
+	public String search_stock(HttpServletRequest req, Model model) {
+		logger.info("url -> search_stock");
+		
+		service.search_stock(req, model);
+		return "host/stock/search_stock";
+	}
+	
 	
 	// 재고실사 페이지 요청
 	@RequestMapping("/host/inventory")
@@ -55,5 +64,44 @@ public class StockController {
 		service.search_periodic_inven(req, model);
 		return "host/stock/search_inventory";
 	}
+	
+	
+	// 입출고 현황 페이지 요청
+	@RequestMapping("/host/inven_inout")
+	public String inven_inout(HttpServletRequest req, Model model) {
+		logger.info("url -> inven_inout");
+		
+		service.inven_inout(req, model);
+		return "host/stock/inven_inout";
+	}
+	
+	// 입출고 등록 페이지 요청
+	@RequestMapping("/host/add_invenInout")
+	public String add_invenInout(HttpServletRequest req, Model model) {
+		logger.info("url -> add_invenInout");
+		
+		model.addAttribute("stock_code", req.getParameter("stock_code"));
+		model.addAttribute("stock_name", req.getParameter("stock_name"));
+		return "host/stock/add_invenInout";
+	}
+	
+	// 입출고 등록 처리
+	@RequestMapping("/host/add_invenInout_action")
+	public String add_invenInout_action(HttpServletRequest req, Model model) {
+		logger.info("url -> add_invenInout_action");
+		
+		service.add_invenInout_action(req, model);
+		return "host/stock/add_invenInout_action";
+	}
+	
+	// 입출고  검색
+	@RequestMapping("/host/search_inout")
+	public String search_inout(HttpServletRequest req, Model model) {
+		logger.info("url -> search_inout");
+		
+		service.search_inout(req, model);
+		return "host/stock/search_inout";
+	}
+	
 	
 }
