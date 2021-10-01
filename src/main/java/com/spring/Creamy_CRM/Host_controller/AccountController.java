@@ -96,13 +96,13 @@ public class AccountController {
 	}
 	
 	// 검색어 조회
-	@RequestMapping("host/slip_Search")
+	@RequestMapping("host/SGA_Search")
 	public String slip_Search(HttpServletRequest req, Model model) {
 		logger.info("url -> slip_Search");
 		
 		service.getSearchList(req, model);
 		
-		return "host/accounting/slip_List";
+		return "host/accounting/SGA_List";
 	}
 	
 	
