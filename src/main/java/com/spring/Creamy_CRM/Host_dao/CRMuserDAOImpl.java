@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.Creamy_CRM.VO.ProductVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
 @Repository
@@ -62,6 +63,13 @@ public class CRMuserDAOImpl implements CRMuserDAO {
 		
 		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.CRMuserDAO.deleteAuth", ID);
 	}
+	
 
+	// 회원 검색
+	@Override
+	public List<userVO> searchUserList(userVO vo) {
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.CRMuserDAO.searchUserList", vo);
+	}
+	
 
 }

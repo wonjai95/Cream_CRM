@@ -7,8 +7,12 @@
 */
 package com.spring.Creamy_CRM.Host_service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
+
+import com.spring.Creamy_CRM.VO.userVO;
 
 public interface CRMuserService {
 	
@@ -27,4 +31,6 @@ public interface CRMuserService {
 	// 회원 정보 삭제(user_tbl)
 	public void deleteUser(HttpServletRequest req, Model model);
 	
+	// 회원 검색
+	public List<userVO> searchUserList(HttpServletRequest req, Model model);
 }
