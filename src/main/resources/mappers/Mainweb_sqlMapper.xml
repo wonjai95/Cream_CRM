@@ -23,13 +23,24 @@
 		VALUES ('RS'||res_seq.nextval, #{res_cnt}, #{res_indiv_request}, #{product_code}, null, #{res_sales})
 	</insert>
   
-  
-  <!-- 예약요청 상세정보 조회 -->
-	<select id="getBookingDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">	   
-		SELECT r.res_code, r.host_code, c.comp_res, r.res_state, r.res_date, res_cnt
-	    FROM reservation_tbl r, reservation_detail_tbl rdt, company_tbl c
+  <!-- 고객의 사장님코드별 예약종류 담당자 상세페이지 -->
+	<select id="getMngBookingDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">	   
+		SELECT *
+	    FROM reservation_tbl r, reservation_detail_tbl rdt, company_tbl c, host_tbl h
         WHERE c.host_code = r.host_code
+        AND h.host_code = r.host_code
          AND rdt.res_detail_code = r.res_detail_code
+	   AND res_code = #{res_code}
+	</select>
+  
+  <!-- 고객의 사장님코드별 예약종류 호실 상세페이지 -->
+	<select id="getRoomBookingDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">	   
+		SELECT *
+	    FROM reservation_tbl r, reservation_detail_tbl rdt, company_tbl c, host_tbl h, room_setting_tbl rst
+        WHERE c.host_code = r.host_code
+        AND h.host_code = r.host_code
+         AND rdt.res_detail_code = r.res_detail_code
+         AND r.room_setting_code = rst.room_setting_code
 	   AND res_code = #{res_code}
 	</select>
   

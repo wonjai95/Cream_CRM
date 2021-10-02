@@ -34,12 +34,19 @@ public class MainwebDAOImpl implements MainwebDAO {
 		return dao.insertBooking2(vo);
 	}
 
-	// 고객 예약 상세정보 조회 처리
+	// 고객의 사장님코드별 예약종류 담당자 상세페이지 처리
 	@Override
-	public ReservationVO getBookingDetail(String code) {
+	public ReservationVO getMngBookingDetail(String code) {
 		
 		MainwebDAO dao = sqlSession.getMapper(MainwebDAO.class);
-		return dao.getBookingDetail(code);
+		return dao.getMngBookingDetail(code);
+	}
+	// 고객의 사장님코드별 예약종류 호실 상세페이지
+	@Override
+	public ReservationVO getRoomBookingDetail(String code) {
+		
+		MainwebDAO dao = sqlSession.getMapper(MainwebDAO.class);
+		return dao.getRoomBookingDetail(code);
 	}
 	
 	// 고객 예약상세정보 내 예약내역취소 처리

@@ -12,7 +12,7 @@
   <mapper namespace="com.spring.Creamy_CRM.User_dao.UserReviewDAO">
   
   <select id="getReservationList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
-	  SELECT r.res_code, h.comp_name, r.res_state, r.res_date,r.res_hour, r.res_review_chk
+	  SELECT r.res_code, r.host_code, h.comp_name, r.res_state, r.res_date,r.res_hour, r.res_review_chk
 	    FROM reservation_tbl r
 	    JOIN host_tbl h
 	      ON h.host_code = r.host_code

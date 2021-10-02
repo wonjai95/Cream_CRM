@@ -44,25 +44,24 @@
          	 	<form action="deleteBooking" method="post" id="deleteBooking" class="php-email-form">
          	 	<sec:csrfInput/>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-				<input type="hidden" id="res_code" name="res_code" value="${dto.res_code}">
-				<input type="hidden" id="user_id" name="user_id" value="${dto.user_id}">
-				<input type="hidden" id="res_state" name="res_state" value="${dto.res_state}">
-				<input type="hidden" id="res_review_chk" name="res_review_chk" value="${dto.res_review_chk}">
-				<input type="hidden" id="product_code" name="product_code" value="${dto.product_code}">
-				<input type="hidden" id="res_detail_code" name="res_detail_code" value="${dto.res_detail_code}">
          	 	
          			<div class="member-info" style="padding-left: 5px;">
          				<span style="font-size: 20px;">
          					<b>예약내역 확인</b>
          				</span><br><br>
-         				<%-- <small >예약 코드 : ${dto.res_code}</small> --%>
          				
-         				<span style="font-size: 20px;">
-         				<input type="hidden" id="res_code" name="res_code" value="${dto.res_code}">
-         					<b>예약내역 확인</b>${dto.res_code}
-         				</span>
-         				<br>
-         				<small>예약 상태 : ${dto.res_state}</small>
+         				<c:if test="${mdto.comp_res eq '담당자'}">
+	         				<small >예약 코드 : ${mdto.res_code} </small>
+	         				<br>
+	         				<small>예약 상태 : ${mdto.res_state} </small>
+         				</c:if>
+         				
+         				<c:if test="${rdto.comp_res eq '호실'}">
+	         				<small >예약 코드 : ${rdto.res_code} </small>
+	         				<br>
+	         				<small>예약 상태 : ${rdto.res_state} </small>
+         				</c:if>
+         				
          			</div>
 					
 					<div class="col-lg-12 col-md-12">
@@ -70,121 +69,91 @@
                         <div class="ibox ">
                             <div class="ibox-content">
                                 <div class="row">
-<%-- comp_res 담당자 c:if 시작 --%>	<c:if test="${dto.comp_res eq '담당자'}">
+<%-- comp_res 담당자 c:if 시작 --%>	<c:if test="${mdto.comp_res eq '담당자'}">
                                    <!-- 예약 테이블 시작 -->
                                    <table class="box">
 	                                    <tr>
 	                                       <td><strong>날짜</strong>
-	                                       <input type="hidden" id="res_code" name="res_code" value="${dto.res_code}">
+												&nbsp;&nbsp;&nbsp;
 		                                       <!-- 시간 -->
-		                                       <div style="display:inline-block">
-		                                             <button type="button" class="btn btn-outline btn-primary" class="timeBtn" style="margin: 10px"
-		                                                id="res_date" name="res_date" value="${dto.res_date}">
-		                                             </button>
-		                                       </div>
+		                                       <div style="display:inline-block">${mdto.res_date}</div>
 		                                       <br><br></td>
 	                                    </tr>
 	                                    <tr>
 	                                       <td><strong>시간</strong>
+												&nbsp;&nbsp;&nbsp;
 		                                       <!-- 시간 -->
-		                                       <div style="display:inline-block">
-		                                             <button type="button" class="btn btn-outline btn-primary" class="timeBtn" style="margin: 10px"
-		                                             	name="res_hour" id="selectTime" value="${dto.res_hour}">
-		                                             </button>
-		                                       </div>
+		                                       <div style="display:inline-block">${mdto.res_hour}</div>
 	                                       <br><br></td>
 	                                    </tr>
 	                  
 	                                    <!-- 인원 -->
 	                                    <tr>
-	                                       <td><strong>인원 &nbsp;&nbsp;&nbsp;&nbsp;</strong>
-											<div style="display:inline-block">
-											<div class="col-4">
-	                                                <button type="button" maxlength="4" class="form-control text-center"
-	                                                	id="res_cnt" name="res_cnt" value="${dto.res_cnt}">
-	                                                </button>
-	                                             </div>
-											</div>
+	                                       <td><strong>인원</strong>
+												&nbsp;&nbsp;&nbsp;
+											<div style="display:inline-block">${mdto.res_cnt}</div>
 											<br><br></td>
 	                                    </tr>
 	                                    
 	                                    <!-- 담당자 -->
 	                                    <tr>
 	                                       <td><strong>담당자</strong>
-		                                       <div style="display:inline-block">
-		                                             <button type="button" class="btn btn-outline btn-primary" class="managerBtn"
-		                                             		id="selectManager" name="employee_code"  value="${dto.employee_code}" style="margin: 10px">
-		                                             </button>
-		                                       </div>
-	                                       </td>
-	                                    </tr>
+												&nbsp;&nbsp;&nbsp;
+		                                       <div style="display:inline-block">${mdto.employee_code}</div>
+	                                       <br><br></td>
+	                                    </tr>	                                    
+	                                    
+	                                    <!-- 추가 요청사항 -->
 	                                    <tr>
 	                                       <td><strong>추가 요청사항</strong>
-	                                          <div class="form-group" style="margin-top:30px;">
+												&nbsp;&nbsp;&nbsp;
+	                                          <div class="form-group" style="margin-top:15px;">
 			                                        <textarea class="form-control" rows="3"
 			                                        id="res_indiv_request" name="res_indiv_request" style="margin: 10px"
-	                         						${dto.res_indiv_request}>
+	                         						${mdto.res_indiv_request} readonly>
 			                                        </textarea>
 	                                    	  </div>
 	                                       </td>
-	                                    </tr>                                    
-                                 </table>                             
-                                 <!-- 예약 테이블 끝 -->
-                                   
-                                   <!-- 상품 테이블 시작 -->
-                                   <table class="box">
-										<!-- 상품 -->
-			                              <tr>
-			                                 <td><strong>상품</strong></td>
+	                                    </tr> 
+	                                    
+	                                    <tr>
+			                                 <td><strong>상품</strong>
+			                                 	&nbsp;&nbsp;&nbsp;
+												<div style="display:inline-block">${mdto.product_code} ${mdto.product_name}</div>
+											<br><br></td>
 			                              </tr>
-			            
-			                              <tr>
-			                                 <td style="padding-bottom:0px;">
-			                                    <div id="group_0" class="revgroup-selected" data-filter="*">전체 상품</div>
-			                                 </td>
-			                              <tr>
-			                                 <td class="dashed">
-			                                    <div id="product-list">
-			                                       <table class="product-item" data-cat="group-0" style="width:100%; border:1px solid #ddd; padding:0px; margin-bottom:8px;">
-													<tr>
-														<td style="width:64px; padding:10px 0 0 0; background:#fafafa; text-align:center">
-															<button type="button" class="btn btn-outline btn-primary" class="managerBtn"
-																	id="product_name" name="product_name"  value="${dto.product_name}" style="margin: 10px">
-															</button>
-															<button type="button" class="btn btn-outline btn-primary" class="managerBtn"
-																	id="product_price" name="product_price"  value="${dto.product_price}" style="margin: 10px">
-														 	</button>
-														</td>
-													</tr>                                       
-                                       			  </table>
                               
 			                                       
                                     
-                                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                                              <input type="text" name="ReserveProductSum" id="ReserveProductSum" style="display: none">
-                                                   	 결제금액 : <span class="productSelectedInfo">총액</span>
-                                             </div>
-                                          </div>
-                                       </table>
-                                      <!-- 상품 테이블 끝 -->
-<%-- comp_res 담당자 c:if 끝 --%>         </c:if>
+                                             <!-- 결제금액 -->
+	                                    <tr>
+	                                       <td><strong>결제금액</strong>
+												&nbsp;&nbsp;&nbsp;
+												<div style="display:inline-block">${mdto.res_sales} 원</div>
+											<br><br></td>
+	                                    </tr>
+									</table>                             
+                                 <!-- 예약 테이블 끝 -->
+<%-- comp_res 담당자 c:if 끝 --%> </c:if>
 
 
 
 
-<%-- comp_res 호실 c:if 시작 --%>	<c:if test="${dto.comp_res eq '호실'}">
+<%-- comp_res 호실 c:if 시작 --%>	<c:if test="${rdto.comp_res eq '호실'}">
                                    <!-- 예약 테이블 시작 -->
                                    <table class="box">
 	                                    <tr>
 	                                       <td><strong>날짜</strong>
 		                                       &nbsp;&nbsp;&nbsp;
-		                                       <div style="display:inline-block">${dto.res_date}</div>
+		                                       <div style="display:inline-block">${rdto.res_date}</div>
 		                                       <br><br></td>
 	                                    </tr>
 	                                    <tr>
 	                                       <td><strong>시간</strong>
 		                                       &nbsp;&nbsp;&nbsp;
-		                                       <div style="display:inline-block">${dto.res_hour}</div>
+		                                       <div style="display:inline-block">${rdto.res_start}</div>
+		                                       ~
+		                                       <div style="display:inline-block">${rdto.res_end} 시</div>
 	                                       <br><br></td>
 	                                    </tr>
 	                                    
@@ -192,7 +161,7 @@
 										<tr>
 											<td><strong>호실</strong>
 												&nbsp;&nbsp;&nbsp;
-												<div style="display:inline-block"><%-- ${dto.room_name} --%></div>
+												<div style="display:inline-block">${rdto.room_name}</div>
 											<br><br></td>
 										</tr>	                                    
 	                  
@@ -200,7 +169,7 @@
 	                                    <tr>
 	                                       <td><strong>인원</strong>
 												&nbsp;&nbsp;&nbsp;
-												<div style="display:inline-block">${dto.res_cnt}명</div>
+												<div style="display:inline-block">${rdto.res_cnt}명</div>
 											<br><br></td>
 	                                    </tr>
 	                                    
@@ -210,51 +179,22 @@
 	                                          <div class="form-group" style="margin-top:30px;">
 			                                        <textarea class="form-control" rows="3"
 			                                        id="res_indiv_request" name="res_indiv_request" style="margin: 10px"
-	                         						${dto.res_indiv_request} readonly>
+	                         						${rdto.res_indiv_request} readonly>
 			                                        </textarea>
 	                                    	  </div>
 	                                       </td>
-	                                    </tr>                                    
+	                                    </tr>
+	                                    
+	                                    <!-- 결제금액 -->
+	                                    <tr>
+	                                       <td><strong>결제금액</strong>
+												&nbsp;&nbsp;&nbsp;
+												<div style="display:inline-block">${rdto.res_sales} 원</div>
+											<br><br></td>
+	                                    </tr>                                  
                                  </table>                             
                                  <!-- 예약 테이블 끝 -->
-                                   
-                                   <!-- 상품 테이블 시작 -->
-                                   <table class="box">
-										<!-- 상품 -->
-			                              <tr>
-			                                 <td><strong>상품</strong></td>
-			                              </tr>
-			            
-			                              <tr>
-			                                 <td style="padding-bottom:0px;">
-			                                    <div id="group_0" class="revgroup-selected" data-filter="*">전체 상품</div>
-			                                 </td>
-			                              <tr>
-			                                 <td class="dashed">
-			                                    <div id="product-list">
-			                                       <%-- <table class="product-item" data-cat="group-0" style="width:100%; border:1px solid #ddd; padding:0px; margin-bottom:8px;">
-													<tr>
-														<td style="width:64px; padding:10px 0 0 0; background:#fafafa; text-align:center">
-															<button type="button" class="btn btn-outline btn-primary" class="managerBtn"
-																	id="product_name" name="product_name"  value="${dto.product_name}" style="margin: 10px">
-															</button>
-															<button type="button" class="btn btn-outline btn-primary" class="managerBtn"
-																	id="product_price" name="product_price"  value="${dto.product_price}" style="margin: 10px">
-														 	</button>
-														</td>
-													</tr>                                       
-                                       			  </table> --%>
-                              
-			                                       
-                                    
-                                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                                              <input type="text" name="ReserveProductSum" id="ReserveProductSum" style="display: none">
-                                                   	 결제금액 : <span class="productSelectedInfo">총액</span>
-                                             </div>
-                                          </div>
-                                       </table>
-                                      <!-- 상품 테이블 끝 -->
-<%-- comp_res 호실 c:if 끝 --%>         </c:if>
+<%-- comp_res 호실 c:if 끝 --%>    </c:if>
 
 
                                    </div>
@@ -264,21 +204,26 @@
                        </div>
                         <!-- col-lg-6 끝 -->
                		
-               		<!-- <div class="text-center">
+               		<div class="text-center">
 		              <button type="submit" style="font-size: 16px"
-		              			formaction="deleteBooking" form="deleteBooking" onclick="return deleteBooking();">
-		              			예약내역 취소(이거 지금 작동됨[9.29/20:00])
+		              			formaction="deleteBooking" form="deleteBooking"
+		              			onclick="return deleteBooking();">
+		              			예약내역 취소
 					  </button>
-		            </div> -->
+					  <button type="submit" style="font-size: 16px"
+		              			formaction="" form="" onclick="">
+		              			예약내역목록
+					  </button>
+		            </div>
               
          	 	</form>
          	 	
-         	 	<div class="text-center">
+         	 	<!-- <div class="text-center">
 		              <button type="submit" style="font-size: 16px"
 		              			formaction="deleteBooking" form="deleteBooking" onclick="return deleteBooking();">
 		              			예약내역 취소
-					  </button> <!-- (이거 지금 작동됨[9.29/20:00]) -->
-		            </div>
+					  </button> (이거 지금 작동됨[9.29/20:00])
+		            </div> -->
          	 	
          	 </div>
          </div>

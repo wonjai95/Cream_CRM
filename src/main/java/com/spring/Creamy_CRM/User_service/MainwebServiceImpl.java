@@ -184,14 +184,20 @@ public class MainwebServiceImpl implements MainwebService {
 	// 고객 예약상세정보 페이지
 	@Override
 	public void getBookingDetail(HttpServletRequest req, Model model) {
+		System.out.println("getBookingDetail 시작합니다.");
 		String res_code = req.getParameter("res_code");
 		String host_code = req.getParameter("host_code");
+		System.out.println("res_code : " + res_code);
+		System.out.println("host_code : " + host_code);
 		
-		ReservationVO vo = dao.getBookingDetail(res_code);
+		// 고객의 사장님코드별 예약종류 담당자 상세페이지
+		ReservationVO mvo = dao.getMngBookingDetail(res_code);
+		// 고객의 사장님코드별 예약종류 호실 상세페이지
+		ReservationVO rvo = dao.getRoomBookingDetail(res_code);
 		
-		req.setAttribute("dto", vo);
+		req.setAttribute("mdto", mvo);
+		req.setAttribute("rdto", rvo);
 		req.setAttribute("res_code", res_code);
-		req.setAttribute("host_code", host_code);
 	}
 	
 	

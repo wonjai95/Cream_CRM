@@ -11,39 +11,14 @@
   <title>CRM</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="images/main/favicon.png" rel="icon">
-  <link href="images/main/apple-touch-icon.png" rel="apple-touch-icon">
-
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="${path}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/font-awesome.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/iCheck/custom.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/bootstrap-icons.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/boxicons.min.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/glightbox.min.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/remixicon.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/swiper-bundle.min.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/animate.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="${path}/resources/bootstrap/css/user_style.css" rel="stylesheet">
-  <link href="${path}/resources/bootstrap/css/style.css" rel="stylesheet">
-  
   <!-- 내가 쓴 js  -->
   <script src="${path}/resources/user/js/modifyUser.js"></script>\
   <script type="text/javascript" src="${path}/resources/host/js/custBooking.js"></script>
 
-  <!-- =======================================================
-  * Template Name: Vlava - v4.3.0
-  * Template URL: https://bootstrapmade.com/vlava-free-bootstrap-one-page-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -54,8 +29,6 @@
 
       <div class="logo">
         <h1><a href="home">Creamy</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="images/main/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
       <nav id="navbar" class="navbar">
