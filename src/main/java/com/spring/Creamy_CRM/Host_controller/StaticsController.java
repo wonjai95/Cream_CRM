@@ -36,8 +36,14 @@ public class StaticsController {
 		// 회원 목록 출력
 		service_user.printUsers(req, model);
 		
-		//성비 계산
+		// 성비 계산
 		service_statics.static_gender_ratio(req, model);
+		
+		// 연령 계산
+		service_statics.static_age_ratio(req, model);
+		
+		// 월별 인원 현황
+		service_statics.static_numOfUserByMonth(req, model);
 		
 		return "host/statics/userStatics";
 	}
