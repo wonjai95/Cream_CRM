@@ -240,11 +240,12 @@
 	
 	<!-- 재고 리스트(페이징) -->
 	<select id="selectStockList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.StockVO">
-		 select * from( 
-		 	select st.*,rownum from( 
-		 		select * from s_t_view where host_code = #{host_code} and stock_status NOT LIKE '삭제' 
-		 		order by stock_code desc) st)
-		 where rownum between #{start} and #{end}
+		select * from(
+			select * from( 
+			   select st.*,rownum num from(
+			      select * from s_t_view where host_code = #{host_code} order by stock_code desc) st))
+			 where num between #{start} and #{end}
+
 	</select>
 	
 	<!-- 재고 상세(수정) -->
