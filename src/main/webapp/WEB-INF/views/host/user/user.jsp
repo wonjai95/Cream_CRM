@@ -122,8 +122,68 @@ $("document").ready(function() {
    
    
 	
+ 	// ajax
+ 	// 회원 정보 검색
+   $(".group, #find ,#justList").click(function(e){
+		e.preventDefault();
+		var queryForName = $("#queryForName").val();
+		var queryForType = $("#queryForType").val();
+		var queryForName = $("#queryForName").val();
+		
+		if(queryForName == ""){
+			queryForName = null;
+		}
+		if(queryForStatus == '전체'){
+			queryForStatus = null;
+		}
+		if(queryForType == '전체'){
+			queryForType = null;
+		}
+		
+		/* ???? */
+		if($(this).attr("id") == 'justList'){
+			queryForStatus = null;
+			queryForType = null;
+			groupCode = null;
+			queryForName = null;
+		}
+		/* ????? */
+		
+		$.ajax({
+			type:"get",
+			url: "searchUserList",
+			/* data : "user_code="+queryForName+"&user_name="+queryForType+
+					"&user_ph="+queryForStatus, */
+			dataType : "json",
+			success: function(response){
+					$("#userList").html("");
+				for (var i = 0; i < response.length; i++) {
+					var temp = addHtml(response[i]);
+					$("#userList").append(temp);
+				}
+			},
+			error: function() {
+				alert("오류");
+			}  
+		});
+	});   
 	
 	
+ 	// searchUserList - addHtml 
+  <%--
+ 	function addHtml(vo) {
+		
+	   return 
+		
+		'<tr class="user${status.index} footable-odd">'
+        + '<td id="user_code${status.index} footable-visible">' + vo.user_code +'<input type="hidden" name="user_code${status.index}" value="${dto.user_code}"></td>'
+        + '<td id="user_name${status.index} footable-visible">'+ vo.user_name + '<input type="hidden" name="user_name${status.index}" value="${dto.user_name}"></td>'
+        + '<td id="user_ph${status.index} footable-visible">'+ vo.user_ph + '<input type="hidden" name="user_ph${status.index}" value="${dto.user_ph}"></td>'
+        + '<td id="user_id${status.index} footable-visible"><input type="hidden" name="user_id${status.index}" value="${dto.user_id}"></td>'
+    	+ '</tr>'
+		;
+	}
+	 --%>	
 	
 	
    
@@ -131,6 +191,19 @@ $("document").ready(function() {
    $("input[name=window_close]").click(function() {
       window.close();
    });
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
 });
@@ -206,21 +279,12 @@ $("document").ready(function() {
 						</select>
 					</div>
 				</div>
-
-				<div class="col-sm-2">
-					<div class="form-group">
-						<select name="" id="" class="form-control">
-							<option value="1" selected="">상품 선택</option>
-							<option value="2">[판매]염색 1회</option>
-							<option value="3">[기간]회원권 1개월</option>
-						</select>
-					</div>
-				</div>
 				
+				<!-- 담당자 말고 다른걸로 찾아야해 -->
 				<div class="col-sm-2">
 					<div class="form-group">
-						<select name="" id="" class="form-control">
-							<option value="1" selected="">담당자 선택</option>
+						<select name="queryForCode" id="queryForCode" class="form-control">
+							<option value="전체" selected="">남녀 선택</option>
 							<option value="2">주수림</option>
 							<option value="3">정지은</option>
 							<option value="4">이시현</option>
@@ -231,14 +295,14 @@ $("document").ready(function() {
 
 				<div class="col-sm-2">
 					<div class="form-group">
-						<input type="text" id="" name="" value=""
-							placeholder="검색어" class="form-control">
+						<input type="text" id="queryForName" name="queryForName"
+								placeholder="검색어" class="form-control">
 					</div>
 				</div>
 
 				<div class="col-sm-2">
 					<div class="form-group">
-						<button class="btn btn-primary dim" type="button">찾기</button>
+						<button class="btn btn-primary dim" id="find" type="button">찾기</button>
 					</div>
 				</div>
 			</div>
@@ -268,13 +332,13 @@ $("document").ready(function() {
 					            </tr>
 					            </thead>
 					            
-					            <tbody>
+					            <tbody id="userList">
 					            <c:forEach var="dto" items="${dto}" varStatus="status">
-						            <tr class="user${status.index}">
-						                <td id="user_code${status.index}">${dto.user_code}<input type="hidden" name="user_code${status.index}" value="${dto.user_code}"></td>
-						                <td id="user_name${status.index}">${dto.user_name}<input type="hidden" name="user_name${status.index}" value="${dto.user_name}"></td>
-						                <td id="user_ph${status.index}">${dto.user_ph}<input type="hidden" name="user_ph${status.index}" value="${dto.user_ph}"></td>
-						                <td id="user_id${status.index}"><input type="hidden" name="user_id${status.index}" value="${dto.user_id}"></td>
+						            <tr class="user${status.index} footable-odd">
+						                <td id="user_code${status.index} footable-visible">${dto.user_code}<input type="hidden" name="user_code${status.index}" value="${dto.user_code}"></td>
+						                <td id="user_name${status.index} footable-visible">${dto.user_name}<input type="hidden" name="user_name${status.index}" value="${dto.user_name}"></td>
+						                <td id="user_ph${status.index} footable-visible">${dto.user_ph}<input type="hidden" name="user_ph${status.index}" value="${dto.user_ph}"></td>
+						                <td id="user_id${status.index} footable-visible"><input type="hidden" name="user_id${status.index}" value="${dto.user_id}"></td>
 						            </tr>
 						        </c:forEach>
 					            </tbody>

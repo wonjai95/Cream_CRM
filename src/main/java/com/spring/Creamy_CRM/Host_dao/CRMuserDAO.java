@@ -29,4 +29,7 @@ public interface CRMuserDAO {
 	// 회원 인증테이블 로그인체크 업데이트
 	public int updateAuth(String ID);
 	
+	// 회원 검색
+	public List<userVO> searchUserList(userVO vo);
+	
 }

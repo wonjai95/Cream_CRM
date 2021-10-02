@@ -58,4 +58,23 @@
   		 WHERE ID = #{ID}
   	</update>
   	
+  	
+  	<!-- 회원 검색 -->
+  	<select id="searchUserList" parameterType="com.spring.Creamy_CRM.VO.userVO" resultType="com.spring.Creamy_CRM.VO.userVO">
+  		
+  		select * from user_tbl
+  			
+			<if test="user_code != null">
+  				and user_code = #{user_code}
+  			</if>
+  			<if test="user_name != null">
+  				and user_name = #{user_name}
+  			</if>
+  			<if test="user_ph != null">
+  				and user_ph = #{user_ph}
+  			</if>
+  			
+  		order by to_number(substr(user_code,4)) desc
+  	</select>
+  	
   </mapper>

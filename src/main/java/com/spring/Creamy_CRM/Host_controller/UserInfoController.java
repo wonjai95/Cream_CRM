@@ -4,6 +4,8 @@
 
 package com.spring.Creamy_CRM.Host_controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -13,10 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.Creamy_CRM.Host_service.CRMuserServiceImpl;
 import com.spring.Creamy_CRM.Host_service.LoginServiceImpl;
 import com.spring.Creamy_CRM.Host_service.ProductServiceImpl;
+import com.spring.Creamy_CRM.VO.ProductVO;
+import com.spring.Creamy_CRM.VO.userVO;
 
 @Controller
 public class UserInfoController {
@@ -36,7 +41,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 	@RequestMapping("/host/user")
 	public String user(HttpServletRequest req, Model model) {
 		logger.info("url -> user");
-
+		
 		String user_code = req.getParameter("user_code");
 		System.out.println("user_code : " + user_code);
 		String user_id = req.getParameter("user_id");
@@ -135,6 +140,13 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		return "host/user/user_sale";
 	}
 	
+	// 회원 검색 (수정중)
+	@RequestMapping("/host/searchUserList")
+	public List<userVO> searchUserList(HttpServletRequest req, Model model) {
+		logger.info("url -> searchUserList");
+		
+		return service_user.searchUserList(req, model);
+	}
 	
 	
 }

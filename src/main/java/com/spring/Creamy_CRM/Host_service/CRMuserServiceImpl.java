@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.CRMuserDAOImpl;
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
+import com.spring.Creamy_CRM.VO.ProductVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
 @Service
@@ -56,6 +57,10 @@ public class CRMuserServiceImpl implements CRMuserService {
 	@Override
 	public void printUsers(HttpServletRequest req, Model model) {
 		System.out.println("service ==> printUsers");
+
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+
 		List<userVO> list = new ArrayList<userVO>();
 		
 		String user_code = req.getParameter("user_code");
@@ -174,6 +179,47 @@ public class CRMuserServiceImpl implements CRMuserService {
 		model.addAttribute("ID", ID);      
 	}
 
+	// 회원 검색
+	@Override
+	public List<userVO> searchUserList(HttpServletRequest req, Model model) {
+		System.out.println("service ==> searchUserList");
+		
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
 
+		
+		String user_code = req.getParameter("user_code");
+		String user_name = req.getParameter("user_name");
+		String user_ph = req.getParameter("user_ph");
+		
+		userVO vo = new userVO();
+		if(user_code.equals("null")) {
+			user_code = null;
+		}
+		if(user_name.equals("null")) {
+			user_name = null;
+		}
+		if(user_ph.equals("null")) {
+			user_ph = null;
+		}
+		
+		System.out.println("user_code : " + user_code);
+		System.out.println("user_name : " + user_name);
+		System.out.println("user_ph : " + user_ph);
+
+		vo.setUser_code(user_code);
+		vo.setUser_name(user_name);
+		vo.setUser_ph(user_ph);
+		
+		List<userVO> list = dao_user.searchUserList(vo);
+		for (int i = 0; i < list.size(); i++) {
+			userVO vo2 = list.get(i);
+			System.out.println(vo2.getUser_id());
+		}
+		
+		return list;
+	}
+		
+	
 
 }
