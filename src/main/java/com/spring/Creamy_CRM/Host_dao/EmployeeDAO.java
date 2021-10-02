@@ -89,7 +89,7 @@ public interface EmployeeDAO {
 	public int deleteContract(String salary_contract_code);
 	
 	// 이미 급여 지급이 완료되었는지 체크
-	public int chkPaymentAction(String pay_month);
+	public int chkPaymentAction(Map<String, Object> map);
 	
 	// 직원 급여 지급 등록
 	public int insertPayment(SalaryVO vo);

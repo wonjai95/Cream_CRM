@@ -19,6 +19,9 @@ import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.AccountDAOImpl;
 import com.spring.Creamy_CRM.VO.AccountVO;
+import com.spring.Creamy_CRM.VO.CostofSalesVO;
+import com.spring.Creamy_CRM.VO.EndingInventoryVO;
+import com.spring.Creamy_CRM.VO.StockVO;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -228,23 +231,53 @@ public class AccountServiceImpl implements AccountService {
 		String currentMonth = req.getParameter("currentMonth");
 		System.out.println("currentMonth : " + currentMonth);
 		
-		Date nowMonth = Date.valueOf(currentMonth);
+		// Date nowMonth = Date.valueOf(currentMonth);
 		
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("host_code", host_code);
-		map1.put("nowMonth", nowMonth);
-		
-		int[] sumExpenses = dao.sumSGA_expenses(map1);
+		// map1.put("nowMonth", currentMonth);
 		
 		// 매출 <- 판매 테이블
+		int Revenue = dao.getRevenue(map1);
+		
+		// 판매비와 관리비 테이블 <- 매출전표에서
+		int[] sumExpenses = dao.sumSGA_expenses(map1);
+		
+		// 영업외손익 <- 매출전표에서
+		int[] sumOperatingLoss = dao.sumNonOperatingLoss(map1);
+		
+		// 직원 급여 총합
+		int TotalSalary = dao.getTotalSalary(map1);
 		
 		// 재고관리 <- 기초(전기 기말) / 당기(재고) / 기말(재고실사)
 		
-		// 직원 급여 총합
+		// 1. 기초 재고액 <- 전기(전월)의 기말재고액
+		EndingInventoryVO EIList = dao.getEndingInven(map1);
+		System.out.println(EIList.getInven_price());
+		System.out.println(EIList.getInven_cnt());
 		
-		// 판매비와 관리비 테이블 <- 매출전표에서
+		// 2. 당기 매입액 <- 입고현황
+		CostofSalesVO CSList = dao.getStockTotal(map1);
+		System.out.println(CSList.getPullingPrice());
+		System.out.println(CSList.getPullingCnt());
 		
-		// 영업외손익 <- 매출전표에서
+		// 3. 기말 재고액 <- 재고실사
+		int TotalInvenCnt = dao.TotalInvenCnt(map1);
+		System.out.println(TotalInvenCnt);
+		
+		int averagePrice = Math.round((EIList.getInven_price() + CSList.getPullingPrice()) / (EIList.getInven_cnt() + CSList.getPullingCnt()));
+		System.out.println(averagePrice);
+		
+		int endingInvenPrice = (averagePrice * TotalInvenCnt); 
+		
+		
+		model.addAttribute("Revenue", Revenue);
+		model.addAttribute("EIList", EIList);
+		model.addAttribute("CSList", CSList);
+		model.addAttribute("endingInvenPrice", endingInvenPrice);
+		model.addAttribute("TotalSalary", TotalSalary);
+		model.addAttribute("sumExpenses", sumExpenses);
+		model.addAttribute("sumOperatingLoss", sumOperatingLoss);
 	}
 
 }

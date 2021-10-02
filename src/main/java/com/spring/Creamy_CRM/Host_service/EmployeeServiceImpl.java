@@ -462,7 +462,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		int loan_payment_amount = monthly_salary - (deduction_total);
 		System.out.println("loan_payment_amount : " + loan_payment_amount);
 		
-		int selectCnt = dao.chkPaymentAction(pay_month);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employee_code", employee_code);
+		map.put("pay_month", pay_month);
+		
+		int selectCnt = dao.chkPaymentAction(map);
 		int insertCnt = 0;
 		
 		if(selectCnt == 0) {

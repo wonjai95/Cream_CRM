@@ -16,6 +16,9 @@ public interface StockDAO {
 	// 재고실지조사 내역 조회
 	public List<StockVO> getInvenLogList(String host_code);
 	
+	// 재고실사 등록 처리시 실사날짜에 기록 여부 판단
+	public int ChkinsertInven(StockVO vo);
+	
 	// 재고실사 등록 처리
 	public int insertPeriodicInven(StockVO vo);
 	

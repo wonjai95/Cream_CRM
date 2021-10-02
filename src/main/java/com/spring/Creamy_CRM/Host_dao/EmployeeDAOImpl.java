@@ -173,9 +173,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	// 이미 급여 지급이 완료되었는지 체크
-	public int chkPaymentAction(String pay_month) {
+	public int chkPaymentAction(Map<String, Object> map) {
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
-		return dao.chkPaymentAction(pay_month);
+		return dao.chkPaymentAction(map);
 	}
 	
 	// 직원 급여 지급 등록

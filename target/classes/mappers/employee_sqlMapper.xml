@@ -205,7 +205,8 @@
 	<select id="chkPaymentAction" parameterType="String" resultType="int">
 		SELECT COUNT(*)
 		  FROM salary_tbl
-		 WHERE pay_month = #{pay_month}	
+		 WHERE employee_code = #{employee_code}
+		   AND pay_month = #{pay_month}	
 	</select>
 	
 	<!-- 직원 급여 지급 등록 -->
@@ -314,7 +315,7 @@
      
     <!-- 급여 계약 등록 -->
     <insert id="insertBankInfo" parameterType="com.spring.Creamy_CRM.VO.SalaryContractVO">
-    	INSERT INTO bank_tbl (bank_code, bank_name, accountAs, account_number, account_holder)
+    	INSERT INTO bank_tbl (bank_code, bank_name, account_as, account_number, account_holder)
     	VALUES ('B'||bank_seq.nextval, #{bank_name}, null, #{account_number}, #{account_holder})
     </insert>
     
