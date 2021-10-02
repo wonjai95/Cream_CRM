@@ -12,6 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>INSPINIA | Data Tables</title>
+<style>
+.tabs-container{
+	width: 85%;
+	margin: 0px auto;
+}
+</style>
 <script type="text/javascript"
 	src="${path}/resources/host/js/Accounting.js"></script>
 </head>
@@ -64,126 +70,176 @@
 									<table class="table table-bordered">
 
 										<tbody>
-											<tr class="gradeX">
+											<tr>
 												<td>과목</td>
 												<td colspan="2" align="center">금액</td>
 											</tr>
-											<tr class="gradeC">
+											<tr>
 												<td>매출액</td>
 												<td></td>
-												<td><fmt:formatNumber value="456680000"
+												<td><fmt:formatNumber value="${vo.revenue}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.revenue}"
 														pattern="###,###,###" /></td>
 											</tr>
-											<tr class="table-danger">
+											<tr>
 												<td>상품매출</td>
-												<td><fmt:formatNumber value="456680000"
+												<td><fmt:formatNumber value="${vo.revenue}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.revenue}"
 														pattern="###,###,###" /></td>
 												<td></td>
 											</tr>
-											<tr class="gradeA">
+											<tr>
 												<td>매출원가</td>
 												<td></td>
-												<td><fmt:formatNumber value="0" pattern="###,###,###" /></td>
+												<td><fmt:formatNumber value="${vo.cost_of_goods_sold}" pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.cost_of_goods_sold}" pattern="###,###,###" /></td>
 											</tr>
-											<tr class="gradeA">
+											<tr>
 												<td>기초상품재고액</td>
-												<td><fmt:formatNumber value="35000000"
+												<td><fmt:formatNumber value="${vo.openning_inventory}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.openning_inventory}"
 														pattern="###,###,###" /></td>
 												<td></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>당기상품재고액</td>
-												<td><fmt:formatNumber value="28767000"
+												<td><fmt:formatNumber value="${vo.purchaes}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.purchaes}"
 														pattern="###,###,###" /></td>
 												<td></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>기말상품재고액</td>
-												<td><fmt:formatNumber value="63767000"
+												<td><fmt:formatNumber value="${vo.ending_inventory}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.ending_inventory}"
 														pattern="###,###,###" /></td>
 												<td></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>매출총이익</td>
 												<td></td>
-												<td><fmt:formatNumber value="456680000"
+												<td><fmt:formatNumber value="${vo.gross_profit}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.gross_profit}"
 														pattern="###,###,###" /></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>판매비와 관리비</td>
 												<td></td>
-												<td><fmt:formatNumber value="97726975"
+												<td><fmt:formatNumber value="${vo.operating_expensews}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.operating_expensews}"
 														pattern="###,###,###" /></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>급여</td>
-												<td><fmt:formatNumber value="93000000"
+												<td><fmt:formatNumber value="${vo.labour_cost}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.labour_cost}"
 														pattern="###,###,###" /></td>
 												<td></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>복리후생비</td>
-												<td><fmt:formatNumber value="2497520"
+												<td><fmt:formatNumber value="${vo.employee_beneifts}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.employee_beneifts}"
 														pattern="###,###,###" /></td>
 												<td></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>소모품비</td>
-												<td><fmt:formatNumber value="2229455"
+												<td><fmt:formatNumber value="${vo.utilies}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.utilies}"
 														pattern="###,###,###" /></td>
 												<td></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>수수료비용</td>
-												<td><fmt:formatNumber value="600000"
+												<td><fmt:formatNumber value="${vo.commission}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.commission}"
 														pattern="###,###,###" /></td>
 												<td></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>영업이익</td>
 												<td></td>
-												<td><fmt:formatNumber value="350577585"
+												<td><fmt:formatNumber value="${vo.operating_income}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.operating_income}"
 														pattern="###,###,###" /></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>영업외수익</td>
 												<td></td>
-												<td><fmt:formatNumber value="0" pattern="###,###,###" /></td>
+												<td><fmt:formatNumber value="${vo.non_operating_income}" pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.non_operating_income}" pattern="###,###,###" /></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>영업외비용</td>
 												<td></td>
-												<td><fmt:formatNumber value="0" pattern="###,###,###" /></td>
+												<td><fmt:formatNumber value="${vo.non_operating_expenses}" pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.non_operating_expenses}" pattern="###,###,###" /></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>법인세차감전이익</td>
 												<td></td>
-												<td><fmt:formatNumber value="350577585"
+												<td><fmt:formatNumber value="${vo.income_before_taxes}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.income_before_taxes}"
 														pattern="###,###,###" /></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>법인세등</td>
 												<td></td>
-												<td><fmt:formatNumber value="0" pattern="###,###,###" /></td>
+												<td><fmt:formatNumber value="${vo.income_taxes}" pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.income_taxes}" pattern="###,###,###" /></td>
 											</tr>
 
-											<tr class="gradeA">
+											<tr>
 												<td>당기순이익</td>
 												<td></td>
-												<td><fmt:formatNumber value="350577585"
+												<td><fmt:formatNumber value="${vo.net_income}"
+														pattern="###,###,###" /></td>
+												<td></td>
+												<td><fmt:formatNumber value="${vo.net_income}"
 														pattern="###,###,###" /></td>
 											</tr>
 

@@ -36,6 +36,8 @@ public class AccountController {
 	public String Accounting(HttpServletRequest req, Model model) {
 		logger.info("url -> Accounting");
 	  
+		service.income_statement(req, model);
+		
 		return "host/accounting/Accounting";
 	}
 	
@@ -219,6 +221,16 @@ public class AccountController {
 		service.settlement(req, model);
 		
 		return "host/accounting/settlement";
+	}
+	
+	// 손익 계산서 등록 처리
+	@RequestMapping("/host/IncomeStatementInsert")
+	public String IncomeStatementInsert(HttpServletRequest req, Model model) {
+		logger.info("url -> IncomeStatementInsert");
+		
+		service.InsertIncomeStatement(req, model);
+		
+		return "host/accounting/IncomeStatementAction";
 	}
 
 }

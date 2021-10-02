@@ -48,9 +48,12 @@ public interface AccountService {
 	// 검색어에 따른 영업외손익 조회
 	public void getNOLsearchList(HttpServletRequest req, Model model);
 	
-	// 손익계산서
+	// 손익계산서 조회
 	public void income_statement(HttpServletRequest req, Model model);
 	
 	// 결산
 	public void settlement(HttpServletRequest req, Model model);
+	
+	// 손익계산서 등록 처리
+	public void InsertIncomeStatement(HttpServletRequest req, Model model);
 }
