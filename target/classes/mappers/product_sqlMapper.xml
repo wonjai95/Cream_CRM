@@ -104,7 +104,6 @@
   	</insert>
   	
 
-  	
   	<!-- 상품코드로 상품 정보 가져오기 -->
   	<select id="getProductOne" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ProductVO">
         select * from product_tbl where product_code = #{product_code}
@@ -121,7 +120,7 @@
   				product_code = #{product_code}
   			</if>
   		</where>
-  		order by to_number(substr(product_code,3)) 
+  		order by to_number(substr(product_code,4)) 
   	</select>
 
   	

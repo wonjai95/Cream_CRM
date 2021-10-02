@@ -260,6 +260,25 @@
 		}
 		
 		
+		$("#roomList").click(function(){
+			$.ajax({
+				type:"get",
+				url:"roomList",
+				success: function(roomList){
+					$("#rooms").html(roomList);
+					/*
+					for (var i = 0; i < roomList.length; i++) {
+						var temp = addHtml(roomList[i]);
+						$("#rooms").append(temp);
+					}
+					*/
+				},
+				error: function(){
+					alert("오류");
+				}
+			});
+		});
+		
 	});
 	
 	
@@ -292,7 +311,7 @@
 								<li><a class="nav-link active" data-toggle="tab"
 									href="#tab-1" id="justList">상품 관리</a></li>
 								<li><a class="nav-link" data-toggle="tab" 
-									href="#tab-2">호실 등록</a></li>
+									href="#tab-2" id="roomList">호실 목록</a></li>
 							</ul>
 							<div class="tab-content">
 								<div id="tab-1" class="tab-pane active">
@@ -509,7 +528,7 @@
 								</div>
 
 								<div id="tab-2" class="tab-pane">
-									<jsp:include page="stock.jsp" />
+									<jsp:include page="../hostPage/roomList.jsp" />
 								</div>
 
 							</div>
