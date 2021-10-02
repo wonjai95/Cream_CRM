@@ -120,7 +120,7 @@
   				product_code = #{product_code}
   			</if>
   		</where>
-  		order by to_number(substr(product_code,3)) 
+  		order by to_number(substr(product_code,4)) 
   	</select>
 
   	

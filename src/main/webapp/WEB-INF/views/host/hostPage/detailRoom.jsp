@@ -32,8 +32,8 @@ body{background-color: white;}
 									$("#chkName").html("호실 이름이 중복되었습니다.");
 									$("#hiddenName").val("0");
 								} else {
-									//$("#chkName").html(room_name + " 은(는) 사용 가능합니다.");
-									$("#chkName").css("display", "none");
+									$("#chkName").html(room_name + " 은(는) 사용 가능합니다.");
+									///$("#chkName").css("display", "none");
 									$("#hiddenName").val(room_name);
 								}
 							},
