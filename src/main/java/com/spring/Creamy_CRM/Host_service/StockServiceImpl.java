@@ -111,8 +111,14 @@ public class StockServiceImpl implements StockService {
 				vo.setStock_code(stock_code);
 				vo.setInven_date(inven_date);
 				
-				insertCnt = dao.insertPeriodicInven(vo);
-				System.out.println("insertCnt[i]: " + insertCnt + " - " + i);
+				int insertChk = dao.ChkinsertInven(vo);
+				
+				if(insertChk == 0) {
+					insertCnt = dao.insertPeriodicInven(vo);
+					System.out.println("insertCnt[i]: " + insertCnt + " - " + i);
+				} else {
+					insertCnt = 2;
+				}
 			}
 		}
 		

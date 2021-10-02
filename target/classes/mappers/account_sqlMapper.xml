@@ -94,14 +94,78 @@
   		 ORDER BY slip_regDate DESC
   	</select>
   	
+  	<!-- 상품(서비스) 총 매출액 -->
+  	<select id="getRevenue" parameterType="java.util.Map" resultType="int">
+  		SELECT SUM(total_payment)
+  		  FROM sale_tbl s, employee_tbl e
+ 		 WHERE e.host_code = #{host_code}
+   		   AND s.employee_code = e.employee_code
+   		   AND TO_CHAR(s.sale_date, 'YYYY-MM') = '2021-09'
+  	</select>
+  	
+  	<!-- 1. 기말 재고액 조회(결산시 기초재고액으로 들어간다) -->
+  	<select id="getEndingInven" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.EndingInventoryVO">
+  		SELECT *
+  		  FROM ending_inventory
+  		 WHERE host_code = #{host_code}
+  		   AND TO_CHAR(ending_inven_date, 'YYYY-MM') = '2021-08'
+  	</select>
+  	
+  	<!-- 2. 당기 매입액 조회 -->
+  	<select id="getStockTotal" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.CostofSalesVO">
+  		SELECT SUM(cntTotal) as pullingCnt, SUM(indiTotal) as pullingPrice
+		  FROM (SELECT SUM(sd.stock_pur_cnt) as cntTotal, SUM(sd.stock_pur_cnt * sd.stock_pur_price) as indiTotal
+          	  	  FROM stock_detail_tbl sd, stock_tbl s, trade_tbl t
+     			 WHERE t.host_code = #{host_code}
+         		   AND t.trade_code = s.trade_code
+           		   AND s.stock_code = sd.stock_code
+         		   AND TO_CHAR(stock_indate, 'YYYY-MM') = '2021-09'
+    			GROUP BY sd.stock_code)
+  	</select>
+  	
+  	<!-- 3. 기말 재고액을 위한 재고실사의 총 수량 조회 -->
+  	<select id="TotalInvenCnt" parameterType="java.util.Map" resultType="int">
+  		SELECT SUM(p.indiv_inven_cnt)
+ 		  FROM periodic_inventory p, stock_tbl s, trade_tbl t, host_tbl h
+ 		 WHERE h.host_code = #{host_code}
+ 		   AND t.trade_code = s.trade_code
+ 		   AND s.stock_code = p.stock_code
+  		   AND TO_CHAR(p.inven_date, 'YYYY-MM') = '2021-09'
+  	</select>
+  	
+  	<!-- 직원 지급 급여 총 금액 조회 -->
+  	<select id="getTotalSalary" parameterType="java.util.Map" resultType="int">
+  		SELECT SUM(s.salary)
+  		  FROM salary_tbl s, employee_tbl e
+  		 WHERE e.host_code = #{host_code}
+  		   AND e.employee_code = s.employee_code 
+  		   AND TO_CHAR(s.salary_payDate, 'YYYY-MM') = '2021-10'
+  	</select>
+  	
   	<!-- 매입매출전표에서 복리후생비, 소모품비, 수수료비용 합계 -->
   	<select id="sumSGA_expenses" parameterType="java.util.Map" resultType="int">
-  		SELECT SUM(slip_tbl)
-  		  FROM slip_tbl
-  		 WHERE host_code = #{host_code}
-  		   AND TO_DATE(slip_regDate, 'YYYY-MM') = #{nowMonth}
-  		 
-  		
+  		SELECT SUM(slip_money)
+          FROM (SELECT *
+                  FROM slip_tbl
+                 WHERE host_code = #{host_code}
+                   AND slip_type IN ('복리후생비', '수수료비용', '소모품비')
+                   AND TO_CHAR(slip_regDate, 'YYYY-MM') = '2021-09'
+                )
+        GROUP BY slip_type
+        ORDER BY slip_type ASC
+  	</select>
+  	
+  	<!-- 매입매출전표에서 법인세등, 비용, 수익 합계 -->
+  	<select id="sumNonOperatingLoss" parameterType="java.util.Map" resultType="int">
+  		SELECT SUM(slip_money)
+  		  FROM (SELECT *
+  		  		  FROM slip_tbl
+  		  		 WHERE host_code = #{host_code}
+  		  		   AND slip_type IN ('비용', '수익', '법인세등')
+  		  		   AND TO_CHAR(slip_regDate, 'YYYY-MM') = '2021-09'
+  		  		)
+  		  GROUP BY slip_type
+  		  ORDER BY slip_type ASC
   	</select>
   
   

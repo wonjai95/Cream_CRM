@@ -44,6 +44,14 @@
   		 
   	</select>
   	
+  	<!-- 재고실사 등록 처리시 실사날짜에 기록 여부 판단 -->
+  	<select id="ChkinsertInven" parameterType="com.spring.Creamy_CRM.VO.StockVO" resultType="int">
+  		select COUNT(*)
+  		  FROM periodic_inventory
+  		 WHERE stock_code = #{stock_code}
+  		   AND inven_date = #{inven_date}
+  	</select>
+  	
   	<!-- 재고실사 등록 처리 -->
   	<insert id="insertPeriodicInven" parameterType="com.spring.Creamy_CRM.VO.StockVO">
   		INSERT INTO periodic_inventory (inven_code, stock_code, inven_date, indiv_inven_cnt)

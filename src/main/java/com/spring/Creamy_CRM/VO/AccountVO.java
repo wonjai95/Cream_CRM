@@ -28,7 +28,7 @@ public class AccountVO {
 	private Date non_operating_loss_regDate;	// 등록일
 	private int non_operating_expenses;			// 비용
 	private int non_operating_profit;			// 수익
-	private int corporate_tax;					// 법인세비 등
+	private int corporate_tax;					// 법인세등
 	private int incidental_PNL_total;			// 영업외손익총액
 	
 	

@@ -28,6 +28,13 @@ public class StockDAOImpl implements StockDAO {
 		StockDAO dao = sqlSession.getMapper(StockDAO.class);
 		return dao.getInvenLogList(host_code);
 	}
+	
+	// 재고실사 등록 처리시 실사날짜에 기록 여부 판단
+	@Override
+	public int ChkinsertInven(StockVO vo) {
+		StockDAO dao = sqlSession.getMapper(StockDAO.class);
+		return dao.ChkinsertInven(vo);
+	}
 
 	// 재고실사 등록 처리
 	@Override

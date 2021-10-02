@@ -15,13 +15,18 @@
 		window.history.back();
 	</script>
 </c:if>
-<c:if test="${insertCnt != 0}">
+<c:if test="${insertCnt == 1}">
 	<script type="text/javascript">
 		alert("재고실사 내역이 등록되었습니다.");		
 		window.location="stock";
 	</script>
 </c:if>
-
+<c:if test="${insertCnt == 2}">
+	<script type="text/javascript">
+		alert("당일 재고실사를 했습니다. 다음에 해주세요.");
+		window.location="stock";
+	</script>
+</c:if>
 <body>
 </body>
 </html>
