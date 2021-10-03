@@ -157,17 +157,49 @@
                 }
             },
             events: [
-            	 <c:forEach var="vo" items="${res_list}">                
-            	 {
-                    title: '${vo.user_name}',
-                    start: '${vo.res_date}',
-                    url: 'http://localhost:3000/host_resdetail?code=${vo.res_code}'
+            	 <c:forEach var="img" items="${weather}" varStatus="i">                
+            	 	{
+            	 		 title: '  ${img.weather}',
+                         start: new Date(y, m, d+${i.index}),
+                         imageurl:"https://www.accuweather.com${img.icon}",
+                        
+                         <c:if test="${i.index == 0}">
+                         color : "#fcf8e3",
+                         </c:if>
+                         <c:if test="${i.index != 0}">
+                         color : "#ffffff",
+                         </c:if>
+                         
+                         textColor : "#000000"
                 },
                 </c:forEach>
+            	
+              /*   {
+                    title: 'home_test',
+                    start: new Date(y, m, d),
+                    imageurl:"https://www.accuweather.com",
+                    color : "#fcf8e3",
+                    textColor : "#000000"
+                }, 
+                {
+                    title: 'home_test',
+                    start: '2021-10-04T00:00:00',
+                    imageurl:"https://www.accuweather.com/images/weathericons/6.svg",
+                    color : "#ffffff",
+                    textColor : "#000000"
+                },  */
+                
+                <c:forEach var="vo" items="${res_list}">                
+           	 	{
+                   title: '${vo.user_name}',
+                   start: '${vo.res_date}T01:00:00',
+                   url: 'http://localhost:3000/host_resdetail?host_code=${sessionScope.code}&code=${vo.res_code}',
+               },
+               </c:forEach>
+               
                 {
                     title: 'home_test',
                     start: new Date(y, m, 28),
-                    end: new Date(y, m, 29),
                     url: 'http://localhost:3000/Home'
                 } 
             ]
@@ -175,6 +207,14 @@
                 if(event.url) {
                     window.open(event.url,'reactview','width=500, height=500');
                     return false;
+                }
+            },
+            eventRender:function(event, eventElement) {
+            	
+            	eventElement.find("span.fc-time").remove();
+            	
+                if(event.imageurl) {
+                    eventElement.find("span.fc-title").prepend("<img src='" + event.imageurl +"' width='25' height='25' style='margin-right:40px;'>");
                 }
             }
 

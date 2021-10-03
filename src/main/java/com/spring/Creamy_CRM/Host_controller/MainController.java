@@ -47,6 +47,7 @@ public class MainController {
 		
 		service_login.HostmainPage(req, model);
 		
+		
 		return "host/home";
 	}
 
