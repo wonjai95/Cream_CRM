@@ -139,7 +139,7 @@ $("document").ready(function() {
 			var empName = $("input[name=employee_name_hidden]").val();
 			console.log(empCode);
 			
-			var url = "employee_leave?employee_code=" + empCode + "&employee_name=" + empName;
+			var url = "http://localhost:3000/employeeLeave?employee_code=" + empCode + "&employee_name=" + empName;
 			window.open(url, "employee_leave", "menubar=no, width=800, height=800");
 		}
 	});

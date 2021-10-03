@@ -58,17 +58,24 @@ $("document").ready(function() {
 	
 	// 취소 버튼 클릭시 창 닫기
 	$("#cancelBtn").click(function() {
+		alert("취소 클릭");
 		window.close();
 	});
 	
-	// 팝업창 아이디 확인 완료
-	$("#idConfirmBtn").click(function() {
+	
+	$("#confirmform").on("click", "#idConfirmBtn", function() {
+		alert("확인 클릭");
 		var id = $("#idChkVal").val();
 		$(opener.document).find("#employee_id").val(id);
 		$(opener.document).find("#idChk").val("1");
 		window.self.close();
-	});
+	})
 	
+	// 팝업창 아이디 확인 완료
+//	$("#idConfirmBtn").click(function() {
+//		
+//	});
+//	
 	// 이미 직원 등록이 완료된 아이디 입력시 전체 팝업창 닫기
 	$("#cancelAllBtn").click(function() {
 		window.close();
