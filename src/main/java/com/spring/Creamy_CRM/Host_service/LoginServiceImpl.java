@@ -6,12 +6,18 @@
 */
 package com.spring.Creamy_CRM.Host_service;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +28,7 @@ import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
 import com.spring.Creamy_CRM.VO.userVO;
+import com.spring.Creamy_CRM.VO.weatherVO;
 import com.spring.Creamy_CRM.util.EmailChkHandler;
 
 @Service
@@ -300,6 +307,7 @@ public class LoginServiceImpl implements LoginService {
 		model.addAttribute("id",id);
 	}
 
+	//host_homepage
 	@Override
 	public void HostmainPage(HttpServletRequest req, Model model) {
 		String code = (String) req.getSession().getAttribute("code");
@@ -316,8 +324,81 @@ public class LoginServiceImpl implements LoginService {
 		List<userVO> res_user = dao_login.getTodayUserList();
 		req.setAttribute("res_user", res_user);
 		
+		//날씨 크롤링
 		
+		String iconurl = ""; //날씨 이미지 url
+		String temp = ""; //기온
+		String weather = ""; //날씨
+		
+		int day = 0;
+		//일주일간의 날씨 데이터 크롤링
+		
+		String URLAddress = "https://www.accuweather.com/ko/kr/geumcheon-gu/2330436/daily-weather-forecast/2330436";
+		
+		List<weatherVO> list = new ArrayList<weatherVO>();
+		
+		List<String> list_image = new ArrayList<String>();
+		List<String> list_texts = new ArrayList<String>();
+		
+		try {
+			Document doc = Jsoup.connect(URLAddress).get();
+			Elements contents = doc.select(".daily-wrapper");
+			Elements icons = contents.select(".weather-icon");
+			list_image = icons.eachAttr("data-src");
+			list_texts = contents.select(".temp").eachText();
+			
+			System.out.println("---------jsoup---------");
+			System.out.println(icons);
+			System.out.println();
+			System.out.println("list--------------");
+			for(String s :list_image)
+				System.out.println(s);
+			System.out.println("list_text--------------");
+			for(String s :list_texts)
+				System.out.println(s);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		for(int i = 0; i < 7; i++) {
+			weatherVO vo = new weatherVO();
+			vo.setIcon(list_image.get(i));
+			vo.setWeather(list_texts.get(i));
+			list.add(vo);
+		}
+		
+		req.setAttribute("weather", list);
+		
+
 		
 	}
 
-}
+	
+	
+	
+	
+	
+	
+	
+}//serviceimpl end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
