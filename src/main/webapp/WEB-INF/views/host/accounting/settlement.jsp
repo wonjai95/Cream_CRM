@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${path}/resources/host/js/settlement.js"></script>
 <style>
 #settlement {
 	display: inline-block;
@@ -33,22 +34,6 @@ input[readonly]{
 }
 </style>
 <script type="text/javascript">
-$.ajax({
-    url : "employee_attendanceList",
-    type : "Post",
-    data : "employee_code="+empCode+"&currentMonth="+curMonth, 
-    beforeSend : function(jqXHR, settings) {
-       console.log("beforesend 진행");
-       jqXHR.setRequestHeader(header, token);
-    },
-    success : function(result) {
-       $(".tab-content").html(result);
-    },
-    error : function(error) {
-   	alert("다시 시도해주세요.");
-    }
-    
- });
 </script>
 </head>
 <body>
@@ -56,7 +41,8 @@ $.ajax({
 	<div class="panel-body">
 		<div class="row">
 			<div class="table-responsive">
-				<form>
+				<form action="IncomeStatementInsert" method="post">
+					<sec:csrfInput />
 					<div class="col-sm-3" id="settlement"
 						style="margin: 0px 80px 0px 100px;">
 						<table class="table table-bordered" style="margin-bottom: 8px;">
@@ -64,7 +50,8 @@ $.ajax({
 								<tr>
 									<th>매출액</th>
 									<td>
-										<input type="Number" class="form-control" name="revenue" style="border:0px;" value="${Revenue}">
+										<fmt:formatNumber value="${Revenue}" pattern="###,###,###,###" />
+										<input type="hidden" name="revenue" value="${Revenue}">
 									</td>
 								</tr>
 							</tbody>
@@ -75,7 +62,8 @@ $.ajax({
 								<tr>
 									<th>매출원가</th>
 									<td>
-										<input type="Number" class="form-control"  name="cost_of_goods_sold" style="border:0px;" value="${EIList.inven_price + CSList.pullingPrice - endingInvenPrice}">
+										<fmt:formatNumber value="${EIList.inven_price + CSList.pullingPrice - endingInvenPrice}" pattern="###,###,###,###" />
+										<input type="hidden" name="cost_of_goods_sold" value="${EIList.inven_price + CSList.pullingPrice - endingInvenPrice}">
 									</td>
 								</tr>
 							</tbody>
@@ -86,7 +74,8 @@ $.ajax({
 								<tr>
 									<th>매출총이익</th>
 									<td>
-										<input type="Number" class="form-control"  name="gross_profit" style="border:0px; background-color:white;" value="" readonly>
+										<fmt:formatNumber value="${Revenue - (EIList.inven_price + CSList.pullingPrice - endingInvenPrice)}" pattern="###,###,###,###" />
+										<input type="hidden" name="gross_profit" value="${Revenue - (EIList.inven_price + CSList.pullingPrice - endingInvenPrice)}">
 									</td>
 								</tr>
 							</tbody>
@@ -97,7 +86,8 @@ $.ajax({
 								<tr>
 									<th>판매비와 관리비</th>
 									<td>
-										<input type="Number" class="form-control"  name="operating_expensews" style="border:0px;" value="${TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2]}">
+										<fmt:formatNumber value="${TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2]}" pattern="###,###,###,###" />
+										<input type="hidden" name="operating_expensews" value="${TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2]}">
 									</td>
 								</tr>
 							</tbody>
@@ -108,7 +98,8 @@ $.ajax({
 								<tr>
 									<th>영업이익</th>
 									<td>
-										<input type="Number" class="form-control"  name="operating_income" style="border:0px; background-color:white;" value="" readonly>
+										<fmt:formatNumber value="${Revenue - (EIList.inven_price + CSList.pullingPrice - endingInvenPrice) - (TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2])}" pattern="###,###,###,###" />
+										<input type="hidden" name="operating_income" value="${Revenue - (EIList.inven_price + CSList.pullingPrice - endingInvenPrice) - (TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2])}">
 									</td>
 								</tr>
 							</tbody>
@@ -119,7 +110,8 @@ $.ajax({
 								<tr>
 									<th>영업외손익</th>
 									<td>
-										<input type="Number" class="form-control"  name="cost_of_goods_sold" style="border:0px;" value="${sumOperatingLoss[2] - sumOperatingLoss[1]}">
+										<fmt:formatNumber value="${sumOperatingLoss[2] - sumOperatingLoss[1]}" pattern="###,###,###,###" />
+										<input type="hidden" name="non_operating_profit_loss" value="${sumOperatingLoss[2] - sumOperatingLoss[1]}">
 									</td>
 								</tr>
 							</tbody>
@@ -131,7 +123,8 @@ $.ajax({
 									<th>법인세차감전이익</th>
 									<!-- 법인세차감전이익 = 영업이익 + 영업외수익 - 영업외비용 -->
 									<td>
-										<input type="Number" class="form-control"  name="income_before_taxes" style="border:0px; background-color:white;" value="" readonly>
+										<fmt:formatNumber value="${Revenue - (EIList.inven_price + CSList.pullingPrice - endingInvenPrice) - (TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2]) - (sumOperatingLoss[2] - sumOperatingLoss[1])}" pattern="###,###,###,###" />
+										<input type="hidden" name="income_before_taxes" value="${Revenue - (EIList.inven_price + CSList.pullingPrice - endingInvenPrice) - (TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2]) - (sumOperatingLoss[2] - sumOperatingLoss[1])}">
 									</td>
 								</tr>
 							</tbody>
@@ -142,7 +135,8 @@ $.ajax({
 								<tr>
 									<th>법인세등</th>
 									<td>
-										<input type="Number" class="form-control"  name="income_taxes" style="border:0px;" value="${sumOperatingLoss[0]}">
+										<fmt:formatNumber value="${sumOperatingLoss[0]}" pattern="###,###,###,###" />
+										<input type="hidden" name="income_taxes" value="${sumOperatingLoss[0]}">
 									</td>
 								</tr>
 							</tbody>
@@ -153,7 +147,8 @@ $.ajax({
 								<tr>
 									<th>당기순이익</th>
 									<td>
-										<input type="Number" class="form-control"  name="net_income" style="border:0px; background-color:white;" value="" readonly>
+										<fmt:formatNumber value="${Revenue - (EIList.inven_price + CSList.pullingPrice - endingInvenPrice) - (TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2]) - (sumOperatingLoss[2] - sumOperatingLoss[1]) - sumOperatingLoss[0]}" pattern="###,###,###,###" />
+										<input type="hidden" name="net_income" value="${Revenue - (EIList.inven_price + CSList.pullingPrice - endingInvenPrice) - (TotalSalary + sumExpenses[0] + sumExpenses[1] + sumExpenses[2]) - (sumOperatingLoss[2] - sumOperatingLoss[1]) - sumOperatingLoss[0]}">
 									</td>
 								</tr>
 							</tbody>
@@ -186,28 +181,28 @@ $.ajax({
 									<th>급여</th>
 									<td><fmt:formatNumber value="${TotalSalary}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="labour_cost" value=""></td>
+										name="labour_cost" value="${TotalSalary}"></td>
 								</tr>
 
 								<tr>
 									<th>복리후생비</th>
 									<td><fmt:formatNumber value="${sumExpenses[0]}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="employee_beneifts" value=""></td>
+										name="employee_beneifts" value="${sumExpenses[0]}"></td>
 								</tr>
 
 								<tr>
 									<th>소모품비</th>
 									<td><fmt:formatNumber value="${sumExpenses[1]}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="utilies" value=""></td>
+										name="utilies" value="${sumExpenses[1]}"></td>
 								</tr>
 
 								<tr>
 									<th>수수료비용</th>
 									<td><fmt:formatNumber value="${sumExpenses[2]}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="commission" value=""></td>
+										name="commission" value="${sumExpenses[2]}"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -230,21 +225,21 @@ $.ajax({
 									<th>기초상품재고액</th>
 									<td><fmt:formatNumber value="${EIList.inven_price}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="openning_inventory" value=""></td>
+										name="openning_inventory" value="${EIList.inven_price}"></td>
 								</tr>
 
 								<tr>
 									<th>당기상품매입액</th>
 									<td><fmt:formatNumber value="${CSList.pullingPrice}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="purchaes" value=""></td>
+										name="purchaes" value="${CSList.pullingPrice}"></td>
 								</tr>
 
 								<tr>
 									<th>기말상품재고액</th>
 									<td><fmt:formatNumber value="${endingInvenPrice}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="ending_inventory" value=""></td>
+										name="ending_inventory" value="${endingInvenPrice}"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -266,14 +261,14 @@ $.ajax({
 									<th>영업외수익</th>
 									<td><fmt:formatNumber value="${sumOperatingLoss[2]}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="non_operating_income" value=""></td>
+										name="non_operating_income" value="${sumOperatingLoss[2]}"></td>
 								</tr>
 
 								<tr>
 									<th>영업외비용</th>
 									<td><fmt:formatNumber value="${sumOperatingLoss[1]}"
 											pattern="###,###,###,###" /> <input type="hidden"
-										name="non_operating_expenses" value=""></td>
+										name="non_operating_expenses" value="${sumOperatingLoss[1]}"></td>
 								</tr>
 							</tbody>
 						</table>
@@ -284,7 +279,7 @@ $.ajax({
 									<th> 영업외손익 </th>
 									<td>
 										<fmt:formatNumber value="${sumOperatingLoss[2] - sumOperatingLoss[1]}" pattern="###,###,###,###" />
-										<input type="hidden" name="corporate_tax" value="">
+										<input type="hidden" name="corporate_tax" value="${sumOperatingLoss[2] - sumOperatingLoss[1]}">
 									</td>
 								</tr>
 							</tbody>

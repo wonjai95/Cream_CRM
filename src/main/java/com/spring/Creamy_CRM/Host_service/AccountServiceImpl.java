@@ -21,6 +21,7 @@ import com.spring.Creamy_CRM.Host_dao.AccountDAOImpl;
 import com.spring.Creamy_CRM.VO.AccountVO;
 import com.spring.Creamy_CRM.VO.CostofSalesVO;
 import com.spring.Creamy_CRM.VO.EndingInventoryVO;
+import com.spring.Creamy_CRM.VO.IncomeStatementVO;
 import com.spring.Creamy_CRM.VO.StockVO;
 
 @Service
@@ -220,7 +221,15 @@ public class AccountServiceImpl implements AccountService {
 	
 	// 손익계산서
 	public void income_statement(HttpServletRequest req, Model model) {
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("host_code", host_code);
+		
+		IncomeStatementVO vo = dao.getIncome_statement(map);
+		
+		model.addAttribute("vo", vo);
 	}
 		
 	// 결산
@@ -278,6 +287,75 @@ public class AccountServiceImpl implements AccountService {
 		model.addAttribute("TotalSalary", TotalSalary);
 		model.addAttribute("sumExpenses", sumExpenses);
 		model.addAttribute("sumOperatingLoss", sumOperatingLoss);
+	}
+	
+	// 손익계산서 등록 처리
+	public void InsertIncomeStatement(HttpServletRequest req, Model model) {
+		String host_code = (String) req.getSession().getAttribute("code");
+		int revenue = Integer.parseInt(req.getParameter("revenue"));
+		int cost_of_goods_sold = Integer.parseInt(req.getParameter("cost_of_goods_sold"));
+		int openning_inventory = Integer.parseInt(req.getParameter("openning_inventory"));
+		int purchaes = Integer.parseInt(req.getParameter("purchaes"));
+		int ending_inventory = Integer.parseInt(req.getParameter("ending_inventory"));
+		int gross_profit = Integer.parseInt(req.getParameter("gross_profit"));
+		int operating_expensews = Integer.parseInt(req.getParameter("operating_expensews"));
+		int labour_cost = Integer.parseInt(req.getParameter("labour_cost"));
+		int utilies = Integer.parseInt(req.getParameter("utilies"));
+		int employee_beneifts = Integer.parseInt(req.getParameter("employee_beneifts"));
+		int commission = Integer.parseInt(req.getParameter("commission"));
+		int operating_income = Integer.parseInt(req.getParameter("operating_income"));
+		int non_operating_profit_loss = Integer.parseInt(req.getParameter("non_operating_profit_loss"));
+		int non_operating_income = Integer.parseInt(req.getParameter("non_operating_income"));
+		int non_operating_expenses = Integer.parseInt(req.getParameter("non_operating_expenses"));
+		int income_before_taxes = Integer.parseInt(req.getParameter("income_before_taxes"));
+		int income_taxes = Integer.parseInt(req.getParameter("income_taxes"));
+		int net_income = Integer.parseInt(req.getParameter("net_income"));
+		
+		System.out.println("host_code : " + host_code);
+		System.out.println("revenue : " + revenue);
+		System.out.println("cost_of_goods_sold : " + cost_of_goods_sold);
+		System.out.println("openning_inventory : " + openning_inventory);
+		System.out.println("purchaes : " + purchaes);
+		System.out.println("ending_inventory : " + ending_inventory);
+		System.out.println("gross_profit : " + gross_profit);
+		System.out.println("operating_expensews : " + operating_expensews);
+		System.out.println("labour_cost : " + labour_cost);
+		System.out.println("utilies : " + utilies);
+		System.out.println("employee_beneifts : " + employee_beneifts);
+		System.out.println("commission : " + commission);
+		System.out.println("operating_income : " + operating_income);
+		System.out.println("non_operating_profit_loss : " + non_operating_profit_loss);
+		System.out.println("non_operating_income : " + non_operating_income);
+		System.out.println("non_operating_expenses : " + non_operating_expenses);
+		System.out.println("income_before_taxes : " + income_before_taxes);
+		System.out.println("income_taxes : " + income_taxes);
+		System.out.println("net_income : " + net_income);
+		
+		IncomeStatementVO vo = new IncomeStatementVO();
+		
+		vo.setHost_code(host_code);
+		vo.setRevenue(revenue);
+		vo.setCost_of_goods_sold(cost_of_goods_sold);
+		vo.setOpenning_inventory(openning_inventory);
+		vo.setPurchaes(purchaes);
+		vo.setEnding_inventory(ending_inventory);
+		vo.setGross_profit(gross_profit);
+		vo.setOperating_expensews(operating_expensews);
+		vo.setLabour_cost(labour_cost);
+		vo.setUtilies(utilies);
+		vo.setEmployee_beneifts(employee_beneifts);
+		vo.setCommission(commission);
+		vo.setOperating_income(non_operating_income);
+		vo.setNon_operating_profit_loss(non_operating_profit_loss);
+		vo.setNon_operating_income(non_operating_income);
+		vo.setNon_operating_expenses(non_operating_expenses);
+		vo.setIncome_before_taxes(income_before_taxes);
+		vo.setIncome_taxes(income_taxes);
+		vo.setNet_income(net_income);
+		
+		int insertCnt = dao.InsertIncomeStatement(vo);
+		
+		model.addAttribute("insertCnt", insertCnt);
 	}
 
 }

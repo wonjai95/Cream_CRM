@@ -94,6 +94,14 @@
   		 ORDER BY slip_regDate DESC
   	</select>
   	
+  	<!-- 손익계산서 조회 -->
+  	<select id="getIncome_statement" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.IncomeStatementVO">
+  		SELECT *
+  		  FROM income_statement
+  		 WHERE host_code = #{host_code}
+  		   AND TO_CHAR(is_reg_date, 'YYYY-MM') = '2021-10'
+  	</select>
+  	
   	<!-- 상품(서비스) 총 매출액 -->
   	<select id="getRevenue" parameterType="java.util.Map" resultType="int">
   		SELECT SUM(total_payment)
@@ -167,6 +175,15 @@
   		  GROUP BY slip_type
   		  ORDER BY slip_type ASC
   	</select>
-  
+  	
+  	<!-- 손익계산서 등록 처리 -->
+  	<insert id="InsertIncomeStatement" parameterType="com.spring.Creamy_CRM.VO.IncomeStatementVO">
+  		INSERT INTO income_statement (income_state_code, host_code, is_reg_date, revenue, cost_of_goods_sold, openning_inventory, purchaes, ending_inventory, gross_profit,
+  						operating_expensews, labour_cost, utilies, employee_beneifts, commission, operating_income, non_operating_profit_loss, non_operating_income, non_operating_expenses,
+  						income_before_taxes, income_taxes, net_income)
+  			VALUES ('IS'||income_statement_seq.nextval, #{host_code}, sysdate, #{revenue}, #{cost_of_goods_sold}, #{openning_inventory}, #{purchaes}, #{ending_inventory}, #{gross_profit},
+  					#{operating_expensews}, #{labour_cost}, #{utilies}, #{employee_beneifts}, #{commission}, #{operating_income}, #{non_operating_profit_loss}, #{non_operating_income},
+  					#{non_operating_expenses}, #{income_before_taxes}, #{income_taxes}, #{net_income})
+  	</insert>
   
   </mapper>

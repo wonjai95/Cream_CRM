@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.Creamy_CRM.VO.AccountVO;
-import com.spring.Creamy_CRM.VO.Income_statementVO;
+import com.spring.Creamy_CRM.VO.IncomeStatementVO;
 import com.spring.Creamy_CRM.VO.CostofSalesVO;
 import com.spring.Creamy_CRM.VO.EndingInventoryVO;
 
@@ -47,7 +47,7 @@ public interface AccountDAO {
 	public List<AccountVO> getNOLsearchList(Map<String, Object> map);
 	
 	// 손익계산서 조회
-	public List<Income_statementVO> getIncome_statement(String host_code);
+	public IncomeStatementVO getIncome_statement(Map<String, Object> map);
 	
 	// 총 매출액 조회
 	public int getRevenue(Map<String, Object> map);
@@ -69,4 +69,7 @@ public interface AccountDAO {
 	
 	// 매입매출전표에서 법인세등, 비용, 수익 합계
 	public int[] sumNonOperatingLoss(Map<String, Object> map);
+	
+	// 손익계산서 등록처리
+	public int InsertIncomeStatement(IncomeStatementVO vo);
 }

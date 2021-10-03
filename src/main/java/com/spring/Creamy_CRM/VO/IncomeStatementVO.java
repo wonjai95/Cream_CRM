@@ -2,7 +2,7 @@ package com.spring.Creamy_CRM.VO;
 
 import java.sql.Date;
 
-public class Income_statementVO {
+public class IncomeStatementVO {
 
 	private String income_state_code;
 	private String host_code;
@@ -19,6 +19,7 @@ public class Income_statementVO {
 	private int employee_beneifts;
 	private int commission;
 	private int operating_income;
+	private int non_operating_profit_loss;
 	private int non_operating_income;
 	private int non_operating_expenses;
 	private int income_before_taxes;
@@ -143,6 +144,14 @@ public class Income_statementVO {
 	
 	public void setOperating_income(int operating_income) {
 		this.operating_income = operating_income;
+	}
+	
+	public int getNon_operating_profit_loss() {
+		return non_operating_profit_loss;
+	}
+	
+	public void setNon_operating_profit_loss(int non_operating_profit_loss) {
+		this.non_operating_profit_loss = non_operating_profit_loss;
 	}
 	
 	public int getNon_operating_income() {
