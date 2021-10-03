@@ -76,7 +76,7 @@
 		<div class="ibox-content">
 			<div class="table-responsive">
 	        <table class="table table-striped table-bordered table-hover dataTables-example">
-		        <thead>
+		        <!-- <thead>
 		        <tr>
 		            <th style="text-align:center">예약코드</th>
 		            <th style="text-align:center">회원아이디</th>
@@ -86,7 +86,7 @@
 		            <th style="text-align:center">날짜</th>
 		               
 		        </tr>
-		        </thead>
+		        </thead> -->
 		        <tbody id="completeList">
 				<!-- 예약조회 목록이 있다면 -->
 				<c:if test="${cnt > 0}">
