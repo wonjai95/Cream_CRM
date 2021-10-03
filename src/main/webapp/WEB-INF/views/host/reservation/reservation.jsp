@@ -54,7 +54,6 @@
 							</ul>
 							<div class="tab-content">
 								<div id="tab-1" class="tab-pane active">
-								
 									<jsp:include page="requestReservation.jsp" />
 								</div>
 								

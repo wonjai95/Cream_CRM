@@ -308,8 +308,12 @@ public class ReservationServiceImpl implements ReservationService {
 			map.put("start", completePage.getStart());
 			map.put("end", completePage.getEnd());
 			
+			System.out.println("start = "+completePage.getStart());
+			
 			mdtos = dao.getCompleteMngList(map);  // dtos대신 list로 매개변수 줘도 무방하다.
 			rdtos = dao.getCompleteRoomList(map);
+			
+			model.addAttribute("pagemap",map);
 		}
 		// 6단계. jsp로 전달하기 위해 request나 session에 처리결과를 저장
 		model.addAttribute("mdtos", mdtos);
