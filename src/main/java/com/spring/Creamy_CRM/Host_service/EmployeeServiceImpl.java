@@ -518,6 +518,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	// 직원 등록시 해당 id 체크 
+//	@Override
+//	public Map<String, Object> chkEmployeeIdAction(HttpServletRequest req, Model model) {
+//		String employee_id = req.getParameter("employee_id");
+//		System.out.println("employee_id : " + employee_id);
+//		int selectCnt = 0;
+//		
+//		// 이미 직원 등록이 완료된 id인지 체크 (직원등록 완료된 id : 1, 직원등록 x인 id : 0)
+//		selectCnt = dao.chkEmployeeIdPreexisting(employee_id);
+//		System.out.println("이미 등록된 직원 아이디 체크 selectCnt : " + selectCnt);
+//		
+//		if(selectCnt == 0) {
+//			// 직원 등록시 해당 id가 Auth_tbl 있는지 체크 (회원가입된 id : 3, 회원가입 x인 id(정상등록 가능) : 2) 
+//			selectCnt = dao.chkEmployeeIdAction(employee_id);
+//			System.out.println("selectCnt : " + selectCnt);
+//		}
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("chkId", selectCnt);
+//		map.put("employee_id", employee_id);
+//
+//		return map;
+//				
+//	}
+	
+	
 	@Override
 	public void chkEmployeeIdAction(HttpServletRequest req, Model model) {
 		String employee_id = req.getParameter("employee_id");

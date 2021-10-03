@@ -7,14 +7,34 @@
 <meta charset="UTF-8">
 <title>employee_idChkAction.jsp</title>
 <link rel="stylesheet" href="${path}/resources/host/css/confirmIdAction.css">
-<script type="text/javascript" src="${path}/resources/host/js/employee_enlist.js"></script>
+<%-- <script type="text/javascript" src="${path}/resources/host/js/employee_enlist.js"></script> --%>
+<script type="text/javascript">
+$("document").ready(function(){
+	// 취소 버튼 클릭시 창 닫기
+	$("#confirmform").on("click", "#cancelBtn", function() {
+		window.close();
+	});
+	
+	
+	$("#confirmform").on("click", "#idConfirmBtn", function() {
+		var id = $("#idChkVal").val();
+		var host_code = $("input[name=host_code]").val();
+		opener.location.href = 'http://localhost:3000/employeeEnlist?employee_id=' + id 
+								+ '&idChk=1' + "&host_code=" + host_code;
+		window.close();
+	})
+})
+
+</script>
+
 </head>
 <body>
-<form action="employee_IdChkAction" method="post" name="confirmform" 
+<form action="employee_IdChkAction" method="post" name="confirmform" id="confirmform"
 	style="margin-top: 30px; text-align: -webkit-center;">
    
 <sec:csrfInput/>
 	<!-- 직원등록 완료된 id : 1 -->
+	<input type="hidden" value="${sessionScope.code}" name="host_code">
 	<c:if test="${selectCnt == 1}">
 		<table>
 			<tr align="center">

@@ -4,6 +4,8 @@
 */
 package com.spring.Creamy_CRM.Host_controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.Creamy_CRM.Host_service.EmployeeServiceImpl;
 
@@ -211,6 +214,15 @@ public class EmployeeController {
 	}
 	
 	// 직원 등록시 id 체크
+//	@ResponseBody
+//	@RequestMapping("host/employee_IdChkAction")
+//	public Map<String, Object> employee_confrimIdChk(HttpServletRequest req, Model model) {
+//		logger.info("url -> employee_IdChkAction");
+//		
+//		return service.chkEmployeeIdAction(req, model);
+//	}
+	
+	
 	@RequestMapping("host/employee_IdChkAction")
 	public String employee_confrimIdChk(HttpServletRequest req, Model model) {
 		logger.info("url -> employee_IdChkAction");
@@ -220,13 +232,16 @@ public class EmployeeController {
 		return "host/employee/employee_IdChkAction";
 	}
 	
+	
 	// 직원 등록 처리
 	@RequestMapping("host/employee_enlistAction")
 	public String employee_enlistAction(HttpServletRequest req, Model model) {
 		logger.info("url -> employee_enlistAction");
 		
-		service.enlistEmployee(req, model);
-		
+		// service.enlistEmployee(req, model);
+		String cnt = req.getParameter("insertCnt");
+		System.out.println("cnt : " + cnt);
+		model.addAttribute("insertCnt", cnt);
 		return "host/employee/employee_enlistAction";
 	}
 	
