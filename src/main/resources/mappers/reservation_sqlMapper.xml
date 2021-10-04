@@ -183,8 +183,9 @@
 <!-- 예약조회 상세정보 조회 -->
 	<select id="getCompleteDetail" parameterType="String" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
 			SELECT *
-			  FROM reservation_tbl r, company_tbl c, reservation_detail_tbl rdt
+			  FROM reservation_tbl r, company_tbl c, reservation_detail_tbl rdt, host_tbl h
 			 WHERE rdt.res_detail_code = r.res_detail_code
+			   AND h.host_code = r.host_code
 			   AND c.host_code = #{host_code}
 			   AND r.res_code = #{res_code}			   
 	</select>
