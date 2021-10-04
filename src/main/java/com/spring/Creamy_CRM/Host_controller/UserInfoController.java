@@ -52,17 +52,22 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		
 		model.addAttribute("user_id", user_id);
 		
-		// 회원 선택 하면 해당 회원에 대한 판매 내역 출력(판매 탭) - user_sale
-		if(user_code != null) {
-			
-			// 회원별 판매 목록 출력(수정중)
-			
-		} else {
-			
-		}
-		
 		return "host/user/user";
 	}
+	
+	// 회원 검색
+	@ResponseBody
+	@RequestMapping("/host/searchUserList")
+	public List<userVO> searchUserList(HttpServletRequest req, Model model) {
+		logger.info("url -> selectProductByQuery");
+		
+		return service_user.searchUserList(req, model);
+	}
+	
+	        
+	
+	
+	
 	
 	// 회원 정보 상세 페이지(for 수정)
 	@RequestMapping("/host/user_detail")
@@ -136,17 +141,10 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		System.out.println("user_code : " + user_code);
 		
 		service_user.userSale(req, model);
-		
+		   
 		return "host/user/user_sale";
 	}
 	
-	// 회원 검색 (수정중)
-	@RequestMapping("/host/searchUserList")
-	public List<userVO> searchUserList(HttpServletRequest req, Model model) {
-		logger.info("url -> searchUserList");
-		
-		return service_user.searchUserList(req, model);
-	}
 	
 	
 }

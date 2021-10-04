@@ -104,9 +104,12 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_hour(Integer.parseInt(res_start));
 		vo.setRes_sales(res_sales);
 		vo.setComp_res(comp_res);
+	
 		System.out.println("날짜 : " + vo.getRes_date());
 		
 		model.addAttribute("dto", vo);
+		model.addAttribute("openTime", openTime);
+		model.addAttribute("closeTime", closeTime);
 		
 	}
 	

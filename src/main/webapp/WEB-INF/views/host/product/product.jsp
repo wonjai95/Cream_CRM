@@ -216,7 +216,7 @@
 			}
 			if($(this).hasClass("group") === true){
 				$(this).parent().prev().children().first().prop("checked",true);
-				groupCode = $(this).parent().prev().children().first().val();
+				groupCode = $(this).parent().prev().children().first().val(); // a태그 값 가져오기
 			}
 			
 			if($(this).attr("id") == 'justList'){

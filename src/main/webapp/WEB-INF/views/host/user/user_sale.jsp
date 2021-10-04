@@ -20,6 +20,13 @@
 
 </head>
 <body>
+
+
+<iframe src="http://localhost:3000/user_sale?host_code=${sessionScope.code}"  style="width: 1000px; height: 1000px;">
+                               
+
+
+
 <div class="ibox-content" style="margin: 0px; padding: 0px;">
 
 	<table
@@ -89,6 +96,7 @@
 	</table>
 
 </div>
+  </iframe>
 					
 <!-- Mainly scripts -->
 <script src="${path}/resources/bootstrap/js/moment.min.js"></script>

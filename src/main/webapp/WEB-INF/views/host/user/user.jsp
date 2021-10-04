@@ -25,6 +25,18 @@ function user_detail() {
 }
 
 
+//회원코드 클릭시 선택되어 있는 값 해제 ???????????????? 
+function unselected() {
+	var click = $("tr[class=unselected]");
+	for (var i = 0; i < click.length; i++) {
+		if (click[i] == true) {
+			click[i] = false;
+			break;
+		}
+	}
+}
+	
+
 $("document").ready(function() {
 
    // 테이블에서 회원 선택시 회원 코드 hidden에 설정
@@ -46,10 +58,6 @@ $("document").ready(function() {
       
       $(this).css("background", "#20c997");
       
-      
-      // 회원별 판매 내역 출력
-	   var url = "user_sale?user_code=" + user_code
-	   window.open(url, "user_sale", "menubar=no, width=800, height=800");
       
    });
    
@@ -106,57 +114,58 @@ $("document").ready(function() {
    });
    
    
-	// 회원별 판매내역 출력
-   $("#user_sale").onclick(function() {
-	   if($("input[name=user_code_hidden]").val() == 0) {
-         alert("회원을 선택하세요!");
-         return false;
-      } else {
-	 	  var user_code = $("input[name=user_code_hidden]").val();
-	      console.log(user_code);
-	      
-	      var url = "user_sale?user_code=" + user_code
-	      window.open(url, "user_sale", "menubar=no, width=800, height=800");
-      }
-   }); 
-   
    
 	
  	// ajax
  	// 회원 정보 검색
-   $(".group, #find ,#justList").click(function(e){
+	$(".user_code, #find ,#user_sale").click(function(e){
 		e.preventDefault();
-		var queryForName = $("#queryForName").val();
-		var queryForType = $("#queryForType").val();
+		var queryForGender = $("#queryForGender").val();
+		var queryForCode = $("#queryForCode").val();
 		var queryForName = $("#queryForName").val();
 		
 		if(queryForName == ""){
 			queryForName = null;
 		}
-		if(queryForStatus == '전체'){
-			queryForStatus = null;
+		if(queryForCode == "전체 회원"){
+			queryForCode = null;
 		}
-		if(queryForType == '전체'){
-			queryForType = null;
+		if(queryForGender == '남녀 선택'){
+			queryForGender = null;
 		}
 		
-		/* ???? */
-		if($(this).attr("id") == 'justList'){
-			queryForStatus = null;
-			queryForType = null;
-			groupCode = null;
-			queryForName = null;
+		var userName = $("table[id=rowClick]:checked").val();
+ 		if(userName == null) {
+ 			userName = null;
+ 		}
+		
+		if($(this).hasClass("user_name") === true){
+			userName = $(this).val(); // a태그 값 가져오기
+			alert("userName : " + userName);
 		}
-		/* ????? */
+		
+		// 판매탭
+		if($(this).attr("id") == 'user_sale'){
+			queryForGender = null;
+			queryForName = null;
+			queryForCode = null;
+		}
+		
+		// 예약탭
+		if($(this).attr("id") == 'user_reservation'){
+			queryForGender = null;
+			queryForName = null;
+			queryForCode = null;
+		}
 		
 		$.ajax({
 			type:"get",
 			url: "searchUserList",
-			/* data : "user_code="+queryForName+"&user_name="+queryForType+
-					"&user_ph="+queryForStatus, */
+			data : "user_name="+queryForName,
 			dataType : "json",
 			success: function(response){
-					$("#userList").html("");
+				
+					$("#userList").html(""); // 비우기
 				for (var i = 0; i < response.length; i++) {
 					var temp = addHtml(response[i]);
 					$("#userList").append(temp);
@@ -164,27 +173,18 @@ $("document").ready(function() {
 			},
 			error: function() {
 				alert("오류");
-			}  
+			}
 		});
-	});   
+	});
 	
-	
- 	// searchUserList - addHtml 
-  <%--
- 	function addHtml(vo) {
-		
-	   return 
-		
-		'<tr class="user${status.index} footable-odd">'
-        + '<td id="user_code${status.index} footable-visible">' + vo.user_code +'<input type="hidden" name="user_code${status.index}" value="${dto.user_code}"></td>'
-        + '<td id="user_name${status.index} footable-visible">'+ vo.user_name + '<input type="hidden" name="user_name${status.index}" value="${dto.user_name}"></td>'
-        + '<td id="user_ph${status.index} footable-visible">'+ vo.user_ph + '<input type="hidden" name="user_ph${status.index}" value="${dto.user_ph}"></td>'
-        + '<td id="user_id${status.index} footable-visible"><input type="hidden" name="user_id${status.index}" value="${dto.user_id}"></td>'
-    	+ '</tr>'
-		;
+	function addHtml(vo) {
+		return '<tr class="footable-odd">'
+        	+ '<input type="hidden" name="user_id" value="' + vo.user_id + '">'
+            + '<td id="footable-visible">' + vo.user_code + '<input type="hidden" name="user_code" value="' + vo.user_code + '"></td>'
+            + '<td id="footable-visible">' + vo.user_name + '<input type="hidden" name="user_name" value="' + vo.user_name + '"></td>'
+            + '<td id="footable-visible">' + vo.user_ph + '<input type="hidden" name="user_ph" value="'+ vo.user_ph + '"></td>'
+        	+ '</tr>';
 	}
-	 --%>	
-	
 	
    
    // 창 닫기 클릭
@@ -193,25 +193,7 @@ $("document").ready(function() {
    });
    
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
 });
-
-
-
-
-
 
 </script>
 </head>
@@ -269,8 +251,8 @@ $("document").ready(function() {
 				<div class="col-sm-2">
 					<div class="form-group">
 					
-						<select name="" id="" class="form-control">
-							<option value="1" selected="">전체 회원</option>
+						<select name="queryForCode" id="queryForCode" class="form-control">
+							<option value="1" selected="selected">전체 회원</option>
 							<option value="2">등록 회원</option>
 							<option value="3">최근 한달 등록 </option>
 							<option value="4">최근 한달 판매 </option>
@@ -283,11 +265,10 @@ $("document").ready(function() {
 				<!-- 담당자 말고 다른걸로 찾아야해 -->
 				<div class="col-sm-2">
 					<div class="form-group">
-						<select name="queryForCode" id="queryForCode" class="form-control">
-							<option value="전체" selected="">남녀 선택</option>
-							<option value="2">주수림</option>
-							<option value="3">정지은</option>
-							<option value="4">이시현</option>
+						<select name="queryForGender" id="queryForGender" class="form-control">
+							<option value="전체" selected="selected">남녀 선택</option>
+							<option value="M">남</option>
+							<option value="F">여</option>
 							
 						</select>
 					</div>
@@ -333,12 +314,13 @@ $("document").ready(function() {
 					            </thead>
 					            
 					            <tbody id="userList">
-					            <c:forEach var="dto" items="${dto}" varStatus="status">
-						            <tr class="user${status.index} footable-odd">
-						                <td id="user_code${status.index} footable-visible">${dto.user_code}<input type="hidden" name="user_code${status.index}" value="${dto.user_code}"></td>
-						                <td id="user_name${status.index} footable-visible">${dto.user_name}<input type="hidden" name="user_name${status.index}" value="${dto.user_name}"></td>
-						                <td id="user_ph${status.index} footable-visible">${dto.user_ph}<input type="hidden" name="user_ph${status.index}" value="${dto.user_ph}"></td>
-						                <td id="user_id${status.index} footable-visible"><input type="hidden" name="user_id${status.index}" value="${dto.user_id}"></td>
+					            <c:forEach var="dto" items="${dto}">
+						           <input type="hidden" name="user_id" value="${dto.user_id}">
+						            <tr class="user footable-odd">
+						                <td id="footable-visible">${dto.user_code}<input type="hidden" name="user_code" value="${dto.user_code}"></td>
+						                <td id="footable-visible">${dto.user_name}<input type="hidden" name="user_name" value="${dto.user_name}"></td>
+						                <td id="footable-visible">${dto.user_ph}<input type="hidden" name="user_ph" value="${dto.user_ph}"></td>
+						                
 						            </tr>
 						        </c:forEach>
 					            </tbody>

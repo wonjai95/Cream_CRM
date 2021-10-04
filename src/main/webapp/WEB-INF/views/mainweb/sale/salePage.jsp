@@ -46,6 +46,21 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  
+  <script type="text/javascript">
+
+  function kakaoPay() {
+  	
+  	var url = "kakaoPay"
+  	window.open(url, "kakaoPay", "menubar=no, width=1300, height=800 ");
+  }
+
+  </script>
+  
+
+  
+  
+  
 </head>
 
 <body>
@@ -133,11 +148,11 @@
 	           <input type="hidden" id="res_sales" name="res_sales" value="0">
          	 	<input type="hidden" name="res_code" value="${res_code}">
          	 	<input type="hidden" name="selectDate" value="${selectDate}">
-         	 	<input type="hidden" name="open_sche" value="${open_sche}">
-         	 	<input type="hidden" name="close_sche" value="${close_sche}">
+         	 	<input type="hidden" name="open_sche" value="${openTime}">
+         	 	<input type="hidden" name="close_sche" value="${closeTime}">
          	 	<input type="hidden" name="res_start" value="${dto.res_hour}">
          	 	<input type="hidden" name="res_end" value="${dto.res_end}">
-         	 	
+         	 	<input type="hidden" name="res_room" value="${dto.res_room}">
          	 	
          	 	
          	 	<input type="hidden" value="0" name="product_typeOfSales_hidden">
@@ -215,10 +230,9 @@
 							                	<tr><td>
 								                    <input type="button" name="payment_option" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
 								                    <input type="hidden" name="payment_option_hidden" value="0">
-								                    <%--<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
+								                    <<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="payment_option" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
-								                    <input type="button" name="payment_option" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" >
-								                     --%>
+								                    <input type="button" name="" id="" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
 							                    </td></tr>   
 							                    </table>
 							                 </div>
