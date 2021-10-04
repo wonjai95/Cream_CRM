@@ -128,7 +128,10 @@
 <!-- ------------------------------- 회원정보 끝 -->
 	
 <!-- ------------------------------- 예약상세정보 조회(담당자) 시작 -->
-<c:if test="${mdto.comp_res eq '담당자'}">
+<iframe src="http://localhost:3000/Complete_Detail?host_code=${sessionScope.code}&res_code=${pagemap.get('res_code')}"
+		style="width: 1500px; height: 1000px;">
+</iframe>
+<%-- <c:if test="${mdto.comp_res eq '담당자'}">
 	<div class="col-sm-8">
 	    <div class="ibox ">
 	        <div class="ibox-title">
@@ -153,7 +156,7 @@
                      <tr>
                         <td>
                            <div class="col-lg-3" style="margin-top:15px; color: black">
-                         <%-- <input type="text" name="selectType" id="selectType" style="display: none">형태 : <span class="stateSelectedInfo">${dto.res_state}</span> --%>
+                         <input type="text" name="selectType" id="selectType" style="display: none">형태 : <span class="stateSelectedInfo">${dto.res_state}</span>
                          <input type="text" name="res_state" id="res_state" value="${mdto.res_state}" readonly style="background-color:#DCDCDC">
                       </div>
                       <div class="hr-line-dashed"></div>
@@ -182,7 +185,7 @@
                         <td class="dashed">
                            <!-- 시간 -->
                       <div class="col-lg-3" style="margin-top:15px; color: black">
-                         <%-- <input type="text" name="selectTime" id="selectTime" value="${dto.res_hour}" style="display: none">선택 시간 : <span class="timeSelectedInfo">${dto.res_hour}</span> --%>
+                         <input type="text" name="selectTime" id="selectTime" value="${dto.res_hour}" style="display: none">선택 시간 : <span class="timeSelectedInfo">${dto.res_hour}</span>
 			         	 <input type="text" name="res_hour" id="res_hour" value="${mdto.res_hour}" readonly style="background-color:#DCDCDC">
                       </div>
                       <div class="hr-line-dashed"></div>
@@ -210,7 +213,7 @@
                      <tr>
                         <td>
                            <div class="col-lg-3" style="margin-top:15px; color: black">
-                               <%-- <input type="text" name="selectManager" id="selectManager" style="display: none">담당자 : <span class="managerSelectedInfo">${dto.employee_code}</span> --%>
+                               <input type="text" name="selectManager" id="selectManager" style="display: none">담당자 : <span class="managerSelectedInfo">${dto.employee_code}</span>
                                <input type="text" name="employee_code" id="employee_code" value="${mdto.employee_code}" readonly style="background-color:#DCDCDC">
                            </div>
                         <div class="hr-line-dashed"></div>   
@@ -271,7 +274,7 @@
 				                
 				        </div>
 				    </div>
-				</c:if>
+				</c:if> --%>
 <!-- ------------------------------- 예약상세정보 조회(담당자) 끝 -->
 
 <!-- ------------------------------- 예약상세정보 조회(호실) 시작 -->
