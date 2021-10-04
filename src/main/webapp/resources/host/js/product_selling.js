@@ -64,16 +64,6 @@ $("document").ready(function() {
    });
    
    
-   
-   
-   
-   
-   
-   
-
-   
-   
-   
 	// 결제 방법 - 현금 버튼 클릭시
    $("#cash_btn").click(function() {
 		
@@ -83,11 +73,9 @@ $("document").ready(function() {
        else {
     	  // 금융기관을 클릭할 수 없게 하기
     	   
-    	   
-    	   
-    	   
-    	   
        }
-   });
+   });        
+   
+   
 	
 });

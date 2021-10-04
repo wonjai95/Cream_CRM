@@ -7,6 +7,16 @@
 */
 package com.spring.Creamy_CRM.User_controller;
 
+import java.io.BufferedReader;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +26,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.Creamy_CRM.Host_controller.MainController;
 import com.spring.Creamy_CRM.Host_service.EmployeeService;
@@ -25,6 +38,9 @@ import com.spring.Creamy_CRM.User_service.SaleService;
 import com.spring.Creamy_CRM.User_service.UserReservationServiceImpl;
 import com.spring.Creamy_CRM.User_service.UserReviewServiceImpl;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
+
+import jdk.nashorn.internal.objects.annotations.Setter;
+
 
 @Controller
 public class MainwebController {
@@ -46,6 +62,7 @@ public class MainwebController {
    
    @Autowired
    SaleService service_sale;
+   
    
    //홈화면
    @RequestMapping("/home")
@@ -348,19 +365,9 @@ public class MainwebController {
 	public String salePage(HttpServletRequest req, Model model) {
 		logger.info("url -> salePage");
 		
-		// 예약 시간 확인 action
-		service_custReserve.chkRoomTime(req, model);
-		String chkScheNull = (String) req.getSession().getAttribute("chkScheNull");
-		System.out.println("chkScheNull : " + chkScheNull);
+		// 회원 예약 정보 받아오기
+		service.getResInfo(req, model);
 		
-		// 예약 불가능
-		if(chkScheNull.equals("3")) {
-			model.addAttribute("insertCnt", 3);
-		} else {
-			// 회원 예약 정보 받아오기
-			service.getResInfo(req, model);
-		}
-		req.getSession().removeAttribute("chkScheNull");
 		return "mainweb/sale/salePage";
 	}
 
@@ -371,6 +378,7 @@ public class MainwebController {
 
 		// 호실 예약 처리
 		service_custReserve.insertRoomBookingAction(req, model);
+		
 		// 결제정보 입력해서 insert
 		service_sale.insertSaleInfo(req, model);
 		
@@ -405,7 +413,92 @@ public class MainwebController {
 		return "mainweb/sale/sale_m_action";
 	}
 	
+	/*
+	// 카카오페이 결제 
+	@RequestMapping("/kakaoPay")
+	public String kakaoPay() {
+		logger.info("url -> kakaoPay");
+		
+		try {
+			URL address = new URL("https://kapi.kakao.com/v1/payment/ready");
+			HttpURLConnection serverConnection = (HttpURLConnection) address.openConnection();
+			serverConnection.setRequestMethod("POST");
+			serverConnection.setRequestProperty("Authorization", "KakaoAK a424cfe847491e516d2de1ca68efea92");
+			serverConnection.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			serverConnection.setDoOutput(true); // connection은 생성되면 기본적으로 input은 true, output은 기본적으로 default라서 따로 지정해줘야함.
+			
+			// 파라미터 심기
+			String parameter = "cid=TC0ONETIME&"
+								+ "partner_order_id=partner_order_id&"
+								+ "partner_user_id=partner_user_id&"
+								+ "item_name=초코파이&"
+								+ "item_code=PRO302&"
+								+ "quantity=1&"
+								+ "total_amount=2200&"
+								+ "vat_amount=200&"
+								+ "tax_free_amount=0&"
+								+ "approval_url=https://developers.kakao.com/success&"
+								+ "fail_url=https://localhost/Creamy_CRM/payment/fail&"
+								+ "cancel_url=https://localhost/Creamy_CRM/payment/cancel";
+			
+			// 파라미터 서버에 전달
+			OutputStream outputStream = serverConnection.getOutputStream();
+			DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+			dataOutputStream.writeBytes(parameter); // 주기 직전 손에 쥐고 있는 상태
+			dataOutputStream.close(); // 자기가 가지고 있는 걸 비운다(flush) 실행할 수 있음
+			
+			int result = serverConnection.getResponseCode();
+			
+			InputStream inputStream;
+			// 성공이면
+			if(result == 200) { 
+				inputStream = serverConnection.getInputStream();
+			// 실패이면
+			} else {
+				inputStream = serverConnection.getErrorStream(); // 에러
+			}
+			
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream); // 받는 애를 읽는 애 생성
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader); // 형변환해서 읽음
+			
+			return bufferedReader.readLine();
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "{\"result\":\"NO\"}";
+	}
+	*/
 	
+	
+	// 카카오페이
+	 @GetMapping("/kakaoPayGet")
+    public void kakaoPayGet() {
+		 logger.info("url -> kakaoPayGet");
+    }
+    
+    @PostMapping("/kakaoPay")
+    public String kakaoPay() {
+    	logger.info("url -> kakaoPay");
+        logger.info("kakaoPay post............................................");
+        
+        return "redirect:" + service_sale.kakaoPayReady();
+ 
+    }
+    
+    @GetMapping("/kakaoPaySuccess")
+    public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
+    	logger.info("url -> kakaoPaySuccess");
+        logger.info("kakaoPaySuccess get............................................");
+        logger.info("kakaoPaySuccess pg_token : " + pg_token);
+        
+        model.addAttribute("info", service_sale.kakaoPayInfo(pg_token));
+        
+    }
+	    
 	
 }
 	

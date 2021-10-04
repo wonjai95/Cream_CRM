@@ -186,21 +186,14 @@ public class CRMuserServiceImpl implements CRMuserService {
 		
 		String host_code = (String) req.getSession().getAttribute("code");
 		System.out.println("host_code : " + host_code);
-
 		
 		String user_code = req.getParameter("user_code");
 		String user_name = req.getParameter("user_name");
 		String user_ph = req.getParameter("user_ph");
 		
 		userVO vo = new userVO();
-		if(user_code.equals("null")) {
-			user_code = null;
-		}
 		if(user_name.equals("null")) {
 			user_name = null;
-		}
-		if(user_ph.equals("null")) {
-			user_ph = null;
 		}
 		
 		System.out.println("user_code : " + user_code);
@@ -212,10 +205,6 @@ public class CRMuserServiceImpl implements CRMuserService {
 		vo.setUser_ph(user_ph);
 		
 		List<userVO> list = dao_user.searchUserList(vo);
-		for (int i = 0; i < list.size(); i++) {
-			userVO vo2 = list.get(i);
-			System.out.println(vo2.getUser_id());
-		}
 		
 		return list;
 	}
