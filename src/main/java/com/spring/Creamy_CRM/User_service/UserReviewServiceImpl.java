@@ -1,5 +1,6 @@
 package com.spring.Creamy_CRM.User_service;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +10,9 @@ import java.util.Map;
 import javax.print.attribute.HashAttributeSet;
 import javax.servlet.http.HttpServletRequest;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -273,6 +277,57 @@ public class UserReviewServiceImpl implements UserReviewService {
 	
 		
 	}//검색결과 end
+
+	//키워드 입력시 크롤링
+	@Override
+	public void SearchKeyword(HttpServletRequest req, Model model) {
+
+		String keyword = req.getParameter("keyword");
+		System.out.println("keyword : "+keyword);
+		
+		String url = "https://search.naver.com/search.naver?where=view&sm=tab_jum&query="+keyword;
+		
+		List<String> list_url = new ArrayList<String>();
+		List<String> list_title = new ArrayList<String>();
+		
+		Document doc;
+		try {
+			doc = Jsoup.connect(url).get();
+			
+			Elements list = doc.select("._svp_item");
+			Elements urllist = list.select(".api_txt_lines");
+			list_url = urllist.eachAttr("href");
+			List<String> list_text = urllist.eachText();
+			
+			/* System.out.println(urllist); */
+			
+			for(int i = 0; i < list_text.size(); i++) {
+				if(i %2 == 0) {
+					String fulltitle = list_text.get(i);
+					if(fulltitle.length() > 10) {
+						String title = fulltitle.substring(0,10);
+						title += "...";
+						list_title.add(title);
+					}else {
+						list_title.add(list_text.get(i));
+					}
+				}
+					
+			}
+			
+			/*
+			 * for(String s : list_title) System.out.println(s);
+			 */
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+		req.setAttribute("list_url", list_url);
+		req.setAttribute("list_title", list_title);
+		
+		
+	}
 
 
 }

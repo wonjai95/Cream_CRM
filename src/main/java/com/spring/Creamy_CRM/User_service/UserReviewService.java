@@ -33,4 +33,8 @@ public interface UserReviewService {
 	//검색 결과 list
 	public void reviewSearchList(HttpServletRequest req, Model model);
 	
+	//-----------------------------------------------------
+	//후기추적 - 키워드 검색
+	public void SearchKeyword(HttpServletRequest req, Model model);
+	
 }
