@@ -229,7 +229,8 @@ public class ProductServiceImpl implements ProductService {
 		String product_content = req.getParameter("product_content");
 		String product_group_code = req.getParameter("product_group_code");
 		MultipartFile file = req.getFile("product_img");
-		System.out.println("fileName : " + file.getOriginalFilename());
+		String product_img = file.getOriginalFilename();
+		System.out.println("fileName : " + product_img);
 		ProductVO vo = new ProductVO();
 		
 		if (!file.getOriginalFilename().equals("") && file.getOriginalFilename() != null) {
@@ -252,8 +253,12 @@ public class ProductServiceImpl implements ProductService {
 				e.printStackTrace();
 				System.out.println(e.getMessage());
 			}
+		}else {
+			product_img = "null";
 		}
 		
+		
+			
 		if (product_rentalPeriod != null) {
 			vo.setProduct_rentalPeriod(Integer.parseInt(product_rentalPeriod));
 		}
@@ -261,7 +266,7 @@ public class ProductServiceImpl implements ProductService {
 		vo.setProduct_typeOfSales(product_typeOfSales);
 		vo.setProduct_price(Integer.parseInt(product_price));
 		vo.setProduct_indate(new Date(System.currentTimeMillis()));
-		vo.setProduct_img(file.getOriginalFilename());
+		vo.setProduct_img(product_img);
 		vo.setProduct_status(product_status);
 		vo.setProduct_content(product_content);
 		vo.setProduct_group_code(product_group_code);
@@ -319,7 +324,6 @@ public class ProductServiceImpl implements ProductService {
 				while ((i = fis.read()) != -1) {
 					fos.write(i);
 				}
-				vo.setProduct_img(file.getOriginalFilename());
 				fis.close();
 				fos.close();
 			} catch (IOException e) {
@@ -394,12 +398,7 @@ public class ProductServiceImpl implements ProductService {
 		vo.setProduct_status(product_status);
 		vo.setProduct_group_code(product_group_code);
 		vo.setHost_code(host_code);
-		List<ProductVO> list = dao.selectProductListByQuery(vo);
-		for (int i = 0; i < list.size(); i++) {
-			ProductVO vo2 = list.get(i);
-			System.out.println(vo2.getProduct_name());
-		}
-		return list;
+		return dao.selectProductListByQuery(vo);
 	}
 	
 	/****************************************************************************/

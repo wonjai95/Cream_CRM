@@ -83,11 +83,6 @@
 					<label>예약 종류</label> <input type="text" class="form-control"
 						name="com_res" readonly value="${hostVo.comp_res}">
 				</div>
-				<div>
-					<button class="btn btn-sm btn-primary m-t-n-xs" type="button">
-						<strong>Submit</strong>
-					</button>
-				</div>
 			</form>
 		</c:if>
 
