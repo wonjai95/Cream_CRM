@@ -47,5 +47,34 @@ public class ReviewController {
 		return "host/review/userReview";
 	}
 
+	
+	//외부추적 그래프
+	@RequestMapping("/host/outreview_graph")
+	public String outreview_graph(HttpServletRequest req, Model model) {
+		logger.info("url -> outReview_graph");
+		
+		
+		return "host/review/outReview_graph";
+	}
+	
+	
+	//새 추적 생성
+	@RequestMapping("/host/newchace")
+	public String newchace(HttpServletRequest req, Model model) {
+		logger.info("url -> newchace");
+		
+		return "host/review/addoutReview";
+	}
+	
+	//키워드 입력시 크롤링
+	@RequestMapping("/host/keywordSearch")
+	public String keywordSearch(HttpServletRequest req, Model model) {
+		logger.info("url->keywordSearch");
+		
+		service_review.SearchKeyword(req, model);
+		
+		
+		return "host/review/outSearchlist";
+	}
 
 }

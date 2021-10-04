@@ -84,12 +84,7 @@
 									</div>
 								</div>
 								<div id="tab-2" class="tab-pane">
-									<div class="panel-body">
-										<div class="ibox-content m-b-sm" style="padding-bottom: 0px; margin-bottom: 0px;">
-											<!-- <iframe src="review_react" name="iframe_review"></iframe> -->
-										</div>
-									</div>
-									<%-- <jsp:include page="reservation.jsp" /> --%>
+									<jsp:include page="outReview.jsp" />
 								</div>
 
 							</div>

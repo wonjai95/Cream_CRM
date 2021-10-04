@@ -348,8 +348,6 @@ public class LoginServiceImpl implements LoginService {
 			list_texts = contents.select(".temp").eachText();
 			
 			System.out.println("---------jsoup---------");
-			System.out.println(icons);
-			System.out.println();
 			System.out.println("list--------------");
 			for(String s :list_image)
 				System.out.println(s);
