@@ -42,6 +42,9 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 	public String user(HttpServletRequest req, Model model) {
 		logger.info("url -> user");
 		
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
 		String user_code = req.getParameter("user_code");
 		System.out.println("user_code : " + user_code);
 		String user_id = req.getParameter("user_id");
@@ -51,6 +54,9 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		service_user.printUsers(req, model);
 		
 		model.addAttribute("user_id", user_id);
+		
+		// 회원별 예약 및 판매 내역 출력
+		service_user.userSale(req, model);
 		
 		return "host/user/user";
 	}
@@ -63,10 +69,6 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		
 		return service_user.searchUserList(req, model);
 	}
-	
-	        
-	
-	
 	
 	
 	// 회원 정보 상세 페이지(for 수정)

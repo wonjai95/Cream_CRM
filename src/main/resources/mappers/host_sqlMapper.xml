@@ -120,4 +120,12 @@
 		update room_setting_tbl set room_name = #{room_name}, room_stat = #{room_stat} , per_price = #{per_price},
 			min_cnt = #{min_cnt}, max_cnt = #{max_cnt} where room_setting_code = #{room_setting_code}
 	</update>
+	
+	<!-- 예약 종류 받아오기 -->
+	<select id="getComp_res" resultType="String" parameterType="String">
+		SELECT DISTINCT comp_res
+		  FROM host_detail_view
+		 WHERE host_code=#{host_code}
+	</select>
+	
   </mapper>

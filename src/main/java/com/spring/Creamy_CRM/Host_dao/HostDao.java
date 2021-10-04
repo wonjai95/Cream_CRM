@@ -10,7 +10,6 @@ import com.spring.Creamy_CRM.VO.ZipcodeVO;
 
 public interface HostDao {
 	
-	
 	//호스트 정보
 	HostVO selectInfo(String host_code);
 	
@@ -47,4 +46,7 @@ public interface HostDao {
 	
 	//호실 수정
 	int updateRoom(RoomSettingVO vo);
+	
+	// 예약 종류 받아오기
+	public String getComp_res(String host_code);
 }
