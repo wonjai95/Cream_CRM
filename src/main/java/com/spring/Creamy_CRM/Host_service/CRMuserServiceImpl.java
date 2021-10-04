@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.CRMuserDAOImpl;
+import com.spring.Creamy_CRM.Host_dao.HostDao;
+import com.spring.Creamy_CRM.Host_dao.HostDaoImpl;
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
 import com.spring.Creamy_CRM.VO.ProductVO;
 import com.spring.Creamy_CRM.VO.userVO;
@@ -31,6 +33,9 @@ public class CRMuserServiceImpl implements CRMuserService {
 
 	@Autowired
 	LoginDAOImpl dao_login;
+	
+	@Autowired
+	HostDaoImpl dao_host;
 	
 	
 	// 선택된 회원 정보 출력
@@ -151,11 +156,13 @@ public class CRMuserServiceImpl implements CRMuserService {
 		String user_code = req.getParameter("user_code");
 		System.out.println("user_code : " + user_code);
 		
-		List<userVO> list = new ArrayList<userVO>();
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
 		
-		list = dao_user.userSale(user_code);
+		String comp_res = dao_host.getComp_res(host_code);
 		
-		model.addAttribute("dto", list);
+		model.addAttribute("comp_res", comp_res);
+		System.out.println("comp_res : " + comp_res);
 		
 	}   
 
