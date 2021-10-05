@@ -40,6 +40,9 @@
   <script type="text/javascript" src="${path}/resources/host/js/product_selling.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a24a16f3acffb8fc1ba508e3c65e6c76&libraries=services"></script>
   
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  
   <!-- =======================================================
   * Template Name: Vlava - v4.3.0
   * Template URL: https://bootstrapmade.com/vlava-free-bootstrap-one-page-template/
@@ -56,8 +59,6 @@
   }
 
   </script>
-  
-
   
   
   
@@ -77,10 +78,6 @@
 		window.history.back();
 	</script>
 </c:if>
-
-
-
-
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
@@ -206,6 +203,7 @@
                         
                         
                          <!-- ibox 시작 -->
+                         
                         <div class="ibox col-lg-6">
                         <div class="ibox-title">
 				            <h5>결제 정보</h5>
@@ -233,7 +231,8 @@
 								                    <<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="payment_option" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="" id="" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
-							                    </td></tr>   
+								                    
+							                    </td></tr> 
 							                    </table>
 							                 </div>
 							            </div>
@@ -318,6 +317,9 @@
 		         
                         <!-- col-lg-6 끝 -->
 					
+			</form>
+			<form method="post" action="kakaoPay">
+			    <button>카카오페이로 결제하기</button>
 			</form>
 			<!-- sale_action 폼 끝 -->
 					

@@ -18,7 +18,6 @@
 결제방법:    [[${info.payment_method_type}]]<br/>
  
  
- 
 <h2>[[${info}]]</h2>
  
 </body>

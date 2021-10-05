@@ -68,16 +68,10 @@ public class CRMuserServiceImpl implements CRMuserService {
 
 		List<userVO> list = new ArrayList<userVO>();
 		
-		String user_code = req.getParameter("user_code");
-		System.out.println("user_code : " + user_code);
-		String user_id = req.getParameter("user_id");
-		System.out.println("user_id : " + user_id);
-		
 		list = dao_user.printUsers();
 		
 		System.out.println("dto : " + list);
-		model.addAttribute("dto", list); // 상품 정보 넘겨주기
-		model.addAttribute("user_id", user_id);
+		model.addAttribute("dto", list); 
 		
 	}
 	
@@ -152,17 +146,18 @@ public class CRMuserServiceImpl implements CRMuserService {
 	public void userSale(HttpServletRequest req, Model model) {
 		System.out.println("service => userSale");
 		
-		// 선택한 user_name 넘겨서 값 출력
-		String user_code = req.getParameter("user_code");
-		System.out.println("user_code : " + user_code);
+		userVO vo = new userVO();
 		
 		String host_code = (String) req.getSession().getAttribute("code");
 		System.out.println("host_code : " + host_code);
 		
 		String comp_res = dao_host.getComp_res(host_code);
-		
-		model.addAttribute("comp_res", comp_res);
 		System.out.println("comp_res : " + comp_res);
+		
+		vo.setHost_code(host_code);
+		vo.setComp_res(comp_res);
+		model.addAttribute("comp_res", comp_res);
+		
 		
 	}   
 
