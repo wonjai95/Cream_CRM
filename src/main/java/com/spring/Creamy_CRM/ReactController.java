@@ -41,5 +41,12 @@ public class ReactController {
 		return "react_test/employee";
 	}
 	
+	@RequestMapping("react/res_complete_detail")
+	public String res_complete_detail(HttpServletRequest req) {
+		System.out.println("url -> res_complete_detail");
+		
+		return "react_test/res_complete_detail";
+	}
+	
 
 }
