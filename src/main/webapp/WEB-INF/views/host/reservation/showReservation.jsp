@@ -97,7 +97,7 @@
 						<tr class="gradeX">
 							<td style="text-align:center">
 								<!-- 상세페이지 -->
-								<a href="completeDetails?res_code=${dto.res_code}&res_detail_code=${cdto.res_detail_code}&user_id=${cdto.user_id}">${cdto.res_code}</a>
+								<a href="completeDetails?res_code=${cdto.res_code}&res_detail_code=${cdto.res_detail_code}&user_id=${cdto.user_id}">${cdto.res_code}</a>
 							</td>
 							
 							<td style="text-align:center">${dto.user_id}</td>
@@ -124,7 +124,7 @@
 				</c:if>
 		        
 		        </tbody>
-		        <tfoot>
+		        <!-- <tfoot>
 		        <tr>
 		            <th style="text-align:center">예약코드</th>
 		            <th style="text-align:center">회원아이디</th>
@@ -133,7 +133,7 @@
 		            <th style="text-align:center">시간</th>
 		            <th style="text-align:center">날짜</th>
 		        </tr>
-		        </tfoot>
+		        </tfoot> -->
 	        </table>
 	        
 	        <!-- 페이지 컨트롤 -->

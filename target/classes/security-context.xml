@@ -17,7 +17,7 @@
 	
 	<!-- 안드로이드 보안설정 x  -->
 	<security:http pattern="/android/**" security="none" />
-	
+	<security:http pattern="/react/**" security="none" />
 	
 	<security:http auto-config="true" use-expressions="true" create-session="never">
 		<security:headers>

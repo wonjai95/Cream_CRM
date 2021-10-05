@@ -160,6 +160,8 @@ public class ReservationController {
 	public String completeDetails(HttpServletRequest req, Model model) {
 		logger.info("url -> completeDetails");
 		
+		System.out.println(req.getParameter("completeList"));
+		
 		String user_id = req.getParameter("user_id");
 		System.out.println("user_id : " + user_id);
 		String res_code = req.getParameter("res_code");
@@ -169,10 +171,10 @@ public class ReservationController {
 		
 		if(comp_res.equals("담당자")) {
 			service.completeDetailAction(req, model);
-			return "host/reservation/completeDetails";
+			return "host/reservation/completeDetail";
 		} else if(comp_res.equals("호실")) {
 			service.completeDetailAction2(req, model);
-			return "host/reservation/completeDetails";
+			return "host/reservation/completeDetail";
 		} else {
 			return "/";
 		}	

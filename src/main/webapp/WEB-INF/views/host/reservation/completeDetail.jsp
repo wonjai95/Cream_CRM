@@ -34,11 +34,18 @@
 </script>
 
 <script type="text/javascript" src="${path}/resources/host/js/reservationDetail.js"></script>
+
+<style type="text/css">
+body {
+background-color: white;
+}
+</style>
+
 </head>
 <body>
 
 <!-- ------------------------------- 테이블표 시작 전 '예약요청' 설명란 시작 -->
-<div class="panel-body">
+<!-- <div class="panel-body">
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		    <div class="col-lg-12">
@@ -50,7 +57,7 @@
 	            <button type="button" class="btn btn-primary btn-lg"
 	            		onclick="window.location='reservation'">예약요청목록
 	            </button>	            
-	        </div>
+	        </div> -->
 <!-- ------------------------------- 테이블표 시작 전 '예약등록' 설명란 끝 -->
 
 <!-- ------------------------------- 회원정보 시작 -->
@@ -128,10 +135,10 @@
 <!-- ------------------------------- 회원정보 끝 -->
 	
 <!-- ------------------------------- 예약상세정보 조회(담당자) 시작 -->
-<iframe src="http://localhost:3000/Complete_Detail?host_code=${sessionScope.code}&res_code=${pagemap.get('res_code')}"
-		style="width: 1500px; height: 1000px;">
-</iframe>
-<%-- <c:if test="${mdto.comp_res eq '담당자'}">
+<%-- <iframe src="http://localhost:3000/Complete_Detail?host_code=${sessionScope.code}&res_code=${pagemap.get('res_code')}"
+		style="width: 1500px; height: 1000px;"> 
+</iframe> --%>
+<c:if test="${mdto.comp_res eq '담당자'}">
 	<div class="col-sm-8">
 	    <div class="ibox ">
 	        <div class="ibox-title">
@@ -274,7 +281,7 @@
 				                
 				        </div>
 				    </div>
-				</c:if> --%>
+				</c:if>
 <!-- ------------------------------- 예약상세정보 조회(담당자) 끝 -->
 
 <!-- ------------------------------- 예약상세정보 조회(호실) 시작 -->
