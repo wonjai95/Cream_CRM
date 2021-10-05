@@ -315,6 +315,20 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
 		return dao.updateSalaryContract(vo);
 	}
+
+	// 안드로이드 직원 근무시간 체크
+	@Override
+	public WorkingHoursVO getAttendanceDateInfo(Map<String, Object> map) {
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.getAttendanceDateInfo(map);
+	}
+
+	// 안드로이드 직원 코드 구하기
+	@Override
+	public String getEmpCode(String employee_id) {
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.getEmpCode(employee_id);
+	}
 	
 
 	

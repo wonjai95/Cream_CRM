@@ -300,7 +300,8 @@ public class EmployeeController {
 	public String employee_leaveAction(HttpServletRequest req, Model model) {
 		logger.info("url -> employee_leaveAction");
 		
-		service.leaveAction(req, model);
+		// service.leaveAction(req, model);
+		model.addAttribute("insertCnt", req.getParameter("insertCnt"));
 		return "host/employee/employee_leaveAction";
 	}
 	

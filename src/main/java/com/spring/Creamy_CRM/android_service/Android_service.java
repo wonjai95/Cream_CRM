@@ -24,4 +24,8 @@ public interface Android_service {
 	
 	//회원가입
 	public Map<String, Object> Join(HttpServletRequest req);
+
+	// QR
+	public Map<String, Object> getQrCode(HttpServletRequest req);
+
 }
