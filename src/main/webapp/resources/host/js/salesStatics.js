@@ -10,7 +10,7 @@ $("document").ready(function() {
       console.log("token : " + token);
 
       $.ajax({
-         url : "salesTypeStatics",
+         url : "managerSalesStatics",
          type : "Post",
          beforeSend : function(jqXHR, settings) {
             console.log("beforesend 진행");
