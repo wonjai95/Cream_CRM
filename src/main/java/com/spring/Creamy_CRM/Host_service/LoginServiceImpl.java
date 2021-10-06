@@ -7,6 +7,7 @@
 package com.spring.Creamy_CRM.Host_service;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -191,7 +192,6 @@ public class LoginServiceImpl implements LoginService {
 		
 		String strDate = req.getParameter("modify_birth");
 	    java.sql.Date date = java.sql.Date.valueOf(strDate);
-	    System.out.println("생일 : "+date);
 	    
 	    String[] years = strDate.split("-");
 	    int year = Integer.parseInt(years[0]);
@@ -205,11 +205,26 @@ public class LoginServiceImpl implements LoginService {
 	    String address= req.getParameter("modify_address");
 	    String memo = req.getParameter("modify_memo");
 	    
+	    
 	    if(memo == null)
 	    	memo = " ";
 	    
 	    String gender = req.getParameter("gender_radio");
-	    System.out.println("성별 : "+gender);
+	    
+	    java.sql.Date w_date = new Date(System.currentTimeMillis());
+	    String wedding_String = req.getParameter("modify_merry");
+	    System.out.println("we: "+wedding_String);
+	    if(wedding_String.length() > 1) {
+	    	w_date = java.sql.Date.valueOf(wedding_String);
+		    System.out.println("결혼기념일 : "+w_date);
+	    }
+	    
+	    String carnum = req.getParameter("modify_car");
+	    
+	    if(carnum == null)
+	    	carnum = " ";
+	    
+	    
 	    
 		//비밀번호 암호화
 		String BcryptPw = passwordEncoder.encode(pw);
@@ -250,12 +265,24 @@ public class LoginServiceImpl implements LoginService {
 		vo.setUser_address(address);
 		vo.setUser_gender(gender);
 		vo.setUser_memo(memo);
+		vo.setWedding_anniversary(w_date);
+		vo.setCar_number(carnum);
 		
-		int updateCnt = dao_login.updateUserInfo(vo);
-		System.out.println("회원정보 수정 : "+updateCnt);
 		
-		req.setAttribute("updateCnt", updateCnt);
-		
+		//추가항목 입력(null일수도 있음) ->결혼기념일 date라 값지정하기 좀 그래서 따로 insert해야될듯
+		if(wedding_String.length() < 1) {
+			
+			int updateCnt = dao_login.updateUserInfo_notWedding(vo);
+			System.out.println("회원정보 수정 : "+updateCnt);
+			req.setAttribute("updateCnt", updateCnt);
+			
+		}
+		else {
+			
+			int updateCnt = dao_login.updateUserInfo(vo);
+			System.out.println("회원정보 수정 : "+updateCnt);
+			req.setAttribute("updateCnt", updateCnt);
+		}
 		
 	}
 

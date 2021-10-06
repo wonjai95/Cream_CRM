@@ -26,7 +26,7 @@ public class userVO {
    private String bank_code;
    private String user_id;
    private String user_memo;
-   private String wedding_anniversary;
+   private Date wedding_anniversary;
    private String car_number;
 
    
@@ -409,10 +409,10 @@ public class userVO {
 
 
    
-   public String getWedding_anniversary() {
+   public Date getWedding_anniversary() {
       return wedding_anniversary;
    }
-   public void setWedding_anniversary(String wedding_anniversary) {
+   public void setWedding_anniversary(Date wedding_anniversary) {
       this.wedding_anniversary = wedding_anniversary;
    }
    public String getCar_number() {
