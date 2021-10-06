@@ -24,9 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
+import com.spring.Creamy_CRM.User_dao.UserReviewDAOImpl;
 import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
+import com.spring.Creamy_CRM.VO.outReviewVO;
 import com.spring.Creamy_CRM.VO.userVO;
 import com.spring.Creamy_CRM.VO.weatherVO;
 import com.spring.Creamy_CRM.util.EmailChkHandler;
@@ -36,6 +38,9 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	LoginDAOImpl dao_login;
+	
+	@Autowired
+	UserReviewDAOImpl dao_review;
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
@@ -347,6 +352,8 @@ public class LoginServiceImpl implements LoginService {
 			list_image = icons.eachAttr("data-src");
 			list_texts = contents.select(".temp").eachText();
 			
+			System.out.println("날씨 정보 불러오는중...");
+			/*
 			System.out.println("---------jsoup---------");
 			System.out.println("list--------------");
 			for(String s :list_image)
@@ -354,6 +361,7 @@ public class LoginServiceImpl implements LoginService {
 			System.out.println("list_text--------------");
 			for(String s :list_texts)
 				System.out.println(s);
+			*/
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -370,6 +378,97 @@ public class LoginServiceImpl implements LoginService {
 		
 
 		
+	}
+
+	//처음 로그인시 db확인해서 외부 후기 추적 업데이트
+	@Override
+	public void updateOutReview(HttpServletRequest req, Model model) {
+		System.out.println("후기 추적 update");
+		
+		String code = (String) req.getSession().getAttribute("code");
+		
+		int count = dao_review.getGraphCount();
+		System.out.println("후기추적여부 : "+count);
+		
+		if(count == 0) {
+			//오늘 업데이트 안했으니까 후기 업데이트 해주기
+			
+			//1. 원래 리스트 들고오기
+			List<outReviewVO> origin_list = dao_review.getUpdateOutreviewList(code);
+			
+			//2. 크롤링해서 오늘 현재 리스트 들고오기 -> 원래 리스트의 키워드로 for문 조회
+			for(outReviewVO vo : origin_list) {
+				
+				System.out.println("추적중 상태? "+vo.getOutreview_chk());
+				//추적중인 상태인것만 조회하면 됨
+				if(vo.getOutreview_chk().equals("Y")) {
+					String keyword = vo.getOutreview_keyword();
+					String url = "https://search.naver.com/search.naver?where=view&sm=tab_jum&query="+keyword;
+					
+					List<String> list_url = new ArrayList<String>();
+					int rank = 0;
+					
+					Document doc;
+					try {
+						doc = Jsoup.connect(url).get();
+						
+						Elements list = doc.select("._svp_item");
+						Elements urllist = list.select(".api_txt_lines");
+						list_url = urllist.eachAttr("href"); //현재 검색순위 urllist
+						
+						//3. 지금 가지고있는 url로 오늘 리스트에서 찾기
+						for(int i = 0; i < list_url.size(); i++) {
+							
+							//현재 테이블에 가지고 있는 url과 지금 조회한 현재 검색순위 url이 같으면 순위 조회
+							if(list_url.get(i).equals(vo.getOutreview_url())) {
+								rank = i;
+								System.out.println("rank : "+rank);
+								
+							}
+						}
+						
+						//4. 순위 업데이트(그래프 테이블 insert) & 추적 중지여부 수정
+						if(rank == 0) {
+							System.out.println("30위 이하, 추적 중지");
+							//순위권 외 ->추적중지
+							rank = 30;
+							outReviewVO insertvo = new outReviewVO();
+							insertvo.setOutreview_code(vo.getOutreview_code());
+							insertvo.setOutdetail_rank(rank);
+							
+							dao_review.updateOutreview_rankout(insertvo);
+							
+						}
+						//순위 변동시에 사장님이 설정한 추적 최대한도보다 아래면 추적 중지
+						else if(rank > vo.getOutreview_rankmax()) {
+							System.out.println("추적한도 초과, 추적 중지");
+							outReviewVO insertvo = new outReviewVO();
+							insertvo.setOutreview_code(vo.getOutreview_code());
+							insertvo.setOutdetail_rank(rank);
+							
+							dao_review.updateOutreview_rankout(insertvo);
+							
+						}
+						else {
+							//순위권 내에 있으면 update
+							//테이블 update일 변경, detail테이블 코드, 검색순위, 날짜 insert
+							System.out.println("순위권 내, 추적 유지");
+							outReviewVO insertvo = new outReviewVO();
+							insertvo.setOutreview_code(vo.getOutreview_code());
+							insertvo.setOutdetail_rank(rank);
+							
+							dao_review.updateOutreview_MaxrankIn(insertvo);
+							
+						}
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}//for문 end
+			
+		}
 	}
 
 	

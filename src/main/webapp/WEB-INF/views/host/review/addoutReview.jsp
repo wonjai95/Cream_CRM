@@ -12,8 +12,10 @@
 </head>
 <body style="background-color: #fcfcfc">
 
-<form action="" name="addoutReviewForm">
+<form action="addoutReview_Action" name="addoutReviewForm" method="post">
 <sec:csrfInput/>	
+<input type="hidden" name="rank_min" value="1">
+
 	<table style="margin: 30px 50px; border-collapse: separate; border-spacing:15px; border: 1px solid gray;">
 		<tr style="height: 80px;">	
 			<th colspan="2" align="left" valign="top" style="padding-left: 10px;">	
@@ -45,7 +47,7 @@
 			<th>포스팅 제목&nbsp;&nbsp;</th>
 			<td style="display: flex;">
 				<div style="width: 87%; margin-right: 10px;">
-				<input class="form-control" type="text">
+				<input name="post_title" class="form-control" type="text">
 				</div>
 			</td>
 		</tr>
@@ -53,7 +55,7 @@
 			<th>포스팅 URL&nbsp;&nbsp;</th>
 			<td style="display: flex;">
 				<div style="width: 87%; margin-right: 10px;">
-				<input class="form-control" type="text">
+				<input name="post_url" class="form-control" type="text">
 				</div>
 			</td>
 		</tr>
@@ -62,7 +64,7 @@
 			<th>하락한도&nbsp;&nbsp;</th>
 			<td style="display: flex;">
 				<div style="width: 14%; margin-right: 10px;">
-					<input class="touchspin3" type="number" min="1" max="30">
+					<input id="id_rank" name="rank_level" onchange="set_rank();" class="touchspin3" type="number" min="1" max="30">
 				</div>
 			</td>
 		</tr>
