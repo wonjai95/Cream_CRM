@@ -560,6 +560,14 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+   
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="crm"
+  agent-id="c4a81e41-b2c3-47b1-838c-d9c4cdf9f29f"
+  language-code="ko"
+></df-messenger>
 
 
 </body>
