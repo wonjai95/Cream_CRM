@@ -36,14 +36,16 @@
                 </div>
 
                 <div class="col-lg-4 info mt-4 mt-lg-0">
-                  <i class="bi bi-envelope"></i>
-                  <a href="insertPaymentInfo" style="align-self: center;"><h4 style="padding-top: 10px;">결제수단 등록</h4></a>
-                </div>
-
-                <div class="col-lg-4 info mt-4 mt-lg-0">
                   <i class="bi bi-phone"></i>
                   <a href="mypage_reservation" style="align-self: center;"><h4 style="padding-top: 10px;">예약내역 확인</h4></a>
                 </div>
+                
+                 <div class="col-lg-4 info mt-4 mt-lg-0">
+                  <i class="bi bi-envelope"></i>
+                  <a href="my_review" style="align-self: center;"><h4 style="padding-top: 10px;">내가 쓴 후기</h4></a>
+                </div>
+                
+                
               </div>
             </div>
           </div>
