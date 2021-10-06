@@ -383,10 +383,10 @@ $("document").ready(function() {
 						<div id="tab-1" class="tab-pane active">
 							<div class="panel-body">
 								<c:if test="${comp_res == '담당자'}">
-									<iframe id="iframe1" src="" style="width: 1000px; height: 1000px;"></iframe>
+									<iframe id="iframe1" src="" style="width: 1000px; height: 600px; background-color: white;"></iframe>
 								</c:if>
 								<c:if test="${comp_res == '호실'}">
-									<iframe id="iframe2" src="" style="width: 1000px; height: 1000px;"></iframe>
+									<iframe id="iframe2" src="" style="width: 1000px; height: 600px; background-color: white;"></iframe>
 								</c:if>  
 								      
 								</div>
