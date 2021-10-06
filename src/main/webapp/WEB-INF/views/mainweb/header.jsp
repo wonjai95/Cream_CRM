@@ -23,7 +23,6 @@
       <div class="logo" style="display: flex;">
         <h1><a href="home" style="margin-left: 10px;">Creamy</a></h1>
       </div>
-
       <nav id="navbar" class="navbar">
         <ul>
 	      <c:if test="${sessionScope.name != null}">
