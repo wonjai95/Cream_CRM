@@ -33,5 +33,8 @@ public interface Android_service {
 	// QR
 	public Map<String, Object> getQrCode(HttpServletRequest req);
 
+	
+	// 관리자페이지 - 예약목록 조회
+    public Map<String, Object> getResList(HttpServletRequest req);
 
 }
