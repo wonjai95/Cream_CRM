@@ -39,7 +39,7 @@ function unselected() {
 
 $("document").ready(function() {
 
-   // 테이블에서 회원 선택시 회원 코드 hidden에 설정
+   // 테이블에서 회원 선택시 회원 코드 hidden에 설정 후 판매내역 뿌리기
    $("tr[class^=user]").click(function() {
       $("tr[class^=user]").css("background", "");
       
@@ -58,8 +58,35 @@ $("document").ready(function() {
       
       $(this).css("background", "#20c997");
       
+      var host = '${sessionScope.code}';
       
-   });
+  	 // 회원 클릭해서 user_sale 바로 뿌리기
+  	var url1 = 'http://localhost:3000/user_sale?host_code='+host+'&user_code='+user_code;
+	$("#iframe1").attr("src",url1);  	
+	console.log(url1);
+	
+	var url2 = 'http://localhost:3000/user_sale_room?host_code='+host+'&user_code='+user_code;
+	$("#iframe2").attr("src",url2);  	
+	console.log(url2);	
+  		 
+		/* $.ajax({
+			type:"get",
+			url: "user_sale",
+			data : "userCode="+user_code,
+			dataType : "json",
+			success: function(data) {
+					alert("성공!");
+				
+			},
+			error: function(data) {
+					alert(data);
+			}
+		});   */	
+      
+      
+      
+      
+    });
    
    // 회원 정보 수정 버튼 클릭
    $("#user_modify_btn").click(function() {
@@ -118,7 +145,7 @@ $("document").ready(function() {
 	
  	// ajax
  	// 회원 정보 검색
-	$(".user_code, #find ,#user_sale").click(function(e){
+	$(".user_code, #find").click(function(e){
 		e.preventDefault();
 		var queryForGender = $("#queryForGender").val();
 		var queryForCode = $("#queryForCode").val();
@@ -186,6 +213,14 @@ $("document").ready(function() {
         	+ '</tr>';
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
    
    // 창 닫기 클릭
    $("input[name=window_close]").click(function() {
@@ -198,6 +233,7 @@ $("document").ready(function() {
 </script>
 </head>
 <body> 
+
 <div id="wrapper">   
 
 	<!-- frame  -->
@@ -241,7 +277,7 @@ $("document").ready(function() {
 			<tr>
 				<td><button type="button" class="btn btn-primary dim" id="user_modify_btn">회원 정보 수정</button></td>
 				<td><button type="button" class="btn btn-primary dim" id="user_del_btn">회원 삭제 처리</button></td>
-				<td><button type="button" class="btn btn-primary dim" id="selling_btn">판매</button></td> 
+				<%--<td><button type="button" class="btn btn-primary dim" id="selling_btn">판매</button></td> --%> 
 				<td><button type="button" class="btn btn-primary dim">회원 본인 인증</button></td>
 			</tr>
 		</table>
@@ -339,19 +375,23 @@ $("document").ready(function() {
 					<div class="col-lg-9 animated fadeInRight">
 					
 					<div class="tabs-container">
-						<ul class="nav nav-tabs">   
-							<li><a id="user_sale" class="nav-link active" data-toggle="tab" href="#tab-1">판매</a></li>
-							<li><a id="user_reservation" class="nav-link" data-toggle="tab" href="#tab-2">예약</a></li>
+						<ul class="nav nav-tabs">
+							<li><a id="user_sale" class="nav-link active" data-toggle="tab" href="#tab-1">회원별 예약내역</a></li>
 						</ul>
 						
 						<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
-							<jsp:include page="user_sale.jsp"/>
+							<div class="panel-body">
+								<c:if test="${comp_res == '담당자'}">
+									<iframe id="iframe1" src="" style="width: 1000px; height: 600px; background-color: white;"></iframe>
+								</c:if>
+								<c:if test="${comp_res == '호실'}">
+									<iframe id="iframe2" src="" style="width: 1000px; height: 600px; background-color: white;"></iframe>
+								</c:if>  
+								      
+								</div>
 						</div>
 						
-						<div id="tab-2" class="tab-pane">
-							<jsp:include page="user_reservation.jsp"/>
-						</div> 
 						</div>
 						
 					</div>

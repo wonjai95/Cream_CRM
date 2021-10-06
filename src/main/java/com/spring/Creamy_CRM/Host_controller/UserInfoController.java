@@ -45,15 +45,8 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		String host_code = (String) req.getSession().getAttribute("code");
 		System.out.println("host_code : " + host_code);
 		
-		String user_code = req.getParameter("user_code");
-		System.out.println("user_code : " + user_code);
-		String user_id = req.getParameter("user_id");
-		System.out.println("user_id : " + user_id);
-		
-		// 회원 목록 출력
+		// 회원 목록 출력   
 		service_user.printUsers(req, model);
-		
-		model.addAttribute("user_id", user_id);
 		
 		// 회원별 예약 및 판매 내역 출력
 		service_user.userSale(req, model);
@@ -65,7 +58,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 	@ResponseBody
 	@RequestMapping("/host/searchUserList")
 	public List<userVO> searchUserList(HttpServletRequest req, Model model) {
-		logger.info("url -> selectProductByQuery");
+		logger.info("url -> searchUserList");
 		
 		return service_user.searchUserList(req, model);
 	}
@@ -113,7 +106,6 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		
 		return "host/user/mypage";
 	}
-	  
 	
 	// 회원 삭제 처리(user_tbl)
 	@RequestMapping("/host/del_user_action")
@@ -133,20 +125,19 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 		
 		return "host/user/del_user_action";
 	}
-	
-	// 회원별 판매 내역 출력
-	@RequestMapping("/host/user_sale")
-	public String user_sale(HttpServletRequest req, Model model) {
-		logger.info("url -> user_sale");
-		
-		String user_code = req.getParameter("user_code");
-		System.out.println("user_code : " + user_code);
-		
-		service_user.userSale(req, model);
-		   
-		return "host/user/user_sale";
-	}
-	
+	/*
+	 * // 회원별 판매 내역 출력
+	 * 
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping("/host/user_sale") public userVO user_sale(HttpServletRequest
+	 * req, Model model) { logger.info("url -> user_sale");
+	 * 
+	 * String user_code = req.getParameter("userCode");
+	 * System.out.println("user_code : " + user_code);
+	 * 
+	 * return service_user.userSale(req, model); }
+	 */
 	
 	
 }

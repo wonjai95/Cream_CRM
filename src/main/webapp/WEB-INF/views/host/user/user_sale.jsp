@@ -14,21 +14,31 @@
 <title>Insert title here</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INSPINIA | Data Tables</title>
-<script>
-</script>
-
+<title>Creamy_CRM | User Info </title>
 </head>
 <body>
-
 <div class="panel-body">
-<c:if test="${comp_res == '담당자'}">
-<iframe src="http://localhost:3000/user_sale?host_code=${sessionScope.code}" style="width: 1000px; height: 1000px;"></iframe>
+${userCode}
+${vo.userCode}
+${vo.host_code}
+dd
+<c:if test="${vo.comp_res == '담당자'}">
+	<c:if test="${vo.user_code != null}">
+		<iframe id="iframe" src="http://localhost:3000/user_sale?host_code=${sessionScope.code}%user_code=${vo.user_code}" style="width: 1000px; height: 1000px;"></iframe>
+	</c:if>
+	<c:if test="${vo.user_code == null}">
+		<iframe src="http://localhost:3000/user_sale?host_code=${sessionScope.code}" style="width: 1000px; height: 1000px;"></iframe>
+	</c:if>
 </c:if>
-<c:if test="${comp_res == '호실'}">
-<iframe src="http://localhost:3000/user_sale_room?host_code=${sessionScope.code}" style="width: 1000px; height: 1000px;"></iframe>
+<c:if test="${vo.comp_res == '호실'}">
+	<c:if test="${vo.user_code != null}">
+		<iframe src="http://localhost:3000/user_sale_room?host_code=${sessionScope.code}%user_code=${vo.user_code}" style="width: 1000px; height: 1000px;"></iframe>
+	</c:if>
+	<c:if test="${vo.user_code == null}">
+		<iframe src="http://localhost:3000/user_sale_room?host_code=${sessionScope.code}" style="width: 1000px; height: 1000px;"></iframe>
+	</c:if>
 </c:if>  
-  
+      
 </div>
 					
 <!-- Mainly scripts -->

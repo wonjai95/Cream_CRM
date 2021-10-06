@@ -83,6 +83,7 @@ public class userVO {
 
    // 사장
    private String host_code;
+   private String comp_res;
    
    public String getUser_code() {
       return user_code;
@@ -446,6 +447,12 @@ public class userVO {
 	}
 	public void setHost_code(String host_code) {
 		this.host_code = host_code;
+	}
+	public String getComp_res() {
+		return comp_res;
+	}
+	public void setComp_res(String comp_res) {
+		this.comp_res = comp_res;
 	}
    
    
