@@ -24,7 +24,14 @@ public interface Android_service {
 	
 	//회원가입
 	public Map<String, Object> Join(HttpServletRequest req);
+
 	
 	// 결산 - 손익계산서 조회
 	public Map<String, Object> getSettlement(HttpServletRequest req);
+
+
+	// QR
+	public Map<String, Object> getQrCode(HttpServletRequest req);
+
+
 }

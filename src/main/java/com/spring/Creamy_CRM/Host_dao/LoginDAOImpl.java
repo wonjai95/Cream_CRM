@@ -139,6 +139,11 @@ public class LoginDAOImpl implements LoginDAO {
 	public List<userVO> getTodayUserList() {
 		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.loginDAO.getTodayUserList");
 	}
+
+	@Override
+	public int updateUserInfo_notWedding(userVO vo) {
+		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.loginDAO.updateUserInfo_notWedding", vo);
+	}
 	
 
 }

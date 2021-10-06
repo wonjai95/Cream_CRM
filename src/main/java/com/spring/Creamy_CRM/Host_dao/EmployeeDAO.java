@@ -151,4 +151,10 @@ public interface EmployeeDAO {
 	// 해당 직원코드에 대해 이미 등록된 급여계약이 있을 경우 기존의 contract_stat = '계약 종료'로 update
 	public int updateSalaryContract(SalaryContractVO vo);
 	
+	
+	// 안드로이드 직원 근무시간 체크
+	public WorkingHoursVO getAttendanceDateInfo(Map<String, Object> map);
+	
+	// 안드로이드 직원 코드 구하기
+	public String getEmpCode(String employee_id);
 }

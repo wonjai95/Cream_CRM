@@ -20,5 +20,8 @@ public interface StaticsService {
 	
 	// 월별 인원 현황
 	public void static_numOfUserByMonth(HttpServletRequest req, Model model);
+	
+	// 담당자별 판매 현황(통계)
+	public void static_managerSales(HttpServletRequest req, Model model);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ReviewVO;
+import com.spring.Creamy_CRM.VO.outReviewVO;
 
 @Repository
 public class UserReviewDAOImpl implements UserReviewDAO {
@@ -87,5 +88,63 @@ public class UserReviewDAOImpl implements UserReviewDAO {
 	public List<ReviewVO> getReviewSearch_date(Map<String, String> map) {
 		return sqlSession.selectList("com.spring.Creamy_CRM.User_dao.UserReviewDAO.getReviewSearch_date",map);
 	}
+
+	@Override
+	public int addOutReview(outReviewVO vo) {
+		int insertCnt = sqlSession.insert("com.spring.Creamy_CRM.User_dao.UserReviewDAO.addOutReview",vo);
+		
+		if(insertCnt > 0)
+			insertCnt = addDetailOutReview(vo);
+		
+		return insertCnt; 
+	}
+
+	@Override
+	public int addDetailOutReview(outReviewVO vo) {
+		return sqlSession.insert("com.spring.Creamy_CRM.User_dao.UserReviewDAO.addDetailOutReview",vo);
+	}
+
+	@Override
+	public List<outReviewVO> getOutreviewList(String host_code) {
+		return sqlSession.getMapper(UserReviewDAO.class).getOutreviewList(host_code);
+	}
+
+	@Override
+	public List<outReviewVO> getGraphOutreviewList(String code) {
+		return sqlSession.getMapper(UserReviewDAO.class).getGraphOutreviewList(code);
+	}
+
+	@Override
+	public int getGraphCount() {
+		return sqlSession.getMapper(UserReviewDAO.class).getGraphCount();
+	}
+
+	@Override
+	public int insertDetail_ranknotnull(outReviewVO vo) {
+		return sqlSession.getMapper(UserReviewDAO.class).insertDetail_ranknotnull(vo);
+	}
+
+	@Override
+	public int updateOutreview_rankout(outReviewVO vo) {
+		insertDetail_ranknotnull(vo);
+		return sqlSession.getMapper(UserReviewDAO.class).updateOutreview_rankout(vo);
+	}
+
+	@Override
+	public int updateOutreview_MaxrankIn(outReviewVO vo) {
+		insertDetail_ranknotnull(vo);
+		return sqlSession.getMapper(UserReviewDAO.class).updateOutreview_MaxrankIn(vo);
+	}
+
+	@Override
+	public List<outReviewVO> getUpdateOutreviewList(String host_code) {
+		return sqlSession.getMapper(UserReviewDAO.class).getUpdateOutreviewList(host_code);
+	}
+
+	@Override
+	public int deleteOutreview(String code) {
+		return sqlSession.getMapper(UserReviewDAO.class).deleteOutreview(code);
+	}
+
 	
 }

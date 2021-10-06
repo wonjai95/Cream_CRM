@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ReviewVO;
+import com.spring.Creamy_CRM.VO.outReviewVO;
 
 public interface UserReviewDAO {
 	
@@ -49,6 +50,40 @@ public interface UserReviewDAO {
 	
 	//등록일로 리뷰 검색
 	public List<ReviewVO> getReviewSearch_date(Map<String, String> map);
+	
+	//-----------------------------------------------------------------
+	
+	
+	//새 추적 등록
+	public int addOutReview(outReviewVO vo);
+	
+	//새 추적 - 상세 테이블 등록
+	public int addDetailOutReview(outReviewVO vo);
+	
+	//후기 추적 리스트 받아오기
+	public List<outReviewVO> getOutreviewList(String host_code);
+	
+	//후기추적리스트 - 업데이트용
+	public List<outReviewVO> getUpdateOutreviewList(String host_code);
+	
+	//그래프용 리스트 받아오기
+	public List<outReviewVO> getGraphOutreviewList(String code);
+	
+	//오늘자 순위 업데이트되었는지 여부 카운트함
+	public int getGraphCount();
+	
+	//detail update -> notnull
+	public int insertDetail_ranknotnull(outReviewVO vo);
+	
+	//추적중단
+	public int updateOutreview_rankout(outReviewVO vo);
+	
+	//하락한도 이내 -계속추적
+	public int updateOutreview_MaxrankIn(outReviewVO vo);
+	
+	//추적 삭제
+	public int deleteOutreview(String code);
+	
 	
 	
 }

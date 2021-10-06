@@ -16,6 +16,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -24,12 +26,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import com.spring.Creamy_CRM.Host_controller.MainController;
 import com.spring.Creamy_CRM.Host_service.EmployeeService;
@@ -38,15 +47,17 @@ import com.spring.Creamy_CRM.User_service.SaleService;
 import com.spring.Creamy_CRM.User_service.UserReservationServiceImpl;
 import com.spring.Creamy_CRM.User_service.UserReviewServiceImpl;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
+import com.spring.Creamy_CRM.VO.KakaoPayReadyVO;
 
 import jdk.nashorn.internal.objects.annotations.Setter;
 
 
 @Controller
 public class MainwebController {
-   
+	
    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
    
+   public KakaoPayReadyVO kakaoPayReadyVO;
    
    @Autowired
    UserReviewServiceImpl service_review;
@@ -412,8 +423,9 @@ public class MainwebController {
 
 		return "mainweb/sale/sale_m_action";
 	}
-	
-	/*
+
+
+/*
 	// 카카오페이 결제 
 	@RequestMapping("/kakaoPay")
 	public String kakaoPay() {
@@ -471,25 +483,25 @@ public class MainwebController {
 		
 		return "{\"result\":\"NO\"}";
 	}
-	*/
+*/
 	
 	
 	// 카카오페이
-	 @GetMapping("/kakaoPayGet")
+	@GetMapping("/kakaoPayGet")
     public void kakaoPayGet() {
 		 logger.info("url -> kakaoPayGet");
     }
-    
-    @PostMapping("/kakaoPay")
+	
+    @PostMapping("/sale/kakaoPay")
     public String kakaoPay() {
-    	logger.info("url -> kakaoPay");
+    	logger.info("url -> kakaoPay");   
         logger.info("kakaoPay post............................................");
         
         return "redirect:" + service_sale.kakaoPayReady();
  
     }
-    
-    @GetMapping("/kakaoPaySuccess")
+	
+    @GetMapping("/sale/kakaoPaySuccess")
     public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
     	logger.info("url -> kakaoPaySuccess");
         logger.info("kakaoPaySuccess get............................................");
@@ -498,7 +510,5 @@ public class MainwebController {
         model.addAttribute("info", service_sale.kakaoPayInfo(pg_token));
         
     }
-	    
-	
 }
 	
