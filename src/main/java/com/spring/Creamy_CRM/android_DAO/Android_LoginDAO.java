@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
+import com.spring.Creamy_CRM.VO.IncomeStatementVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
 
@@ -23,5 +24,11 @@ public interface Android_LoginDAO {
 	
 	//마이페이지 - 직원
 	public EmployeeVO getEmployeeVO(String id);
+	
+	// host_id를 이용한 host_code 가져오기
+	public String getCode(String host_id);
+	
+	// 손익계산서 조회
+	public IncomeStatementVO getSettlement(Map<String, Object> map);
 	
 }

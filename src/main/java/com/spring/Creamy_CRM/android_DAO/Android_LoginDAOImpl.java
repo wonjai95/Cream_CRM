@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
+import com.spring.Creamy_CRM.VO.IncomeStatementVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
 
@@ -46,6 +47,20 @@ public class Android_LoginDAOImpl implements Android_LoginDAO{
 	public EmployeeVO getEmployeeVO(String id) {
 		Android_LoginDAO dao = sqlSession.getMapper(Android_LoginDAO.class);
 		return dao.getEmployeeVO(id);
+	}
+	
+	// host_id를 이용한 host_code 가져오기
+	@Override
+	public String getCode(String host_id) {
+		Android_LoginDAO dao = sqlSession.getMapper(Android_LoginDAO.class);
+		return dao.getCode(host_id);
+	}
+	
+	// 손익계산서 조회
+	@Override
+	public IncomeStatementVO getSettlement(Map<String, Object> map) {
+		Android_LoginDAO dao = sqlSession.getMapper(Android_LoginDAO.class);
+		return dao.getSettlement(map);
 	}
 
 }

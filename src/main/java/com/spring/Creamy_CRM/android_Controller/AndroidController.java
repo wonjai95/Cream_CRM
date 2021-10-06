@@ -91,6 +91,17 @@ public class AndroidController {
 		return "react_test/daum_2";
 	}
 	
+
+	// 결산
+	@ResponseBody
+	@RequestMapping("android/androidSettlement")
+	public Map<String, Object> androidSettlement(HttpServletRequest req) {
+		log.info("url -> androidSettlement");
+		
+		Map<String, Object> map = service_android.getSettlement(req);
+
+    return map;
+  }
 	
 	// QR
 	@ResponseBody
@@ -100,6 +111,7 @@ public class AndroidController {
 
 		Map<String, Object> map = service_android.getQrCode(req);
 		System.out.println("map info : " + map.get("attendChk"));
+
 		
 		return map;
 	}
