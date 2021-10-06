@@ -115,5 +115,17 @@ public class AndroidController {
 		
 		return map;
 	}
+	
+	// 앱 관리자페이지 => 예약목록 조회하기
+    @ResponseBody
+    @RequestMapping("android/androidReservationList")
+    public Map<String, Object> androidReservationList(HttpServletRequest req) {
+        log.info("androidReservationList()");
+        System.out.println("url -> 안드로이드 예약목록 조회페이지");
+        
+        Map<String, Object> map = service_android.getResList(req);
+        
+        return map;
+    }
 
 }
