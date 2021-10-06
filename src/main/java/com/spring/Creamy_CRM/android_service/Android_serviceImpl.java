@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
+import com.spring.Creamy_CRM.VO.IncomeStatementVO;
 import com.spring.Creamy_CRM.VO.userVO;
 import com.spring.Creamy_CRM.android_DAO.Android_LoginDAOImpl;
 
@@ -220,6 +221,37 @@ public class Android_serviceImpl implements Android_service{
 		map.put("member", null);
 		
 		return re_map;
+	}
+	
+	// 결산 - 손익계산서 조회
+	public Map<String, Object> getSettlement(HttpServletRequest req){
+		String host_id = req.getParameter("host_id");
+		System.out.println("host_id : " + host_id);
+		
+		// host_code 가져오기
+		String host_code = dao_Android_login.getCode(host_id);
+		
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("host_code", host_code);
+		System.out.println("host_code : " + host_code);
+		
+		// 손익계산서 조회
+		Map<String, Object> map = new HashMap<String, Object>();
+		IncomeStatementVO vo = dao_Android_login.getSettlement(map1);
+		
+		map.put("revenue", vo.getRevenue());
+		map.put("cost_of_goods_sold", vo.getCost_of_goods_sold());
+		map.put("gross_profit", vo.getGross_profit());
+		map.put("operating_expensews", vo.getOperating_expensews());
+		System.out.println(vo.getOperating_expensews());
+		
+		map.put("operating_income", vo.getOperating_income());
+		map.put("non_operating_profit_loss", vo.getNon_operating_profit_loss());
+		map.put("income_before_taxes", vo.getIncome_before_taxes());
+		map.put("income_taxes", vo.getIncome_taxes());
+		map.put("net_income", vo.getNet_income());
+		
+		return map;
 	}
 	
 	

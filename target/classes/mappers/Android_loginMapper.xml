@@ -25,5 +25,19 @@
 		select * from employee_tbl where employee_id = #{id}
 	</select>
 	
+	<select id="getCode" parameterType="String" resultType="String">
+		SELECT host_code
+		  FROM host_tbl
+		 WHERE host_id = #{host_id}
+	</select>
+	
+	<!-- 손익계산서 조회 -->
+  	<select id="getSettlement" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.IncomeStatementVO">
+  		SELECT *
+  		  FROM income_statement
+  		 WHERE host_code = #{host_code}
+  		   AND TO_CHAR(is_reg_date, 'YYYY-MM') = '2021-10'
+  	</select>
+	
 
 </mapper>
