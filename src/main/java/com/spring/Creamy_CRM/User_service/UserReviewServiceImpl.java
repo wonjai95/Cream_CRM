@@ -2,7 +2,10 @@ package com.spring.Creamy_CRM.User_service;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +24,7 @@ import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
 import com.spring.Creamy_CRM.User_dao.UserReviewDAOImpl;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ReviewVO;
+import com.spring.Creamy_CRM.VO.outReviewVO;
 
 @Service
 public class UserReviewServiceImpl implements UserReviewService {
@@ -326,6 +330,128 @@ public class UserReviewServiceImpl implements UserReviewService {
 		req.setAttribute("list_url", list_url);
 		req.setAttribute("list_title", list_title);
 		
+		
+	}
+
+	//새 추적 등록
+	@Override
+	public void addOutReview(HttpServletRequest req, Model model) {
+		
+		String host_code = (String) req.getSession().getAttribute("code");
+		
+		String title = req.getParameter("post_title");
+		String url = req.getParameter("post_url");
+		String rank_s = req.getParameter("rank_min");
+		int rank = Integer.parseInt(rank_s);
+		String keyword = req.getParameter("chace_keyword");
+		int max_rank = Integer.parseInt(req.getParameter("rank_level"));
+		
+		outReviewVO vo = new outReviewVO();
+		vo.setHost_code(host_code);
+		vo.setOutreview_title(title);
+		vo.setOutreview_url(url);
+		vo.setOutdetail_rank(rank);
+		vo.setOutreview_keyword(keyword);
+		vo.setOutdetail_rank(rank);
+		vo.setOutreview_rankmax(max_rank);
+		
+		//새 추적 등록
+		int insertCnt = dao_review.addOutReview(vo);
+		System.out.println("새 추적 등록? :"+insertCnt);
+		
+		req.setAttribute("insertCnt", insertCnt);
+		
+	}
+
+	//외부 리뷰 리스트 받아오기
+	@Override
+	public void getOutReviewList(HttpServletRequest req, Model model) {
+		
+		String host_code = (String) req.getSession().getAttribute("code");
+		
+		List<outReviewVO> list = dao_review.getOutreviewList(host_code);
+		
+		List<Integer> number_list = new ArrayList<Integer>();
+		for(int i = 0; i < 5; i++) {
+			number_list.add(i);
+		}
+		req.setAttribute("number_list", number_list);
+		
+		if(list.size() != 0) {
+			//외부 리뷰 리스트 넘겨주기
+			req.setAttribute("out_list", list);
+			
+			//현재 리뷰 리스트 개수 넘겨주기 - 5개이상 새 추적 되는거 방지
+			int listsize = list.size();
+			req.setAttribute("out_listsize", listsize);
+			
+			//첫번째 리뷰 있으면 코드번호 넘겨주기
+			String first_code = list.get(0).getOutreview_code();
+			req.setAttribute("out_first_code", first_code);
+			
+		}
+		else
+			System.out.println("리스트 없음");
+		
+		
+	}
+
+	//후기 추적 순위 그래프용 데이터
+	@Override
+	public void getOutReveiw_GraptData(HttpServletRequest req, Model model) {
+		String code = req.getParameter("code");
+		System.out.println("그래프 코드 : "+code);
+		
+		List<outReviewVO> graph_list = dao_review.getGraphOutreviewList(code);
+		
+		req.setAttribute("graph_list", graph_list);
+		
+		int lastindex = graph_list.size() - 1;
+		
+		
+		//앞뒤로 2
+		Date f_day = graph_list.get(0).getOutdetail_date();
+		Date day = graph_list.get(lastindex).getOutdetail_date();
+		
+		Calendar f_cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		f_cal.setTime(f_day);
+		cal.setTime(day);
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		
+		f_cal.add(f_cal.DATE, -2);
+		String firstday = df.format(f_cal.getTime());
+		req.setAttribute("firstday", firstday);
+		System.out.println(firstday);
+		
+		f_cal.add(f_cal.DATE, +1);
+		String beforeday = df.format(f_cal.getTime());
+		req.setAttribute("beforeday", beforeday);
+		System.out.println(beforeday);
+		
+		cal.add(cal.DATE, +1);
+		String nextday = df.format(cal.getTime());
+		req.setAttribute("nextday", nextday);
+		System.out.println(nextday);
+		
+		cal.add(cal.DATE, +1);
+		String finalday = df.format(cal.getTime());
+		req.setAttribute("finalday", finalday);
+		System.out.println(finalday);
+			
+		
+		
+	}
+
+	//추적 삭제
+	@Override
+	public void Delete_outReview(HttpServletRequest req, Model model) {
+		String code = req.getParameter("outReview_hiddencode");
+		System.out.println("삭제할 코드 : "+code);
+		
+		int deleteCnt = dao_review.deleteOutreview(code);
+		System.out.println("외부 후기 삭제? :"+deleteCnt);
+		req.setAttribute("deleteCnt", deleteCnt);
 		
 	}
 

@@ -39,5 +39,8 @@ public interface LoginService {
 	//홈화면 띄울때 가져올 정보들
 	public void HostmainPage(HttpServletRequest req, Model model);
 	
+	//첫 로그인 시 db확인해서 외부 후기 업데이트
+	public void updateOutReview(HttpServletRequest req, Model model);
+	
 
 }

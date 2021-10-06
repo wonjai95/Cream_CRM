@@ -10,10 +10,15 @@ public class outReviewVO {
 	private String outreview_chk;		//추적여부
 	private Date  outreview_date;		//등록일
 	private Date outreview_update;		//update일
+	private int outreview_rankmax;		//추적할 최대 검색순위
+	
+	private String host_code;			//사장님 코드
 	
 	//detail
 	private int outdetail_rank;			//검색순위
 	private Date outdetail_date;		//날짜
+	
+	
 	public String getOutreview_code() {
 		return outreview_code;
 	}
@@ -68,10 +73,18 @@ public class outReviewVO {
 	public void setOutdetail_date(Date outdetail_date) {
 		this.outdetail_date = outdetail_date;
 	}
-	
-	
-	
-	
+	public String getHost_code() {
+		return host_code;
+	}
+	public void setHost_code(String host_code) {
+		this.host_code = host_code;
+	}
+	public int getOutreview_rankmax() {
+		return outreview_rankmax;
+	}
+	public void setOutreview_rankmax(int outreview_rankmax) {
+		this.outreview_rankmax = outreview_rankmax;
+	}
 	
 	
 	

@@ -113,6 +113,58 @@
 	and r.regdate like #{date}
   </select>
   
+  <insert id="addOutReview" parameterType="com.spring.Creamy_CRM.VO.outReviewVO">
+  	INSERT INTO outReview_tbl(outreview_code,outreview_title,outreview_keyword,outreview_url,outreview_chk,host_code,outreview_rankmax)
+  	VALUES('OR'||outreview_seq.nextval,#{outreview_title},#{outreview_keyword},#{outreview_url},'Y',#{host_code},#{outreview_rankmax})
+  </insert>
   	
+  <insert id="addDetailOutReview" parameterType="com.spring.Creamy_CRM.VO.outReviewVO">
+  	INSERT INTO outdetail_tbl(outreview_code,outdetail_rank,outdetail_date)
+  	VALUES('OR'||outreview_seq.currval,#{outdetail_rank},sysdate)
+  </insert>
+  
+  <select id="getOutreviewList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.outReviewVO">
+ 	select o.*, d.outdetail_rank
+	from outReview_tbl o, outdetail_tbl d
+	where o.outreview_code = d.outreview_code
+	and d.outdetail_date LIKE sysdate
+ 	and host_code = #{host_code}
+  </select>
+  
+  <select id="getGraphOutreviewList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.outReviewVO">
+  	select * from outdetail_tbl
+  	where outreview_code = #{code}
+  	order by outdetail_date asc
+  </select>
+  
+  <select id="getGraphCount" resultType="Integer">
+  	select COUNT(*) from outdetail_tbl
+  	where outdetail_date like sysdate
+  </select>
+  
+  <insert id="insertDetail_ranknotnull" parameterType="com.spring.Creamy_CRM.VO.outReviewVO">
+  	insert into outdetail_tbl(outreview_code,outdetail_rank,outdetail_date)
+  	values(#{outreview_code},#{outdetail_rank},sysdate)
+  </insert>
+  
+  <update id="updateOutreview_rankout" parameterType="com.spring.Creamy_CRM.VO.outReviewVO">
+  	update outReview_tbl set outreview_chk = 'N', outreview_update = sysdate
+  	where outreview_code = #{outreview_code}
+  </update>
+  
+  <update id="updateOutreview_MaxrankIn" parameterType="com.spring.Creamy_CRM.VO.outReviewVO">
+  	update outReview_tbl set outreview_update = sysdate
+  	where outreview_code = #{outreview_code}
+  </update>
+  
+  <select id="getUpdateOutreviewList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.outReviewVO">
+  	select * from outReview_tbl
+  	where host_code =#{host_code}
+  </select>
+  
+  <delete id="deleteOutreview" parameterType="String">
+  	delete outReview_tbl
+  	where outreview_code = #{code}
+  </delete>
   
   </mapper>
