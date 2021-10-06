@@ -39,9 +39,9 @@ public class StockServiceImpl implements StockService {
 		
 		// 거래처 페이지
 		tradePage.setCnt(pro_dao.tradeCnt(host_code));
-		tradePage.setPageSize(10);
-		tradePage.setPageBlock(5);
-		tradePage.setCurrentPage(req.getParameter("pageNum"));
+		tradePage.setPageSize(2);
+		tradePage.setPageBlock(2);
+		tradePage.setCurrentPage(req.getParameter("tradePageNum"));
 
 		if (tradePage.getCnt() > 0) {
 			map = new HashMap<String, Object>();
@@ -53,9 +53,9 @@ public class StockServiceImpl implements StockService {
 
 		// 재고 페이지 
 		stockPage.setCnt(pro_dao.stockCnt(host_code)); 
-		stockPage.setPageSize(10);
-		stockPage.setPageBlock(5);
-		stockPage.setCurrentPage(req.getParameter("pageNum"));
+		stockPage.setPageSize(2);
+		stockPage.setPageBlock(2);
+		stockPage.setCurrentPage(req.getParameter("stockPageNum"));
 
 		if (stockPage.getCnt() > 0) {
 			map = new HashMap<String, Object>();
@@ -66,7 +66,22 @@ public class StockServiceImpl implements StockService {
 		}
 		
 		model.addAttribute("stockList", stockList);
+		model.addAttribute("stockCnt", stockPage.getCnt());
+		model.addAttribute("stockStartPage", stockPage.getStartPage());
+		model.addAttribute("stockEndPage", stockPage.getEndPage());
+		model.addAttribute("stockPageBlock", stockPage.getPageBlock());
+		model.addAttribute("stockPageNum", stockPage.getCurrentPage());
+		model.addAttribute("stockPageCount", stockPage.getPageCount());
+		
+		
 		model.addAttribute("tradeList", tradeList);
+		model.addAttribute("tradeCnt", tradePage.getCnt());
+		model.addAttribute("tradeStartPage", tradePage.getStartPage());
+		model.addAttribute("tradeEndPage", tradePage.getEndPage());
+		model.addAttribute("tradePageBlock", tradePage.getPageBlock());
+		model.addAttribute("tradePageNum", tradePage.getCurrentPage());
+		model.addAttribute("tradePageCount", tradePage.getPageCount());
+		
 		
 	}
 

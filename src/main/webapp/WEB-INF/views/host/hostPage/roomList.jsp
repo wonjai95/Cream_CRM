@@ -55,7 +55,7 @@
 			<div class="wrapper wrapper-content">
 				<div class="row">
 					<div class="col-lg-9 animated fadeInRight">
-						<div class="ibox-content" style="margin: 0px; padding: 0px;"  id="rooms">
+						<div class="ibox-content" style="margin: 0px; padding: 0px; border: none;"  id="rooms" >
 							
 						</div>
 					</div>

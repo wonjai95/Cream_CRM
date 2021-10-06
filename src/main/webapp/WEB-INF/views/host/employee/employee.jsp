@@ -52,7 +52,7 @@
     <div class="row">
         <div class="col-lg-12">
         <div class="ibox ">
-            <div class="ibox-title">
+            <div class="ibox-title" style="padding-right: 15px;">
             	<!-- 직원 등록, 근태, 근무시간, 휴가, 급여계약 버튼 시작 -->
                 <div id="p_group" style="margin-bottom: 15px;">
 					<button type="button" class="btn btn-outline btn-primary" id="employee_enlist_btn">직원등록</button>
@@ -95,28 +95,8 @@
 	
 	            </div>
 	             <!-- 검색 끝 -->   
-                
-                <!-- 접기, 도구 아이콘 시작 -->
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#" class="dropdown-item">Config option 1</a>
-                        </li>
-                        <li><a href="#" class="dropdown-item">Config option 2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-                 <!-- 접기, 도구 아이콘 끝 -->
             </div>
-            <div class="ibox-content">
+            <div class="ibox-content" style="border: none;">
 
             <div class="table-responsive">
             <!-- table table-striped table-bordered table-hover dataTables-example -->  
