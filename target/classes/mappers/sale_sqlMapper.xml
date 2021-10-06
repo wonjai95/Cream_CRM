@@ -15,7 +15,7 @@
 	<!-- 결제정보 등록 -->  
 	<insert id="insertSaleInfo" parameterType="com.spring.Creamy_CRM.VO.userVO"> 
 		INSERT INTO sale_tbl(sale_code, total_payment, sale_date, payment_option, sale_memo, user_code, employee_code, product_code, credit_select, credit_installment, res_code)
-		 VALUES('SL'||sale_seq.NEXTVAL, #{total_payment}, sysdate, #{payment_option}, #{sale_memo}, #{user_code}, #{employee_code, jdbcType=VARCHAR}, #{product_code, jdbcType=VARCHAR}, #{credit_select}, #{credit_installment}, 'RS'||res_seq.CURRVAL)
+		VALUES ('SL'||sale_seq.NEXTVAL, #{total_payment}, sysdate, #{payment_option}, #{sale_memo}, #{user_code}, #{employee_code, jdbcType=VARCHAR}, #{product_code, jdbcType=VARCHAR}, #{credit_select}, #{credit_installment}, 'RS'||res_seq.CURRVAL)
 	</insert>   
 	
   </mapper>
