@@ -17,6 +17,8 @@ public class AttendanceVO {
 	private String memo;				// 메모
 	
 	
+	
+	
 	public String getAttendance_code() {
 		return attendance_code;
 	}

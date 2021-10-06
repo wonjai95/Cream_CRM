@@ -18,11 +18,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.CRMuserDAOImpl;
+import com.spring.Creamy_CRM.Host_dao.StaticsDAOImpl;
+import com.spring.Creamy_CRM.VO.StaticVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
 @Service
 public class StaticsServiceImpl implements StaticsService {
 
+	@Autowired
+	StaticsDAOImpl dao_statics;
+	
 	@Autowired
 	CRMuserDAOImpl dao_user;
 	
@@ -203,6 +208,18 @@ public class StaticsServiceImpl implements StaticsService {
 		// 방문 및 예약 고객
 		
 		
+	}
+
+	// 담당자별 판매 현황(통계)
+	@Override
+	public void static_managerSales(HttpServletRequest req, Model model) {
+		
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
+		ArrayList<StaticVO> dtos = dao_statics.managerSalesList(host_code);
+		
+		model.addAttribute("dtos", dtos);
 	}
 	
 	

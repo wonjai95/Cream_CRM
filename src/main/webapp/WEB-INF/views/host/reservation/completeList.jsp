@@ -10,7 +10,7 @@
 <body>
 
 <iframe src="http://localhost:3000/show_Reservation?host_code=${sessionScope.code}&start=${pagemap.get('start')}&end=${pagemap.get('end')}"
-		style="width: 1500px; height: 1000px;">
+		style="width: 1000px; height: 1000px;">
 </iframe>
 
 <%-- <c:forEach var="mdto" items="${mdtos}">

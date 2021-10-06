@@ -90,5 +90,18 @@ public class AndroidController {
 		
 		return "react_test/daum_2";
 	}
+	
+	
+	// QR
+	@ResponseBody
+	@RequestMapping("android/qrCode")
+	public Map<String,Object> qrCode(HttpServletRequest req) {
+		log.info("qrCode");
+
+		Map<String, Object> map = service_android.getQrCode(req);
+		System.out.println("map info : " + map.get("attendChk"));
+		
+		return map;
+	}
 
 }

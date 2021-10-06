@@ -278,7 +278,7 @@
   		UPDATE attendance_tbl
   		   SET check_out_time = #{check_out_time},
   		       lateChk = lateChk || ' / ' || #{lateChk},
-  		       memo = memo || ' / ' || #{memo}
+  		       memo = memo || ' / ' || #{memo, jdbcType=VARCHAR}
   		 WHERE employee_code = #{employee_code}
   		   AND TO_CHAR(attendance_date, 'yyyy/MM/dd') = TO_CHAR(#{attendance_date}, 'yyyy/MM/dd')
   	</update>
@@ -358,5 +358,20 @@
      	 WHERE employee_code = #{employee_code}
      	   AND contract_stat = '계약중'
      </update>
+     
+     
+     <!-- 안드로이드 직원 근무시간 체크 -->
+     <select id="getAttendanceDateInfo" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.WorkingHoursVO">
+     	SELECT *
+     	  FROM working_hours_tbl
+     	 WHERE employee_code = #{employee_code}
+     </select>
+     
+     <!-- 안드로이드 직원 코드 구하기 -->
+      <select id="getEmpCode" parameterType="String" resultType="String">
+     	SELECT employee_code
+     	  FROM employee_tbl
+     	 WHERE employee_id = #{employee_id}
+     </select>
        
   </mapper>

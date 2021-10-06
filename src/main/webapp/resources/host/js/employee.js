@@ -154,7 +154,8 @@ $("document").ready(function() {
 			var empName = $("input[name=employee_name_hidden]").val();
 			console.log(empCode);
 			
-			var url = "employee_contract?employee_code=" + empCode + "&employee_name=" + empName;
+			// var url = "employee_contract?employee_code=" + empCode + "&employee_name=" + empName;
+			var url = "http://localhost:3000/contract_form?employee_code=" + empCode;
 			window.open(url, "employee_contract", "menubar=no, width=800, height=800");
 		}
 	});

@@ -15,6 +15,11 @@ $("document").ready(function(){
 		window.close();
 	});
 	
+	// 직원 등록이 완료된 아이디 확인 버튼 클릭시 창 닫기
+	$("#confirmform").on("click", "#cancelAllBtn", function() {
+		window.close();
+	});
+	
 	
 	$("#confirmform").on("click", "#idConfirmBtn", function() {
 		var id = $("#idChkVal").val();
