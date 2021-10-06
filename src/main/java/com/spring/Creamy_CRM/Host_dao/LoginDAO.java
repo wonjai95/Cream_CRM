@@ -55,6 +55,9 @@ public interface LoginDAO {
 	//회원 정보 update
 	public int updateUserInfo(userVO vo);
 	
+	//회원정보 update - nowedding
+	public int updateUserInfo_notWedding(userVO vo);
+	
 	//사장님 회원가입
 	public int insertHost(HostVO vo);
 	

@@ -168,13 +168,13 @@
                		<div style="padding-top: 9px; padding-bottom: 9px; display: flex;">
 	         	 		<div style="padding-left: 5px; padding-bottom: 8px; align-self: center; padding-right: 25px; width: 20%" align="right">결혼기념일</div>
 						<div class="form-group" style="width: 20%; display: flex; ">
-	                   		<input type="date" name="modify_merry" class="form-control" id="modify_merry" style="margin-right: 3px;">
+	                   		<input type="date" value="${vo.wedding_anniversary}" name="modify_merry" class="form-control" id="modify_merry" style="margin-right: 3px;">
 	               		</div>
                		</div>
                		<div style="display: flex;">
 	         	 		<div style="padding-left: 5px; padding-bottom: 8px; align-self: center; padding-right: 25px; width: 20%" align="right">차량번호</div>
 						<div class="form-group" style="width: 15%; display: flex; margin-right: 20px; ">
-	                   		<input type="text" name="modify_car" class="form-control" value="" style="margin-right: 3px;" maxlength="8">
+	                   		<input type="text" name="modify_car" class="form-control" value="${vo.car_number}" style="margin-right: 3px;" maxlength="8">
 	               		</div>
                		</div>
                		
