@@ -312,32 +312,55 @@ $("docuemnt").ready(function() {
 																		</c:forEach>
 																	</tbody>
 																</table>
+																	<table>
+																	<tfoot>
+																		<tr>
+																			<td colspan="6" class="footable-visible">
+																				<ul class="pagination float-right">
+																					<c:if test="${tradeCnt>0}">
+																						<c:if test="${tradeStartPage > tradePageBlock}">
+																							<li class="footable-page-arrow disabled">
+																							<a class="page" data-page="first" href="stock?stockPageNum=${stockPageNum}">«</a>
+																							</li>
+																							<li class="footable-page-arrow disabled">
+																								<a class="page" data-page="prev" href="stock?tradePageNum=${tradeStartPage - tradePageBlock}&stockPageNum=${stockPageNum}">‹</a>
+																							</li>
+																						</c:if>
+																							
+																						<c:forEach var="i" begin="${tradeStartPage}" end="${tradeEndPage}">
+																						
+																							<c:if test="${i == tradePageNum}">
+																								<li class="footable-page active">
+																									<a data-page="0">${i}</a>
+																								</li>
+																							</c:if>
+																							
+																							<c:if test="${i != tradePageNum}">
+																								<li class="footable-page">
+																									<a class="page" data-page="1" href="stock?tradePageNum=${i}&stockPageNum=${stockPageNum}">${i}</a>
+																								</li>
+																							</c:if>	
+																						</c:forEach>
+																						
+																						<c:if test="${tradePageCount > tradeEndPage}">
+																							<li class="footable-page-arrow">
+																								<a class="page" data-page="next" href="stock?tradePageNum=${tradeStartPage + tradePageBlock}&stockPageNum=${stockPageNum}">›</a>
+																							</li>
+																							<li class="footable-page-arrow">
+																								<a class="page" data-page="last" href="stock?tradePageNum=${tradePageCount}&stockPageNum=${stockPageNum}">»</a>
+																							</li>
+																						</c:if>
+																					</c:if>
+																				</ul>
+																			</td>
+																		</tr>
+																	</tfoot>
+																</table>
 															</form>
-															<table>
-																<tfoot>
-																	<tr>
-																		<td colspan="6" class="footable-visible">
-																			<ul class="pagination float-right">
-																				<li class="footable-page-arrow disabled"><a
-																					data-page="first" href="#first">«</a></li>
-																				<li class="footable-page-arrow disabled"><a
-																					data-page="prev" href="#prev">‹</a></li>
-																				<li class="footable-page active"><a data-page="0"
-																					href="#">1</a></li>
-																				<li class="footable-page"><a data-page="1" href="#">2</a></li>
-																				<li class="footable-page-arrow"><a data-page="next"
-																					href="#next">›</a></li>
-																				<li class="footable-page-arrow"><a data-page="last"
-																					href="#last">»</a></li>
-																			</ul>
-																		</td>
-																	</tr>
-																</tfoot>
-															</table>
 														</div>
-														<div class="col-lg-9 animated fadeInRight" style="width: 70%">
+														<div class="col-lg-9 animated fadeInRight" style="width: 70%; border: none;">
 									
-															<div class="ibox-content" style="margin: 0px; padding: 0px;">
+															<div class="ibox-content" style="margin: 0px; padding: 0px;  border: none;">
 									
 																<form action="deleteStockAction" method="post"
 																	onsubmit="return deleteStock();">
@@ -424,22 +447,47 @@ $("docuemnt").ready(function() {
 																		<tr>
 																			<td colspan="6" class="footable-visible">
 																				<ul class="pagination float-right">
-																					<li class="footable-page-arrow disabled"><a
-																						data-page="first" href="#first">«</a></li>
-																					<li class="footable-page-arrow disabled"><a
-																						data-page="prev" href="#prev">‹</a></li>
-																					<li class="footable-page active"><a data-page="0"
-																						href="#">1</a></li>
-																					<li class="footable-page"><a data-page="1" href="#">2</a></li>
-																					<li class="footable-page-arrow"><a data-page="next"
-																						href="#next">›</a></li>
-																					<li class="footable-page-arrow"><a data-page="last"
-																						href="#last">»</a></li>
+																					<c:if test="${stockCnt>0}">
+																					
+																						<c:if test="${stockStartPage > stockPageBlock}">
+																							<li class="footable-page-arrow disabled">
+																							<a class="page" data-page="first" href="stock?tradePageNum=${tradePageNum}">«</a>
+																							</li>
+																							<li class="footable-page-arrow disabled">
+																								<a class="page" data-page="prev" href="stock?stockPageNum=${stockStartPage - stockPageBlock}&tradePageNum=${tradePageNum}">‹</a>
+																							</li>
+																						</c:if>
+																							
+																						<c:forEach var="i" begin="${stockStartPage}" end="${stockEndPage}">
+																						
+																							<c:if test="${i == stockPageNum}">
+																								<li class="footable-page active">
+																									<a data-page="0">${i}</a>
+																								</li>
+																							</c:if>
+																							
+																							<c:if test="${i != stockPageNum}">
+																								<li class="footable-page">
+																									<a class="page" data-page="1" href="stock?stockPageNum=${i}&tradePageNum=${tradePageNum}">${i}</a>
+																								</li>
+																							</c:if>	
+																						</c:forEach>
+																						
+																						<c:if test="${stockPageCount > stockEndPage}">
+																							<li class="footable-page-arrow">
+																								<a class="page" data-page="next" href="stock?stockPageNum=${stockStartPage + stockPageBlock}&tradePageNum=${tradePageNum}">›</a>
+																							</li>
+																							<li class="footable-page-arrow">
+																								<a class="page" data-page="last" href="stock?stockPageNum=${stockPageCount}&tradePageNum=${tradePageNum}">»</a>
+																							</li>
+																						</c:if>
+																					</c:if>
 																				</ul>
 																			</td>
 																		</tr>
 																	</tfoot>
 																</table>
+				
 															</div>
 														</div>
 													</div>

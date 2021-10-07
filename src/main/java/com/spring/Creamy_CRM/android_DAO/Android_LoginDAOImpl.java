@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.IncomeStatementVO;
+import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
 
@@ -62,6 +63,12 @@ public class Android_LoginDAOImpl implements Android_LoginDAO{
 		Android_LoginDAO dao = sqlSession.getMapper(Android_LoginDAO.class);
 		return dao.getSettlement(map);
 	}
+	
+	@Override
+    public ReservationVO getReservationVO(Map<String, Object> map) {
+        Android_LoginDAO dao = sqlSession.getMapper(Android_LoginDAO.class);
+        return dao.getReservationVO(map);
+    }
 
 	// 비밀번호 변경
 	@Override

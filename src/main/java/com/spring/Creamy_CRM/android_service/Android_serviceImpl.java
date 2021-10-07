@@ -26,6 +26,7 @@ import com.spring.Creamy_CRM.VO.AttendanceVO;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.IncomeStatementVO;
+import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.WorkingHoursVO;
 import com.spring.Creamy_CRM.VO.userVO;
 import com.spring.Creamy_CRM.android_DAO.Android_LoginDAOImpl;
@@ -552,6 +553,36 @@ public class Android_serviceImpl implements Android_service{
 		return map;
 		
 	}
+	
+	// 관리자페이지 - 예약목록 조회
+    @Override
+    public Map<String, Object> getResList(HttpServletRequest req) {
+        
+	    String host_id = req.getParameter("host_id");
+	    System.out.println("host_id : " + host_id);
+	    
+	    // host_code 가져오기
+	    String host_code = dao_Android_login.getCode(host_id);
+	    
+	    Map<String, Object> map1 = new HashMap<String, Object>();
+	    map1.put("host_code", host_code);
+	    System.out.println("host_code : " + host_code);
+	    
+	    
+	    // 사장님별 예약목록 조회
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    ReservationVO vo = dao_Android_login.getReservationVO(map1);
+	    
+	    map.put("res_code", vo.getRes_code());
+	    map.put("user_id", vo.getUser_id());
+	    map.put("employee_code", vo.getEmployee_code());
+	    map.put("res_state", vo.getRes_state());
+	    map.put("res_hour", vo.getRes_hour());
+	    map.put("res_date", vo.getRes_date());
+	    
+	    
+	    return map;
+    }
 	
 	
 
