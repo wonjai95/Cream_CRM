@@ -8,6 +8,7 @@
 package com.spring.Creamy_CRM.android_Controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.Creamy_CRM.Host_service.LoginServiceImpl;
+import com.spring.Creamy_CRM.VO.ReviewVO;
 import com.spring.Creamy_CRM.android_service.Android_service;
 import com.spring.Creamy_CRM.android_service.Android_serviceImpl;
 
@@ -154,4 +156,13 @@ public class AndroidController {
     }
 
 
+	//리뷰
+	@ResponseBody
+	@RequestMapping("android/androidUserReview")
+	public List<ReviewVO> androidUserReview(HttpServletRequest req){
+		log.info("androidUserReview()");
+		System.out.println("url -> 안드로이드 리뷰");
+		return service_android.reviewListFromStore(req);
+	}
+	
 }
