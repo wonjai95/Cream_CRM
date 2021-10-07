@@ -212,6 +212,7 @@ public class MainwebServiceImpl implements MainwebService {
 		// 3단계. 화면으로부터 입력받은 값(= hidden값)을 받아온다.
 		String res_state = "예약취소";
 		String res_code = req.getParameter("res_code");
+		System.out.println("res_code : " + res_code);
 		
 		// reservationVO vo 바구니 생성
 		ReservationVO vo = new ReservationVO();

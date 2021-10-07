@@ -16,12 +16,12 @@
 	<script src="${path}/resources/user/js/modifyUser.js"></script>
 	<script type="text/javascript" src="${path}/resources/host/js/custBooking.js"></script>
 	<script type="text/javascript">
-		function deleteBooking() {		
+		function deleteBook() {		
 				var isTrue = confirm("해당 예약내역을 취소하시겠습니까?");
 				
 				if(isTrue==true){
 					alert('좋아요');
-					return true;
+					window.location="deleteBooking";
 				} else {
 					return false;
 				}
@@ -41,7 +41,7 @@
          <div class="row mt-5 justify-content-center">
          	<div class="col-lg-10">
          	<%-- <form method="post" name="modifyUser" role="form" class="php-email-form">  --%>
-         	 	<form action="deleteBooking" method="post" id="deleteBooking" class="php-email-form">
+         	 	<form action="deleteBooking" onsubmit="return deleteBook();" method="post" id="deleteBooking" class="php-email-form">
          	 	<sec:csrfInput/>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
          	 	<input type="hidden" name="res_code" value="${res_code}">
@@ -206,15 +206,12 @@
                         <!-- col-lg-6 끝 -->
                		
                		<div class="text-center">
-		              <button type="submit" style="font-size: 16px"
-		              			
-		              			onclick="return deleteBooking();">
+		              <button type="submit" style="font-size: 16px">
 		              			예약 취소 및 환불
 					  </button>
-					  <button type="submit" style="font-size: 16px"
-		              			formaction="mypage_reservation" form="" onclick="">
+					  <input type="submit" style="font-size: 16px"
+		              			formaction="mypage_reservation">
 		              			예약내역목록
-					  </button>
 		            </div>
               
          	 	</form>
