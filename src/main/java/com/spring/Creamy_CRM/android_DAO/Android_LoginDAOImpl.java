@@ -63,4 +63,11 @@ public class Android_LoginDAOImpl implements Android_LoginDAO{
 		return dao.getSettlement(map);
 	}
 
+	// 비밀번호 변경
+	@Override
+	public int updatePW(Map<String, Object> map) {
+		
+		return sqlSession.update("com.spring.Creamy_CRM.android_DAO.Android_LoginDAO.updatePW", map);
+	}
+
 }

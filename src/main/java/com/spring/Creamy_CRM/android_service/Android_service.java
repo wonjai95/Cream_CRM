@@ -33,5 +33,11 @@ public interface Android_service {
 	// QR
 	public Map<String, Object> getQrCode(HttpServletRequest req);
 
+	// 비밀번호 변경전 비번 확인
+	public Map<String, Object> modifyPW(HttpServletRequest req);
+	
+	// 비밀번호 변경
+	public Map<String, Object> updatePW(HttpServletRequest req);
+	
 
 }

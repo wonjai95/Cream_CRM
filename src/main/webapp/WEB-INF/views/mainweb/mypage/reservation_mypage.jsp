@@ -64,7 +64,7 @@
 	                        <td> ${dto.res_date} - ${dto.res_hour} 시</td>
 	                        <td> ${dto.res_state}</td>
 	                        <td>
-	                        	<c:if test="${dto.res_state eq '서비스 완료' && dto.res_review_chk eq 'N'}">
+	                        	<c:if test="${dto.res_state eq '서비스 완료' && dto.res_state eq '예약완료' && dto.res_review_chk eq 'N'}">
 	                        	<input type="radio" id="${dto.res_code}" name ="check_form" value="${dto.res_code}" style="display: none;" >
 	                        		<a data-toggle="modal" class="btn btn-primary" href="#modal-form" onclick="check_radio('${dto.res_code}');">후기 등록</a>
 	                        		 <div id="modal-form" class="modal fade" aria-hidden="true">

@@ -38,6 +38,13 @@
   		 WHERE host_code = #{host_code}
   		   AND TO_CHAR(is_reg_date, 'YYYY-MM') = '2021-10'
   	</select>
+  	
+  	<!-- 비밀번호 업데이트 -->
+  	<update id="updatePW" parameterType="java.util.Map">
+  		UPDATE Auth_tbl
+  		   SET password = #{pw}
+  		 WHERE ID = #{id}
+  	</update>
 	
 
 </mapper>

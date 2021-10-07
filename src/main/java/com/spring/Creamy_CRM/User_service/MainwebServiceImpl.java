@@ -201,6 +201,7 @@ public class MainwebServiceImpl implements MainwebService {
 		req.setAttribute("mdto", mvo);
 		req.setAttribute("rdto", rvo);
 		req.setAttribute("res_code", res_code);
+		model.addAttribute("res_code", res_code);
 	}
 	
 	
@@ -224,7 +225,12 @@ public class MainwebServiceImpl implements MainwebService {
 		int deleteCnt = dao.deleteActionByUser(vo);
 		System.out.println("deleteCnt : " + deleteCnt);
 		
+		int deleteCnt2 = dao_sale.deletePay(res_code);
+		System.out.println("deleteCnt2 : " + deleteCnt2);
+		
 		model.addAttribute("deleteCnt", deleteCnt);
+		model.addAttribute("deleteCnt2", deleteCnt2);
+		model.addAttribute("res_code", res_code);
 	}
 
 	// 결제처리

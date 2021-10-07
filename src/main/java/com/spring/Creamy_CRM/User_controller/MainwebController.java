@@ -353,7 +353,7 @@ public class MainwebController {
    public String showBookingDetail(HttpServletRequest req, Model model) {
       logger.info("url -> showBookingDetail");
       
-      service.getBookingDetail(req, model);
+      service.getBookingDetail(req, model);   
       
       //service_review.getReservationList(req, model);
       return "mainweb/mypage/showBookingDetail";
@@ -364,7 +364,7 @@ public class MainwebController {
    public String deleteBooking(HttpServletRequest req, Model model) {
       logger.info("url -> deleteBooking");
       
-      //service.deleteActionByUser(req, model);
+      service.deleteActionByUser(req, model);
       
       return "mainweb/mypage/deleteBooking";
    }

@@ -31,4 +31,7 @@ public interface Android_LoginDAO {
 	// 손익계산서 조회
 	public IncomeStatementVO getSettlement(Map<String, Object> map);
 	
+	// 비밀번호 변경
+	public int updatePW(Map<String, Object> map);
+	
 }

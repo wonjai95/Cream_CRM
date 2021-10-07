@@ -45,11 +45,11 @@
 	</select>
   
   <!-- 예약상세정보 내 예약내역취소 처리 -->
-	<!-- <update id="deleteActionByUser" parameterType="com.spring.Creamy_CRM.VO.ReservationVO">
+	<update id="deleteActionByUser" parameterType="com.spring.Creamy_CRM.VO.ReservationVO">
 			UPDATE reservation_tbl
 			   SET res_state = #{res_state}
 			 WHERE res_code = #{res_code}
-	</update> -->
+	</update>
   
   
   </mapper>
