@@ -11,7 +11,7 @@
 <c:if test="${insertCnt == 1}">
 	<script type="text/javascript">
 		alert("예약에 성공했습니다.");
-		window.location='mypage';
+		window.location='mypage_reservation';
 	</script>
 </c:if>
 <c:if test="${insertCnt == 0}">
