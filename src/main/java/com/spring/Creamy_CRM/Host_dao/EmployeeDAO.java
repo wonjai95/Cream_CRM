@@ -68,7 +68,7 @@ public interface EmployeeDAO {
 	public int deleteAttendance(String attendance_code);
 	
 	// 직원의 휴가 정보
-	public ArrayList<LeaveVO> getLeaveList(String employee_code);
+	public ArrayList<LeaveVO> getLeaveList(Map<String, Object> map);
 	
 	// 직원의 해당 휴가 정보
 	public LeaveVO getLeaveInfo(String leave_code);
@@ -95,7 +95,7 @@ public interface EmployeeDAO {
 	public int insertPayment(SalaryVO vo);
 	
 	// 직원 급여 지급 정보
-	public ArrayList<SalaryVO> getPaymentList(String employee_code);
+	public ArrayList<SalaryVO> getPaymentList(Map<String, Object> map);
 	
 	// 직원 급여 지급 삭제
 	public int deletePayment(String salary_code);
