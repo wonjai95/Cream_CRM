@@ -46,13 +46,30 @@
   		   SET password = #{pw}
   		 WHERE ID = #{id}
   	</update>
-
-  	<select id="getReservationVO" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+  	
+  	<!-- host_code를 이용한 comp_res 가져오기 -->
+  	<select id="getCompRes" parameterType="String" resultType="String">
+		SELECT comp_res
+		  FROM company_tbl
+		 WHERE host_code = #{host_code}
+	</select>
+	<!-- 관리자페이지 예약목록 조회 -->
+	<!-- 담당자 예약 조회 -->
+  	<select id="getManagerResList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
         SELECT *
-          FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt
-         WHERE h.host_code = r.host_code
+          FROM reservation_tbl r, company_tbl c
+         WHERE r.host_code = c.host_code
+           AND c.host_code = #{host_code}
+	  ORDER BY r.res_code DESC, r.res_date DESC
+    </select>
+    <!-- 호실 예약 조회 -->
+    <select id="getRoomResList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+        SELECT *
+          FROM reservation_tbl r, company_tbl c, room_setting_tbl rst, reservation_detail_tbl rdt
+         WHERE rst.room_setting_code = r.room_setting_code
            AND rdt.res_detail_code = r.res_detail_code
-           AND h.host_code = #{host_code}
+           AND c.host_code = r.host_code
+           AND r.host_code = #{host_code}
 	  ORDER BY r.res_code DESC, r.res_date DESC
     </select>
 

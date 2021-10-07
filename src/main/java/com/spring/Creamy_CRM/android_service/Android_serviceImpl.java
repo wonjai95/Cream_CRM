@@ -589,14 +589,24 @@ public class Android_serviceImpl implements Android_service{
 	    map1.put("host_code", host_code);
 	    System.out.println("host_code : " + host_code);
 	    
-	    List<ReservationVO> list = dao_Android_login.getReservationVO(map1);
+	    // comp_res 가져오기
+	    String comp_res = dao_Android_login.getCompRes(host_code);
+	    System.out.println("comp_res : " + comp_res);
+
+	    if(comp_res.equals("담당자")) {
+	    	System.out.println("=== 담당자 예약목록 시작 ===");
+	    	List<ReservationVO> mngList = dao_Android_login.getManagerResList(map1);
+	    	return mngList;
+	    } else {
+	    	System.out.println("=== 호실 예약목록 시작 ===");
+	    	List<ReservationVO> roomList = dao_Android_login.getRoomResList(map1);
+	    	return roomList;
+	    }
 	   /*
 	    for (int i = 0; i < list.size(); i++) {
 	    	System.out.println(list.get(i).getRes_date());
 		}
-	    */
-	    
-	    return list;	    
+	    */	    
     }
 
 	
