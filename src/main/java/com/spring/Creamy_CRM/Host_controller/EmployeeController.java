@@ -126,6 +126,16 @@ public class EmployeeController {
 		return "host/employee/employee_leaveList";
 	}
 	
+	// 직원 휴가 선택 년도 조회
+	@RequestMapping("host/annual_leaveList")
+	public String annual_leaveList(HttpServletRequest req, Model model) {
+		logger.info("url -> annual_leaveList");
+		
+		service.leaveAnnualList(req, model);
+		
+		return "host/employee/annual_leaveList";
+	}
+	
 	// 직원 휴가 수정 페이지
 	@RequestMapping("host/employee_getLeaveInfo")
 	public String employee_getLeaveInfo(HttpServletRequest req, Model model) {
@@ -189,10 +199,21 @@ public class EmployeeController {
 	// 급여 지급 조회
 	@RequestMapping("host/employee_paymentList")
 	public String employee_payment(HttpServletRequest req, Model model) {
+		logger.info("url -> employee_paymentList");
 		
 		service.paymentList(req, model);
 		
 		return "host/employee/employee_paymentList";
+	}
+	
+	// 급여 지급 선택 년도 조회
+	@RequestMapping("host/annual_paymentList")
+	public String annual_paymentList(HttpServletRequest req, Model model) {
+		logger.info("url -> annual_paymentList");
+		
+		service.paymentAnnualList(req, model);
+		
+		return "host/employee/annual_paymentList";
 	}
 	
 	// 직원 급여 지급 삭제

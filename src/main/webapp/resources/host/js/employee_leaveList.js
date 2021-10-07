@@ -52,6 +52,7 @@ $("document").ready(function(){
     		}
     	}
     });
+    
 });    
  
     // select box 연도 , 월 표시
@@ -73,3 +74,5 @@ $("document").ready(function(){
         $("#YEAR").val(currentYear).attr("selected", "selected");
         
     }
+    
+    
