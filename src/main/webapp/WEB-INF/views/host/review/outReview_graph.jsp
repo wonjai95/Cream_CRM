@@ -13,7 +13,7 @@
 
 </head>
 <body>
-	<h5>Line Chart Example </h5>
+	<h5>추적중인 후기 순위 변동 그래프 </h5>
    <div class="ibox-content">
        <div id="morris-one-line-chart"></div>
    </div>

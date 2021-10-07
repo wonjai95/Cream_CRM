@@ -128,11 +128,15 @@ public class Android_serviceImpl implements Android_service{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		// 해당 아이디의 employee_code 찾기
+		String employee_code = dao_emp.getEmpCode(id);
+		System.out.println("employee_code : " + employee_code);
+		
 		
 		//회원정보 조회 ->사장 &직원의 경우 테이블 다르기 때문에 auth 한번더 확인해주기
-		userVO vo = dao_Android_login.getUserInfo(id);
+		EmployeeVO vo = dao_emp.getEmployeeDetail(employee_code);
 		
-		map.put("name",vo.getUser_name());
+		map.put("name",vo.getEmployee_name());
 		map.put("Auth", "ROLE_USER");
 		map.put("Host", null);
 		map.put("Employee", null);
@@ -333,7 +337,7 @@ public class Android_serviceImpl implements Android_service{
 				vo.setLateChk("0");
 				
 			// 정해진 날짜에 출근할 경우
-			} else {
+			} {
 				// 지각 기준 시간
 				int late = Integer.parseInt(work_vo.getLate_criteria());
 				
