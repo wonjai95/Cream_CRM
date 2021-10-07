@@ -37,8 +37,14 @@ public interface Android_LoginDAO {
 	// 비밀번호 변경
 	public int updatePW(Map<String, Object> map);
 
-	//관리자페이지 - 예약
-	public List<ReservationVO> getReservationVO(Map<String, Object> map);
+	// host_code를 이용한 comp_res 가져오기
+	public String getCompRes(String host_code);
+	// 관리자페이지
+	// 담당자 예약 조회
+	public List<ReservationVO> getManagerResList(Map<String, Object> map);
+	// 호실 예약 조회
+	public List<ReservationVO> getRoomResList(Map<String, Object> map);
 
+	
 	
 }
