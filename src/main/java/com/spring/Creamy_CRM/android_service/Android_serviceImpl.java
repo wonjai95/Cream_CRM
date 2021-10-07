@@ -46,6 +46,8 @@ public class Android_serviceImpl implements Android_service{
 	@Autowired
 	EmployeeDAOImpl dao_emp;
 	
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public Map<String, String> login(HttpServletRequest req) {
@@ -477,6 +479,79 @@ public class Android_serviceImpl implements Android_service{
 		map.put("net_income", vo.getNet_income());
 		
 		return map;
+	}
+
+
+	// 비밀번호 변경 전 비밀번호 확인
+	@Override
+	public Map<String, Object> modifyPW(HttpServletRequest req) {
+		
+		System.out.println("service ==> modifyPW");
+
+		// 안드로이드에서 전달한 값
+		String id = req.getParameter("m_id");
+		String pw = req.getParameter("m_pw");
+		
+		//비밀번호 확인
+		String pwd = dao_Android_login.getPw(id);
+		
+		boolean pwcheck = bcryptPassword.matches(pw, pwd);
+		System.out.println("비번 확인 : " + pwcheck);
+		
+		String chkCnt;
+		if(pwcheck) {
+			chkCnt = "1";
+		} else {
+			chkCnt = "0";
+		}
+
+		// 웹에서 안드로이드로 전달할 값 
+		//map key에 안드로이드의 vo 변수명과 일치하면 넘어가는듯
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("pw", null);
+		map.put("pw2", null);
+		map.put("chkCnt", chkCnt);
+		map.put("updateCnt", null);
+		
+		
+		return map;
+		
+	}
+
+	// 비밀번호 변경
+	@Override
+	public Map<String, Object> updatePW(HttpServletRequest req) {
+		System.out.println("service ==> updatePW");
+		
+		String pw = req.getParameter("updatePW1");
+		String pw2 = req.getParameter("updatePW2");
+		String id = req.getParameter("id");
+		System.out.println("pw : " + pw);
+		System.out.println("pw2 : " + pw2);
+		System.out.println("id : " + id);
+		
+		String bcryptPW = passwordEncoder.encode(pw);
+		String bcryptPW2 = passwordEncoder.encode(pw2);
+		System.out.println("bcryptPW : " + bcryptPW);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("pw", bcryptPW);
+		map.put("pw2", pw);
+		map.put("chkCnt", null);
+		
+		int updateCnt = 0;
+		if(pw.equals(pw2)) {
+			updateCnt = dao_Android_login.updatePW(map);
+		} else {
+			updateCnt = 0;
+		}
+		
+		map.put("updateCnt", updateCnt);
+		   
+		return map;
+		
 	}
 	
 	// 관리자페이지 - 예약목록 조회

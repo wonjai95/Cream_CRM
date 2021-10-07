@@ -40,18 +40,19 @@
         <!-- ======= 예약내역 폼 ======= -->
          <div class="row mt-5 justify-content-center">
          	<div class="col-lg-10">
-         	<!-- <form method="post" name="modifyUser" role="form" class="php-email-form"> -->
+         	<%-- <form method="post" name="modifyUser" role="form" class="php-email-form">  --%>
          	 	<form action="deleteBooking" method="post" id="deleteBooking" class="php-email-form">
          	 	<sec:csrfInput/>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+         	 	<input type="hidden" name="res_code" value="${res_code}">
          	 	
          			<div class="member-info" style="padding-left: 5px;">
          				<span style="font-size: 20px;">
          					<b>예약내역 확인</b>
          				</span><br><br>
-         				
          				<c:if test="${mdto.comp_res eq '담당자'}">
 	         				<small >예약 코드 : ${mdto.res_code} </small>
+	         				
 	         				<br>
 	         				<small>예약 상태 : ${mdto.res_state} </small>
          				</c:if>
@@ -206,24 +207,24 @@
                		
                		<div class="text-center">
 		              <button type="submit" style="font-size: 16px"
-		              			formaction="deleteBooking" form="deleteBooking"
+		              			
 		              			onclick="return deleteBooking();">
-		              			예약내역 취소
+		              			예약 취소 및 환불
 					  </button>
 					  <button type="submit" style="font-size: 16px"
-		              			formaction="" form="" onclick="">
+		              			formaction="mypage_reservation" form="" onclick="">
 		              			예약내역목록
 					  </button>
 		            </div>
               
          	 	</form>
          	 	
-         	 	<!-- <div class="text-center">
+         	 	<%-- <div class="text-center">
 		              <button type="submit" style="font-size: 16px"
 		              			formaction="deleteBooking" form="deleteBooking" onclick="return deleteBooking();">
 		              			예약내역 취소
 					  </button> (이거 지금 작동됨[9.29/20:00])
-		            </div> -->
+		            </div> --%>
          	 	
          	 </div>
          </div>

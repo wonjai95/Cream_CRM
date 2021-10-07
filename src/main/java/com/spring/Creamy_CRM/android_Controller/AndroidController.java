@@ -116,6 +116,31 @@ public class AndroidController {
 		return map;
 	}
 	
+
+	// 관리자 비밀번호 변경 전 현재 비번 체크
+	@ResponseBody // 웹(스프링)에서 안드로이드로 값(json)을 전달하기 위한 어노테이션
+	@RequestMapping("android/androidModifyPW")
+	public Map<String, Object> androidModifyPW(HttpServletRequest req){
+		log.info("androidModifyPW()");
+		System.out.println("url -> 안드로이드 비밀번호 확인");
+		
+		Map<String, Object> map = service_android.modifyPW(req);
+		
+		return map;
+	}
+	
+	// 관리자 비밀번호 변경
+	@ResponseBody // 웹(스프링)에서 안드로이드로 값(json)을 전달하기 위한 어노테이션
+	@RequestMapping("android/androidupdatePW")
+	public Map<String, Object> androidupdatePW(HttpServletRequest req){
+		log.info("androidupdatePW()");
+		System.out.println("url -> 안드로이드 비밀번호 변경");
+		
+		Map<String, Object> map = service_android.updatePW(req);
+		
+		return map;
+	}
+
 	// 앱 관리자페이지 => 예약목록 조회하기
     @ResponseBody
     @RequestMapping("android/androidReservationList")
@@ -127,5 +152,6 @@ public class AndroidController {
         
         return map;
     }
+
 
 }
