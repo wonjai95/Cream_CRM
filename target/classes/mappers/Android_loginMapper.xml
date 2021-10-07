@@ -38,6 +38,24 @@
   		 WHERE host_code = #{host_code}
   		   AND TO_CHAR(is_reg_date, 'YYYY-MM') = '2021-10'
   	</select>
+  	
+
+  	<!-- 비밀번호 업데이트 -->
+  	<update id="updatePW" parameterType="java.util.Map">
+  		UPDATE Auth_tbl
+  		   SET password = #{pw}
+  		 WHERE ID = #{id}
+  	</update>
+
+  	<select id="getReservationVO" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
+        SELECT *
+          FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt
+         WHERE h.host_code = r.host_code
+           AND rdt.res_detail_code = r.res_detail_code
+           AND h.host_id = #{host_id}
+	  ORDER BY r.res_code DESC, r.res_date DESC
+    </select>
+
 	
 
 </mapper>

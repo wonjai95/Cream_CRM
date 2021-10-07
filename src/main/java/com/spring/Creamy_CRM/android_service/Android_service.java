@@ -40,4 +40,16 @@ public interface Android_service {
 	public List<ReviewVO> reviewListFromStore(HttpServletRequest req);
 
 
+	// 비밀번호 변경전 비번 확인
+	public Map<String, Object> modifyPW(HttpServletRequest req);
+	
+	// 비밀번호 변경
+	public Map<String, Object> updatePW(HttpServletRequest req);
+	
+
+	
+	// 관리자페이지 - 예약목록 조회
+    public Map<String, Object> getResList(HttpServletRequest req);
+
+
 }

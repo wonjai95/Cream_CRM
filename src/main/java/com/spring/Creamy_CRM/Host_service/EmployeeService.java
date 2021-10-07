@@ -44,6 +44,9 @@ public interface EmployeeService {
 	// 직원 휴가 목록 조회
 	public void leaveList(HttpServletRequest req, Model model);
 	
+	// 직원 휴가 선택 년도 조회
+	public void leaveAnnualList(HttpServletRequest req, Model model);
+	
 	// 수정할 휴가 정보 가져오기
 	public void getLeaveInfo(HttpServletRequest req, Model model);
 	
@@ -64,6 +67,9 @@ public interface EmployeeService {
 	
 	// 직원 급여 지금 목록 조회
 	public void paymentList(HttpServletRequest req, Model model);
+	
+	// 직원 급여 지급 선택 년도 목록 조회
+	public void paymentAnnualList(HttpServletRequest req, Model model);
 	
 	// 직원 급여 지급 삭제
 	public void deletePayment(HttpServletRequest req, Model model);

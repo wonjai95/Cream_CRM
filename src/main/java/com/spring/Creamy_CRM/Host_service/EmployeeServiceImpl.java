@@ -312,12 +312,36 @@ public class EmployeeServiceImpl implements EmployeeService {
 		String curYear = req.getParameter("curYear");
 		System.out.println("curYear : " + curYear);
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employee_code", employee_code);
+		map.put("curYear", curYear);
+		
 		// 직원 휴가 정보 가져오기
-		ArrayList<LeaveVO> leaveList = dao.getLeaveList(employee_code);
+		ArrayList<LeaveVO> leaveList = dao.getLeaveList(map);
 		
 		model.addAttribute("leaveList", leaveList);
 		model.addAttribute("employee_code", employee_code);
 		model.addAttribute("curYear", curYear);
+	}
+	
+	// 직원 휴가 선택 년도 조회
+	public void leaveAnnualList(HttpServletRequest req, Model model) {
+		String employee_code = req.getParameter("employee_code");
+		System.out.println("employee_code : " + employee_code);
+		
+		String selectAnnual = req.getParameter("changeAnnual");
+		System.out.println("selectAnnual : " + selectAnnual);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employee_code", employee_code);
+		map.put("curYear", selectAnnual);
+		
+		// 직원 휴가 정보 가져오기
+		ArrayList<LeaveVO> leaveList = dao.getLeaveList(map);
+				
+		model.addAttribute("leaveList", leaveList);
+		model.addAttribute("employee_code", employee_code);
+		model.addAttribute("curYear", selectAnnual);
 	}
 	
 	// 수정할 휴가 정보 가져오기
@@ -500,10 +524,34 @@ public class EmployeeServiceImpl implements EmployeeService {
 		String curYear = req.getParameter("curYear");
 		System.out.println("curYear : " + curYear);
 		
-		ArrayList<SalaryVO> paymentList = dao.getPaymentList(employee_code);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employee_code", employee_code);
+		map.put("curYear", curYear);
+		
+		ArrayList<SalaryVO> paymentList = dao.getPaymentList(map);
 		
 		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("employee_code", employee_code);
 		model.addAttribute("curYear", curYear);
+	}
+	
+	// 직원 급여 지급 선택 년도 목록 조회
+	public void paymentAnnualList(HttpServletRequest req, Model model) {
+		String employee_code = req.getParameter("employee_code");
+		System.out.println("employee_code : " + employee_code);
+		
+		String selectAnnual = req.getParameter("changeAnnual");
+		System.out.println("selectAnnual : " + selectAnnual);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employee_code", employee_code);
+		map.put("curYear", selectAnnual);
+		
+		ArrayList<SalaryVO> paymentList = dao.getPaymentList(map);
+		
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("employee_code", employee_code);
+		model.addAttribute("curYear", selectAnnual);
 	}
 	
 	// 직원 급여 지급 삭제

@@ -117,6 +117,15 @@ public class CRMuserServiceImpl implements CRMuserService {
 		}
 		System.out.println("insertCnt : " + insertCnt);
 		
+		//결혼기념일
+		java.sql.Date w_date = new Date(System.currentTimeMillis());
+	    String wedding_String = req.getParameter("modify_wedding");
+	    System.out.println("we: "+wedding_String);
+	    if(wedding_String.length() > 1) {
+	    	w_date = java.sql.Date.valueOf(wedding_String);
+		    System.out.println("결혼기념일 : "+w_date);
+	    }
+		
 		
 		//회원 테이블 update   
 		userVO vo = new userVO();
@@ -129,7 +138,7 @@ public class CRMuserServiceImpl implements CRMuserService {
 		vo.setZipcode(zipcode);
 		vo.setUser_address(address);
 		vo.setUser_ph(user_phone);
-		vo.setWedding_anniversary(wedding_anniversary);
+		vo.setWedding_anniversary(w_date);
 		vo.setCar_number(car_number);
 		
 		int updateCnt = dao_user.updateUser(vo);

@@ -18,5 +18,12 @@
 		VALUES ('SL'||sale_seq.NEXTVAL, #{total_payment}, sysdate, #{payment_option}, #{sale_memo}, #{user_code}, #{employee_code, jdbcType=VARCHAR}, #{product_code, jdbcType=VARCHAR}, #{credit_select}, #{credit_installment}, 'RS'||res_seq.CURRVAL)
 	</insert>   
 	
+	<!-- 환불 처리 -->
+	<delete id="deletePay" parameterType="com.spring.Creamy_CRM.VO.ReservationVO">
+		DELETE 
+		  FROM sale_tbl
+		 WHERE res_code = #{res_code}
+	</delete>
+	
   </mapper>
   
