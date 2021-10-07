@@ -128,6 +128,11 @@
   		WHERE user_id = #{user_id}
   	</update>
   	
+  	<select id="getEmpInfo" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+  		select * from employee_tbl
+  		where employee_id = #{id}
+  	</select>
+  	
   	
   
   </mapper>

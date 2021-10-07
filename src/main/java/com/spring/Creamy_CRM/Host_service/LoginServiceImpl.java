@@ -145,7 +145,6 @@ public class LoginServiceImpl implements LoginService {
 		req.getSession().setAttribute("name", name);
 		
 		
-		
 	}
 	
 	//회원정보 수정 페이지
@@ -498,11 +497,24 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 
-	
-	
-	
-	
-	
+	//직원 첫 로그인시 코드 받아오기
+	@Override
+	public void getEmpCode(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		
+		String id = (String) req.getSession().getAttribute("id");
+		String code = dao_login.getEmpInfo(id).getEmployee_code();
+		String name = dao_login.getEmpInfo(id).getEmployee_name();
+		System.out.println("user_code : "+code);
+		
+		String hostcode = dao_login.getEmpInfo(id).getHost_code();
+		
+		req.getSession().setAttribute("code", hostcode);
+		req.getSession().setAttribute("empcode", code);
+		req.getSession().setAttribute("name", name);
+		
+	}
+
 	
 	
 }//serviceimpl end

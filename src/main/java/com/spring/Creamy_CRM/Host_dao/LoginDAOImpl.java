@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
@@ -143,6 +144,11 @@ public class LoginDAOImpl implements LoginDAO {
 	@Override
 	public int updateUserInfo_notWedding(userVO vo) {
 		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.loginDAO.updateUserInfo_notWedding", vo);
+	}
+
+	@Override
+	public EmployeeVO getEmpInfo(String id) {
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.loginDAO.getEmpInfo",id);
 	}
 	
 
