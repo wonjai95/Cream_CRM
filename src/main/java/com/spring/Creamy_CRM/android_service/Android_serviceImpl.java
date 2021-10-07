@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +23,12 @@ import org.springframework.stereotype.Service;
 
 import com.spring.Creamy_CRM.Host_dao.EmployeeDAOImpl;
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
+import com.spring.Creamy_CRM.User_dao.UserReviewDAO;
 import com.spring.Creamy_CRM.VO.AttendanceVO;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.IncomeStatementVO;
+import com.spring.Creamy_CRM.VO.ReviewVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.WorkingHoursVO;
 import com.spring.Creamy_CRM.VO.userVO;
@@ -47,7 +50,11 @@ public class Android_serviceImpl implements Android_service{
 	EmployeeDAOImpl dao_emp;
 	
 	@Autowired
+	UserReviewDAO dao_re;
+
+  @Autowired
 	BCryptPasswordEncoder passwordEncoder;
+
 
 	@Override
 	public Map<String, String> login(HttpServletRequest req) {
@@ -486,6 +493,16 @@ public class Android_serviceImpl implements Android_service{
 	}
 
 
+
+	@Override
+	public List<ReviewVO> reviewListFromStore(HttpServletRequest req) {
+		String host_id = req.getParameter("host_id");
+		String host_code = dao_Android_login.getCode(host_id);
+		return dao_re.getStoreReviewList(host_code);
+	}
+	
+	
+
 	// 비밀번호 변경 전 비밀번호 확인
 	@Override
 	public Map<String, Object> modifyPW(HttpServletRequest req) {
@@ -587,6 +604,7 @@ public class Android_serviceImpl implements Android_service{
 	    
 	    return map;
     }
+
 	
 	
 
