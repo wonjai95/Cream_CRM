@@ -7,9 +7,12 @@
 */
 package com.spring.Creamy_CRM.android_service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.spring.Creamy_CRM.VO.ReviewVO;
 
 public interface Android_service {
 
@@ -32,6 +35,9 @@ public interface Android_service {
 
 	// QR
 	public Map<String, Object> getQrCode(HttpServletRequest req);
+	
+	//리뷰
+	public List<ReviewVO> reviewListFromStore(HttpServletRequest req);
 
 
 }
