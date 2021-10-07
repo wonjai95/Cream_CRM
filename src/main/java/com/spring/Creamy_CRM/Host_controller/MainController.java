@@ -51,6 +51,23 @@ public class MainController {
 		
 		return "host/home";
 	}
+	
+	//메인 홈 화면 -> 직원 첫 로그인
+	@RequestMapping("/host/fist_emphome")
+	public String fist_emphome(HttpServletRequest req, Model model) {
+		logger.info("url -> emp_firsthome");
+		
+		service_login.getEmpCode(req, model);
+		
+		service_login.updateOutReview(req, model);
+		
+		System.out.println(req.getSession().getAttribute("code"));
+		
+		service_login.HostmainPage(req, model);
+		
+		
+		return "host/home";
+	}
 
 
 }

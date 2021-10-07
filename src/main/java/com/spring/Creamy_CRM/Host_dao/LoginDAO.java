@@ -9,6 +9,7 @@ package com.spring.Creamy_CRM.Host_dao;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
@@ -50,6 +51,7 @@ public interface LoginDAO {
 	public HostVO getHostInfo(String id);
 	
 	//직원 정보 select
+	public EmployeeVO getEmpInfo(String id);
 	
 	
 	//회원 정보 update
