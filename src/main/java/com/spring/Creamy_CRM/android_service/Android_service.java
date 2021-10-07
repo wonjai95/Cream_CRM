@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ReviewVO;
 
 public interface Android_service {
@@ -49,7 +50,8 @@ public interface Android_service {
 
 	
 	// 관리자페이지 - 예약목록 조회
-    public Map<String, Object> getResList(HttpServletRequest req);
+	public List<ReservationVO> getResList(HttpServletRequest req);
+    //public Map<String, Object> getResList(HttpServletRequest req);
 
 
 }
