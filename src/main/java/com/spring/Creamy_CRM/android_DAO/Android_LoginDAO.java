@@ -1,5 +1,6 @@
 package com.spring.Creamy_CRM.android_DAO;
 
+import java.util.List;
 import java.util.Map;
 
 import com.spring.Creamy_CRM.VO.EmployeeVO;
@@ -37,7 +38,7 @@ public interface Android_LoginDAO {
 	public int updatePW(Map<String, Object> map);
 
 	//관리자페이지 - 예약
-    public ReservationVO getReservationVO(Map<String, Object> map);
+	public List<ReservationVO> getReservationVO(Map<String, Object> map);
 
 	
 }

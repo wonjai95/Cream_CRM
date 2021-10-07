@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.Creamy_CRM.Host_service.LoginServiceImpl;
+import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.ReviewVO;
 import com.spring.Creamy_CRM.android_service.Android_service;
 import com.spring.Creamy_CRM.android_service.Android_serviceImpl;
@@ -146,13 +147,13 @@ public class AndroidController {
 	// 앱 관리자페이지 => 예약목록 조회하기
     @ResponseBody
     @RequestMapping("android/androidReservationList")
-    public Map<String, Object> androidReservationList(HttpServletRequest req) {
+    public List<ReservationVO> androidReservationList(HttpServletRequest req) {
         log.info("androidReservationList()");
         System.out.println("url -> 안드로이드 예약목록 조회페이지");
         
-        Map<String, Object> map = service_android.getResList(req);
+        List<ReservationVO> list = service_android.getResList(req);
         
-        return map;
+        return list;
     }
 
 

@@ -577,8 +577,8 @@ public class Android_serviceImpl implements Android_service{
 	
 	// 관리자페이지 - 예약목록 조회
     @Override
-    public Map<String, Object> getResList(HttpServletRequest req) {
-        
+    public List<ReservationVO> getResList(HttpServletRequest req) {
+    	System.out.println("관리자 예약목록 시작합니다.");
 	    String host_id = req.getParameter("host_id");
 	    System.out.println("host_id : " + host_id);
 	    
@@ -589,20 +589,14 @@ public class Android_serviceImpl implements Android_service{
 	    map1.put("host_code", host_code);
 	    System.out.println("host_code : " + host_code);
 	    
+	    List<ReservationVO> list = dao_Android_login.getReservationVO(map1);
+	   /*
+	    for (int i = 0; i < list.size(); i++) {
+	    	System.out.println(list.get(i).getRes_date());
+		}
+	    */
 	    
-	    // 사장님별 예약목록 조회
-	    Map<String, Object> map = new HashMap<String, Object>();
-	    ReservationVO vo = dao_Android_login.getReservationVO(map1);
-	    
-	    map.put("res_code", vo.getRes_code());
-	    map.put("user_id", vo.getUser_id());
-	    map.put("employee_code", vo.getEmployee_code());
-	    map.put("res_state", vo.getRes_state());
-	    map.put("res_hour", vo.getRes_hour());
-	    map.put("res_date", vo.getRes_date());
-	    
-	    
-	    return map;
+	    return list;	    
     }
 
 	

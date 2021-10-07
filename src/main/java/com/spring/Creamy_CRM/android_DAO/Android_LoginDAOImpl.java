@@ -1,5 +1,6 @@
 package com.spring.Creamy_CRM.android_DAO;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -65,9 +66,11 @@ public class Android_LoginDAOImpl implements Android_LoginDAO{
 	}
 	
 	@Override
-    public ReservationVO getReservationVO(Map<String, Object> map) {
+    public List<ReservationVO> getReservationVO(Map<String, Object> map) {
         Android_LoginDAO dao = sqlSession.getMapper(Android_LoginDAO.class);
         return dao.getReservationVO(map);
+        
+        //return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.Android_LoginDAO.getReservationVO", id);
     }
 
 	// 비밀번호 변경

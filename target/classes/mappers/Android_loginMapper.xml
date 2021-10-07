@@ -52,7 +52,7 @@
           FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt
          WHERE h.host_code = r.host_code
            AND rdt.res_detail_code = r.res_detail_code
-           AND h.host_id = #{host_id}
+           AND h.host_code = #{host_code}
 	  ORDER BY r.res_code DESC, r.res_date DESC
     </select>
 
