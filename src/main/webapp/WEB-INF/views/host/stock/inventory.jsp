@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div id="tab-1" class="tab-pane active">
-		<div class="panel-body">
+		<div class="panel-body" style="border: none;">
 				<div class="ibox-content m-b-sm border-bottom">
 					<div class="row">
 						<div class="col-sm-2">
@@ -96,7 +96,7 @@
 						</div>
 						<div class="col-lg-9 animated fadeInRight" style="width: 60%">
 	
-							<div class="ibox-content" style="margin: 0px; padding: 0px;">
+							<div class="ibox-content" style="margin: 0px; padding: 0px; border: none;">
 	
 								<form action="" method="post">
 									<sec:csrfInput/>

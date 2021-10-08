@@ -20,23 +20,16 @@
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <div class="logo">
-        <h1><a href="home">Creamy</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="images/main/logo.png" alt="" class="img-fluid"></a>-->
+      <div class="logo" style="display: flex;">
+        <h1><a href="home" style="margin-left: 10px;">Creamy</a></h1>
       </div>
-
       <nav id="navbar" class="navbar">
         <ul>
 	      <c:if test="${sessionScope.name != null}">
           	<li><a href="mypage" class="nav-link scrollto">${sessionScope.name}</a></li>
           </c:if>
           <li><a class="nav-link scrollto active" href="home">Home</a></li>
-           <li class="dropdown"><a href=""><span>review</span> <i class="bi bi-chevron-down"></i></a>
-          	<ul>
-                  <li><a href="review_main">후기</a></li>
-                  <li><a href="my_review">내가 쓴 후기</a></li>
-          	</ul>
+           <li class="dropdown"><a href="review_main"><span>review</span></a>
           <li class="dropdown"><a href=""><span>Reservation</span> <i class="bi bi-chevron-down"></i></a>
           	<ul>
                   <li><a href="selectHost">고객 예약</a></li>

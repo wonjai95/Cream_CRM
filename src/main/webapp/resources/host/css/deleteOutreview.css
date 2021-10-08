@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'SEBANG_Gothic_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	background-color: #FFFFFF;
+	font-size: 13px;
+	font-family: SEBANG_Gothic_Regular;
+	color: #FFFFFF;
+	padding: 4px;
+}
+
+table {
+	border: 2px solid darkgray;
+	border-radius: 5px;
+	background-color: #FFFFFF;
+	font-size: 13px;
+}
+
+table input {
+	color: black;
+	width: 150px;
+}
+
+.input {
+	background-color: #FFFFFF;
+	border: 1px solid darkgray;
+}
+
+.inputButton {
+	background-color: #FFFFFF;
+	color: #CC3D3D;
+	width: 70px;
+	font-size: 11px;
+	margin: 3px;
+}
+
+th {
+	background-color: #FFFFFF;
+	color: black;
+	font-size: 13px;
+	border: 1px solid darkgray;
+	margin: 0px;
+	padding: 3px;
+	height: 35px;
+	width: 250px;
+}
+
+td {
+	background-color: whitesmoke;
+	color: #CC3D3D;
+	font-size: 11px;
+	border: 1px solid darkgray;
+	margin: 0px;
+	padding: 3px;
+	height: 35px;
+	width: 270px;
+}
+
+span {
+	font-size: 1.1em;
+	color: red;
+	font-weight: bold;
+}
+
+center {
+	color: #CC3D3D;
+	font-size: 1.1em;
+}
+
+.button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font-family: SEBANG_Gothic_Regular;
+	font: 14px/100%;
+	color: whitesmoke;
+	background-color: #FFFFFF;;
+	border-color: #FFEAEA;;
+	padding: .5em .5em .55em;
+	width: 70px;
+}
+
+.button:hover {
+	text-decoration: none;
+}
+
+.button:active {
+	position: relative;
+	top: 1px;
+}

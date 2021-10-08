@@ -16,7 +16,7 @@
 <c:if test="${updateCnt == 1}">
 	<script type="text/javascript">
 		window.alert("회원 정보 수정 성공!!");
-		window.location("user");
+		window.close();
 	</script>
 </c:if>
 <c:if test="${updateCnt == 0}">

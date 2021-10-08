@@ -26,7 +26,7 @@ public class userVO {
    private String bank_code;
    private String user_id;
    private String user_memo;
-   private String wedding_anniversary;
+   private Date wedding_anniversary;
    private String car_number;
 
    
@@ -80,7 +80,10 @@ public class userVO {
    // 예약
    private String res_code;
    private String room_setting_code;
-   
+
+   // 사장
+   private String host_code;
+   private String comp_res;
    
    public String getUser_code() {
       return user_code;
@@ -406,10 +409,10 @@ public class userVO {
 
 
    
-   public String getWedding_anniversary() {
+   public Date getWedding_anniversary() {
       return wedding_anniversary;
    }
-   public void setWedding_anniversary(String wedding_anniversary) {
+   public void setWedding_anniversary(Date wedding_anniversary) {
       this.wedding_anniversary = wedding_anniversary;
    }
    public String getCar_number() {
@@ -436,6 +439,21 @@ public class userVO {
    public void setRoom_setting_code(String room_setting_code) {
       this.room_setting_code = room_setting_code;
    }
+   
+   
+   
+	public String getHost_code() {
+		return host_code;
+	}
+	public void setHost_code(String host_code) {
+		this.host_code = host_code;
+	}
+	public String getComp_res() {
+		return comp_res;
+	}
+	public void setComp_res(String comp_res) {
+		this.comp_res = comp_res;
+	}
    
    
    

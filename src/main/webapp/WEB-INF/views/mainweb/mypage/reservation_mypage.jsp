@@ -64,7 +64,7 @@
 	                        <td> ${dto.res_date} - ${dto.res_hour} 시</td>
 	                        <td> ${dto.res_state}</td>
 	                        <td>
-	                        	<c:if test="${dto.res_state eq '서비스 완료' && dto.res_review_chk eq 'N'}">
+	                        	<c:if test="${dto.res_state eq '서비스 완료' && dto.res_state eq '예약완료' && dto.res_review_chk eq 'N'}">
 	                        	<input type="radio" id="${dto.res_code}" name ="check_form" value="${dto.res_code}" style="display: none;" >
 	                        		<a data-toggle="modal" class="btn btn-primary" href="#modal-form" onclick="check_radio('${dto.res_code}');">후기 등록</a>
 	                        		 <div id="modal-form" class="modal fade" aria-hidden="true">
@@ -90,7 +90,7 @@
 
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
+<!-- ======= Footer ======= -->
   <footer id="footer">
 
     <div class="footer-top">
@@ -100,26 +100,9 @@
         <div class="row  justify-content-center">
           <div class="col-lg-6">
             <h3>Creamy</h3>
-            <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
+            <p>123, Gasan digital 2-ro, Geumcheon-gu, Seoul, Republic of Korea</p>
           </div>
         </div>
-
-        <div class="row footer-newsletter justify-content-center">
-          <div class="col-lg-6">
-            <form action="" method="post">
-              <input type="email" name="email" placeholder="Enter your Email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-
-        <div class="social-links">
-          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-        </div>
-
       </div>
     </div>
 
@@ -128,10 +111,6 @@
         &copy; Copyright <strong><span>Creamy</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/vlava-free-bootstrap-one-page-template/ -->
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>

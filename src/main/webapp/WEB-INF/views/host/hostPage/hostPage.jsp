@@ -74,8 +74,11 @@
 										<div class="ibox-content">
 											<h2>마이페이지</h2>
 											<p class="font-bold">마이페이지</p>
+											
+											<iframe src="http://localhost:3000/hostInfoPage?host_code=${sessionScope.code}"  style="width: 1000px; height: 1000px;">
+											</iframe>
 
-											<form role="form" id="form" novalidate="novalidate">
+											<%-- <form role="form" id="form" novalidate="novalidate">
 
 												<div class="form-group">
 													<label>코드</label> <input type="text" class="form-control"
@@ -105,14 +108,7 @@
 													<label>번호</label> <input type="text" class="form-control"
 														readonly value="${hostVo.host_ph}">
 												</div>
-
-												<div>
-													<button class="btn btn-sm btn-primary m-t-n-xs"
-														type="submit">
-														<strong>Submit</strong>
-													</button>
-												</div>
-											</form>
+											</form> --%>
 										</div>
 									</div>
 								</div>

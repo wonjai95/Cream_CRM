@@ -5,8 +5,41 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Insert title here</title>
 <script type="text/javascript" src="${path}/resources/host/js/employee_leaveList.js"></script>
+<script>
+$("document").ready(function(){
+	$("#YEAR").change(function(){
+		
+		var header = $("meta[name='_csrf_header']").attr("content");
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var empCode = $("input[name=employee_code]").val();
+		var changeYear = $("#YEAR").val();
+		
+		console.log("empCode : " + empCode);
+		console.log("changeYear : " + changeYear);
+		
+		$.ajax({
+			url : "annual_leaveList",
+			type : "Post",
+			data : "employee_code="+empCode+"&changeAnnual="+changeYear,
+			beforeSend : function(jqXHR, settings) {
+		          console.log("beforesend 진행");
+		          jqXHR.setRequestHeader(header, token);
+		    },
+		    success : function(result){
+		    	$("#leaveList").html(result);
+		    },
+		    error : function(error){
+		    	alert("다시 시도해주세요.");
+		    }
+		});
+		
+	});
+});
+</script>
 </head>
 <body>
 <!-- 휴가탭 시작 -->
@@ -16,6 +49,7 @@
 	<input type="hidden" name="employee_code" value="${employee_code}">
 	<input type="hidden" name="leave_code" value="0">
     
+    <form id="leaveform">
 	    <!-- 월선택 달력!!! -->
 		<div class="form-group" id="data_4" style="width:13%; margin-bottom:10px; display:inline-block;">
 			<div class="input-group date">
@@ -28,6 +62,7 @@
 			<a class="btn btn-default btn-rounded" id="leaveUpd_btn">수정</a>
 			<a class="btn btn-default btn-rounded" id="leaveDel_btn">삭제</a>
 		</div>
+	</form>
 	
 		<fieldset>
 		    <table class="table table-bordered" style="font-size:12px; text-align:center;">
@@ -45,7 +80,7 @@
 					</tr>
 				</thead>
 				
-				<tbody>
+				<tbody id=leaveList>
 					<c:forEach var="list2" items="${leaveList}">
 						<tr class="leave">
 						    <td>

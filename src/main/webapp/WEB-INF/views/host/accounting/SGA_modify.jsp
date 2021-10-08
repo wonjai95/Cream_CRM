@@ -19,7 +19,7 @@ body {
 </head>
 <body>
 	<div class="ibox-content">
-		<h3 style="font-size:20px;">전표 입력</h3>
+		<h3 style="font-size:20px;">전표 수정</h3>
    			<hr>
             <p class="small">
                             복리후생비,소모품비,수수료비용을 적어주세요.

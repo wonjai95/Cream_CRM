@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.Host_dao.CRMuserDAOImpl;
+import com.spring.Creamy_CRM.Host_dao.HostDao;
+import com.spring.Creamy_CRM.Host_dao.HostDaoImpl;
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
 import com.spring.Creamy_CRM.VO.ProductVO;
 import com.spring.Creamy_CRM.VO.userVO;
@@ -31,6 +33,9 @@ public class CRMuserServiceImpl implements CRMuserService {
 
 	@Autowired
 	LoginDAOImpl dao_login;
+	
+	@Autowired
+	HostDaoImpl dao_host;
 	
 	
 	// 선택된 회원 정보 출력
@@ -63,16 +68,10 @@ public class CRMuserServiceImpl implements CRMuserService {
 
 		List<userVO> list = new ArrayList<userVO>();
 		
-		String user_code = req.getParameter("user_code");
-		System.out.println("user_code : " + user_code);
-		String user_id = req.getParameter("user_id");
-		System.out.println("user_id : " + user_id);
-		
 		list = dao_user.printUsers();
 		
 		System.out.println("dto : " + list);
-		model.addAttribute("dto", list); // 상품 정보 넘겨주기
-		model.addAttribute("user_id", user_id);
+		model.addAttribute("dto", list); 
 		
 	}
 	
@@ -118,6 +117,15 @@ public class CRMuserServiceImpl implements CRMuserService {
 		}
 		System.out.println("insertCnt : " + insertCnt);
 		
+		//결혼기념일
+		java.sql.Date w_date = new Date(System.currentTimeMillis());
+	    String wedding_String = req.getParameter("modify_wedding");
+	    System.out.println("we: "+wedding_String);
+	    if(wedding_String.length() > 1) {
+	    	w_date = java.sql.Date.valueOf(wedding_String);
+		    System.out.println("결혼기념일 : "+w_date);
+	    }
+		
 		
 		//회원 테이블 update   
 		userVO vo = new userVO();
@@ -130,7 +138,7 @@ public class CRMuserServiceImpl implements CRMuserService {
 		vo.setZipcode(zipcode);
 		vo.setUser_address(address);
 		vo.setUser_ph(user_phone);
-		vo.setWedding_anniversary(wedding_anniversary);
+		vo.setWedding_anniversary(w_date);
 		vo.setCar_number(car_number);
 		
 		int updateCnt = dao_user.updateUser(vo);
@@ -147,15 +155,18 @@ public class CRMuserServiceImpl implements CRMuserService {
 	public void userSale(HttpServletRequest req, Model model) {
 		System.out.println("service => userSale");
 		
-		// 선택한 user_name 넘겨서 값 출력
-		String user_code = req.getParameter("user_code");
-		System.out.println("user_code : " + user_code);
+		userVO vo = new userVO();
 		
-		List<userVO> list = new ArrayList<userVO>();
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
 		
-		list = dao_user.userSale(user_code);
+		String comp_res = dao_host.getComp_res(host_code);
+		System.out.println("comp_res : " + comp_res);
 		
-		model.addAttribute("dto", list);
+		vo.setHost_code(host_code);
+		vo.setComp_res(comp_res);
+		model.addAttribute("comp_res", comp_res);
+		
 		
 	}   
 
@@ -186,21 +197,14 @@ public class CRMuserServiceImpl implements CRMuserService {
 		
 		String host_code = (String) req.getSession().getAttribute("code");
 		System.out.println("host_code : " + host_code);
-
 		
 		String user_code = req.getParameter("user_code");
 		String user_name = req.getParameter("user_name");
 		String user_ph = req.getParameter("user_ph");
 		
 		userVO vo = new userVO();
-		if(user_code.equals("null")) {
-			user_code = null;
-		}
 		if(user_name.equals("null")) {
 			user_name = null;
-		}
-		if(user_ph.equals("null")) {
-			user_ph = null;
 		}
 		
 		System.out.println("user_code : " + user_code);
@@ -212,10 +216,6 @@ public class CRMuserServiceImpl implements CRMuserService {
 		vo.setUser_ph(user_ph);
 		
 		List<userVO> list = dao_user.searchUserList(vo);
-		for (int i = 0; i < list.size(); i++) {
-			userVO vo2 = list.get(i);
-			System.out.println(vo2.getUser_id());
-		}
 		
 		return list;
 	}

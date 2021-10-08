@@ -85,8 +85,9 @@ $("document").ready(function() {
 		console.log("popupX : " + popupX);
 		console.log("popupY : " + popupY);
 		
-		var url = "SGA_modify?SGA_code=" + SGA_code;
-			window.open(url, "SGA_modify", "status=no, width=800, height=600, left="+ popupX + ", top="+ popupY);
+		// var url = "SGA_modify?SGA_code=" + SGA_code;
+		var url = "http://localhost:3000/SGA_modify?SGA_code=" + SGA_code;
+		window.open(url, "SGA_modify", "status=no, width=800, height=600, left="+ popupX + ", top="+ popupY);
 	});
 	
 	/*

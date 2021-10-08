@@ -49,6 +49,7 @@ public class StaticsController {
 	}
 	
 	// 판매통계
+	// 상품별 판매 현황(통계)
 	@RequestMapping("host/salesStatics")
 	public String salesStatics(HttpServletRequest req, Model model) {
 		logger.info("url -> salesStatics");
@@ -56,12 +57,16 @@ public class StaticsController {
 		return "host/statics/salesStatics";
 	}
 	
-	// 판매통계
-	@RequestMapping("host/salesTypeStatics")
-	public String salesTypeStatics(HttpServletRequest req, Model model) {
-		logger.info("url -> salesStatics");
+	// 담당자별 판매 현황(통계)
+	@RequestMapping("host/managerSalesStatics")
+	public String managerSalesStatics(HttpServletRequest req, Model model) {
+		logger.info("url -> managerSalesStatics");
 		
-		return "host/statics/salesTypeStatics";
+		// 담당자별 판매정보 목록 출력
+		service_statics.static_managerSales(req, model);
+		
+		// salesTypeStatics jsp파일 이름
+		return "host/statics/managerSalesStatics";
 	}
 
 }

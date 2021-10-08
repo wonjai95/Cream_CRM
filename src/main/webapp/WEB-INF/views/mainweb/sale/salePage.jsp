@@ -40,12 +40,28 @@
   <script type="text/javascript" src="${path}/resources/host/js/product_selling.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a24a16f3acffb8fc1ba508e3c65e6c76&libraries=services"></script>
   
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  
   <!-- =======================================================
   * Template Name: Vlava - v4.3.0
   * Template URL: https://bootstrapmade.com/vlava-free-bootstrap-one-page-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  
+  <script type="text/javascript">
+
+  function kakaoPay() {
+  	
+  	var url = "kakaoPay"
+  	window.open(url, "kakaoPay", "menubar=no, width=1300, height=800 ");
+  }
+
+  </script>
+  
+  
+  
 </head>
 
 <body>
@@ -62,10 +78,6 @@
 		window.history.back();
 	</script>
 </c:if>
-
-
-
-
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
@@ -133,11 +145,11 @@
 	           <input type="hidden" id="res_sales" name="res_sales" value="0">
          	 	<input type="hidden" name="res_code" value="${res_code}">
          	 	<input type="hidden" name="selectDate" value="${selectDate}">
-         	 	<input type="hidden" name="open_sche" value="${open_sche}">
-         	 	<input type="hidden" name="close_sche" value="${close_sche}">
+         	 	<input type="hidden" name="open_sche" value="${openTime}">
+         	 	<input type="hidden" name="close_sche" value="${closeTime}">
          	 	<input type="hidden" name="res_start" value="${dto.res_hour}">
          	 	<input type="hidden" name="res_end" value="${dto.res_end}">
-         	 	
+         	 	<input type="hidden" name="res_room" value="${dto.res_room}">
          	 	
          	 	
          	 	<input type="hidden" value="0" name="product_typeOfSales_hidden">
@@ -191,6 +203,7 @@
                         
                         
                          <!-- ibox 시작 -->
+                         
                         <div class="ibox col-lg-6">
                         <div class="ibox-title">
 				            <h5>결제 정보</h5>
@@ -215,11 +228,11 @@
 							                	<tr><td>
 								                    <input type="button" name="payment_option" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
 								                    <input type="hidden" name="payment_option_hidden" value="0">
-								                    <%--<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
+								                    <<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="payment_option" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
-								                    <input type="button" name="payment_option" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" >
-								                     --%>
-							                    </td></tr>   
+								                    <input type="button" name="" id="" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
+								                    
+							                    </td></tr> 
 							                    </table>
 							                 </div>
 							            </div>
@@ -304,6 +317,9 @@
 		         
                         <!-- col-lg-6 끝 -->
 					
+			</form>
+			<form method="post" action="kakaoPay">
+			    <button>카카오페이로 결제하기</button>
 			</form>
 			<!-- sale_action 폼 끝 -->
 					

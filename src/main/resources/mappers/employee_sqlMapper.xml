@@ -219,7 +219,6 @@
 	</insert>
 	
 	<!-- 직원 급여 지급 정보 조회 -->
-	<select id="getPaymentList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.SalaryVO">
 	<select id="getPaymentList" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.SalaryVO">
 		SELECT *
 		  FROM salary_tbl

@@ -150,7 +150,7 @@ $("document").ready(function() {
 
 <!-- ------------------------------- 테이블표 시작 -->
 		<div class="col-lg-12">
-	    <div class="ibox ">
+	    <div class="ibox " >
 		
 		
 		<form action="requestReservation" method="post">
@@ -158,7 +158,7 @@ $("document").ready(function() {
            <input type="hidden" id="pageNum" name="pageNum" value="${pageNum}">
            <input type="hidden" id="user_id" name="user_id" value="${user_id}">
            <input type="hidden" id="comp_res" name="comp_res" value="${mdtos.comp_res}">
-		<div class="ibox-content">
+		<div class="ibox-content" style="border: none;">
 			<div class="table-responsive">
 	        <table class="table table-striped table-bordered table-hover dataTables-example">
 		        <thead>

@@ -5,14 +5,48 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>employee_paymentList.jsp</title>
 <script type="text/javascript" src="${path}/resources/host/js/employee_paymentList.js"></script>
+<script>
+$("document").ready(function(){
+$("#YEAR").change(function(){
+		
+		var header = $("meta[name='_csrf_header']").attr("content");
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var empCode = $("input[name=employee_code]").val();
+		var changeYear = $("#YEAR").val();
+		
+		console.log("empCode : " + empCode);
+		console.log("changeYear : " + changeYear);
+		
+		$.ajax({
+			url : "annual_paymentList",
+			type : "Post",
+			data : "employee_code="+empCode+"&changeAnnual="+changeYear,
+			beforeSend : function(jqXHR, settings) {
+		          console.log("beforesend 진행");
+		          jqXHR.setRequestHeader(header, token);
+		    },
+		    success : function(result){
+		    	$("#paymentList").html(result);
+		    },
+		    error : function(error){
+		    	alert("다시 시도해주세요.");
+		    }
+		});
+		
+	});
+});
+</script>
 </head>
 <body>
 <!-- 급여 지급 시작 -->
 <div id="tab-4" class="tab-pane active">
     <div class="panel-body">
     
+    <input type="hidden" name="employee_code" value="${employee_code}">
     <input type="hidden" name="salary_code" value="0">
 
         <!-- 월선택 달력!!! -->
@@ -44,7 +78,7 @@
 						<th style="width:9%;">차인지급액</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="paymentList">
 					<c:forEach var="list4" items="${paymentList}">
 						<tr class="salary">
 						    <td>

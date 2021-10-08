@@ -4,15 +4,31 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <!--
-	작성자 : 
-	작성일 : 
-	 에서 사용하는 mapper
+	작성자 : 이시현
+	작성일 : 2021.10.04
+	 StaticsDAO에서 사용하는 mapper
 -->
   
   
-  <mapper namespace="com.spring.Creamy_CRM.Host_dao.staticsDAO">
+  <mapper namespace="com.spring.Creamy_CRM.Host_dao.StaticsDAO">
   
-  	
+  	<!-- 예약요청 갯수 조회 [예시]
+	<select id="getRequestCnt" resultType="int">
+	 		SELECT COUNT(*)
+	 		  FROM reservation_tbl
+ 	</select> -->
+ 	
+ 	<!-- 직원(담당자)별 판매정보 목록 조회 -->
+	<select id="managerSalesList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StaticVO">
+		SELECT * 
+		  FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt, employee_tbl e 
+		 WHERE r.host_code = #{host_code}
+		   AND h.host_code = r.host_code
+		   AND e.employee_code = r.employee_code
+		   AND rdt.res_detail_code = r.res_detail_code
+		   AND r.res_state = '서비스 완료'
+		 ORDER BY TO_NUMBER(SUBSTR(r.employee_code,2)) DESC
+	</select>
   	
   
   </mapper>

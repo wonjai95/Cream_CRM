@@ -132,6 +132,7 @@
 		</table>
 	</form>
 	
+	
 	<table>
 		<tfoot>
 			<tr>
@@ -174,16 +175,6 @@
 						</c:if>
 					</ul>
 				</td>
-				
-				
-					
-						
-							
-						
-							
-						
-					
-				
 			</tr>
 		</tfoot>
 	</table>

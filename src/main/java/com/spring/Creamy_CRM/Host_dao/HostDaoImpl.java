@@ -13,7 +13,7 @@ import com.spring.Creamy_CRM.VO.RoomSettingVO;
 import com.spring.Creamy_CRM.VO.ZipcodeVO;
 
 @Repository
-public class HostDaoImpl implements HostDao{
+public class HostDaoImpl implements HostDao {
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -98,6 +98,14 @@ public class HostDaoImpl implements HostDao{
 	@Override
 	public int updateRoom(RoomSettingVO vo) {
 		return sqlSession.update("com.spring.Creamy_CRM.Host_dao.HostDao.updateRoom", vo);
+	}
+
+
+	// 예약 종류 받아오기
+	@Override
+	public String getComp_res(String host_code) {
+		
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.HostDao.getComp_res", host_code);
 	}
 	
 }

@@ -73,6 +73,8 @@
   		 user_memo = #{user_memo},
   		 user_ph = #{user_ph},
   		 zipcode = #{zipcode},
+  		 wedding_anniversary = #{wedding_anniversary},
+		 car_number = #{car_number}, 		 
   		 user_address = #{user_address}
   		WHERE user_id = #{user_id}
   	</update>
@@ -109,6 +111,27 @@
 		where join_date like TO_DATE(sysdate,'YY/MM/DD')
   	</select>
   	
+  	<update id="updateUserInfo_notWedding" parameterType="com.spring.Creamy_CRM.VO.userVO">
+  		UPDATE user_tbl SET
+  		 user_password = #{user_password},
+  		 user_name = #{user_name},
+  		 user_age = #{user_age},
+  		 user_birth = #{user_birth},
+  		 user_email = #{user_email},
+  		 user_gender = #{user_gender},
+  		 user_memo = #{user_memo},
+  		 user_ph = #{user_ph},
+  		 zipcode = #{zipcode},
+		 car_number = #{car_number}, 	
+		 wedding_anniversary = null,	 
+  		 user_address = #{user_address}
+  		WHERE user_id = #{user_id}
+  	</update>
+  	
+  	<select id="getEmpInfo" parameterType="String" resultType="com.spring.Creamy_CRM.VO.EmployeeVO">
+  		select * from employee_tbl
+  		where employee_id = #{id}
+  	</select>
   	
   	
   

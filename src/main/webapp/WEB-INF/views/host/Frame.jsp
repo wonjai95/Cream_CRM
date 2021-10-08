@@ -40,6 +40,7 @@
             <li>
                 <a href="reservation"><i class="fa fa-edit"></i> <span class="nav-label">예약</span><span class="fa arrow"></span></a>
             </li>
+            <c:if test="${sessionScope.authority == '[ROLE_HOST]'}">
              <li>
                 <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">회계</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -47,6 +48,7 @@
                     <li><a href="SGA_expenses">판매비와 관리비</a></li>
                  </ul>
             </li>
+            </c:if>
             <li>
                 <a href=""><i class="fa fa-globe"></i> <span class="nav-label">통계</span><span class="fa arrow"></span></a>
                  <ul class="nav nav-second-level collapse">
@@ -60,9 +62,11 @@
             <li>
                 <a href="product"><i class="fa fa-flask"></i> <span class="nav-label">상품</span><span class="fa arrow"></span></a>
             </li>
+             <c:if test="${sessionScope.authority == '[ROLE_HOST]'}">
             <li>
                <a href="employee"><i class="fa fa-table"></i> <span class="nav-label">직원</span><span class="fa arrow"></span></a>
             </li>
+            </c:if>
             <li>
                 <a href="review"><i class="fa fa-table"></i> <span class="nav-label">후기</span><span class="fa arrow"></span></a>
             </li>

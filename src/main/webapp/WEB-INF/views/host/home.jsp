@@ -189,19 +189,20 @@
                     textColor : "#000000"
                 },  */
                 
-                <c:forEach var="vo" items="${res_list}">                
+                <c:forEach var="vo" items="${res_list}" varStatus="i">                
            	 	{
                    title: '${vo.user_name}',
                    start: '${vo.res_date}T01:00:00',
                    url: 'http://localhost:3000/host_resdetail?host_code=${sessionScope.code}&code=${vo.res_code}',
-               },
-               </c:forEach>
+               <c:if test="${i.index == res_list.size()}">
+	           	 }
+               </c:if>
+	           <c:if test="${i.index != res_list.size()}">
+      	 		},
+      			</c:if>
                
-                {
-                    title: 'home_test',
-                    start: new Date(y, m, 28),
-                    url: 'http://localhost:3000/Home'
-                } 
+               </c:forEach>
+              
             ]
             , eventClick:function(event) {
                 if(event.url) {

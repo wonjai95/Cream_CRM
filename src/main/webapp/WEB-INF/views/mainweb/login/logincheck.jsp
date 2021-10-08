@@ -26,6 +26,12 @@
 			window.location="${path}/host/firsthome";
 		</script>
 	</c:if>
+	
+	<c:if test="${authority eq '[ROLE_EMP]'}">
+		<script type="text/javascript">
+			window.location="${path}/host/fist_emphome";
+		</script>
+	</c:if>
 
 
 </body>

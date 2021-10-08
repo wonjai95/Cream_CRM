@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +23,13 @@ import org.springframework.stereotype.Service;
 
 import com.spring.Creamy_CRM.Host_dao.EmployeeDAOImpl;
 import com.spring.Creamy_CRM.Host_dao.LoginDAOImpl;
+import com.spring.Creamy_CRM.User_dao.UserReviewDAO;
 import com.spring.Creamy_CRM.VO.AttendanceVO;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
+import com.spring.Creamy_CRM.VO.IncomeStatementVO;
+import com.spring.Creamy_CRM.VO.ReviewVO;
+import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.WorkingHoursVO;
 import com.spring.Creamy_CRM.VO.userVO;
 import com.spring.Creamy_CRM.android_DAO.Android_LoginDAOImpl;
@@ -44,6 +49,12 @@ public class Android_serviceImpl implements Android_service{
 	@Autowired
 	EmployeeDAOImpl dao_emp;
 	
+	@Autowired
+	UserReviewDAO dao_re;
+
+  @Autowired
+	BCryptPasswordEncoder passwordEncoder;
+
 
 	@Override
 	public Map<String, String> login(HttpServletRequest req) {
@@ -124,11 +135,15 @@ public class Android_serviceImpl implements Android_service{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		// 해당 아이디의 employee_code 찾기
+		String employee_code = dao_emp.getEmpCode(id);
+		System.out.println("employee_code : " + employee_code);
+		
 		
 		//회원정보 조회 ->사장 &직원의 경우 테이블 다르기 때문에 auth 한번더 확인해주기
-		userVO vo = dao_Android_login.getUserInfo(id);
+		EmployeeVO vo = dao_emp.getEmployeeDetail(employee_code);
 		
-		map.put("name",vo.getUser_name());
+		map.put("name",vo.getEmployee_name());
 		map.put("Auth", "ROLE_USER");
 		map.put("Host", null);
 		map.put("Employee", null);
@@ -329,7 +344,7 @@ public class Android_serviceImpl implements Android_service{
 				vo.setLateChk("0");
 				
 			// 정해진 날짜에 출근할 경우
-			} else {
+			} {
 				// 지각 기준 시간
 				int late = Integer.parseInt(work_vo.getLate_criteria());
 				
@@ -445,6 +460,155 @@ public class Android_serviceImpl implements Android_service{
 		
 		return returnMap;
 	}
+	
+	// 결산 - 손익계산서 조회
+	public Map<String, Object> getSettlement(HttpServletRequest req){
+		String host_id = req.getParameter("host_id");
+		System.out.println("host_id : " + host_id);
+		
+		// host_code 가져오기
+		String host_code = dao_Android_login.getCode(host_id);
+		
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("host_code", host_code);
+		System.out.println("host_code : " + host_code);
+		
+		// 손익계산서 조회
+		Map<String, Object> map = new HashMap<String, Object>();
+		IncomeStatementVO vo = dao_Android_login.getSettlement(map1);
+		
+		map.put("revenue", vo.getRevenue());
+		map.put("cost_of_goods_sold", vo.getCost_of_goods_sold());
+		map.put("gross_profit", vo.getGross_profit());
+		map.put("operating_expensews", vo.getOperating_expensews());
+		System.out.println(vo.getOperating_expensews());
+		
+		map.put("operating_income", vo.getOperating_income());
+		map.put("non_operating_profit_loss", vo.getNon_operating_profit_loss());
+		map.put("income_before_taxes", vo.getIncome_before_taxes());
+		map.put("income_taxes", vo.getIncome_taxes());
+		map.put("net_income", vo.getNet_income());
+		
+		return map;
+	}
+
+
+
+	@Override
+	public List<ReviewVO> reviewListFromStore(HttpServletRequest req) {
+		String host_id = req.getParameter("host_id");
+		String host_code = dao_Android_login.getCode(host_id);
+		return dao_re.getStoreReviewList(host_code);
+	}
+	
+	
+
+	// 비밀번호 변경 전 비밀번호 확인
+	@Override
+	public Map<String, Object> modifyPW(HttpServletRequest req) {
+		
+		System.out.println("service ==> modifyPW");
+
+		// 안드로이드에서 전달한 값
+		String id = req.getParameter("m_id");
+		String pw = req.getParameter("m_pw");
+		
+		//비밀번호 확인
+		String pwd = dao_Android_login.getPw(id);
+		
+		boolean pwcheck = bcryptPassword.matches(pw, pwd);
+		System.out.println("비번 확인 : " + pwcheck);
+		
+		String chkCnt;
+		if(pwcheck) {
+			chkCnt = "1";
+		} else {
+			chkCnt = "0";
+		}
+
+		// 웹에서 안드로이드로 전달할 값 
+		//map key에 안드로이드의 vo 변수명과 일치하면 넘어가는듯
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("pw", null);
+		map.put("pw2", null);
+		map.put("chkCnt", chkCnt);
+		map.put("updateCnt", null);
+		
+		
+		return map;
+		
+	}
+
+	// 비밀번호 변경
+	@Override
+	public Map<String, Object> updatePW(HttpServletRequest req) {
+		System.out.println("service ==> updatePW");
+		
+		String pw = req.getParameter("updatePW1");
+		String pw2 = req.getParameter("updatePW2");
+		String id = req.getParameter("id");
+		System.out.println("pw : " + pw);
+		System.out.println("pw2 : " + pw2);
+		System.out.println("id : " + id);
+		
+		String bcryptPW = passwordEncoder.encode(pw);
+		String bcryptPW2 = passwordEncoder.encode(pw2);
+		System.out.println("bcryptPW : " + bcryptPW);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("pw", bcryptPW);
+		map.put("pw2", pw);
+		map.put("chkCnt", null);
+		
+		int updateCnt = 0;
+		if(pw.equals(pw2)) {
+			updateCnt = dao_Android_login.updatePW(map);
+		} else {
+			updateCnt = 0;
+		}
+		
+		map.put("updateCnt", updateCnt);
+		   
+		return map;
+		
+	}
+	
+	// 관리자페이지 - 예약목록 조회
+    @Override
+    public List<ReservationVO> getResList(HttpServletRequest req) {
+    	System.out.println("관리자 예약목록 시작합니다.");
+	    String host_id = req.getParameter("host_id");
+	    System.out.println("host_id : " + host_id);
+	    
+	    // host_code 가져오기
+	    String host_code = dao_Android_login.getCode(host_id);
+	    
+	    Map<String, Object> map1 = new HashMap<String, Object>();
+	    map1.put("host_code", host_code);
+	    System.out.println("host_code : " + host_code);
+	    
+	    // comp_res 가져오기
+	    String comp_res = dao_Android_login.getCompRes(host_code);
+	    System.out.println("comp_res : " + comp_res);
+
+	    if(comp_res.equals("담당자")) {
+	    	System.out.println("=== 담당자 예약목록 시작 ===");
+	    	List<ReservationVO> mngList = dao_Android_login.getManagerResList(map1);
+	    	return mngList;
+	    } else {
+	    	System.out.println("=== 호실 예약목록 시작 ===");
+	    	List<ReservationVO> roomList = dao_Android_login.getRoomResList(map1);
+	    	return roomList;
+	    }
+	   /*
+	    for (int i = 0; i < list.size(); i++) {
+	    	System.out.println(list.get(i).getRes_date());
+		}
+	    */	    
+    }
+
 	
 	
 

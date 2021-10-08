@@ -8,6 +8,7 @@
 package com.spring.Creamy_CRM.android_Controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.Creamy_CRM.Host_service.LoginServiceImpl;
+import com.spring.Creamy_CRM.VO.ReservationVO;
+import com.spring.Creamy_CRM.VO.ReviewVO;
 import com.spring.Creamy_CRM.android_service.Android_service;
 import com.spring.Creamy_CRM.android_service.Android_serviceImpl;
 
@@ -91,6 +94,17 @@ public class AndroidController {
 		return "react_test/daum_2";
 	}
 	
+
+	// 결산
+	@ResponseBody
+	@RequestMapping("android/androidSettlement")
+	public Map<String, Object> androidSettlement(HttpServletRequest req) {
+		log.info("url -> androidSettlement");
+		
+		Map<String, Object> map = service_android.getSettlement(req);
+
+    return map;
+  }
 	
 	// QR
 	@ResponseBody
@@ -100,8 +114,56 @@ public class AndroidController {
 
 		Map<String, Object> map = service_android.getQrCode(req);
 		System.out.println("map info : " + map.get("attendChk"));
+
+		
+		return map;
+	}
+	
+
+	// 관리자 비밀번호 변경 전 현재 비번 체크
+	@ResponseBody // 웹(스프링)에서 안드로이드로 값(json)을 전달하기 위한 어노테이션
+	@RequestMapping("android/androidModifyPW")
+	public Map<String, Object> androidModifyPW(HttpServletRequest req){
+		log.info("androidModifyPW()");
+		System.out.println("url -> 안드로이드 비밀번호 확인");
+		
+		Map<String, Object> map = service_android.modifyPW(req);
+		
+		return map;
+	}
+	
+	// 관리자 비밀번호 변경
+	@ResponseBody // 웹(스프링)에서 안드로이드로 값(json)을 전달하기 위한 어노테이션
+	@RequestMapping("android/androidupdatePW")
+	public Map<String, Object> androidupdatePW(HttpServletRequest req){
+		log.info("androidupdatePW()");
+		System.out.println("url -> 안드로이드 비밀번호 변경");
+		
+		Map<String, Object> map = service_android.updatePW(req);
 		
 		return map;
 	}
 
+	// 앱 관리자페이지 => 예약목록 조회하기
+    @ResponseBody
+    @RequestMapping("android/androidReservationList")
+    public List<ReservationVO> androidReservationList(HttpServletRequest req) {
+        log.info("androidReservationList()");
+        System.out.println("url -> 안드로이드 예약목록 조회페이지");
+        
+        List<ReservationVO> list = service_android.getResList(req);
+        
+        return list;
+    }
+
+
+	//리뷰
+	@ResponseBody
+	@RequestMapping("android/androidUserReview")
+	public List<ReviewVO> androidUserReview(HttpServletRequest req){
+		log.info("androidUserReview()");
+		System.out.println("url -> 안드로이드 리뷰");
+		return service_android.reviewListFromStore(req);
+	}
+	
 }

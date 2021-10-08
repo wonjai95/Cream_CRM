@@ -33,4 +33,20 @@ public interface UserReviewService {
 	//검색 결과 list
 	public void reviewSearchList(HttpServletRequest req, Model model);
 	
+	//-----------------------------------------------------
+	//후기추적 - 키워드 검색
+	public void SearchKeyword(HttpServletRequest req, Model model);
+	
+	//새 추적 등록
+	public void addOutReview(HttpServletRequest req, Model model);
+	
+	//후기 추적 리스트
+	public void getOutReviewList(HttpServletRequest req, Model model);
+	
+	//그래프용 데이터 받아오기
+	public void getOutReveiw_GraptData(HttpServletRequest req, Model model);
+	
+	//추적 삭제
+	public void Delete_outReview(HttpServletRequest req, Model model);
+	
 }

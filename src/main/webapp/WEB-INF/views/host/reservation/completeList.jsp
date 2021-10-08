@@ -9,31 +9,35 @@
 </head>
 <body>
 
-<c:forEach var="mdto" items="${mdtos}">
+<iframe src="http://localhost:3000/show_Reservation?host_code=${sessionScope.code}&start=${pagemap.get('start')}&end=${pagemap.get('end')}"
+		style="width: 1000px; height: 1000px;">
+</iframe>
 
-<c:if test="${mdto.comp_res eq '담당자'}">
+<%-- <c:forEach var="mdto" items="${mdtos}">
+ <c:if test="${mdto.comp_res eq '담당자'}">
 		
 	<c:if test="${cnt > 0}">
-		<tr class="gradeX">
+	
+		 <tr class="gradeX">
 			<td style="text-align:center">
 				<!-- 상세페이지 -->
 				<a href="completeDetails?res_code=${mdto.res_code}&res_detail_code=${mdto.res_detail_code}&user_id=${mdto.user_id}&comp_res=${mdto.comp_res}">${mdto.res_code}</a>
 			</td>
 			
 			<td style="text-align:center">${mdto.user_id}</td>
-			<%-- ${param.dto.user_id} --%>
+			${param.dto.user_id}
 			<td style="text-align:center">${mdto.employee_code}</td>
 			
 			<td style="text-align:center">${mdto.res_state}</td>
 			
 			<td style="text-align:center">${mdto.res_hour}시</td>
 			
-			<td style="text-align:center">${mdto.res_date}</td>
+			<td style="text-align:center">${mdto.res_date}</td>	
 		</tr>
 	</c:if>
-</c:if>
+</c:if> 
 
-</c:forEach>
+</c:forEach> --%>
 
 
 

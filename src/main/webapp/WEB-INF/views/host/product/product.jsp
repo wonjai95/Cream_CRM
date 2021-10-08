@@ -216,7 +216,7 @@
 			}
 			if($(this).hasClass("group") === true){
 				$(this).parent().prev().children().first().prop("checked",true);
-				groupCode = $(this).parent().prev().children().first().val();
+				groupCode = $(this).parent().prev().children().first().val(); // a태그 값 가져오기
 			}
 			
 			if($(this).attr("id") == 'justList'){
@@ -403,7 +403,7 @@
 																		</td>
 
 																		<td class="footable-visible">
-																		<a href="${productGroup.product_group_code}" class="group">
+																		<a href="${productGroup.product_group_code}" class="group" style="text-decoration: none;">
 																			<span>${productGroup.product_group_name}</span>
 																		</a>
 																		</td>
@@ -417,7 +417,7 @@
 												<div class="col-lg-9 animated fadeInRight">
 
 													<div class="ibox-content"
-														style="margin: 0px; padding: 0px;">
+														style="margin: 0px; padding: 0px; border:  none;">
 															 <form id = deleteProductFrm>
 														<%-- <form action="deleteProductAction" method="post"
 															onsubmit="return deleteProduct();">
@@ -513,7 +513,7 @@
 																			</td>
 
 																			<td class="footable-visible">
-																			<span class="label label-primary">${product.product_group_code}</span>
+																			<span class="">${product.product_group_code}</span>
 																			</td>
 																		</tr>
 																	</c:forEach>

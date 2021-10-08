@@ -123,7 +123,9 @@ public class AccountController {
 	public String SGA_modifyAction(HttpServletRequest req, Model model) {
 		logger.info("url -> SGA_modifyAction");
 		
-		service.modifySlip(req, model);
+		// service.modifySlip(req, model);
+		int updateCnt = Integer.parseInt(req.getParameter("updateCnt"));
+		model.addAttribute("updateCnt", updateCnt);
 		
 		return "host/accounting/SGA_modifyAction";
 	}
@@ -133,7 +135,10 @@ public class AccountController {
 	public String SGA_deleteAction(HttpServletRequest req, Model model) {
 		logger.info("url -> SGA_deleteAction");
 		
-		service.deleteSlip(req, model);
+		// service.deleteSlip(req, model);
+		int deleteCnt = Integer.parseInt(req.getParameter("deleteCnt"));
+		model.addAttribute("deleteCnt", deleteCnt);
+		
 		return "host/accounting/SGA_deleteAction";
 	}
 	

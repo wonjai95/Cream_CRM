@@ -129,9 +129,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	// 직원의 휴가 정보
 	@Override
-	public ArrayList<LeaveVO> getLeaveList(String employee_code){
+	public ArrayList<LeaveVO> getLeaveList(Map<String, Object> map){
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
-		return dao.getLeaveList(employee_code);
+		return dao.getLeaveList(map);
 	}
 	
 	// 직원의 해당 휴가 정보
@@ -186,9 +186,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 	
 	// 직원 급여 지급 정보
-	public ArrayList<SalaryVO> getPaymentList(String employee_code){
+	public ArrayList<SalaryVO> getPaymentList(Map<String, Object> map){
 		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
-		return dao.getPaymentList(employee_code);
+		return dao.getPaymentList(map);
 	}
 	
 	// 직원 급여 지급 삭제
