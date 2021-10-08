@@ -41,7 +41,6 @@ input[readonly]{
 	<div class="panel-body">
 		<div class="row">
 			<div class="table-responsive">
-				<form action="IncomeStatementInsert" method="post" id="accountForm">
 					<sec:csrfInput />
 					<div class="col-sm-3" id="settlement"
 						style="margin: 0px 80px 0px 100px;">
