@@ -134,25 +134,25 @@
          	 	<div class="row">
          	 	
          	 	<sec:csrfInput/>
-	           <input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
-	           <input type="hidden" id="res_memo" name="res_memo">
-	           <input type="hidden" id="host_code" name="host_code" value="${dto.host_code}">
-	           <input type="hidden" id="chkDay">
-	           <input type="hidden" id="comp_res" value="${comp_res}">
-	           <input type="hidden" id="per_price" value="0">
-	           <input type="hidden" id="min_cnt" value="0">
-	           <input type="hidden" id="max_cnt" value="0">
-	           <input type="hidden" id="res_sales" name="res_sales" value="0">
-         	 	<input type="hidden" name="res_code" value="${res_code}">
-         	 	<input type="hidden" name="selectDate" value="${selectDate}">
-         	 	<input type="hidden" name="open_sche" value="${openTime}">
-         	 	<input type="hidden" name="close_sche" value="${closeTime}">
-         	 	<input type="hidden" name="res_start" value="${dto.res_hour}">
-         	 	<input type="hidden" name="res_end" value="${dto.res_end}">
-         	 	<input type="hidden" name="res_room" value="${dto.res_room}">
-         	 	
-         	 	
-         	 	<input type="hidden" value="0" name="product_typeOfSales_hidden">
+				<input type="hidden" id="user_id" name="user_id" value="${sessionScope.id}">
+				<input type="hidden" id="res_memo" name="res_memo">
+				<input type="hidden" id="host_code" name="host_code" value="${dto.host_code}">
+				<input type="hidden" id="chkDay">
+				<input type="hidden" id="comp_res" value="${comp_res}">
+				<input type="hidden" id="per_price" value="0">
+				<input type="hidden" id="min_cnt" value="0">
+				<input type="hidden" id="max_cnt" value="0">
+				<input type="hidden" id="res_sales" name="res_sales" value="0">
+				<input type="hidden" name="res_code" value="${res_code}">
+				<input type="hidden" name="selectDate" value="${selectDate}">
+				<input type="hidden" name="open_sche" value="${openTime}">
+				<input type="hidden" name="close_sche" value="${closeTime}">
+				<input type="hidden" name="res_start" value="${dto.res_start}">
+				<input type="hidden" name="res_end" value="${dto.res_end}">
+				<input type="hidden" name="res_room" value="${dto.res_room}">
+				     	 	
+				     	 	
+				<input type="hidden" value="0" name="product_typeOfSales_hidden">
 				<input type="hidden" value="0" name="product_name_hidden">
 				<input type="hidden" value="0" name="product_price_hidden">
 				<input type="hidden" value="0" name="product_rentalPeriod_hidden">
@@ -173,12 +173,11 @@
                               <input type="date" name="res_date" value="${dto.res_date}"></div>   
                             </div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                               <input type="text" name="res_hour" id="selectTime" style="display: none" value="${dto.res_hour}">예약 시간 : ${dto.res_hour} 시
+                               <input type="text" name="res_hour" id="selectTime" style="display: none" value="${dto.res_hour}">예약 시간 : ${dto.res_start} ~ ${dto.res_end} 
                             </div>
                             
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
                           		<input type="text" name="room_setting_code" id="selectRoom" style="display: none" value="${dto.room_setting_code}">예약 호실 : ${dto.res_room}</span>
-                          		<!-- dto.room_setting_code인데 예약호실명이네???? -->
                        	  	</div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
                           		<input type="number" name="GuestCount" id="GuestCount" style="display: none" value="${dto.res_cnt}">예약 인원 : ${dto.res_cnt}</span>

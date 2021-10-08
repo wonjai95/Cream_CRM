@@ -58,19 +58,20 @@ public class MainwebServiceImpl implements MainwebService {
 		
 		// 예약 페이지에서 예약 정보 담아오기
 		String host_code = req.getParameter("host_code");
-		String res_start = req.getParameter("res_start");
-		System.out.println("res_start : " + res_start);
+		
+		
 		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
 		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
 		String res_state = "예약완료";
-		String res_room = req.getParameter("selectRoom");
+		String res_room = req.getParameter("room_name");
+		String room_setting_code = req.getParameter("room_setting_code");
 		System.out.println("res_room : " + res_room);
 		
 		// 방이름, 사장코드로 room_setting_code 가져오기
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("host_code", host_code);
 		map.put("room_name", res_room);
-		String room_setting_code = dao_res.getRoomCodeByName(map);
+//		String room_setting_code = dao_res.getRoomCodeByName(map);
 		System.out.println("room_setting_code : " + room_setting_code);
 
 		
@@ -83,14 +84,22 @@ public class MainwebServiceImpl implements MainwebService {
 		String close_sche = req.getParameter("close_sche");
 		
 		int openTime = Integer.parseInt(open_sche.split(":")[0]);
-		System.out.println("openTime : " + openTime);
 		int closeTime = Integer.parseInt(close_sche.split(":")[0]);
-		System.out.println("closeTime : " + closeTime); 
 		   
 		String comp_res = req.getParameter("comp_res");
+		String res_start = req.getParameter("res_start");
+		String res_end = req.getParameter("res_end");
 		
 		// vo에 담아서 넘겨주기
 		ReservationVO vo = new ReservationVO();
+		
+		vo.setRes_hour(Integer.parseInt(res_start));
+		
+		res_start = res_start + ":00";
+		res_end = res_end + ":00";
+		
+		System.out.println("getResInfo ==> res_start : " + res_start);
+		System.out.println("getResInfo ==> res_end : " + res_end);
 		
 		vo.setHost_code(host_code);
 		vo.setRes_state(res_state);
@@ -101,9 +110,13 @@ public class MainwebServiceImpl implements MainwebService {
 		vo.setRes_indiv_request(res_indiv_request);
 		vo.setUser_id(user_id);
 		vo.setRes_date(res_date);
-		vo.setRes_hour(Integer.parseInt(res_start));
+		vo.setRes_start(res_start);
+		vo.setRes_end(res_end);
 		vo.setRes_sales(res_sales);
 		vo.setComp_res(comp_res);
+		
+		System.out.println("예약 시작 시간 : " + vo.getRes_start());
+		System.out.println("예약 시작 끝 : " + vo.getRes_end());
 	
 		System.out.println("날짜 : " + vo.getRes_date());
 		
@@ -201,7 +214,6 @@ public class MainwebServiceImpl implements MainwebService {
 		req.setAttribute("mdto", mvo);
 		req.setAttribute("rdto", rvo);
 		req.setAttribute("res_code", res_code);
-		model.addAttribute("res_code", res_code);
 	}
 	
 	
@@ -212,7 +224,6 @@ public class MainwebServiceImpl implements MainwebService {
 		// 3단계. 화면으로부터 입력받은 값(= hidden값)을 받아온다.
 		String res_state = "예약취소";
 		String res_code = req.getParameter("res_code");
-		System.out.println("res_code : " + res_code);
 		
 		// reservationVO vo 바구니 생성
 		ReservationVO vo = new ReservationVO();
@@ -226,12 +237,7 @@ public class MainwebServiceImpl implements MainwebService {
 		int deleteCnt = dao.deleteActionByUser(vo);
 		System.out.println("deleteCnt : " + deleteCnt);
 		
-		int deleteCnt2 = dao_sale.deletePay(res_code);
-		System.out.println("deleteCnt2 : " + deleteCnt2);
-		
 		model.addAttribute("deleteCnt", deleteCnt);
-		model.addAttribute("deleteCnt2", deleteCnt2);
-		model.addAttribute("res_code", res_code);
 	}
 
 	// 결제처리

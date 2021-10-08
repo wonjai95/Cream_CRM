@@ -182,6 +182,7 @@ public class UserReservationServiceImpl implements UserReservationService {
 		
 	}
 
+
 	// 회원 예약 가능한 호실 표시
 	@Override
 	public void bookingRoomTable(HttpServletRequest req, Model model) {
@@ -228,10 +229,11 @@ public class UserReservationServiceImpl implements UserReservationService {
 		model.addAttribute("open_sche", vo.getOpen_sche());
 		model.addAttribute("close_sche", vo.getClose_sche());
 		model.addAttribute("selectDate", selectDate);
-		req.setAttribute("selectDate", selectDate);
 		model.addAttribute("dtos", resVO);
+		System.out.println("");
 		model.addAttribute("roomDto", roomVO);
-		req.setAttribute("room_setting_code", selectRoom);
+//		req.setAttribute("room_setting_code", selectRoom);
+//		req.setAttribute("selectDate", selectDate);
 	}
 
 	// 호실 예약 처리
@@ -241,7 +243,7 @@ public class UserReservationServiceImpl implements UserReservationService {
 		
 		String host_code = req.getParameter("host_code");
 		System.out.println("host_code : " + host_code);
-		int res_start = Integer.parseInt(req.getParameter("res_hour"));
+		String res_start =req.getParameter("res_start");
 		String res_end = req.getParameter("res_end");
 		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
 		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
@@ -259,13 +261,6 @@ public class UserReservationServiceImpl implements UserReservationService {
 		Date resDate = Date.valueOf(str_res_date);
 		System.out.println("resDate : " + resDate);
 		
-		String open_sche = req.getParameter("open_sche");
-		String close_sche = req.getParameter("close_sche");
-		  
-		int openTime = Integer.parseInt(open_sche.split(":")[0]);
-		System.out.println("openTime : " + openTime);
-		int closeTime = Integer.parseInt(close_sche.split(":")[0]);
-		
 		ReservationVO vo = new ReservationVO();
 		vo.setHost_code(host_code);
 		vo.setRes_state(res_state);
@@ -274,7 +269,7 @@ public class UserReservationServiceImpl implements UserReservationService {
 		vo.setRes_indiv_request(res_indiv_request);
 		vo.setUser_id(user_id);
 		vo.setRes_date(resDate);
-		vo.setRes_start(req.getParameter("res_hour"));
+		vo.setRes_start(res_start);
 		vo.setRes_end(res_end);
 		vo.setRes_hour(Integer.parseInt(req.getParameter("res_hour")));
 		System.out.println("vo.getRes_hour : " + vo.getRes_hour());
@@ -302,14 +297,13 @@ public class UserReservationServiceImpl implements UserReservationService {
 		System.out.println("guestCount : " + guestCount);
 		String res_state = "예약완료";
 		String room_setting_code = req.getParameter("room_setting_code");
-		System.out.println("room_setting_code : " + room_setting_code);
+		System.out.println("chkRoomTime ==> room_setting_code : " + room_setting_code);
+		
 		String res_indiv_request = req.getParameter("res_indiv_request");
 		String user_id = req.getParameter("user_id"); 
 		String str_res_date = req.getParameter("selectDate");
 		
-		System.out.println("str_res_date : " + str_res_date);
 		Date resDate = Date.valueOf(str_res_date);
-		System.out.println("resDate : " + resDate);
 		
 		String open_sche = req.getParameter("open_sche");
 		String close_sche = req.getParameter("close_sche");
@@ -361,10 +355,10 @@ public class UserReservationServiceImpl implements UserReservationService {
 								+ "AS "
 								+ "SELECT * "
 								+ "FROM reservation_detail_tbl "
-								+ "WHERE TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') BETWEEN TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) AND TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) "
-								+ "OR TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi') BETWEEN TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) AND TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) "
-								+ "OR TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/dd HH24:mi') + 5/(24*60) BETWEEN TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') AND TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi') " 
-								+ "OR TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/dd HH24:mi') - 5/(24*60) BETWEEN TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/dd HH24:mi') AND TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/dd HH24:mi')";
+								+ "WHERE TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/DD HH24:mi') BETWEEN TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/DD HH24:mi') + 5/(24*60) AND TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/DD HH24:mi') - 5/(24*60) "
+								+ "OR TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/DD HH24:mi') BETWEEN TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/DD HH24:mi') + 5/(24*60) AND TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/DD HH24:mi') - 5/(24*60) "
+								+ "OR TO_DATE(TO_CHAR('1990/01/01' || res_start), 'YYYY/MM/DD HH24:mi') + 5/(24*60) BETWEEN TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/DD HH24:mi') AND TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/DD HH24:mi') " 
+								+ "OR TO_DATE(TO_CHAR('1990/01/01' || res_end), 'YYYY/MM/DD HH24:mi') - 5/(24*60) BETWEEN TO_DATE('1990/01/01' || '" + res_start + "', 'YYYY/MM/DD HH24:mi') AND TO_DATE('1990/01/01' || '" + res_end + "', 'YYYY/MM/DD HH24:mi')";
 				
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("sql", sql);         

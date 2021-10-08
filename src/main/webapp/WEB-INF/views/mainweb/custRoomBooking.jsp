@@ -55,8 +55,9 @@
            <input type="hidden" id="min_cnt" value="0">
            <input type="hidden" id="max_cnt" value="0">
            <input type="hidden" id="res_sales" name="res_sales" value="0">
-           <input type="hidden" id="room_setting_code" name="room_setting_code" value="${room_setting_code}">
            <input type="hidden" id="use_time" name="use_time" value="0">
+           <input type="hidden" id="comp_address" name="comp_address" value="${comp_address}">
+           <input type="hidden" id="room_name" name="room_name" value="">
            
                 <div class="row">
                    <!-- col-lg-8  시작 -->

@@ -31,7 +31,9 @@ $(document).ready(function() {
        console.log("호실 클릭 : " + roomClick);
        var roomName = $(this).text();
        $('#selectRoom').val(roomClick);
+       $('input[name=room_setting_code]').val(roomClick);
        $('.roomSelectedInfo').html(roomName);
+       $('#room_name').val(roomName);
        
        // 선택한 시간과 요일
        var selectDate = $("input[name=selectDate]").val();

@@ -284,13 +284,13 @@ public class MainwebController {
       logger.info("url -> roomTimeTable");
       
       service_custReserve.bookingRoomTimeTable(req, model);
-      
-      String res_date = (String) req.getAttribute("selectDate");
-      System.out.println("res_date : " + res_date);
-      model.addAttribute("res_date", res_date);
-      String room_setting_code = (String)req.getAttribute("room_setting_code");
-      System.out.println("room_setting_code : " + room_setting_code);
-      model.addAttribute("room_setting_code", room_setting_code);
+//      
+//      String res_date = (String) req.getAttribute("selectDate");
+//      System.out.println("res_date : " + res_date);
+//      model.addAttribute("res_date", res_date);
+//      String room_setting_code = (String)req.getAttribute("room_setting_code");
+//      System.out.println("room_setting_code : " + room_setting_code);
+//      model.addAttribute("room_setting_code", room_setting_code);
       
       return "mainweb/roomDetail";
    }         
@@ -353,7 +353,7 @@ public class MainwebController {
    public String showBookingDetail(HttpServletRequest req, Model model) {
       logger.info("url -> showBookingDetail");
       
-      service.getBookingDetail(req, model);   
+      service.getBookingDetail(req, model);
       
       //service_review.getReservationList(req, model);
       return "mainweb/mypage/showBookingDetail";
@@ -364,7 +364,7 @@ public class MainwebController {
    public String deleteBooking(HttpServletRequest req, Model model) {
       logger.info("url -> deleteBooking");
       
-      service.deleteActionByUser(req, model);
+      //service.deleteActionByUser(req, model);
       
       return "mainweb/mypage/deleteBooking";
    }
@@ -376,8 +376,19 @@ public class MainwebController {
 	public String salePage(HttpServletRequest req, Model model) {
 		logger.info("url -> salePage");
 		
-		// 회원 예약 정보 받아오기
-		service.getResInfo(req, model);
+		// 예약 시간 확인 action
+		service_custReserve.chkRoomTime(req, model);
+		String chkScheNull = (String) req.getSession().getAttribute("chkScheNull");
+		System.out.println("chkScheNull : " + chkScheNull);
+		
+		// 예약 불가능
+		if(chkScheNull.equals("3")) {
+			model.addAttribute("insertCnt", 3);
+			req.getSession().removeAttribute("chkScheNull");
+		} else {
+			// 회원 예약 정보 받아오기
+			service.getResInfo(req, model);
+		}
 		
 		return "mainweb/sale/salePage";
 	}
@@ -423,7 +434,6 @@ public class MainwebController {
 
 		return "mainweb/sale/sale_m_action";
 	}
-
 
 /*
 	// 카카오페이 결제 
