@@ -72,4 +72,7 @@ public interface AccountDAO {
 	
 	// 손익계산서 등록처리
 	public int InsertIncomeStatement(IncomeStatementVO vo);
+	
+	// 기말재고액 등록처리
+	public int insertEndingInventory(EndingInventoryVO vo);
 }

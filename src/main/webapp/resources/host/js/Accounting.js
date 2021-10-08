@@ -4,7 +4,6 @@
 
 $("document").ready(function(){
 	$("a[href='#tab-2']").click(function(){
-		alert("클릭");
 		
 		var header = $("meta[name='_csrf_header']").attr("content");
 	    var token = $("meta[name='_csrf']").attr("content");

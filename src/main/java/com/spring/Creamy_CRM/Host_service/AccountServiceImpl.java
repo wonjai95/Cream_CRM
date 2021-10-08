@@ -283,6 +283,7 @@ public class AccountServiceImpl implements AccountService {
 		model.addAttribute("Revenue", Revenue);
 		model.addAttribute("EIList", EIList);
 		model.addAttribute("CSList", CSList);
+		model.addAttribute("TotalInvenCnt", TotalInvenCnt);
 		model.addAttribute("endingInvenPrice", endingInvenPrice);
 		model.addAttribute("TotalSalary", TotalSalary);
 		model.addAttribute("sumExpenses", sumExpenses);
@@ -354,6 +355,16 @@ public class AccountServiceImpl implements AccountService {
 		vo.setNet_income(net_income);
 		
 		int insertCnt = dao.InsertIncomeStatement(vo);
+		
+		// 기말 재고액 테이블 등록
+		int TotalInvenCnt = Integer.parseInt(req.getParameter("TotalInvenCnt"));
+		
+		EndingInventoryVO EIVO = new EndingInventoryVO();
+		EIVO.setHost_code(host_code);
+		EIVO.setInven_price(ending_inventory);
+		EIVO.setInven_cnt(TotalInvenCnt);
+		 
+		dao.insertEndingInventory(EIVO);
 		
 		model.addAttribute("insertCnt", insertCnt);
 	}
