@@ -284,8 +284,10 @@ $(document).ready(function() {
      // 주소-좌표 변환 객체를 생성합니다
      var geocoder = new kakao.maps.services.Geocoder();
    
+     var comp_address = document.getElementById('comp_address').value;
+     
      // 주소로 좌표를 검색합니다
-     geocoder.addressSearch('서울 금천구 가산디지털2로 123 월드메르디앙벤처센터II', function(result, status) {
+     geocoder.addressSearch(comp_address, function(result, status) {
    
          // 정상적으로 검색이 완료됐으면 
           if (status === kakao.maps.services.Status.OK) {

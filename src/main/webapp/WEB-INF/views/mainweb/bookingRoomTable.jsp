@@ -16,6 +16,7 @@
 <sec:csrfInput/>
 <input type="hidden" name="selectDate" value="${selectDate}">
 <input type="hidden" name="room_setting_code" value="0">
+<input type="hidden" name="selectRoom" value="0">
 <body class="top-navigation">
 	<div style="display:inline-block" id="roomTable">
 		 <!-- 인원 -->
@@ -28,10 +29,6 @@
 		           		<input type="text" style="display: none" name="per_price" value="${dto.per_price}">
 		           		<input type="text" style="display: none" name="min_cnt" value="${dto.min_cnt}">
 		           		<input type="text" style="display: none" name="max_cnt" value="${dto.max_cnt}">
-		           		<input type="hidden" name="selectRoom" value="${dto.room_name}">
-		           		<input type="hidden" name="res_hour" value="${dto.res_hour}">
-		           		
-		           		
 		           		
 		           	</td>
 				</c:forEach>
@@ -39,5 +36,6 @@
 		</table>
 	</div>
 </body>
+
 
 </html>

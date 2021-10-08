@@ -57,39 +57,39 @@
    		  FROM hostEmp_TimeTable_view
    		<choose>
    			<when test="selectDay == 0">
-   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-dd HH24:mi') 
-   				BETWEEN TO_DATE('1990/01/01'||sun_in, 'YYYY-MM-dd HH24:mi') 
-   				AND TO_DATE('1990/01/01'||sun_out, 'YYYY-MM-dd HH24:mi')
+   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-DD HH24:mi') 
+   				BETWEEN TO_DATE('1990/01/01'||sun_in, 'YYYY-MM-DD HH24:mi') 
+   				AND TO_DATE('1990/01/01'||sun_out, 'YYYY-MM-DD HH24:mi')
    			</when>
    			<when test="selectDay == 1">
-   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-dd HH24:mi') 
-   				BETWEEN TO_DATE('1990/01/01'||mon_in, 'YYYY-MM-dd HH24:mi') 
-   				AND TO_DATE('1990/01/01'||mon_out, 'YYYY-MM-dd HH24:mi')
+   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-DD HH24:mi') 
+   				BETWEEN TO_DATE('1990/01/01'||mon_in, 'YYYY-MM-DD HH24:mi') 
+   				AND TO_DATE('1990/01/01'||mon_out, 'YYYY-MM-DD HH24:mi')
    			</when>
    			<when test="selectDay == 2">
-   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-dd HH24:mi') 
-   				BETWEEN TO_DATE('1990/01/01'||tue_in, 'YYYY-MM-dd HH24:mi') 
-   				AND TO_DATE('1990/01/01'||tue_out, 'YYYY-MM-dd HH24:mi')
+   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-DD HH24:mi') 
+   				BETWEEN TO_DATE('1990/01/01'||tue_in, 'YYYY-MM-DD HH24:mi') 
+   				AND TO_DATE('1990/01/01'||tue_out, 'YYYY-MM-DD HH24:mi')
    			</when>
    			<when test="selectDay == 3">
-   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-dd HH24:mi') 
-   				BETWEEN TO_DATE('1990/01/01'||wed_in, 'YYYY-MM-dd HH24:mi') 
-   				AND TO_DATE('1990/01/01'||wed_out, 'YYYY-MM-dd HH24:mi')
+   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-DD HH24:mi') 
+   				BETWEEN TO_DATE('1990/01/01'||wed_in, 'YYYY-MM-DD HH24:mi') 
+   				AND TO_DATE('1990/01/01'||wed_out, 'YYYY-MM-DD HH24:mi')
    			</when>
    			<when test="selectDay == 4">
-   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-dd HH24:mi') 
-   				BETWEEN TO_DATE('1990/01/01'||thu_in, 'YYYY-MM-dd HH24:mi') 
-   				AND TO_DATE('1990/01/01'||thu_out, 'YYYY-MM-dd HH24:mi')
+   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-DD HH24:mi') 
+   				BETWEEN TO_DATE('1990/01/01'||thu_in, 'YYYY-MM-DD HH24:mi') 
+   				AND TO_DATE('1990/01/01'||thu_out, 'YYYY-MM-DD HH24:mi')
    			</when>
    			<when test="selectDay == 5">
-   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-dd HH24:mi') 
-   				BETWEEN TO_DATE('1990/01/01'||fri_in, 'YYYY-MM-dd HH24:mi') 
-   				AND TO_DATE('1990/01/01'||fri_out, 'YYYY-MM-dd HH24:mi')
+   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-DD HH24:mi') 
+   				BETWEEN TO_DATE('1990/01/01'||fri_in, 'YYYY-MM-DD HH24:mi') 
+   				AND TO_DATE('1990/01/01'||fri_out, 'YYYY-MM-DD HH24:mi')
    			</when>
    			<when test="selectDay == 6">
-   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-dd HH24:mi') 
-   				BETWEEN TO_DATE('1990/01/01'||sat_in, 'YYYY-MM-dd HH24:mi') 
-   				AND TO_DATE('1990/01/01'||sat_out, 'YYYY-MM-dd HH24:mi')
+   				WHERE TO_DATE('1990/01/01'||#{selectTime}, 'YYYY-MM-DD HH24:mi') 
+   				BETWEEN TO_DATE('1990/01/01'||sat_in, 'YYYY-MM-DD HH24:mi') 
+   				AND TO_DATE('1990/01/01'||sat_out, 'YYYY-MM-DD HH24:mi')
    			</when>
    		</choose>
    		AND host_code = #{host_code}
@@ -100,7 +100,7 @@
    		SELECT COUNT(*)
    		  FROM reservation_tbl
    		 WHERE employee_code = #{employee_code}
-   		   AND #{selectDate} = TO_CHAR(res_date, 'YYYY-MM-dd')
+   		   AND #{selectDate} = TO_CHAR(res_date, 'YYYY-MM-DD')
    		   AND res_hour = #{res_hour}
    	</select>
    	
@@ -115,7 +115,7 @@
   	<select id="getBookedRoomTime" parameterType="java.util.Map" resultType="com.spring.Creamy_CRM.VO.ReservationVO">
   		SELECT res_start, res_end
   		  FROM res_detail_view
-  		 WHERE TO_CHAR(res_date, 'YYYY-MM-dd') = #{res_date}
+  		 WHERE TO_CHAR(res_date, 'YYYY-MM-DD') = #{res_date}
   		   AND room_setting_code = #{room_setting_code}
   		 ORDER BY res_start 
   	</select>
@@ -126,7 +126,7 @@
 		  FROM res_timetable_view rv
 		  JOIN reservation_tbl r
 		    ON rv.res_detail_code = r.res_detail_code
-		 WHERE TO_CHAR(r.res_date, 'YYYY-MM-dd') = #{res_date}
+		 WHERE TO_CHAR(r.res_date, 'YYYY-MM-DD') = #{res_date}
 		   AND r.room_setting_code = #{room_setting_code}
 		   AND r.res_state = '예약완료'
   	</select>

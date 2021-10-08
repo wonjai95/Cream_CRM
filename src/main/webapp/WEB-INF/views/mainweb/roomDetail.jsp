@@ -42,7 +42,7 @@
            	<hr>
            	<p style="font-size: 14px;">${res_date} 해당 호실 예약 현황</p>
             <c:forEach var="dto" items="${dtos}">
-            	<div class='home_div navy-bg'>&nbsp; 예약 완료 :&nbsp; ${dtos.res_start} - ${dtos.res_end}</div>
+            	<div class='home_div navy-bg'>&nbsp; 예약 완료 :&nbsp; ${dto.res_start} - ${dto.res_end}</div>
             </c:forEach>
             <br>
 				<p class="m-t" style="border-top: 1px solid gray; padding-top: 15px; display: flex; margin-bottom: 10px;">
