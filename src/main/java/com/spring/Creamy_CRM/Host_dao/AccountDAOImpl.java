@@ -142,6 +142,12 @@ public class AccountDAOImpl implements AccountDAO {
 		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
 		return dao.InsertIncomeStatement(vo);
 	}
+	
+	// 기말재고액 등록처리
+	public int insertEndingInventory(EndingInventoryVO vo) {
+		AccountDAO dao = sqlSession.getMapper(AccountDAO.class);
+		return dao.insertEndingInventory(vo);
+	}
 
 
 }

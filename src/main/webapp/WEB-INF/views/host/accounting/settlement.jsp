@@ -43,6 +43,9 @@ input[readonly]{
 			<div class="table-responsive">
 				<form action="IncomeStatementInsert" method="post" id="accountForm">
 					<sec:csrfInput />
+					
+					<input type="hidden" name="TotalInvenCnt" value=${TotalInvenCnt}>
+					
 					<div class="col-sm-3" id="settlement"
 						style="margin: 0px 80px 0px 100px;">
 						<table class="table table-bordered" style="margin-bottom: 8px;">

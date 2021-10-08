@@ -185,5 +185,11 @@
   					#{operating_expensews}, #{labour_cost}, #{utilies}, #{employee_beneifts}, #{commission}, #{operating_income}, #{non_operating_profit_loss}, #{non_operating_income},
   					#{non_operating_expenses}, #{income_before_taxes}, #{income_taxes}, #{net_income})
   	</insert>
+  	
+  	<!-- 기말재고테이블 등록 처리 -->
+  	<insert id="insertEndingInventory" parameterType="com.spring.Creamy_CRM.VO.EndingInventoryVO">
+  		INSERT INTO ending_inventory (ending_inven_code, host_code, ending_inven_date, inven_price, inven_cnt)
+  			VALUES('EI'||ending_inven_seq.nextval, #{host_code}, sysdate, #{inven_price}, #{inven_cnt})
+  	</insert>
   
   </mapper>
