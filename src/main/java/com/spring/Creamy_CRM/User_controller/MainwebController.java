@@ -495,7 +495,6 @@ public class MainwebController {
     @PostMapping("/sale/kakaoPay")
     public String kakaoPay() {
     	logger.info("url -> kakaoPay");   
-        logger.info("kakaoPay post............................................");
         
         return "redirect:" + service_sale.kakaoPayReady();
  
@@ -504,7 +503,6 @@ public class MainwebController {
     @GetMapping("/sale/kakaoPaySuccess")
     public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
     	logger.info("url -> kakaoPaySuccess");
-        logger.info("kakaoPaySuccess get............................................");
         logger.info("kakaoPaySuccess pg_token : " + pg_token);
         
         model.addAttribute("info", service_sale.kakaoPayInfo(pg_token));

@@ -12,6 +12,5 @@
 	<form method="post" action="/kakaoPay">
 		<input type="button" name="kakaoPay"> 카카오페이로 결제하기 !!	
 	</form>
-
 </body>
 </html>
