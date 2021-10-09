@@ -18,16 +18,40 @@
 	 		  FROM reservation_tbl
  	</select> -->
  	
+ 	
+ 	<!-- host_code를 이용한 employee_code 가져오기 -->
+  	<select id="getEmpCode" parameterType="String" resultType="String">
+		SELECT employee_code
+		  FROM employee_tbl
+		 WHERE host_code = #{host_code}
+	</select>
+ 	
  	<!-- 직원(담당자)별 판매정보 목록 조회 -->
-	<select id="managerSalesList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StaticVO">
-		SELECT * 
-		  FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt, employee_tbl e 
-		 WHERE r.host_code = #{host_code}
-		   AND h.host_code = r.host_code
-		   AND e.employee_code = r.employee_code
-		   AND rdt.res_detail_code = r.res_detail_code
-		   AND r.res_state = '서비스 완료'
-		 ORDER BY TO_NUMBER(SUBSTR(r.employee_code,2)) DESC
+	<select id="managerSalesList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StaticVO">	 
+	SELECT r.employee_code, e.employee_name, r.res_state, r.res_date, e.position
+         , COUNT(r.res_code) OVER(PARTITION BY r.res_code) AS "salesCount"
+         , SUM(rdt.res_sales) OVER(PARTITION BY rdt.res_sales) AS "salesSum"
+      FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt, employee_tbl e
+     WHERE h.host_code = r.host_code
+       AND e.employee_code = r.employee_code
+       AND rdt.res_detail_code = r.res_detail_code
+       AND r.res_state = '서비스 완료'
+       AND r.host_code = #{host_code}
+  ORDER BY TO_NUMBER(SUBSTR(r.employee_code,2)) DESC
+	</select>
+	
+	<!-- 직원(담당자)별 판매정보 차트 조회 -->
+	<select id="managerSalesChart" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StaticVO">	 
+	SELECT r.employee_code, e.employee_name, r.res_state, r.res_date, e.position
+         , COUNT(r.res_code) OVER(PARTITION BY r.res_code) AS "salesCount"
+         , SUM(rdt.res_sales) OVER(PARTITION BY rdt.res_sales) AS "salesSum"
+      FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt, employee_tbl e
+     WHERE h.host_code = r.host_code
+       AND e.employee_code = r.employee_code
+       AND rdt.res_detail_code = r.res_detail_code
+       AND r.res_state = '서비스 완료'
+       AND r.host_code = #{host_code}
+  ORDER BY TO_NUMBER(SUBSTR(r.employee_code,2)) DESC
 	</select>
   	
   

@@ -64,7 +64,7 @@ public class StaticsController {
 		
 		// 담당자별 판매정보 목록 출력
 		service_statics.static_managerSales(req, model);
-		
+
 		// salesTypeStatics jsp파일 이름
 		return "host/statics/managerSalesStatics";
 	}

@@ -20,7 +20,7 @@
   <script src="${path}/resources/bootstrap/js/plugins/d3/d3.min.js"></script>
   <script src="${path}/resources/bootstrap/js/plugins/c3/c3.min.js"></script>
   <script src="${path}/resources/bootstrap/js/plugins/chartJs/Chart.min.js"></script>
-  <script src="${path}/resources/bootstrap/js/demo/chartjs-demo.js"></script>
+  <script src="${path}/resources/bootstrap/js/plugins/demo/chartjs-demo.js"></script>
 
 <script type="text/javascript">
 	function addProduct() {

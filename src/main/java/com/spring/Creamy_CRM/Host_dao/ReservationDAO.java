@@ -11,12 +11,16 @@ import java.util.Map;
 
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.userVO;
+import com.spring.Creamy_CRM.android_DAO.Android_LoginDAO;
 
 public interface ReservationDAO {
 
 //======= 예약요청 탭 =======	
 	// 예약요청 목록 갯수 구하기
 	public int getRequestCnt();
+	
+	// host_code를 이용한 comp_res 가져오기
+	public String getCompRes(String host_code);
 	
 	// 예약요청 목록 조회
 	// 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회
@@ -30,7 +34,7 @@ public interface ReservationDAO {
 	public List<ReservationVO> getRequestCancel(Map<String, Object> map);
 	
 	// 예약요청 검색목록
-	public List<ReservationVO> requestSearch(String res_code);
+	public List<ReservationVO> requestSearch(Map<String, Object> map);
 	
 	// 예약요청 상세 페이지 내 회원정보
 	public userVO getUserInfo(String user_id);

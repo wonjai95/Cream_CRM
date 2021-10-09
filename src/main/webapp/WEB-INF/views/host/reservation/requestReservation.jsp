@@ -45,56 +45,46 @@
 // 검색기능 함수
 $("document").ready(function() {	
 	
-	$("select[name=res_state]").change(function(){
-		
-		var selectState = $("select[name=res_state] option:selected").val();
-		console.log("selectState : " + selectState);
+	$("#Search_btn").click(function(){
 		
 		var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
         console.log("header : " + header);
         
-         $.ajax({
-	       	  url : '${pageContext.request.contextPath}/requestReservation',
-	       	  type : "Post",
-	       	  data : "res_state=" + selectState,
-       	  	  async: false,	
-  			  beforeSend : function(jqXHR, settings) {
-	       		  console.log("beforesend 진행");
-	                 jqXHR.setRequestHeader(header, token);
-	       	  },
-	       	  success : function(result) {
-	       		  $("#requestList").html(result);
-	       	  },
-	       	  error : function(error) {
-	       		console.log(error);  
-	       	  }
-         });
-	})
-	
-	$("#Search_content").keyup(function(){
-		var header = $("meta[name='_csrf_header']").attr("content");
-        var token = $("meta[name='_csrf']").attr("content");
-		var content = $("#Search_content").val();
-		console.log("content : " + content);
-		
-		$.ajax({
-	       	  url : '${pageContext.request.contextPath}/requestReservation',
-	       	  type : "Post",
-	       	  data : "res_state=" + content,
-     	  	  async: false,	
-			  beforeSend : function(jqXHR, settings) {
-	       		  console.log("beforesend 진행");
-	                 jqXHR.setRequestHeader(header, token);
-	       	  },
-	       	  success : function(result) {
-	       		  $("#requestList").html(result);
-	       	  },
-	       	  error : function(error) {
-	       		console.log(error);  
-	       	  }
-       });
-	})
+        var selectState = $("#queryForState option:selected").val();
+        var keyword = $("input[id=queryForAll]").val();
+        
+        console.log("keyword : "+keyword);
+        console.log("selectState : "+selectState);
+        
+        //입력창에 아무것도 입력하지 않은경우
+        if(keyword == "")
+        	alert("검색어를 입력하세요");
+        else if(selectState == "0")
+        	alert("검색 옵션을 설정하세요");
+        else{
+        	
+        	$.ajax({
+        		url : "requestSearch",
+        		type: "POST",
+        		data : "selectState="+selectState+"&keyword="+keyword,
+        		async: false,	
+				beforeSend : function(jqXHR, settings) {
+		       	  console.log("beforesend 진행");
+		               jqXHR.setRequestHeader(header, token);
+		       	},
+		       	success : function(result){
+		       		$("#requestList").html(result);
+		       		console.log("success");
+		       		
+		       	},
+		       	error : function(error){
+		       		console.log(error);
+		       	}
+        		
+        	});
+        }
+	}); // 검색 end
 	
 	
 	
@@ -128,17 +118,19 @@ $("document").ready(function() {
 
 <!-- ------------------------------- 테이블표 시작 전 '예약요청' 검색창 시작 -->
 		<div class="col-sm-5 m-b-xs" style="width: 30%; ">
-			<select class="form-control-sm form-control input-s-sm inline" name="res_state" style="width: 80%; ">
-				<option value="0">예약상태</option>
-				<option value="예약완료">예약완료</option>
-				<option value="예약취소">예약취소</option>
+			<select class="form-control-sm form-control input-s-sm inline"
+					name="queryForState" id="queryForState"  style="width: 80%; ">
+				<option value="0" selected="">예약상태</option>
+				<option value="1">예약완료</option>
+				<option value="2">예약취소</option>
 			</select>
 			<input type="hidden" name="res_state">
 		</div>
 		
 		<div class="col-sm-3" style="width: 40%; ">
 			<div class="input-group">
-			<input placeholder="검색어" type="text" id="Search_content" class="form-control form-control-sm">
+			<input type="text" name="queryForAll" id="queryForAll" 
+					class="form-control form-control-sm" placeholder="검색어" >
 			<%-- <input type="text" id="res_code" name="res_code" value="${dto.res_code}" class="form-control"> --%>
 				<span class="input-group-append"> 
 					<input type="button" class="btn btn-sm btn-primary" id="Search_btn" value="검색">
@@ -157,7 +149,7 @@ $("document").ready(function() {
 		   <sec:csrfInput/>
            <input type="hidden" id="pageNum" name="pageNum" value="${pageNum}">
            <input type="hidden" id="user_id" name="user_id" value="${user_id}">
-           <input type="hidden" id="comp_res" name="comp_res" value="${mdtos.comp_res}">
+           <input type="hidden" id="comp_res" name="comp_res" value="${comp_res}">
 		<div class="ibox-content" style="border: none;">
 			<div class="table-responsive">
 	        <table class="table table-striped table-bordered table-hover dataTables-example">
@@ -166,12 +158,12 @@ $("document").ready(function() {
 		        <tr>
 		            <th style="text-align:center">예약코드</th>
 		            <th style="text-align:center">회원아이디</th>
-		            <%-- <c:if test="${comp_res eq '담당자'}"> --%>
-		            <th style="text-align:center">담당자</th>
-		            <%-- </c:if> --%>
-		            <%-- <c:if test="${comp_res eq '호실'}"> --%>
-		            <!-- <th style="text-align:center">호실12</th> -->
-		            <%-- </c:if> --%>
+				<c:if test="${comp_res eq '담당자'}">
+					<th style="text-align:center">담당자</th>
+				</c:if>
+				<c:if test="${comp_res eq '호실'}">
+		            <th style="text-align:center">호실</th>
+				</c:if>
 		            <th style="text-align:center">상태</th>
 		            <th style="text-align:center">시간</th>
 		            <th style="text-align:center">날짜</th>
@@ -220,7 +212,12 @@ $("document").ready(function() {
 		        <tr>
 		            <th style="text-align:center">예약코드</th>
 		            <th style="text-align:center">회원아이디</th>
+				<c:if test="${comp_res eq '담당자'}">
 		            <th style="text-align:center">담당자</th>
+				</c:if>
+				<c:if test="${comp_res eq '호실'}">
+		            <th style="text-align:center">호실</th>
+				</c:if>
 		            <th style="text-align:center">상태</th>
 		            <th style="text-align:center">시간</th>
 		            <th style="text-align:center">날짜</th>

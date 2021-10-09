@@ -31,16 +31,27 @@ public class ReservationController {
 		//service.requestSearch(req, model);
 		
 		//service.completeList(req, model);
+		
+		service.firstSetting(req, model);
 		return "host/reservation/reservation";
 	}
-	//예약 요청 페이
+	
+	//예약 요청 페이지
 	@RequestMapping("/host/requestReservation")
 	public String requestReservation(HttpServletRequest req, Model model) {
 		logger.info("url -> requestReservation");
 		
-		//service.requestList(req, model);
-		
 		return "host/reservation/requestReservation";
+	}
+	
+	// 예약 목록 검색
+	@RequestMapping("/host/requestSearch")
+	public String requestSearch(HttpServletRequest req, Model model) {
+		logger.info("url -> requestSearch");
+		
+		//service.requestSearch(req, model);
+		
+		return "host/reservation/requestList";
 	}
 	
 	// 목록
@@ -59,8 +70,7 @@ public class ReservationController {
 //      } else {
 //    	  return "";
 //      }
-		
-		
+		//service.requestSearch(req, model);
 		
 		return "host/reservation/requestList";
 	}
@@ -70,18 +80,23 @@ public class ReservationController {
 		logger.info("url -> requestDetails");
 		
 		String user_id = req.getParameter("user_id");
-		System.out.println("user_id : " + user_id);
 		String res_code = req.getParameter("res_code");
-		System.out.println("res_code : " + res_code);
 		String comp_res = req.getParameter("comp_res");
+		
+		System.out.println("user_id : " + user_id);
+		System.out.println("res_code : " + res_code);
 		System.out.println("comp_res : " + comp_res);
 		
 		if(comp_res.equals("담당자")) {
 			service.requestDetailAction(req, model);
+			
 			return "host/reservation/requestDetails";
+			
 		} else if(comp_res.equals("호실")) {
 			service.requestDetailAction2(req, model);
+			
 			return "host/reservation/requestDetails";
+			
 		} else {
 			return "/";
 		}	
@@ -132,8 +147,6 @@ public class ReservationController {
 	public String showReservation(HttpServletRequest req, Model model) {
 		logger.info("url -> showReservation");
 		
-		//service.completeList(req, model);
-		
 		return "host/reservation/showReservation";
 	}
 	// 목록
@@ -163,18 +176,23 @@ public class ReservationController {
 		System.out.println(req.getParameter("completeList"));
 		
 		String user_id = req.getParameter("user_id");
-		System.out.println("user_id : " + user_id);
 		String res_code = req.getParameter("res_code");
-		System.out.println("res_code : " + res_code);
 		String comp_res = req.getParameter("comp_res");
+		
+		System.out.println("user_id : " + user_id);
+		System.out.println("res_code : " + res_code);
 		System.out.println("comp_res : " + comp_res);
 		
 		if(comp_res.equals("담당자")) {
 			service.completeDetailAction(req, model);
+			
 			return "host/reservation/completeDetail";
+			
 		} else if(comp_res.equals("호실")) {
 			service.completeDetailAction2(req, model);
+			
 			return "host/reservation/completeDetail";
+			
 		} else {
 			return "/";
 		}	

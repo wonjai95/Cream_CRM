@@ -6,12 +6,16 @@
 */
 package com.spring.Creamy_CRM.Host_dao;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.spring.Creamy_CRM.VO.StaticVO;
 
 public interface StaticsDAO {
 
 	// 직원(담당자)별 판매정보 목록 조회
-	ArrayList<StaticVO> managerSalesList(String host_code);
+	public List<StaticVO> managerSalesList(String host_code);
+	
+	// 직원(담당자)별 판매정보 차트 조회
+	public List<StaticVO> managerSalesChart(String host_code);
 }

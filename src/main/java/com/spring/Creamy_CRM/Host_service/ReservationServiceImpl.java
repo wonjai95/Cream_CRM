@@ -6,6 +6,7 @@
 */
 package com.spring.Creamy_CRM.Host_service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,10 +31,9 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	
 //======= 예약요청 탭 =======	
-	// 예약요청 목록	
-	@Override
-	public void requestList(HttpServletRequest req, Model model) {
-		System.out.println("서비스 requestList시작합니다.");
+	// 예약요청 목록 구분 짓기	
+	public void firstSetting(HttpServletRequest req, Model model) {
+		System.out.println("서비스 firstSetting시작합니다.");
 		
 		// 3단계. 화면으로부터 입력받은 값을 받아온다.
 		// 페이징 (변수들)
@@ -44,44 +44,73 @@ public class ReservationServiceImpl implements ReservationService {
 		requestPage.setCurrentPage(req.getParameter("pageNum"));
 		String host_code = (String) req.getSession().getAttribute("code");
 		System.out.println("host_code : " + host_code);
-		String comp_res = req.getParameter("comp_res");
-		System.out.println("comp_res : " + comp_res);
+		
+		// comp_res 가져오기
+	    String comp_res = dao.getCompRes(host_code);
+	    System.out.println("comp_res : " + comp_res);
+		System.out.println("getCnt : " + requestPage.getCnt());
+		
+		model.addAttribute("comp_res", comp_res);
+	}
+	
+	
+	// 예약요청 목록	
+	@Override
+	public void requestList(HttpServletRequest req, Model model) {
+		System.out.println("서비스 requestList시작합니다.");
+		
+		// 3단계. 화면으로부터 입력받은 값을 받아온다.
+		String selectState = req.getParameter("selectState");
+		String keyword = req.getParameter("keyword");
+		String res_keyword = "%"+keyword+"%";
+		
+		
+		
+		// 페이징 (변수들)
+		Page requestPage = new Page();
+		requestPage.setPageSize(10);
+		requestPage.setPageBlock(10);
+		requestPage.setCnt(dao.getRequestCnt());
+		requestPage.setCurrentPage(req.getParameter("pageNum"));
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
+		// comp_res 가져오기
+	    String comp_res = dao.getCompRes(host_code);
+	    System.out.println("comp_res : " + comp_res);
 		
 		System.out.println("==============================");
 		
-		List<ReservationVO> mdtos = null;
-		List<ReservationVO> rdtos = null;
-		//String state = "서비스 완료";
+		List<ReservationVO> mdtos = null;  // mdtos => 예약종류가 담당자인 경우의 예약목록들
+		List<ReservationVO> rdtos = null;  // rdtos => 예약종류가 호실인 경우의 예약목록들
 
 		if(requestPage.getCnt() > 0) {
 			System.out.println("getCnt : " + requestPage.getCnt());
 			// 5-2단계. 게시글 목록 조회
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("host_code", host_code);
+			map.put("comp_res", comp_res);
 			map.put("start", requestPage.getStart());
 			map.put("end", requestPage.getEnd());
-			//map.put("res_state", state);
 			
-//			if(req.getParameter("res_state").equals("0")) {
-//				System.out.println("res_state 1 : " + req.getParameter("res_state"));
-				// 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회
-				mdtos = dao.getRequestMngList(map);
-				//System.out.print(mdtos.comp_res);
-				rdtos = dao.getRequestRoomList(map);  // dtos대신 list로 매개변수 줘도 무방하다.
-				
-//			} else if(req.getParameter("res_state").equals("예약완료")) {
-//				System.out.println("res_state 2 : " + req.getParameter("res_state"));
-//				// 2. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약완료) 조회
-//				dtos = dao.getRequestComplete(map);
-//			} else if(req.getParameter("res_state").equals("예약취소")) {
-//				System.out.println("res_state 3 : " + req.getParameter("res_state"));
-//				// 3. 예약상태가 "서비스 완료"가 아닌 예약요청 목록(= 예약취소) 조회
-//				dtos = dao.getRequestCancel(map);
-//			}			
+			mdtos = dao.getRequestMngList(map);
+			rdtos = dao.getRequestRoomList(map);  // dtos대신 list로 매개변수 줘도 무방하다.		
+		
+//			if(selectState.equals("1")) {
+//				System.out.println("예약완료 검색");
+//				Map<String, Object> map1 = new HashMap<String, Object>();
+//				map1.put("host_code", host_code);
+//				map1.put("comp_res", comp_res);
+//				map1.put("res_state", res_keyword);
+//				map1.put("start", requestPage.getStart());
+//				map1.put("end", requestPage.getEnd());
+//				
+//				mdtos = dao.requestSearch(map1);
+//				//rdtos = dao.getRequestRoomList(map);  // dtos대신 list로 매개변수 줘도 무방하다.		
+//			}
+		
 		}
 		
-		//System.out.println(requestPage.getCnt());
-		//System.out.println(rdtos);
 		// 6단계. jsp로 전달하기 위해 request나 session에 처리결과를 저장
 		model.addAttribute("mdtos", mdtos);
 		model.addAttribute("rdtos", rdtos);			// 리스트 = 게시글 목록
@@ -101,14 +130,85 @@ public class ReservationServiceImpl implements ReservationService {
 	// 예약요청 검색목록
 	@Override
 	public void requestSearch(HttpServletRequest req, Model model) {
+		System.out.println("서비스 requestSearch시작합니다.");
 		
-		String res_state = req.getParameter("res_state");
-		System.out.println("res_state ==> " + res_state);
+		Page requestPage = new Page();
+		requestPage.setPageSize(10);
+		requestPage.setPageBlock(10);
+		requestPage.setCnt(dao.getRequestCnt());
+		requestPage.setCurrentPage(req.getParameter("pageNum"));
 		
-		List<ReservationVO> dtos = dao.requestSearch(res_state);
-		System.out.println("dtos ==> " + dtos);
+		String selectState = req.getParameter("selectState");
+		String keyword = req.getParameter("keyword");
+		String host_code = (String) req.getSession().getAttribute("code");
 		
-		model.addAttribute("dtos", dtos);
+		String res_keyword = "%"+keyword+"%";
+		
+		// comp_res 가져오기
+	    String comp_res = dao.getCompRes(host_code);
+	    
+	    System.out.println("selectState : " + selectState);
+	    System.out.println("keyword : " + keyword);
+	    System.out.println("res_keyword : " + res_keyword);
+	    System.out.println("comp_res : " + comp_res);
+		
+		//String res_state = req.getParameter("res_state");
+		//System.out.println("res_state ==> " + res_state);
+		
+		// List<ReservationVO> dtos = new ArrayList<ReservationVO>();
+		
+		System.out.println("==============================");
+		
+		List<ReservationVO> mdtos = null;  // mdtos => 예약종류가 담당자인 경우의 예약목록들
+		//List<ReservationVO> rdtos = null;  // rdtos => 예약종류가 호실인 경우의 예약목록들
+		
+		if(requestPage.getCnt() > 0) {
+			System.out.println("getCnt : " + requestPage.getCnt());
+			// 5-2단계. 게시글 목록 조회
+		
+		//글제목
+		if(selectState.equals("1")) {
+			System.out.println("예약완료 검색");
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("host_code", host_code);
+			map.put("comp_res", comp_res);
+			map.put("res_state", res_keyword);
+			map.put("start", requestPage.getStart());
+			map.put("end", requestPage.getEnd());
+			
+			mdtos = dao.requestSearch(map);
+			//rdtos = dao.getRequestRoomList(map);  // dtos대신 list로 매개변수 줘도 무방하다.		
+		}
+		}
+		
+		//작성자
+//		else if(selectState.equals("2")) {
+//			System.out.println("예약취소 검색 - "+res_keyword);
+//			Map<String, String> map = new HashMap<String, String>();
+//			map.put("host_code", host_code);
+//			map.put("name", res_keyword);
+//			
+//			list = dao_review.getReviewSearch_user(map);
+//			
+//		}
+		
+		
+		//List<ReservationVO> dtos = dao.requestSearch(res_state);
+		//System.out.println("dtos ==> " + dtos);
+		
+		model.addAttribute("mdtos", mdtos);
+		
+		model.addAttribute("cnt", requestPage.getCnt());			// 글 갯수
+		model.addAttribute("pageNum", requestPage.getCurrentPage());	// 페이지 번호
+		model.addAttribute("number", requestPage.getNumber());		// 출력용 글 번호
+
+		if(requestPage.getCnt() > 0) {
+			model.addAttribute("startPage", requestPage.getStartPage());		// 시작 페이지 
+			model.addAttribute("endPage", requestPage.getEndPage());			// 마지막 페이지
+			model.addAttribute("pageBlock", requestPage.getPageBlock());		// 한 블럭당 페이지 갯수
+			model.addAttribute("pageCount", requestPage.getPageCount());		// 페이지 갯수
+			model.addAttribute("currentPage", requestPage.getCurrentPage());	// 현재 페이지
+		}
 	}
 	
 	// 예약요청 상세 페이지
@@ -187,13 +287,9 @@ public class ReservationServiceImpl implements ReservationService {
 		System.out.println("modifyAction 시작합니다.");
 		String comp_res = req.getParameter("comp_res");
 		System.out.println("comp_res : " + comp_res);
+		
 		// 3단계. 화면으로부터 입력받은 값(= hidden값)을 받아온다.
 		String res_state = req.getParameter("res_state");
-		//int res_hour = Integer.parseInt(req.getParameter("res_hour"));
-		//String res_room = req.getParameter("res_room");
-		int res_cnt = Integer.parseInt(req.getParameter("res_cnt"));
-		String employee_code = req.getParameter("employee_code");
-		String res_indiv_request = req.getParameter("res_indiv_request");
 		String res_memo = req.getParameter("res_memo");
 		String res_code = req.getParameter("res_code");
 		String res_detail_code = req.getParameter("res_detail_code");
@@ -202,21 +298,11 @@ public class ReservationServiceImpl implements ReservationService {
 		ReservationVO vo = new ReservationVO();
 		
 		vo.setRes_state(res_state);
-		//vo.setRes_hour(res_hour);
-		//vo.setRes_room(res_room);
-		vo.setRes_cnt(res_cnt);
-		vo.setEmployee_code(employee_code);
-		vo.setRes_indiv_request(res_indiv_request);
 		vo.setRes_memo(res_memo);
 		vo.setRes_code(res_code);  // update시, WHERE절에서 key를 비교하기 위해서.
 		vo.setRes_detail_code(res_detail_code);  // update시, WHERE절에서 key를 비교하기 위해서.
 		
 		System.out.println("res_state : " + res_state);
-		//System.out.println("res_hour : " + res_hour);
-		//System.out.println("res_room : " + res_room);
-		System.out.println("res_cnt : " + res_cnt);
-		System.out.println("employee_code : " + employee_code);
-		System.out.println("res_indiv_request : " + res_indiv_request);
 		System.out.println("res_memo : " + res_memo);
 		System.out.println("res_code : " + res_code);
 		System.out.println("res_detail_code : " + res_detail_code);

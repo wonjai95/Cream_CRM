@@ -22,7 +22,7 @@
 			
 			<td style="text-align:center">${mdto.user_id}</td>
 			<%-- ${param.dto.user_id} --%>
-			<td style="text-align:center">${mdto.employee_code}</td>
+			<td style="text-align:center">${mdto.employee_name}</td>
 			
 			<td style="text-align:center">${mdto.res_state}</td>
 			
