@@ -21,7 +21,6 @@
 ${userCode}
 ${vo.userCode}
 ${vo.host_code}
-dd
 <c:if test="${vo.comp_res == '담당자'}">
 	<c:if test="${vo.user_code != null}">
 		<iframe id="iframe" src="http://localhost:3000/user_sale?host_code=${sessionScope.code}%user_code=${vo.user_code}" style="width: 1000px; height: 1000px;"></iframe>

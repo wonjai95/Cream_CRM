@@ -230,7 +230,6 @@
 								                    <<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="payment_option" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="" id="" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
-								                    
 							                    </td></tr> 
 							                    </table>
 							                 </div>
@@ -315,7 +314,6 @@
 		            </div>
 		         
                         <!-- col-lg-6 끝 -->
-					
 			</form>
 			<form method="post" action="kakaoPay">
 			    <button>카카오페이로 결제하기</button>
