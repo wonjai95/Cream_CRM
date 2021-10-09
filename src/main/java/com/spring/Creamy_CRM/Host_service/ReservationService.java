@@ -6,14 +6,21 @@
 */
 package com.spring.Creamy_CRM.Host_service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
+
+import com.spring.Creamy_CRM.VO.ReservationVO;
 
 public interface ReservationService {
 
 	
 //======= 예약요청 탭 =======	
+	// 예약요청 목록 구분 짓기	
+	public void firstSetting(HttpServletRequest req, Model model);
+	
 	// 예약요청 목록	
 	public void requestList(HttpServletRequest req, Model model);
 	

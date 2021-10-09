@@ -21,6 +21,8 @@
   <!-- d3 and c3 charts -->
   <script src="${path}/resources/bootstrap/js/plugins/d3/d3.min.js"></script>
   <script src="${path}/resources/bootstrap/js/plugins/c3/c3.min.js"></script>
+  <script src="${path}/resources/bootstrap/js/plugins/chartJs/Chart.min.js"></script>
+  <script src="${path}/resources/bootstrap/js/plugins/demo/chartjs-demo.js"></script>
 
 </head>
 <body>
@@ -42,34 +44,28 @@
 								<form action="" name="">
 	                            <table id="rowClick" class="table table-hover" data-page-size="15">
 									<thead>
-						            <tr>
+						            <tr style="text-align: center">
 						                <th>담당자코드</th>
 						                <th>담당자명</th>
-						                <!-- <th>판매건수</th> -->
+						                <th>판매 건수</th>
 						                <th>예약상태</th>
-						                <!-- <th>매출총금액</th> -->
+						                <th>매출 총 금액</th>
 						                <th>직급</th>
 						            </tr>
 						            </thead>
 						            
 						            <tbody>
 						            <c:forEach var="dto" items="${dtos}" >
-							            <tr >
-							                <td >${dto.employee_code}
-							                	<%-- <input type="hidden" name="user_code${status.index}" value="${dto.user_code}"> --%>
+							            <tr style="text-align: center">
+							                <td >${dto.employee_code}</td>
+							                <td >${dto.employee_name}</td>
+							                <td>${dto.salesCount} 건</td>
+							                <td>${dto.res_state}</td>
+							                <td > 
+								                <fmt:formatNumber value="${dto.salesSum}"
+														pattern="###,###,###" />&nbsp;원
 							                </td>
-							                <td >${dto.employee_name}
-							                	<%-- <input type="hidden" name="user_name${status.index}" value="${dto.user_name}"> --%>
-							                </td>
-							                <td>${dto.res_state}
-							                	<%-- <input type="hidden" name="user_name${status.index}" value="${dto.user_name}"> --%>
-							                </td>
-							                <%-- <td id="user_birth${status.index}">${dto.user_birth}
-							                	<input type="hidden" name="user_birth${status.index}" value="${dto.user_birth}">
-							                </td> --%>
-											<td>${dto.position}
-												<%-- <input type="hidden" name="user_age${status.index}" value="${dto.user_age}"> --%>
-											</td>
+											<td>${dto.position}</td>
 							            </tr>
 							        </c:forEach>
 						            </tbody>
@@ -80,18 +76,18 @@
 	                </div>
 	                <!-- 위에 데이터 시트 끝 -->
 	                <!-- 아래 차트 시작 -->
-	                <div class="col-lg-12">
-	                    <div class="ibox ">
-	                        <div class="ibox-title">
-	                            <h5>Radar Chart Example</h5>
-	                        </div>
-	                        <div class="ibox-content">
-	                            <div>
-	                                <div id="pie2"></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
+					<div class="col-lg-12">
+						<div class="ibox ">
+							<div class="ibox-title">
+								<h5>Bar Chart Example</h5>
+							</div>
+							<div class="ibox-content">
+								<div>
+									<canvas id="barChart" height="140"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
 	                <!-- 아래 차트 끝 -->
 				</div>
 			</fieldset>
@@ -103,36 +99,46 @@
  <script>
 
  $(document).ready(function () {
+	/*  <c:forEach var="dto" items="${plist}">
+ 	 ['${dto.m_name}', ${dto.sumTotal}],
+  </c:forEach> */
+	 var barData = {
+		 labels: ["1월", "2월", "3월", "4월",
+				  "5월", "6월", "7월", "8월",
+				  "9월", "10월", "11월", "12월"],
+    	 datasets: [
+        	 {
+       		    label: "담당자1?2?",
+                backgroundColor: 'rgba(26,179,148,0.5)',
+                borderColor: "rgba(26,179,148,0.7)",
+                pointBackgroundColor: "rgba(26,179,148,1)",
+                pointBorderColor: "#fff",
+                data: [${janSalesSum}, ${febSalesSum}, ${marSalesSum}, ${aprSalesSum},
+						${maySalesSum}, ${junSalesSum}, ${julSalesSum}, ${augSalesSum},
+                		${sepSalesSum}, ${octSalesSum}, ${novSalesSum}, ${decSalesSum}]
+        	 },
+        	 {
+            	 label: "Data 2",
+            	 backgroundColor: 'rgba(26,179,148,0.5)',
+            	 borderColor: "rgba(26,179,148,0.7)",
+            	 pointBackgroundColor: "rgba(26,179,148,1)",
+            	 pointBorderColor: "#fff",
+            	 data: [28, 48, 40, 19, 86, 27, 90]
+        	 }
+    	 ]
+	 };
 
-	 c3.generate({
-         bindto: '#pie1',
-         data:{
-             columns: [
-                 ['data1', 30],
-                 ['data2', 120]
-             ],
-             colors:{
-                 data1: '#1ab394',
-                 data2: '#BABABA'
-             },
-             type : 'pie'
-         }
-     });
+	 var barOptions = {
+    	 responsive: true
+	 };
+
+
+	 var ctx2 = document.getElementById("barChart").getContext("2d");
+	 new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
 	 
-	 c3.generate({
-         bindto: '#pie2',
-         data:{
-             columns: [
-                 ['data1', 30],
-                 ['data2', 120]
-             ],
-             colors:{
-                 data1: '#1ab394',
-                 data2: '#BABABA'
-             },
-             type : 'pie'
-         }
-     });
+		    
+		    
+	 
  });
      
  </script>
