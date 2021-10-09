@@ -29,7 +29,7 @@
           <div class="col-lg-10">
             <div class="info-wrap">
               <div class="row">
-                <div class="col-lg-4 info">
+                <div class="col-lg-4 info" style="margin-inline:auto; flex:auto;">
 	                <sec:csrfInput/>
 	                <div class="form-group">
 	                    <input type="text" placeholder="검색어 입력" 

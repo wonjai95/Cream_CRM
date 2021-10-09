@@ -330,6 +330,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return dao.getEmpCode(employee_id);
 	}
 	
+	// 안드로이드 직원 근무시간 설정 여부 확인
+	@Override
+	public int getWorkingHoursCnt(String employee_code) {
+		EmployeeDAO dao = sqlSession.getMapper(EmployeeDAO.class);
+		return dao.getWorkingHoursCnt(employee_code);
+	}	
+	
 
 	
 
