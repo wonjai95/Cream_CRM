@@ -55,15 +55,11 @@
   function kakaoPay() {
   	
   	var url = "kakaoPay"
-  	window.open(url, "kakaoPay", "menubar=no, width=1300, height=800 ");
+  	window.open(url, "kakaoPay", "menubar=no, width=1300, height=800");
   }
 
   </script>
-  
-  
-  
 </head>
-
 <body>
 
 <c:if test="${insertCnt == 3}">
@@ -222,14 +218,14 @@
 						                
 						                <div class="form-group  row">
 						                <label class="col-sm-3 col-form-label">납부 방법</label>
+						                	<input type="hidden" name="payment_option" value="">
 							                <div class="col-sm-8" name="">  
 							                	<table>   
 							                	<tr><td>
-								                    <input type="button" name="payment_option" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
-								                    <input type="hidden" name="payment_option_hidden" value="0">
-								                    <<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
-								                    <input type="button" name="payment_option" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
-								                    <input type="button" name="" id="" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
+								                    <input type="button" name="cash_btn" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
+								                    <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
+								                    <input type="button" name="bank_btn" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
+								                    <input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
 							                    </td></tr> 
 							                    </table>
 							                 </div>
@@ -299,15 +295,8 @@
                                </div>
                            </div>
                            <!-- ibox 끝 -->
-                        
-                        
-                        
-                        
                     
                     </div>
-               		
-						
-					
 					
                     <div class="text-center">
 		              <button type="submit" style="font-size: 16px">예약하기</button>
@@ -320,9 +309,6 @@
 			</form>
 			<!-- sale_action 폼 끝 -->
 					
-					
-               		
-               		
               
          	 	</div>
          	 </div>
@@ -362,7 +348,6 @@
           <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
           <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
         </div>
-
       </div>
     </div>
 

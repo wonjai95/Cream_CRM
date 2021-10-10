@@ -582,7 +582,7 @@ public class ProductServiceImpl implements ProductService {
 		
 		int total_payment = Integer.parseInt(req.getParameter("product_price_hidden"));
 		System.out.println("total_payment : " + total_payment);
-		String payment_option = req.getParameter("payment_option_hidden");
+		String payment_option = req.getParameter("payment_option");
 		System.out.println("payment_option  : " + payment_option);
 		String credit_select = req.getParameter("credit_select");
 		System.out.println("credit_select : " + credit_select);

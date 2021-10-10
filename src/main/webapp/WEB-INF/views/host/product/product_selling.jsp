@@ -245,16 +245,15 @@
 	                
 	                <div class="form-group  row">
 	                <label class="col-sm-3 col-form-label">납부 방법</label>
+	                	<input type="hidden" name="payment_option" value="">
 		                <div class="col-sm-8" name="">  
 		                	<table>   
 		                	<tr><td>
-			                    <input type="button" name="payment_option" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
-			                    <input type="hidden" name="payment_option_hidden" value="0">
-			                    <%--<input type="button" name="payment_option" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
-			                    <input type="button" name="payment_option" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
-			                    <input type="button" name="payment_option" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" >
-			                     --%>
-		                    </td></tr>   
+			                    <input type="button" name="cash_btn" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
+			                    <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
+			                    <input type="button" name="bank_btn" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
+			                    <input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
+		                    </td></tr> 
 		                    </table>
 		                 </div>
 		            </div>

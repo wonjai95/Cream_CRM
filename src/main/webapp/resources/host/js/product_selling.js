@@ -52,16 +52,55 @@ $("document").ready(function() {
    $("input[id=cash_btn]").click(function() {
       $("input[id=cash_btn]").css("background", "");
       
-      alert("버튼 값 : " + $(this).attr("value"));   
-      
       var cash_btn =  $(this).attr("value");
       console.log("cash_btn : " + cash_btn);
       
-      $("input[name=payment_option]").val(cash_btn);
-      
-      alert("값 : " + $("input[name=payment_option]").val());
+      $("input[name=cash_btn]").val(cash_btn);
+      $("input[name=payment_option").val(cash_btn);
       $(this).css("background", "#20c997");
    });
+   
+   // 카드
+   $("input[id=credit_btn]").click(function() {
+      $("input[id=credit_btn]").css("background", "");
+      
+      var credit_btn =  $(this).attr("value");
+      console.log("credit_btn : " + credit_btn);
+      
+      $("input[name=credit_btn]").val(credit_btn);
+      $("input[name=payment_option").val(credit_btn);
+      
+      $(this).css("background", "#20c997");
+   });
+   
+   // 무통장
+   $("input[id=bank_btn]").click(function() {
+      $("input[id=bank_btn]").css("background", "");
+      
+      var bank_btn =  $(this).attr("value");
+      console.log("bank_btn : " + bank_btn);
+      
+      $("input[name=bank_btn]").val(bank_btn);
+      $("input[name=payment_option").val(bank_btn);
+      
+      $(this).css("background", "#20c997");
+   });
+   
+   // 카카오페이
+   $("input[id=kakao_btn]").click(function() {
+      $("input[id=kakao_btn]").css("background", "");
+      
+      var kakao_btn =  $(this).attr("value");
+      console.log("kakao_btn : " + kakao_btn);
+      
+      $("input[name=kakao_btn]").val(kakao_btn);
+      $("input[name=payment_option").val(bank_btn);
+      
+      
+      
+      $(this).css("background", "#20c997");
+   });
+   
    
    
 	// 결제 방법 - 현금 버튼 클릭시

@@ -62,7 +62,7 @@ public class SaleServiceImpl implements SaleService {
 		
 		int total_payment = Integer.parseInt(req.getParameter("total_payment"));
 		System.out.println("total_payment : " + total_payment);
-		String payment_option = req.getParameter("payment_option_hidden");
+		String payment_option = req.getParameter("payment_option");
 		System.out.println("payment_option  : " + payment_option);
 		
 		String credit_select = req.getParameter("credit_select");
@@ -150,7 +150,7 @@ public class SaleServiceImpl implements SaleService {
  
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + "admin key를 넣어주세요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!");
+        headers.add("Authorization", "KakaoAK " + "a424cfe847491e516d2de1ca68efea92");
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
  

@@ -28,6 +28,16 @@
 			}
 	</script>
 	
+<!-- 	<style type="text/css">
+	td {
+		text-align:center;
+	
+	}
+	</style> -->
+	
+	
+	
+	
 </head>
 <body>
 
@@ -46,21 +56,21 @@
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
          	 	<input type="hidden" name="res_code" value="${res_code}">
          	 	
-         			<div class="member-info" style="padding-left: 5px;">
+         			<div class="member-info" style="padding-left: 5px; text-align:center;">
          				<span style="font-size: 20px;">
-         					<b>예약내역 확인</b>
+         					<b style="text-align:center;">예약내역 확인</b>
          				</span><br><br>
          				<c:if test="${mdto.comp_res eq '담당자'}">
-	         				<small >예약 코드 : ${mdto.res_code} </small>
+	         				<small >예약 코드 :</small><strong> ${mdto.res_code} </strong> 
 	         				
 	         				<br>
-	         				<small>예약 상태 : ${mdto.res_state} </small>
+	         				<small>예약 상태 :</small><strong> ${mdto.res_state} </strong>
          				</c:if>
          				
          				<c:if test="${rdto.comp_res eq '호실'}">
-	         				<small >예약 코드 : ${rdto.res_code} </small>
+	         				<small >예약 코드 :</small><strong> ${rdto.res_code} </strong>
 	         				<br>
-	         				<small>예약 상태 : ${rdto.res_state} </small>
+	         				<small>예약 상태 :</small><strong> ${rdto.res_state} </strong>
          				</c:if>
          				
          			</div>
@@ -74,62 +84,70 @@
                                    <!-- 예약 테이블 시작 -->
                                    <table class="box">
 	                                    <tr>
-	                                       <td><strong>날짜</strong>
-												&nbsp;&nbsp;&nbsp;
-		                                       <!-- 시간 -->
+	                                       <td style="witdh:30px">
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>날짜</strong>
+												&emsp;
+		                                       <!-- 날짜 -->
 		                                       <div style="display:inline-block">${mdto.res_date}</div>
 		                                       <br><br></td>
-	                                    </tr>
-	                                    <tr>
-	                                       <td><strong>시간</strong>
-												&nbsp;&nbsp;&nbsp;
-		                                       <!-- 시간 -->
-		                                       <div style="display:inline-block">${mdto.res_hour}</div>
-	                                       <br><br></td>
-	                                    </tr>
-	                  
-	                                    <!-- 인원 -->
-	                                    <tr>
-	                                       <td><strong>인원</strong>
-												&nbsp;&nbsp;&nbsp;
-											<div style="display:inline-block">${mdto.res_cnt}</div>
-											<br><br></td>
-	                                    </tr>
-	                                    
-	                                    <!-- 담당자 -->
-	                                    <tr>
-	                                       <td><strong>담당자</strong>
-												&nbsp;&nbsp;&nbsp;
-		                                       <div style="display:inline-block">${mdto.employee_code}</div>
-	                                       <br><br></td>
-	                                    </tr>	                                    
-	                                    
-	                                    <!-- 추가 요청사항 -->
-	                                    <tr>
-	                                       <td><strong>추가 요청사항</strong>
-												&nbsp;&nbsp;&nbsp;
-	                                          <div class="form-group" style="margin-top:15px;">
-			                                        <textarea class="form-control" rows="3"
+		                                       
+		                                       <!-- 추가 요청사항 -->
+		                                   <td style="text-align:center;" rowspan="5"><strong>추가 요청사항</strong>
+	                                          <div class="form-group" style="margin-top:15px">
+			                                        <textarea class="form-control" rows="8"
 			                                        id="res_indiv_request" name="res_indiv_request" style="margin: 10px"
 	                         						${mdto.res_indiv_request} readonly>
 			                                        </textarea>
 	                                    	  </div>
 	                                       </td>
-	                                    </tr> 
-	                                    
+	                                    </tr>
 	                                    <tr>
-			                                 <td><strong>상품</strong>
-			                                 	&nbsp;&nbsp;&nbsp;
-												<div style="display:inline-block">${mdto.product_code} ${mdto.product_name}</div>
+	                                       <td>
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>시간</strong>
+												&emsp;
+		                                       <!-- 시간 -->
+		                                       <div style="display:inline-block">${mdto.res_hour} 시</div>
+	                                       <br><br></td>
+	                                    </tr>
+	                  
+	                                    <!-- 인원 -->
+	                                    <tr>
+	                                       <td>
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>인원</strong>
+												&emsp;
+											<div style="display:inline-block">${mdto.res_cnt} 명</div>
 											<br><br></td>
-			                              </tr>
-                              
-			                                       
-                                    
-                                             <!-- 결제금액 -->
+	                                    </tr>
+	                                    
+	                                    <!-- 담당자 -->
 	                                    <tr>
-	                                       <td><strong>결제금액</strong>
-												&nbsp;&nbsp;&nbsp;
+	                                       <td>
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>담당자</strong>
+												&emsp;
+		                                       <div style="display:inline-block">${mdto.employee_name} <small>담당자</small></div>
+	                                       <br><br></td>
+	                                    </tr>
+	                                    
+	                                    <!-- 상품 -->
+	                                    <tr>
+			                                 <td>
+			                                 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+			                                 <strong>상품</strong>
+			                                 	&emsp;
+												<div style="display:inline-block">${mdto.product_name}</div>
+											<br><br></td>
+			                              </tr>     
+                                    
+                                        <!-- 결제금액 -->
+	                                    <tr>
+	                                       <td>
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>결제금액</strong>
+												&emsp;
 												<div style="display:inline-block">${mdto.res_sales} 원</div>
 											<br><br></td>
 	                                    </tr>
@@ -143,15 +161,32 @@
 <%-- comp_res 호실 c:if 시작 --%>	<c:if test="${rdto.comp_res eq '호실'}">
                                    <!-- 예약 테이블 시작 -->
                                    <table class="box">
+	                                    <!-- 날짜 -->
 	                                    <tr>
-	                                       <td><strong>날짜</strong>
-		                                       &nbsp;&nbsp;&nbsp;
+	                                       <td>
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>날짜</strong>
+		                                       &emsp;
 		                                       <div style="display:inline-block">${rdto.res_date}</div>
 		                                       <br><br></td>
+		                                       
+		                                   <!-- 추가 요청사항 -->
+		                                   <td style="text-align:center;" rowspan="5"><strong>추가 요청사항</strong>
+	                                          <div class="form-group" style="margin-top:15px;">
+			                                        <textarea class="form-control" rows="8"
+			                                        id="res_indiv_request" name="res_indiv_request" style="margin: 10px"
+	                         						${rdto.res_indiv_request} readonly>
+			                                        </textarea>
+	                                    	  </div>
+	                                       </td> 
 	                                    </tr>
+	                                    
+	                                    <!-- 시간 -->
 	                                    <tr>
-	                                       <td><strong>시간</strong>
-		                                       &nbsp;&nbsp;&nbsp;
+	                                       <td>
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>시간</strong>
+		                                       &emsp;
 		                                       <div style="display:inline-block">${rdto.res_start}</div>
 		                                       ~
 		                                       <div style="display:inline-block">${rdto.res_end} 시</div>
@@ -160,36 +195,30 @@
 	                                    
 	                                    <!-- 호실 -->
 										<tr>
-											<td><strong>호실</strong>
-												&nbsp;&nbsp;&nbsp;
+											<td>
+											&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+											<strong>호실</strong>
+												&emsp;
 												<div style="display:inline-block">${rdto.room_name}</div>
 											<br><br></td>
 										</tr>	                                    
 	                  
 	                                    <!-- 인원 -->
 	                                    <tr>
-	                                       <td><strong>인원</strong>
-												&nbsp;&nbsp;&nbsp;
+	                                       <td>
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>인원</strong>
+												&emsp;
 												<div style="display:inline-block">${rdto.res_cnt}명</div>
 											<br><br></td>
 	                                    </tr>
 	                                    
-	                                    <!-- 추가 요청사항 -->
-	                                    <tr>
-	                                       <td><strong>추가 요청사항</strong>
-	                                          <div class="form-group" style="margin-top:30px;">
-			                                        <textarea class="form-control" rows="3"
-			                                        id="res_indiv_request" name="res_indiv_request" style="margin: 10px"
-	                         						${rdto.res_indiv_request} readonly>
-			                                        </textarea>
-	                                    	  </div>
-	                                       </td>
-	                                    </tr>
-	                                    
 	                                    <!-- 결제금액 -->
 	                                    <tr>
-	                                       <td><strong>결제금액</strong>
-												&nbsp;&nbsp;&nbsp;
+	                                       <td>
+	                                       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+	                                       <strong>결제금액</strong>
+												&emsp;
 												<div style="display:inline-block">${rdto.res_sales} 원</div>
 											<br><br></td>
 	                                    </tr>                                  
@@ -206,23 +235,15 @@
                         <!-- col-lg-6 끝 -->
                		
                		<div class="text-center">
-		              <button type="submit" style="font-size: 16px">
-		              			예약 취소 및 환불
-					  </button>
-					  <input type="submit" style="font-size: 16px"
-		              			formaction="mypage_reservation">
-		              			예약내역목록
+			            <button type="submit" style="font-size: 16px">
+			              			예약 취소 및 환불
+						  </button>
+					  <button type="button" class="btn btn-primary btn-lg"
+	            		onclick="window.location='mypage_reservation'">예약내역목록
+	            	  </button>
 		            </div>
               
          	 	</form>
-         	 	
-         	 	<%-- <div class="text-center">
-		              <button type="submit" style="font-size: 16px"
-		              			formaction="deleteBooking" form="deleteBooking" onclick="return deleteBooking();">
-		              			예약내역 취소
-					  </button> (이거 지금 작동됨[9.29/20:00])
-		            </div> --%>
-         	 	
          	 </div>
          </div>
 
@@ -241,24 +262,8 @@
         <div class="row  justify-content-center">
           <div class="col-lg-6">
             <h3>Creamy</h3>
-            <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
+            <p>123, Gasan digital 2-ro, Geumcheon-gu, Seoul, Republic of Korea</p>
           </div>
-        </div>
-
-        <div class="row footer-newsletter justify-content-center">
-          <div class="col-lg-6">
-            <form action="" method="post">
-              <input type="email" name="email" placeholder="Enter your Email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-
-        <div class="social-links">
-          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
         </div>
 
       </div>

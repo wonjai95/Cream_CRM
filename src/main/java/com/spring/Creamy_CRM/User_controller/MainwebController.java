@@ -364,7 +364,7 @@ public class MainwebController {
    public String deleteBooking(HttpServletRequest req, Model model) {
       logger.info("url -> deleteBooking");
       
-      //service.deleteActionByUser(req, model);
+      service.deleteActionByUser(req, model);
       
       return "mainweb/mypage/deleteBooking";
    }
@@ -502,7 +502,7 @@ public class MainwebController {
 		 logger.info("url -> kakaoPayGet");
     }
 	
-    @PostMapping("/sale/kakaoPay")
+    @PostMapping("/kakaoPay")
     public String kakaoPay() {
     	logger.info("url -> kakaoPay");   
         
