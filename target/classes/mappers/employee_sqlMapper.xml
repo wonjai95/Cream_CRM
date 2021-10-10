@@ -375,5 +375,12 @@
      	  FROM employee_tbl
      	 WHERE employee_id = #{employee_id}
      </select>
+     
+     <!--   안드로이드 직원 근무시간 설정 여부 확인  -->
+     <select id="getWorkingHoursCnt" parameterType="String" resultType="Integer">
+         SELECT COUNT(*)
+           FROM working_hours_tbl
+         WHERE employee_code = #{employee_code}
+     </select>
        
   </mapper>
