@@ -133,6 +133,11 @@
   		where employee_id = #{id}
   	</select>
   	
+  	<select id="getAuth" parameterType="String" resultType="com.spring.Creamy_CRM.VO.Android_AuthVO">
+  		select * from Auth_tbl
+  		where ID = #{id}
+  	</select>
+  	
   	
   
   </mapper>

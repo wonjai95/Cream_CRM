@@ -278,7 +278,7 @@ $("document").ready(function() {
 				<td><button type="button" class="btn btn-primary dim" id="user_modify_btn">회원 정보 수정</button></td>
 				<td><button type="button" class="btn btn-primary dim" id="user_del_btn">회원 삭제 처리</button></td>
 				<%--<td><button type="button" class="btn btn-primary dim" id="selling_btn">판매</button></td> --%> 
-				<td><button type="button" class="btn btn-primary dim">회원 본인 인증</button></td>
+				<!-- <td><button type="button" class="btn btn-primary dim">회원 본인 인증</button></td> -->
 			</tr>
 		</table>
         
