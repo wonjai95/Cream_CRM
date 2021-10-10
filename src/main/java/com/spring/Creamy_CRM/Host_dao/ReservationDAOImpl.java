@@ -36,6 +36,13 @@ public class ReservationDAOImpl implements ReservationDAO {
 		return dao.getRequestCnt();
 	}
 
+	// host_code를 이용한 comp_res 가져오기
+	@Override
+	public String getCompRes(String host_code) {
+		ReservationDAO dao = sqlSession.getMapper(ReservationDAO.class);
+		return dao.getCompRes(host_code);
+	}
+	
 	// 예약요청 목록 조회
 	// 1. 예약상태가 "서비스 완료"가 아닌 모든 예약요청 목록(예약완료 & 예약취소) 조회
 	// 1-1. 모든 예약요청 목록 중 사장님코드 별 예약종류(comp_res)가 "담당자"인 경우
@@ -78,9 +85,9 @@ public class ReservationDAOImpl implements ReservationDAO {
 	
 	// 예약요청 검색목록
 	@Override
-	public List<ReservationVO> requestSearch(String res_code) {
+	public List<ReservationVO> requestSearch(Map<String, Object> map) {
 		
-		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.requestSearch", res_code);
+		return sqlSession.selectList("com.spring.Creamy_CRM.Host_dao.ReservationDAO.requestSearch", map);
 	}
 	
 	

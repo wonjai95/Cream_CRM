@@ -157,4 +157,7 @@ public interface EmployeeDAO {
 	
 	// 안드로이드 직원 코드 구하기
 	public String getEmpCode(String employee_id);
+	
+	// 안드로이드 직원 근무시간 설정 여부 확인
+	public int getWorkingHoursCnt(String employee_code);
 }

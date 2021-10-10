@@ -183,7 +183,7 @@ public class Android_serviceImpl implements Android_service{
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("id",id);
 		map.put("pw", BcryptPw);
-		map.put("Auth", "ROLE_USER");
+		map.put("Auth", "ROLE_HOST");
 		
 		int cnt = dao_login.insertAuth(map);
 		System.out.println("이메일 인증 테이블 update : "+cnt);
@@ -216,6 +216,21 @@ public class Android_serviceImpl implements Android_service{
 		//성별 일단 걍 박아버림
 		String gender = "F";
 		
+		HostVO hosvo = new HostVO();
+		hosvo.setHost_id(id);
+		hosvo.setHost_pw(BcryptPw);
+		hosvo.setHost_ph(phone);
+		hosvo.setHost_email(email);
+		hosvo.setHost_name(name);
+		hosvo.setComp_name("");
+		
+		
+		int hostcnt = dao_login.insertHost(hosvo);
+		System.out.println("host 가입성공 : "+hostcnt);
+		String chk = hostcnt == 1?"1":"0";
+		
+		
+		
 		userVO vo = new userVO();
 		vo.setUser_id(id);
 		vo.setUser_password(BcryptPw);
@@ -230,7 +245,7 @@ public class Android_serviceImpl implements Android_service{
 		
 		int userinsertCnt = dao_login.insertUserinfo(vo);
 		System.out.println("회원가입 성공? : "+userinsertCnt);
-		String chk = userinsertCnt == 1?"1":"0";
+		/* String chk = userinsertCnt == 1?"1":"0"; */
 		System.out.println(chk);
 		
 		
@@ -248,218 +263,224 @@ public class Android_serviceImpl implements Android_service{
 	}
 
 
-	// QR
-	@Override
-	public Map<String, Object> getQrCode(HttpServletRequest req) {
-		System.out.println("getQRCode 진입");
-		
-		String employee_inout = req.getParameter("employee_inout");
-		String temperature = req.getParameter("temperature");
-		String covid_chk1 = req.getParameter("covid_chk1");
-		String covid_chk2 = req.getParameter("covid_chk2");
-		String covid_chk3 = req.getParameter("covid_chk3");
-		String memo = req.getParameter("memo");
-		String employee_id = req.getParameter("id");
-		System.out.println("employee_id : " + employee_id);
-		System.out.println("temperature : " + temperature);
-		System.out.println("covid_chk1 : " + covid_chk1);
-		System.out.println("memo : " + memo);
-		
-		// 해당 아이디의 employee_code 찾기
-		String employee_code = dao_emp.getEmpCode(employee_id);
-		System.out.println("employee_code : " + employee_code);
-		
-		// 날짜와 시간 
-		Date attendance_date = new Date(System.currentTimeMillis());
-		// 현재 시간만 출력
-		String inout_time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
-		
-		Calendar cal = Calendar.getInstance();
-        cal.setTime(attendance_date);// nDate 기준으로 날짜 변경
-        int dayNum = cal.get(Calendar.DAY_OF_WEEK); // Calendar로부터 요일상수 받음
-		
-		System.out.println("attendance_date : " + attendance_date);
-		System.out.println("inout_time : " + inout_time);
-		System.out.println("dayNum : " + dayNum);
-		
-		AttendanceVO vo = new AttendanceVO();
-		vo.setEmployee_code(employee_code);
-		vo.setAttendance_date(attendance_date);
-		vo.setTemperature(temperature);
-		vo.setExamination_chk1(covid_chk1);
-		vo.setExamination_chk2(covid_chk2);
-		vo.setExamination_chk3(covid_chk3);
-		vo.setMemo(memo);
-		
-		int insertCnt = 0;
-		int inChk = 0;
-		int updateCnt = 0;
-		// 출퇴근 결과 종합
-		// 1 : 출근 등록 완료, 2 : 퇴근 등록 완료, 3 : 출근 등록전에 퇴근 찍음, 4 : 중복 출근 찍음, 0 : 실패
-		int attendChk = 0;
-		
-		// 지각 여부 체크를 위해서 dao 갔다 옴
-		// 해당 직원의 해당 요일의 근무시간(working_hours_tbl)에서 late_criteria와 비교해서, 늦으면 지각. 아니면 정상
-		// switch case 이용해서 해당 요일의 in, out 시간과 late_criteria, early_criteria를 가져온다.
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("employee_code", employee_code);
-
-		WorkingHoursVO work_vo = dao_emp.getAttendanceDateInfo(map);
-		
-		
-		// 출근일 경우 attendance_tbl에 바로 삽입
-		if(employee_inout.equals("출근")) {
-			vo.setCheck_in_time(inout_time);
-			vo.setCheck_out_time("0");
-			
-			// 해당 요일의 출근 시간
-			String schedIn = "";
-			switch (dayNum) {
-				case 1 : 
-					schedIn = work_vo.getMon_in();
-					break;
-				case 2 : 
-					schedIn = work_vo.getTue_in();
-					break;
-				case 3 : 
-					schedIn = work_vo.getWed_in();
-					break;
-				case 4 : 
-					schedIn = work_vo.getThu_in();
-					break;
-				case 5 :
-					schedIn = work_vo.getFri_in();
-					break;
-				case 6 : 
-					schedIn = work_vo.getSat_in();
-					break;
-				case 0 : 
-					schedIn = work_vo.getSun_in();
-					break;
-			}
-			
-			// 출근 날짜가 아닐 때 출근할 경우
-			if(schedIn.equals("") || schedIn == null || schedIn.equals("0")) {
-				vo.setLateChk("0");
-				
-			// 정해진 날짜에 출근할 경우
-			} {
-				// 지각 기준 시간
-				int late = Integer.parseInt(work_vo.getLate_criteria());
-				
-				// 현재시간과 출근시간을 비교. 지각기준시간을 초과하면 late_early를 '지각'으로 set
-				LocalTime scheTime = LocalTime.parse(schedIn);
-				LocalTime curTime = LocalTime.parse(inout_time);
-				
-				// 정해진 출근시간 + 지각시간
-				LocalTime lateChkTime = scheTime.plusMinutes(late);
-				
-				// 실제 출근시간이 정해진 출근시간 + 지각시간보다 늦으면 지각 처리
-				if(curTime.isAfter(lateChkTime)) {
-					vo.setLateChk("지각");
-				} else {
-					vo.setLateChk("0");
-				}
-			}
-			
-			inChk = dao_emp.chkIn(vo);
-			
-			// 이미 출근을 등록한 경우
-			if(inChk == 1) {
-				attendChk = 4;
-			// 출근 정상 등록
-			} else {
-				insertCnt = dao_emp.insertAttendance(vo);
-				System.out.println("insertCnt : " + insertCnt);
-				if(insertCnt == 1) {
-					attendChk = 1;
-				}
-			}
-			
-			
-		// 퇴근일 경우 
-		} else if(employee_inout.equals("퇴근")){
-			
-			// 해당 요일의 퇴근 시간
-			String schedOut = "";
-			switch (dayNum) {
-				case 1 : 
-					schedOut = work_vo.getMon_out();
-					break;
-				case 2 : 
-					schedOut = work_vo.getTue_out();
-					break;
-				case 3 : 
-					schedOut = work_vo.getWed_out();
-					break;
-				case 4 : 
-					schedOut = work_vo.getThu_out();
-					break;
-				case 5 :
-					schedOut = work_vo.getFri_out();
-					break;
-				case 6 : 
-					schedOut = work_vo.getSat_out();
-					break;
-				case 0 : 
-					schedOut = work_vo.getSun_out();
-					break;
-			}
-			
-			// 정해진 날짜가 아닐 때 퇴근 할 경우
-			if(schedOut.equals("") || schedOut == null || schedOut.equals("0")) {
-				vo.setLateChk("0");
-			} else {
-				// 조퇴 기준 시간
-				int early = Integer.parseInt(work_vo.getLate_criteria());
-				
-				// 현재시간과 퇴근시간을 비교. 조퇴기준시간을 보다 빨리 퇴근시 late_early를 '조퇴'으로 set
-				LocalTime scheTime = LocalTime.parse(schedOut);
-				LocalTime curTime = LocalTime.parse(inout_time);
-				
-				// 정해진 퇴근시간 - 조퇴시간
-				LocalTime lateChkTime = scheTime.minusMinutes(early);
-				
-				// 실제 출근시간이 정해진 퇴근시간 - 조퇴시간보다 빠르면 조퇴 처리
-				if(curTime.isBefore(lateChkTime)) {
-					vo.setLateChk("조퇴");
-				} else {
-					vo.setLateChk("0");
-				}
-			}
-			
-			// 출근을 찍었는지 먼저 체크
-			inChk = dao_emp.chkIn(vo);
-			
-			// attendance_tbl을 update - check_out_time만 삽입
-			if(inChk == 1) {
-				vo.setCheck_out_time(inout_time);
-				updateCnt = dao_emp.updateAttendanceOut(vo);
-				System.out.println("updateCnt : " + updateCnt);
-				
-				if(updateCnt == 1) {
-					// 퇴근 등록 정상 완료
-					attendChk = 2;
-				}
-			} else {
-				// 출근을 먼저 찍으라는 alert
-				attendChk = 4;
-			}
-			
-		}
-		
-		System.out.println("inChk : " + inChk);
-		System.out.println("attendChk : " + attendChk);
-		
-		// 출퇴근 성공 여부
-		// attendChk
-		// 1 : 출근 등록 완료, 2 : 퇴근 등록 완료, 3 : 출근 등록전에 퇴근 찍음, 4 : 중복 출근 찍음, 0 : 실패
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("attendChk", attendChk);
-		
-		return returnMap;
-	}
+	   // QR
+	   @Override
+	   public Map<String, Object> getQrCode(HttpServletRequest req) {
+	      System.out.println("getQRCode 진입");
+	      
+	      String employee_inout = req.getParameter("employee_inout");
+	      String temperature = req.getParameter("temperature");
+	      String covid_chk1 = req.getParameter("covid_chk1");
+	      String covid_chk2 = req.getParameter("covid_chk2");
+	      String covid_chk3 = req.getParameter("covid_chk3");
+	      String memo = req.getParameter("memo");
+	      String employee_id = req.getParameter("id");
+	      System.out.println("employee_id : " + employee_id);
+	      System.out.println("temperature : " + temperature);
+	      System.out.println("covid_chk1 : " + covid_chk1);
+	      System.out.println("memo : " + memo);
+	      
+	      // 해당 아이디의 employee_code 찾기
+	      String employee_code = dao_emp.getEmpCode(employee_id);
+	      System.out.println("employee_code : " + employee_code);
+	      
+	      // 날짜와 시간 
+	      Date attendance_date = new Date(System.currentTimeMillis());
+	      // 현재 시간만 출력
+	      String inout_time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+	      
+	      Calendar cal = Calendar.getInstance();
+	        cal.setTime(attendance_date);// nDate 기준으로 날짜 변경
+	        int dayNum = cal.get(Calendar.DAY_OF_WEEK); // Calendar로부터 요일상수 받음
+	      
+	      System.out.println("attendance_date : " + attendance_date);
+	      System.out.println("inout_time : " + inout_time);
+	      System.out.println("dayNum : " + dayNum);
+	      
+	      AttendanceVO vo = new AttendanceVO();
+	      vo.setEmployee_code(employee_code);
+	      vo.setAttendance_date(attendance_date);
+	      vo.setTemperature(temperature);
+	      vo.setExamination_chk1(covid_chk1);
+	      vo.setExamination_chk2(covid_chk2);
+	      vo.setExamination_chk3(covid_chk3);
+	      vo.setMemo(memo);
+	      
+	      int insertCnt = 0;
+	      int inChk = 0;
+	      int updateCnt = 0;
+	      // 출퇴근 결과 종합
+	      // 1 : 출근 등록 완료, 2 : 퇴근 등록 완료, 3 : 출근 등록전에 퇴근 찍음, 4 : 중복 출근 찍음, 5 : 근무시간이 등록되지 않은 직원, 0 : 실패
+	      int attendChk = 0;
+	      
+	      // 지각 여부 체크를 위해서 dao 갔다 옴
+	      // 해당 직원의 해당 요일의 근무시간(working_hours_tbl)에서 late_criteria와 비교해서, 늦으면 지각. 아니면 정상
+	      // switch case 이용해서 해당 요일의 in, out 시간과 late_criteria, early_criteria를 가져온다.
+	      
+	      Map<String, Object> map = new HashMap<String, Object>();
+	      map.put("employee_code", employee_code);
+	      
+	      int chkWorkingHours = dao_emp.getWorkingHoursCnt(employee_code);
+	      
+	      // 근무시간이 등록되지 않은 직원
+	      if(chkWorkingHours == 0) {
+	         attendChk = 5;
+	      } else {
+	         WorkingHoursVO work_vo = dao_emp.getAttendanceDateInfo(map);
+	         
+	         // 출근일 경우 attendance_tbl에 바로 삽입
+	         if(employee_inout.equals("출근")) {
+	            vo.setCheck_in_time(inout_time);
+	            vo.setCheck_out_time("0");
+	            
+	            // 해당 요일의 출근 시간
+	            String schedIn = "";
+	            switch (dayNum) {
+	               case 1 : 
+	                  schedIn = work_vo.getMon_in();
+	                  break;
+	               case 2 : 
+	                  schedIn = work_vo.getTue_in();
+	                  break;
+	               case 3 : 
+	                  schedIn = work_vo.getWed_in();
+	                  break;
+	               case 4 : 
+	                  schedIn = work_vo.getThu_in();
+	                  break;
+	               case 5 :
+	                  schedIn = work_vo.getFri_in();
+	                  break;
+	               case 6 : 
+	                  schedIn = work_vo.getSat_in();
+	                  break;
+	               case 0 : 
+	                  schedIn = work_vo.getSun_in();
+	                  break;
+	            }
+	            
+	            // 출근 날짜가 아닐 때 출근할 경우
+	            if(schedIn.equals("") || schedIn == null || schedIn.equals("0")) {
+	               vo.setLateChk("0");
+	               
+	            // 정해진 날짜에 출근할 경우
+	            } {
+	               // 지각 기준 시간
+	               int late = Integer.parseInt(work_vo.getLate_criteria());
+	               
+	               // 현재시간과 출근시간을 비교. 지각기준시간을 초과하면 late_early를 '지각'으로 set
+	               LocalTime scheTime = LocalTime.parse(schedIn);
+	               LocalTime curTime = LocalTime.parse(inout_time);
+	               
+	               // 정해진 출근시간 + 지각시간
+	               LocalTime lateChkTime = scheTime.plusMinutes(late);
+	               
+	               // 실제 출근시간이 정해진 출근시간 + 지각시간보다 늦으면 지각 처리
+	               if(curTime.isAfter(lateChkTime)) {
+	                  vo.setLateChk("지각");
+	               } else {
+	                  vo.setLateChk("0");
+	               }
+	            }
+	            
+	            inChk = dao_emp.chkIn(vo);
+	            
+	            // 이미 출근을 등록한 경우
+	            if(inChk == 1) {
+	               attendChk = 4;
+	            // 출근 정상 등록
+	            } else {
+	               insertCnt = dao_emp.insertAttendance(vo);
+	               System.out.println("insertCnt : " + insertCnt);
+	               if(insertCnt == 1) {
+	                  attendChk = 1;
+	               }
+	            }
+	            
+	            
+	         // 퇴근일 경우 
+	         } else if(employee_inout.equals("퇴근")){
+	            
+	            // 해당 요일의 퇴근 시간
+	            String schedOut = "";
+	            switch (dayNum) {
+	               case 1 : 
+	                  schedOut = work_vo.getMon_out();
+	                  break;
+	               case 2 : 
+	                  schedOut = work_vo.getTue_out();
+	                  break;
+	               case 3 : 
+	                  schedOut = work_vo.getWed_out();
+	                  break;
+	               case 4 : 
+	                  schedOut = work_vo.getThu_out();
+	                  break;
+	               case 5 :
+	                  schedOut = work_vo.getFri_out();
+	                  break;
+	               case 6 : 
+	                  schedOut = work_vo.getSat_out();
+	                  break;
+	               case 0 : 
+	                  schedOut = work_vo.getSun_out();
+	                  break;
+	            }
+	            
+	            // 정해진 날짜가 아닐 때 퇴근 할 경우
+	            if(schedOut.equals("") || schedOut == null || schedOut.equals("0")) {
+	               vo.setLateChk("0");
+	            } else {
+	               // 조퇴 기준 시간
+	               int early = Integer.parseInt(work_vo.getLate_criteria());
+	               
+	               // 현재시간과 퇴근시간을 비교. 조퇴기준시간을 보다 빨리 퇴근시 late_early를 '조퇴'으로 set
+	               LocalTime scheTime = LocalTime.parse(schedOut);
+	               LocalTime curTime = LocalTime.parse(inout_time);
+	               
+	               // 정해진 퇴근시간 - 조퇴시간
+	               LocalTime lateChkTime = scheTime.minusMinutes(early);
+	               
+	               // 실제 출근시간이 정해진 퇴근시간 - 조퇴시간보다 빠르면 조퇴 처리
+	               if(curTime.isBefore(lateChkTime)) {
+	                  vo.setLateChk("조퇴");
+	               } else {
+	                  vo.setLateChk("0");
+	               }
+	            }
+	            
+	            // 출근을 찍었는지 먼저 체크
+	            inChk = dao_emp.chkIn(vo);
+	            
+	            // attendance_tbl을 update - check_out_time만 삽입
+	            if(inChk == 1) {
+	               vo.setCheck_out_time(inout_time);
+	               updateCnt = dao_emp.updateAttendanceOut(vo);
+	               System.out.println("updateCnt : " + updateCnt);
+	               
+	               if(updateCnt == 1) {
+	                  // 퇴근 등록 정상 완료
+	                  attendChk = 2;
+	               }
+	            } else {
+	               // 출근을 먼저 찍으라는 alert
+	               attendChk = 4;
+	            }
+	            
+	         }
+	      }
+	      
+	      System.out.println("inChk : " + inChk);
+	      System.out.println("attendChk : " + attendChk);
+	      
+	      // 출퇴근 성공 여부
+	      // attendChk
+	      // 1 : 출근 등록 완료, 2 : 퇴근 등록 완료, 3 : 출근 등록전에 퇴근 찍음, 4 : 중복 출근 찍음, 5 : 근무시간이 등록되지 않은 직원, 0 : 실패
+	      Map<String, Object> returnMap = new HashMap<String, Object>();
+	      returnMap.put("attendChk", attendChk);
+	      
+	      return returnMap;
+	   }
 	
 	// 결산 - 손익계산서 조회
 	public Map<String, Object> getSettlement(HttpServletRequest req){
@@ -494,11 +515,28 @@ public class Android_serviceImpl implements Android_service{
 
 
 
+	//후기 조회
 	@Override
 	public List<ReviewVO> reviewListFromStore(HttpServletRequest req) {
-		String host_id = req.getParameter("host_id");
-		String host_code = dao_Android_login.getCode(host_id);
-		return dao_re.getStoreReviewList(host_code);
+		
+		//id를 받아옴
+    	String id = req.getParameter("host_id");
+    	
+    	//id로 Auth_tbl에서 권한 찾아오기
+    	String Auth_chk = dao_login.getAuth(id).getAuthority();
+    	System.out.println("Auth : "+Auth_chk);
+    	
+    	//사장님인 경우
+    	if(Auth_chk.equals("ROLE_HOST")) {
+    		String host_code = dao_Android_login.getCode(id);
+			return dao_re.getStoreReviewList(host_code);
+    	}
+    	else {
+    		String host_code= dao_login.getEmpInfo(id).getHost_code();
+			return dao_re.getStoreReviewList(host_code);
+    	}
+		
+		
 	}
 	
 	
@@ -579,34 +617,56 @@ public class Android_serviceImpl implements Android_service{
     @Override
     public List<ReservationVO> getResList(HttpServletRequest req) {
     	System.out.println("관리자 예약목록 시작합니다.");
-	    String host_id = req.getParameter("host_id");
-	    System.out.println("host_id : " + host_id);
-	    
-	    // host_code 가져오기
-	    String host_code = dao_Android_login.getCode(host_id);
-	    
-	    Map<String, Object> map1 = new HashMap<String, Object>();
-	    map1.put("host_code", host_code);
-	    System.out.println("host_code : " + host_code);
-	    
-	    // comp_res 가져오기
-	    String comp_res = dao_Android_login.getCompRes(host_code);
-	    System.out.println("comp_res : " + comp_res);
+    	
+    	//id를 받아옴
+    	String id = req.getParameter("host_id");
+    	
+    	//id로 Auth_tbl에서 권한 찾아오기
+    	String Auth_chk = dao_login.getAuth(id).getAuthority();
+    	System.out.println("Auth : "+Auth_chk);
+    	
+    	//사장님인 경우
+    	if(Auth_chk.equals("ROLE_HOST")) {
+    		String host_code = dao_Android_login.getCode(id);
+		    
+		    Map<String, Object> map1 = new HashMap<String, Object>();
+		    map1.put("host_code", host_code);
+		    System.out.println("host_code : " + host_code);
+		    
+		    // comp_res 가져오기
+		    String comp_res = dao_Android_login.getCompRes(host_code);
+		    System.out.println("comp_res : " + comp_res);
 
-	    if(comp_res.equals("담당자")) {
-	    	System.out.println("=== 담당자 예약목록 시작 ===");
-	    	List<ReservationVO> mngList = dao_Android_login.getManagerResList(map1);
-	    	return mngList;
-	    } else {
-	    	System.out.println("=== 호실 예약목록 시작 ===");
-	    	List<ReservationVO> roomList = dao_Android_login.getRoomResList(map1);
-	    	return roomList;
-	    }
-	   /*
-	    for (int i = 0; i < list.size(); i++) {
-	    	System.out.println(list.get(i).getRes_date());
-		}
-	    */	    
+		    if(comp_res.equals("담당자")) {
+		    	System.out.println("=== 담당자 예약목록 시작 ===");
+		    	List<ReservationVO> mngList = dao_Android_login.getManagerResList(map1);
+		    	return mngList;
+		    } else {
+		    	System.out.println("=== 호실 예약목록 시작 ===");
+		    	List<ReservationVO> roomList = dao_Android_login.getRoomResList(map1);
+		    	return roomList;
+		    }
+    	}
+    	else {
+    		 String ho_code = dao_login.getEmpInfo(id).getHost_code();
+ 		    Map<String, Object> map1 = new HashMap<String, Object>();
+ 		    map1.put("host_code", ho_code);
+ 		    System.out.println("host_code : " + ho_code);
+ 		    
+ 		    // comp_res 가져오기
+ 		    String comp_res = dao_Android_login.getCompRes(ho_code);
+ 		    System.out.println("comp_res : " + comp_res);
+
+ 		    if(comp_res.equals("담당자")) {
+ 		    	System.out.println("=== 담당자 예약목록 시작 ===");
+ 		    	List<ReservationVO> mngList = dao_Android_login.getManagerResList(map1);
+ 		    	return mngList;
+ 		    } else {
+ 		    	System.out.println("=== 호실 예약목록 시작 ===");
+ 		    	List<ReservationVO> roomList = dao_Android_login.getRoomResList(map1);
+ 		    	return roomList;
+ 		    }
+    	}
     }
 
 	

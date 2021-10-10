@@ -35,7 +35,7 @@ body {
 	</script>
 </c:if>
 
-<c:if test="${insertCnt != 1}">
+<c:if test="${insertCnt == 0}">
 	<script type="text/javascript">
 		alert("직원이 등록에 실패했습니다.");
 		history.back();

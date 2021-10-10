@@ -9,7 +9,9 @@ package com.spring.Creamy_CRM.Host_service;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -210,18 +212,99 @@ public class StaticsServiceImpl implements StaticsService {
 		
 	}
 
-	// 담당자별 판매 현황(통계)
+	// 담당자별 판매 현황 (리스트 목록 통계)
 	@Override
 	public void static_managerSales(HttpServletRequest req, Model model) {
+		System.out.println("static_managerSalesList 시작합니다");
 		
 		String host_code = (String) req.getSession().getAttribute("code");
 		System.out.println("host_code : " + host_code);
 		
-		ArrayList<StaticVO> dtos = dao_statics.managerSalesList(host_code);
+		List<StaticVO> dtos = dao_statics.managerSalesList(host_code);
+		System.out.println("dtos 목록 : " + dtos);
 		
 		model.addAttribute("dtos", dtos);
+		
+		System.out.println("====================");
+		System.out.println("");
+		
+		//System.out.println("static_managerSalesChart 시작합니다");
+		
+		//List<StaticVO> list = new ArrayList<StaticVO>();
+		
+		//list = dao_statics.managerSalesChart(host_code);
+		
+		// 신규등록 고객
+		int janSalesSum = 0;
+		int febSalesSum = 0;
+		int marSalesSum = 0;
+		int aprSalesSum = 0;
+		int maySalesSum = 0;
+		int junSalesSum = 0;
+		int julSalesSum = 0;
+		int augSalesSum = 0;
+		int sepSalesSum = 0;
+		int octSalesSum = 0;
+		int novSalesSum = 0;
+		int decSalesSum = 0;
+
+		for(StaticVO vo : dtos) {
+			
+			Date month = vo.getRes_date();
+			int intMonth = month.getMonth() + 1;
+			
+			if(intMonth == 1) 
+				janSalesSum += vo.getSalesSum();
+			else if(intMonth == 2)
+				febSalesSum += vo.getSalesSum();
+			else if(intMonth == 3)
+				marSalesSum += vo.getSalesSum();
+			else if(intMonth == 4)
+				aprSalesSum += vo.getSalesSum();
+			else if(intMonth == 5)
+				maySalesSum += vo.getSalesSum();
+			else if(intMonth == 6)
+				junSalesSum += vo.getSalesSum();
+			else if(intMonth == 7)
+				julSalesSum += vo.getSalesSum();
+			else if(intMonth == 8)
+				augSalesSum += vo.getSalesSum();
+			else if(intMonth == 9)
+				sepSalesSum += vo.getSalesSum();  // => 9월달 가입자 6명이 나와야한다. (10/2 22:27 기준)
+			else if(intMonth == 10)
+				octSalesSum += vo.getSalesSum();
+			else if(intMonth == 11)
+				novSalesSum += vo.getSalesSum();
+			else if(intMonth == 12)
+				decSalesSum += vo.getSalesSum();
+			}
+
+		int totalMngSalesCnt = dtos.size();
+		System.out.println("전체 담당자 판매건수 : " + totalMngSalesCnt + "건");
+		
+		req.setAttribute("janSalesSum", janSalesSum);
+		req.setAttribute("febSalesSum", febSalesSum);
+		req.setAttribute("marSalesSum", marSalesSum);
+		req.setAttribute("aprSalesSum", aprSalesSum);
+		req.setAttribute("maySalesSum", maySalesSum);
+		req.setAttribute("junSalesSum", junSalesSum);
+		req.setAttribute("julSalesSum", julSalesSum);
+		req.setAttribute("augSalesSum", augSalesSum);
+		req.setAttribute("sepSalesSum", sepSalesSum);
+		req.setAttribute("octSalesSum", octSalesSum);
+		req.setAttribute("novSalesSum", novSalesSum);
+		req.setAttribute("decSalesSum", decSalesSum);
+		
+		System.out.println("====================");
+		
+		
+		
+		
+		
+		
+		
+		
 	}
-	
 	
 	
 	

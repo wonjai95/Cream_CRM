@@ -235,9 +235,11 @@
                         <!-- col-lg-6 끝 -->
                		
                		<div class="text-center">
+
 			            <button type="submit" style="font-size: 16px">
 			              			예약 취소 및 환불
 						  </button>
+
 					  <button type="button" class="btn btn-primary btn-lg"
 	            		onclick="window.location='mypage_reservation'">예약내역목록
 	            	  </button>
