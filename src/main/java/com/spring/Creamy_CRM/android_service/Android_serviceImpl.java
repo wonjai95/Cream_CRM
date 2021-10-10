@@ -183,7 +183,7 @@ public class Android_serviceImpl implements Android_service{
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("id",id);
 		map.put("pw", BcryptPw);
-		map.put("Auth", "ROLE_USER");
+		map.put("Auth", "ROLE_HOST");
 		
 		int cnt = dao_login.insertAuth(map);
 		System.out.println("이메일 인증 테이블 update : "+cnt);
@@ -216,6 +216,21 @@ public class Android_serviceImpl implements Android_service{
 		//성별 일단 걍 박아버림
 		String gender = "F";
 		
+		HostVO hosvo = new HostVO();
+		hosvo.setHost_id(id);
+		hosvo.setHost_pw(BcryptPw);
+		hosvo.setHost_ph(phone);
+		hosvo.setHost_email(email);
+		hosvo.setHost_name(name);
+		hosvo.setComp_name("");
+		
+		
+		int hostcnt = dao_login.insertHost(hosvo);
+		System.out.println("host 가입성공 : "+hostcnt);
+		String chk = hostcnt == 1?"1":"0";
+		
+		
+		
 		userVO vo = new userVO();
 		vo.setUser_id(id);
 		vo.setUser_password(BcryptPw);
@@ -230,7 +245,7 @@ public class Android_serviceImpl implements Android_service{
 		
 		int userinsertCnt = dao_login.insertUserinfo(vo);
 		System.out.println("회원가입 성공? : "+userinsertCnt);
-		String chk = userinsertCnt == 1?"1":"0";
+		/* String chk = userinsertCnt == 1?"1":"0"; */
 		System.out.println(chk);
 		
 		
@@ -500,11 +515,28 @@ public class Android_serviceImpl implements Android_service{
 
 
 
+	//후기 조회
 	@Override
 	public List<ReviewVO> reviewListFromStore(HttpServletRequest req) {
-		String host_id = req.getParameter("host_id");
-		String host_code = dao_Android_login.getCode(host_id);
-		return dao_re.getStoreReviewList(host_code);
+		
+		//id를 받아옴
+    	String id = req.getParameter("host_id");
+    	
+    	//id로 Auth_tbl에서 권한 찾아오기
+    	String Auth_chk = dao_login.getAuth(id).getAuthority();
+    	System.out.println("Auth : "+Auth_chk);
+    	
+    	//사장님인 경우
+    	if(Auth_chk.equals("ROLE_HOST")) {
+    		String host_code = dao_Android_login.getCode(id);
+			return dao_re.getStoreReviewList(host_code);
+    	}
+    	else {
+    		String host_code= dao_login.getEmpInfo(id).getHost_code();
+			return dao_re.getStoreReviewList(host_code);
+    	}
+		
+		
 	}
 	
 	
@@ -585,34 +617,56 @@ public class Android_serviceImpl implements Android_service{
     @Override
     public List<ReservationVO> getResList(HttpServletRequest req) {
     	System.out.println("관리자 예약목록 시작합니다.");
-	    String host_id = req.getParameter("host_id");
-	    System.out.println("host_id : " + host_id);
-	    
-	    // host_code 가져오기
-	    String host_code = dao_Android_login.getCode(host_id);
-	    
-	    Map<String, Object> map1 = new HashMap<String, Object>();
-	    map1.put("host_code", host_code);
-	    System.out.println("host_code : " + host_code);
-	    
-	    // comp_res 가져오기
-	    String comp_res = dao_Android_login.getCompRes(host_code);
-	    System.out.println("comp_res : " + comp_res);
+    	
+    	//id를 받아옴
+    	String id = req.getParameter("host_id");
+    	
+    	//id로 Auth_tbl에서 권한 찾아오기
+    	String Auth_chk = dao_login.getAuth(id).getAuthority();
+    	System.out.println("Auth : "+Auth_chk);
+    	
+    	//사장님인 경우
+    	if(Auth_chk.equals("ROLE_HOST")) {
+    		String host_code = dao_Android_login.getCode(id);
+		    
+		    Map<String, Object> map1 = new HashMap<String, Object>();
+		    map1.put("host_code", host_code);
+		    System.out.println("host_code : " + host_code);
+		    
+		    // comp_res 가져오기
+		    String comp_res = dao_Android_login.getCompRes(host_code);
+		    System.out.println("comp_res : " + comp_res);
 
-	    if(comp_res.equals("담당자")) {
-	    	System.out.println("=== 담당자 예약목록 시작 ===");
-	    	List<ReservationVO> mngList = dao_Android_login.getManagerResList(map1);
-	    	return mngList;
-	    } else {
-	    	System.out.println("=== 호실 예약목록 시작 ===");
-	    	List<ReservationVO> roomList = dao_Android_login.getRoomResList(map1);
-	    	return roomList;
-	    }
-	   /*
-	    for (int i = 0; i < list.size(); i++) {
-	    	System.out.println(list.get(i).getRes_date());
-		}
-	    */	    
+		    if(comp_res.equals("담당자")) {
+		    	System.out.println("=== 담당자 예약목록 시작 ===");
+		    	List<ReservationVO> mngList = dao_Android_login.getManagerResList(map1);
+		    	return mngList;
+		    } else {
+		    	System.out.println("=== 호실 예약목록 시작 ===");
+		    	List<ReservationVO> roomList = dao_Android_login.getRoomResList(map1);
+		    	return roomList;
+		    }
+    	}
+    	else {
+    		 String ho_code = dao_login.getEmpInfo(id).getHost_code();
+ 		    Map<String, Object> map1 = new HashMap<String, Object>();
+ 		    map1.put("host_code", ho_code);
+ 		    System.out.println("host_code : " + ho_code);
+ 		    
+ 		    // comp_res 가져오기
+ 		    String comp_res = dao_Android_login.getCompRes(ho_code);
+ 		    System.out.println("comp_res : " + comp_res);
+
+ 		    if(comp_res.equals("담당자")) {
+ 		    	System.out.println("=== 담당자 예약목록 시작 ===");
+ 		    	List<ReservationVO> mngList = dao_Android_login.getManagerResList(map1);
+ 		    	return mngList;
+ 		    } else {
+ 		    	System.out.println("=== 호실 예약목록 시작 ===");
+ 		    	List<ReservationVO> roomList = dao_Android_login.getRoomResList(map1);
+ 		    	return roomList;
+ 		    }
+    	}
     }
 
 	

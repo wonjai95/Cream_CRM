@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import com.spring.Creamy_CRM.VO.Android_AuthVO;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.HostVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
@@ -149,6 +150,11 @@ public class LoginDAOImpl implements LoginDAO {
 	@Override
 	public EmployeeVO getEmpInfo(String id) {
 		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.loginDAO.getEmpInfo",id);
+	}
+
+	@Override
+	public Android_AuthVO getAuth(String id) {
+		return sqlSession.selectOne("com.spring.Creamy_CRM.Host_dao.loginDAO.getAuth",id);
 	}
 	
 

@@ -131,12 +131,12 @@
       		         		<c:if test="${sessionScope.id eq vo.user_id}">
 	      		         		<c:if test="${check_page eq 'my'}">
 	      		         		<button type="submit" formaction="modify_review" >후기 수정</button>
-	      		         		<button type="submit" formaction="delete_review">후기 삭제</button>
+	      		         		<!-- <button type="submit" formaction="delete_review">후기 삭제</button> -->
 			              		<button type="button" onclick="location.href='my_review'">목록으로</button>
 			              		</c:if>
 			              		<c:if test="${check_page eq 'all'}">
 			              		<button type="submit" formaction="modify_review" >후기 수정</button>
-			              		<button type="submit" formaction="delete_review">후기 삭제</button>
+			              		<!-- <button type="submit" formaction="delete_review">후기 삭제</button> -->
 			              		<button type="button" onclick="location.href='review_main'">목록으로</button>
 			              		</c:if>
 		              		</c:if>
