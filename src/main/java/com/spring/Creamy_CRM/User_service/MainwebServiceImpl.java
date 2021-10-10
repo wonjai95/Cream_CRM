@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,8 @@ public class MainwebServiceImpl implements MainwebService {
 	
 	@Autowired
 	EmployeeDAOImpl dao_emp;
+	
+	
 	
 //======= 회원예약 =======		
 	
@@ -213,6 +216,7 @@ public class MainwebServiceImpl implements MainwebService {
 		
 		req.setAttribute("mdto", mvo);
 		req.setAttribute("rdto", rvo);
+		req.setAttribute("host_code", host_code);
 		req.setAttribute("res_code", res_code);
 	}
 	
@@ -223,7 +227,7 @@ public class MainwebServiceImpl implements MainwebService {
 		System.out.println("deleteActionByUser 시작합니다.");
 		// 3단계. 화면으로부터 입력받은 값(= hidden값)을 받아온다.
 		String res_state = "예약취소";
-		String res_code = req.getParameter("res_code");
+		String res_code = (String) req.getAttribute("res_code");
 		
 		// reservationVO vo 바구니 생성
 		ReservationVO vo = new ReservationVO();

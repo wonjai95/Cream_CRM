@@ -54,7 +54,7 @@
             </button>
         </nav>
         </div>    
-      <input type="hidden" name="res_code" value="${res_code}">
+      <input type="text" name="res_code" value="${res_code}">
       
         <!-- 예약 취소가 실패라면, -->
 		<c:if test="${deleteCnt == 0 && deleteCnt1 == 0}">

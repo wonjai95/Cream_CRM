@@ -12,7 +12,7 @@
 <c:if test="${insertCnt == 1}">
 	<script type="text/javascript">
 		alert("결제 처리 및 예약 완료!!");
-		window.location = "mypage";
+		window.location = "mypage_reservation";
 	</script>
 </c:if>
 
