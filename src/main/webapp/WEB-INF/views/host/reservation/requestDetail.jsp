@@ -109,10 +109,10 @@
 	        <div class="ibox-title">
 	            <h5>예약요청건에 대해 관리합니다.</h5>
 	            
-	            &nbsp;&nbsp;&nbsp;
+	            <!-- &nbsp;&nbsp;&nbsp;
 	            <button type="submit" class="btn btn-primary btn-lg"
 	            		formaction="insertAction">예약 등록
-	            </button>
+	            </button> -->
 	            &nbsp;&nbsp;&nbsp;
 	            <button type="submit" class="btn btn-primary btn-lg"
 	            		formaction="modifyAction" form="requestDetail" onclick="return modifyReservation();">예약 수정

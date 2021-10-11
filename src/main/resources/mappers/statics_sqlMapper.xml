@@ -42,16 +42,14 @@
 	
 	<!-- 직원(담당자)별 판매정보 차트 조회 -->
 	<select id="managerSalesChart" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StaticVO">	 
-	SELECT r.employee_code, e.employee_name, r.res_state, r.res_date, e.position
-         , COUNT(r.res_code) OVER(PARTITION BY r.res_code) AS "salesCount"
-         , SUM(rdt.res_sales) OVER(PARTITION BY rdt.res_sales) AS "salesSum"
-      FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt, employee_tbl e
-     WHERE h.host_code = r.host_code
-       AND e.employee_code = r.employee_code
-       AND rdt.res_detail_code = r.res_detail_code
-       AND r.res_state = '서비스 완료'
-       AND r.host_code = #{host_code}
-  ORDER BY TO_NUMBER(SUBSTR(r.employee_code,2)) DESC
+	SELECT r.employee_code, e.employee_name, TO_CHAR(r.res_date, 'YYYY-MM')as "res_dates", SUM(rdt.res_sales) AS "salesSum"
+  FROM reservation_tbl r, reservation_detail_tbl rdt, employee_tbl e
+WHERE r.res_detail_code = rdt.res_detail_code 
+    AND r.employee_code = e.employee_code
+    AND r.res_state = '서비스 완료'
+    AND r.employee_code= #{employee_code}
+GROUP BY r.employee_code, e.employee_name, TO_CHAR(r.res_date, 'YYYY-MM')
+ORDER BY TO_NUMBER(SUBSTR(r.employee_code,2)) DESC
 	</select>
   	
   

@@ -30,9 +30,9 @@ public class StaticsDAOImpl implements StaticsDAO {
 	}
 	
 	// 직원(담당자)별 판매정보 차트 조회
-	public List<StaticVO> managerSalesChart(String host_code) {
+	public List<StaticVO> managerSalesChart(String employee_code) {
 		StaticsDAO dao = sqlSession.getMapper(StaticsDAO.class);
-		return dao.managerSalesChart(host_code);
+		return dao.managerSalesChart(employee_code);
 	}
 
 }

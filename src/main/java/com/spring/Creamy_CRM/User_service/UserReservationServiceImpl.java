@@ -230,7 +230,6 @@ public class UserReservationServiceImpl implements UserReservationService {
 		model.addAttribute("close_sche", vo.getClose_sche());
 		model.addAttribute("selectDate", selectDate);
 		model.addAttribute("dtos", resVO);
-		System.out.println("");
 		model.addAttribute("roomDto", roomVO);
 //		req.setAttribute("room_setting_code", selectRoom);
 //		req.setAttribute("selectDate", selectDate);
