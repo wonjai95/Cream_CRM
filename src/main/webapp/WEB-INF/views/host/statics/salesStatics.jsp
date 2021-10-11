@@ -123,9 +123,12 @@
 									<!-- 본문 내용 끝 -->
 								</div>
 							</div>
+							
+							<!-- tab-2 시작 -->
 							<div id="tab-2" class="tab-pane">
 							
 							</div>
+							<!-- tab-2 끝 -->
 
 						</div>
 					</div>

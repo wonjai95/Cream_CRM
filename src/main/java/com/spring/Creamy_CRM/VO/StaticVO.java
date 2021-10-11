@@ -14,6 +14,24 @@ public class StaticVO {
 	private String position;				// 담당자(직원) 직책
 	private String host_code;				// 사장님 코드
 	private Date res_date;					// 예약된 날짜(= 서비스완료로 기재된 예약건의 날짜)
+	private String res_dates;
+	
+	
+	private int totalSum;
+	private int janSalesSum;
+	private int febSalesSum;
+	private int marSalesSum;
+	private int aprSalesSum;
+	private int maySalesSum;
+	private int junSalesSum;
+	private int julSalesSum;
+	private int augSalesSum;
+	private int sepSalesSum;
+	private int octSalesSum;
+	private int novSalesSum;
+	private int decSalesSum;
+	
+	
 	
 	// getter & setter
 	public String getRes_state() {
@@ -77,6 +95,111 @@ public class StaticVO {
 	}
 	public void setRes_date(Date res_date) {
 		this.res_date = res_date;
+	}
+	
+	
+	
+	public String getRes_dates() {
+		return res_dates;
+	}
+	public void setRes_dates(String res_dates) {
+		this.res_dates = res_dates;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public int getTotalSum() {
+		return totalSum;
+	}
+	public void setTotalSum(int totalSum) {
+		this.totalSum = totalSum;
+	}
+	public int getJanSalesSum() {
+		return janSalesSum;
+	}
+	public void setJanSalesSum(int janSalesSum) {
+		this.janSalesSum = janSalesSum;
+	}
+	public int getFebSalesSum() {
+		return febSalesSum;
+	}
+	public void setFebSalesSum(int febSalesSum) {
+		this.febSalesSum = febSalesSum;
+	}
+	public int getMarSalesSum() {
+		return marSalesSum;
+	}
+	public void setMarSalesSum(int marSalesSum) {
+		this.marSalesSum = marSalesSum;
+	}
+	public int getAprSalesSum() {
+		return aprSalesSum;
+	}
+	public void setAprSalesSum(int aprSalesSum) {
+		this.aprSalesSum = aprSalesSum;
+	}
+	public int getMaySalesSum() {
+		return maySalesSum;
+	}
+	public void setMaySalesSum(int maySalesSum) {
+		this.maySalesSum = maySalesSum;
+	}
+	public int getJunSalesSum() {
+		return junSalesSum;
+	}
+	public void setJunSalesSum(int junSalesSum) {
+		this.junSalesSum = junSalesSum;
+	}
+	public int getJulSalesSum() {
+		return julSalesSum;
+	}
+	public void setJulSalesSum(int julSalesSum) {
+		this.julSalesSum = julSalesSum;
+	}
+	public int getAugSalesSum() {
+		return augSalesSum;
+	}
+	public void setAugSalesSum(int augSalesSum) {
+		this.augSalesSum = augSalesSum;
+	}
+	public int getSepSalesSum() {
+		return sepSalesSum;
+	}
+	public void setSepSalesSum(int sepSalesSum) {
+		this.sepSalesSum = sepSalesSum;
+	}
+	public int getOctSalesSum() {
+		return octSalesSum;
+	}
+	public void setOctSalesSum(int octSalesSum) {
+		this.octSalesSum = octSalesSum;
+	}
+	public int getNovSalesSum() {
+		return novSalesSum;
+	}
+	public void setNovSalesSum(int novSalesSum) {
+		this.novSalesSum = novSalesSum;
+	}
+	public int getDecSalesSum() {
+		return decSalesSum;
+	}
+	public void setDecSalesSum(int decSalesSum) {
+		this.decSalesSum = decSalesSum;
 	}
 	
 	
