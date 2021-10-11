@@ -26,10 +26,7 @@ import com.spring.Creamy_CRM.User_dao.SaleDAO;
 import com.spring.Creamy_CRM.User_dao.SaleDAOImpl;
 import com.spring.Creamy_CRM.VO.KakaoPayApprovalVO;
 import com.spring.Creamy_CRM.VO.KakaoPayReadyVO;
-import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.userVO;
-
-import sun.net.www.ParseUtil;
 
 @Service
 public class SaleServiceImpl implements SaleService {
@@ -99,46 +96,40 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 
-	// 카카오페이 결제 - 결제 정보 받으려면 vo 추가하기
+	// 카카오페이 결제
 	@Override
-	public String kakaoPayReady(HttpServletRequest req, Model model) {
+	public String kakaoPayReady() {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		 
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + "408871ccae74749e2d6962d6c45fa347");
+        headers.add("Authorization", "KakaoAK " + "a424cfe847491e516d2de1ca68efea92");
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
- 
-        
-        System.out.println("total_payment : " + req.getParameter("total_payment"));
         
         // 서버로 요청할 Body
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
-        params.add("partner_order_id", "서비스 예약");
-        params.add("partner_user_id", "Creamy_CRM");
-        params.add("item_name", req.getParameter("res_hour"));
-        params.add("item_code", req.getParameter("product_code"));
-        params.add("total_amount", req.getParameter("total_payment"));
+        params.add("partner_order_id", "1001");
+        params.add("partner_user_id", "gorany");
+        params.add("item_name", "갤럭시S9");
         params.add("quantity", "1");
-        params.add("tax_free_amount", "0");
-        params.add("approval_url", "http://localhost/Creamy_CRM/kakaoPaySuccess");    
-        params.add("cancel_url", "http://localhost/Creamy_CRM/kakaoPayCancel");
-        params.add("fail_url", "http://localhost/Creamy_CRM/kakaoPaySuccessFail");
+        params.add("total_amount", "2100");
+        params.add("tax_free_amount", "100");
+        params.add("approval_url", "http://localhost:8080/Creamy_CRM/kakaoPaySuccess");
+        params.add("cancel_url", "http://localhost:8080/Creamy_CRM/kakaoPayCancel");
+        params.add("fail_url", "http://localhost:8080/Creamy_CRM/kakaoPaySuccessFail");
  
-        // header와 body 붙이기     
+        // header와 body 붙이기
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
  
         try {
         	// RestTemplate 이용 카카오페이에 데이터 보내기
             kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
-                
-            System.out.println("kakaopay..getNext_redirect_pc_url");
-            System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
-            return kakaoPayReadyVO.getNext_redirect_pc_url();
             
+            return kakaoPayReadyVO.getNext_redirect_pc_url();
+ 
         } catch (RestClientException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -147,43 +138,37 @@ public class SaleServiceImpl implements SaleService {
             e.printStackTrace();
         }
         
-        return "/kakaoPaySuccess";
+        return "/pay";
 	}
 	
 	
 	// 카카오페이 결제 승인 내용
 	@Override
 	public KakaoPayApprovalVO kakaoPayInfo(String pg_token) {
-		System.out.println("service ==> kakaoPayInfo"); 
-		
+		 
         RestTemplate restTemplate = new RestTemplate();
-        
+ 
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + "408871ccae74749e2d6962d6c45fa347");
+        headers.add("Authorization", "KakaoAK " + "a424cfe847491e516d2de1ca68efea92");
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
-        
+ 
         // 서버로 요청할 Body
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("tid", kakaoPayReadyVO.getTid());
-        params.add("partner_order_id", "서비스 예약");
-        params.add("partner_user_id", "Creamy_CRM");
-        params.add("payment_method_type", "Kakao Pay");
+        params.add("partner_order_id", "1001");
+        params.add("partner_user_id", "gorany");
         params.add("pg_token", pg_token);
-              
+        params.add("total_amount", "2100");
+        
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         
         try {
             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
-            System.out.println("vo?" + kakaoPayApprovalVO);
-            
-            KakaoPayApprovalVO vo = new KakaoPayApprovalVO();
-            
-            dao.insertKakaoPay(vo);
-            
-            
+            System.out.println("" + kakaoPayApprovalVO);
+          
             return kakaoPayApprovalVO;
         
         } catch (RestClientException e) {

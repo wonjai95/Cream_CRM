@@ -8,9 +8,6 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Creamy || kakaoPay </title>
-<script type="text/javascript">
-
-</script>
 </head>
 <body>
 	<h1> kakaoPay 결제하기 </h1>

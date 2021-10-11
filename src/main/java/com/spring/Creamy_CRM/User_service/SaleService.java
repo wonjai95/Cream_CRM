@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 
 import com.spring.Creamy_CRM.VO.KakaoPayApprovalVO;
-import com.spring.Creamy_CRM.VO.ReservationVO;
 
 public interface SaleService {
 	
@@ -13,7 +12,7 @@ public interface SaleService {
 	public void insertSaleInfo(HttpServletRequest req, Model model);
 	
 	// 카카오페이 결제
-	public String kakaoPayReady(HttpServletRequest req, Model model);
+	public String kakaoPayReady();
 	
 	// 카카오페이 결제 승인 내용
 	public KakaoPayApprovalVO kakaoPayInfo(String pg_token);

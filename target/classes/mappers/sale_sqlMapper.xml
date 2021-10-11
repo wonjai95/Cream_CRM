@@ -25,11 +25,5 @@
 		 WHERE res_code = #{res_code}
 	</delete>
 	
-	<!-- 카카오페이 정보 입력 -->
-	<insert id="insertKakaoPay" parameterType="com.spring.Creamy_CRM.VO.KakaoPayApprovalVO">
-		INSERT INTO kakaopay_tbl(kakao_code, tid, cid, aid, sale_code)
-		VALUES ('K'||kakao_seq.NEXTVAL, #{tid}, #{cid}, #{aid}, 'SL'||sale_seq.CURRVAL)
-	</insert>
-	
   </mapper>
   

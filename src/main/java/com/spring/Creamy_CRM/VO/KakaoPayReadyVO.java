@@ -8,12 +8,12 @@ public class KakaoPayReadyVO {
     private String tid, next_redirect_pc_url;
     private Date created_at;
 	public String getNext_redirect_pc_url() {
-		
-		return next_redirect_pc_url;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	public String getTid() {
-		
-		return tid;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
