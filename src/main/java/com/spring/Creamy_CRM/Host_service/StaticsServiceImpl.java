@@ -225,16 +225,43 @@ public class StaticsServiceImpl implements StaticsService {
 		
 		model.addAttribute("dtos", dtos);
 		
-		System.out.println("====================");
-		System.out.println("");
+		System.out.println(dtos.get(0).getEmployee_name());
 		
-		//System.out.println("static_managerSalesChart 시작합니다");
+		System.out.println("====================");
+		
+		System.out.println("static_managerSalesChart 시작합니다");
+		
+		String employee_code = null;
+		List<StaticVO> list = null;
+		for(int i=0; i<dtos.size(); i++) {
+			
+			employee_code = dtos.get(i).getEmployee_code();
+			
+			System.out.println("dtos로부터 받아온 employee_code 목록들 : " + employee_code);
+		}	
+		
+		
+		
+		list = dao_statics.managerSalesChart(employee_code);
+		
+
+		
 		
 		//List<StaticVO> list = new ArrayList<StaticVO>();
 		
-		//list = dao_statics.managerSalesChart(host_code);
 		
-		// 신규등록 고객
+		//String employee_code = dtos.get(0).getEmployee_code();
+		//List<StaticVO> list = dao_statics.managerSalesChart(employee_code);
+//		for(int i=0; i<list.size(); i++) {
+//			employee_code = list.get(i).getEmployee_code();
+//			list = dao_statics.managerSalesChart(employee_code);
+//		}
+		
+		System.out.println("list 목록 : " + list + "\n" + list.size() + "\n" + list.toString());
+		list.get(0).getRes_dates();
+		System.out.println("list 0번째의 res_dates : " + list.get(0).getRes_dates());
+		
+		// 담당자별 월 판매 총액
 		int janSalesSum = 0;
 		int febSalesSum = 0;
 		int marSalesSum = 0;
@@ -248,39 +275,96 @@ public class StaticsServiceImpl implements StaticsService {
 		int novSalesSum = 0;
 		int decSalesSum = 0;
 
-		for(StaticVO vo : dtos) {
+		for(int i=0; i<list.size(); i++) {
 			
-			Date month = vo.getRes_date();
-			int intMonth = month.getMonth() + 1;
+			employee_code = list.get(i).getEmployee_code();
+			System.out.println("employee_code 목록 : " + employee_code);
 			
-			if(intMonth == 1) 
-				janSalesSum += vo.getSalesSum();
-			else if(intMonth == 2)
-				febSalesSum += vo.getSalesSum();
-			else if(intMonth == 3)
-				marSalesSum += vo.getSalesSum();
-			else if(intMonth == 4)
-				aprSalesSum += vo.getSalesSum();
-			else if(intMonth == 5)
-				maySalesSum += vo.getSalesSum();
-			else if(intMonth == 6)
-				junSalesSum += vo.getSalesSum();
-			else if(intMonth == 7)
-				julSalesSum += vo.getSalesSum();
-			else if(intMonth == 8)
-				augSalesSum += vo.getSalesSum();
-			else if(intMonth == 9)
-				sepSalesSum += vo.getSalesSum();  // => 9월달 가입자 6명이 나와야한다. (10/2 22:27 기준)
-			else if(intMonth == 10)
-				octSalesSum += vo.getSalesSum();
-			else if(intMonth == 11)
-				novSalesSum += vo.getSalesSum();
-			else if(intMonth == 12)
-				decSalesSum += vo.getSalesSum();
+			//Date month = vo.getRes_date();
+			String months = list.get(i).getRes_dates();
+			String[] splitMonth = months.split("-");
+			
+			String year = splitMonth[0];
+			String month = splitMonth[1];
+
+//			for( int i = 0; i < splitMonth.length; i++) {
+//				System.out.println("splitMonth는? " + splitMonth[i]);
+//			}
+			
+			System.out.println("vo.getSalesSum() : " + list.get(i).getSalesSum());
+			System.out.println("months : " + months);
+			System.out.println("year : " + year);
+			System.out.println("month : " + month);
+			
+			//int intMonth = month.getMonth() + 1;
+			
+			if(month.equals("01")) 
+				list.get(i).setJanSalesSum(list.get(i).getSalesSum());		
+			else if(month.equals("02"))
+				febSalesSum += list.get(i).getSalesSum();
+			else if(month.equals("03"))
+				marSalesSum += list.get(i).getSalesSum();
+			else if(month.equals("04"))
+				aprSalesSum += list.get(i).getSalesSum();
+			else if(month.equals("05"))
+				maySalesSum += list.get(i).getSalesSum();
+			else if(month.equals("06"))
+				junSalesSum += list.get(i).getSalesSum();
+			else if(month.equals("07"))
+				julSalesSum += list.get(i).getSalesSum();
+			else if(month.equals("08"))
+				augSalesSum += list.get(i).getSalesSum();
+			else if(month.equals("09")) {
+				list.get(i).setSepSalesSum(list.get(i).getSalesSum());  // => 9월달 가입자 6명이 나와야한다. (10/2 22:27 기준)
+				System.out.println("sepSalesSum : " + sepSalesSum);
+			}
+			else if(month.equals("10"))
+				list.get(i).setOctSalesSum(list.get(i).getSalesSum());
+			else if(month.equals("11"))
+				novSalesSum += list.get(i).getSalesSum();
+			else if(month.equals("12"))
+				decSalesSum += list.get(i).getSalesSum();
+			
+			
+			
+			
+			
+			
+			
+//			int intMonth = month.getMonth() + 1;
+//			
+//			if(intMonth == 1) 
+//				janSalesSum += vo.getJanSalesSum();			
+//			else if(intMonth == 2)
+//				febSalesSum += vo.getFebSalesSum();
+//			else if(intMonth == 3)
+//				marSalesSum += vo.getMarSalesSum();
+//			else if(intMonth == 4)
+//				aprSalesSum += vo.getAprSalesSum();
+//			else if(intMonth == 5)
+//				maySalesSum += vo.getMaySalesSum();
+//			else if(intMonth == 6)
+//				junSalesSum += vo.getJunSalesSum();
+//			else if(intMonth == 7)
+//				julSalesSum += vo.getJulSalesSum();
+//			else if(intMonth == 8)
+//				augSalesSum += vo.getAugSalesSum();
+//			else if(intMonth == 9)
+//				sepSalesSum += vo.getSepSalesSum();  // => 9월달 가입자 6명이 나와야한다. (10/2 22:27 기준)
+//			else if(intMonth == 10)
+//				octSalesSum += vo.getOctSalesSum();
+//			else if(intMonth == 11)
+//				novSalesSum += vo.getNovSalesSum();
+//			else if(intMonth == 12)
+//				decSalesSum += vo.getDecSalesSum();
 			}
 
 		int totalMngSalesCnt = dtos.size();
 		System.out.println("전체 담당자 판매건수 : " + totalMngSalesCnt + "건");
+		
+		System.out.println("list 목록 : " + list);
+		System.out.println("sepSalesSum 목록 : " + sepSalesSum);
+		model.addAttribute("list", list);
 		
 		req.setAttribute("janSalesSum", janSalesSum);
 		req.setAttribute("febSalesSum", febSalesSum);

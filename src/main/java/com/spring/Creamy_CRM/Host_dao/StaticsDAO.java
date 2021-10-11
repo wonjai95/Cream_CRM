@@ -17,5 +17,5 @@ public interface StaticsDAO {
 	public List<StaticVO> managerSalesList(String host_code);
 	
 	// 직원(담당자)별 판매정보 차트 조회
-	public List<StaticVO> managerSalesChart(String host_code);
+	public List<StaticVO> managerSalesChart(String employee_code);
 }

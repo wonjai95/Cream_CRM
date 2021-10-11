@@ -79,7 +79,7 @@
 					<div class="col-lg-12">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>Bar Chart Example</h5>
+								<h5>담당자별 월 판매총액</h5>
 							</div>
 							<div class="ibox-content">
 								<div>
@@ -101,30 +101,37 @@
  $(document).ready(function () {
 	/*  <c:forEach var="dto" items="${plist}">
  	 ['${dto.m_name}', ${dto.sumTotal}],
-  </c:forEach> */
+  </c:forEach> 
+ 	${dto.employee_name},${dto.salesSum}*/
 	 var barData = {
 		 labels: ["1월", "2월", "3월", "4월",
 				  "5월", "6월", "7월", "8월",
 				  "9월", "10월", "11월", "12월"],
     	 datasets: [
-        	 {
-       		    label: "담당자1?2?",
+    		 <c:forEach var="list" items="${list}">
+        	 {        	
+       		    label: '${list.employee_name}',
                 backgroundColor: 'rgba(26,179,148,0.5)',
                 borderColor: "rgba(26,179,148,0.7)",
                 pointBackgroundColor: "rgba(26,179,148,1)",
                 pointBorderColor: "#fff",
-                data: [${janSalesSum}, ${febSalesSum}, ${marSalesSum}, ${aprSalesSum},
-						${maySalesSum}, ${junSalesSum}, ${julSalesSum}, ${augSalesSum},
-                		${sepSalesSum}, ${octSalesSum}, ${novSalesSum}, ${decSalesSum}]
+                data: [${list.janSalesSum}, ${list.febSalesSum}, ${list.marSalesSum}, ${list.aprSalesSum},
+					${list.maySalesSum}, ${list.junSalesSum}, ${list.julSalesSum}, ${list.augSalesSum},
+					${list.sepSalesSum}, ${list.octSalesSum}, ${list.novSalesSum}, ${list.decSalesSum}]   	 
         	 },
-        	 {
+        	 </c:forEach> 
+        	 
+        	 /* [${janSalesSum}, ${febSalesSum}, ${marSalesSum}, ${aprSalesSum},
+					${maySalesSum}, ${junSalesSum}, ${julSalesSum}, ${augSalesSum},
+					${dto.salesSum}, ${octSalesSum}, ${novSalesSum}, ${decSalesSum}] */
+        	 /* {
             	 label: "Data 2",
             	 backgroundColor: 'rgba(26,179,148,0.5)',
             	 borderColor: "rgba(26,179,148,0.7)",
             	 pointBackgroundColor: "rgba(26,179,148,1)",
             	 pointBorderColor: "#fff",
             	 data: [28, 48, 40, 19, 86, 27, 90]
-        	 }
+        	 } */
     	 ]
 	 };
 
