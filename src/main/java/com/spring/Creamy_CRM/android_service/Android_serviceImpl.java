@@ -295,7 +295,8 @@ public class Android_serviceImpl implements Android_service{
 	      int inChk = 0;
 	      int updateCnt = 0;
 	      // 출퇴근 결과 종합
-	      // 1 : 출근 등록 완료, 2 : 퇴근 등록 완료, 3 : 출근 등록전에 퇴근 찍음, 4 : 중복 출근 찍음, 5 : 근무시간이 등록되지 않은 직원, 0 : 실패
+	      // 1 : 출근 등록 완료, 2 : 퇴근 등록 완료, 3 : 출근 등록전에 퇴근 찍음, 
+	      // 4 : 중복 출근 찍음, 5 : 근무시간이 등록되지 않은 직원, 0 : 실패
 	      int attendChk = 0;
 	      
 	      // 지각 여부 체크를 위해서 dao 갔다 옴
@@ -451,7 +452,6 @@ public class Android_serviceImpl implements Android_service{
 	               // 출근을 먼저 찍으라는 alert
 	               attendChk = 4;
 	            }
-	            
 	         }
 	      }
 	      

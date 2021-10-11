@@ -132,7 +132,6 @@
   	</select>
   	
   	<!-- 예약 신청 시간 가능 여부 체크를 위한 뷰 생성 -->
-  	<!-- 대체 왜 $로 해야 먹는거지...????? -->
   	<update id="createRoomBookingView" parameterType="java.util.Map">
   		${sql}
   	</update>
