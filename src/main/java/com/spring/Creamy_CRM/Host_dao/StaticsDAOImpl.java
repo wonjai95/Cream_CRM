@@ -21,6 +21,19 @@ public class StaticsDAOImpl implements StaticsDAO {
 	@Autowired
 	SqlSession sqlSession;
 	
+	// host_code를 이용한 employee_code 가져오기
+	@Override
+	public List<StaticVO> getEmpCode(String host_code) {
+		StaticsDAO dao = sqlSession.getMapper(StaticsDAO.class);
+		return dao.getEmpCode(host_code);
+	}
+	
+	// host_code를 이용한 room_setting_code 가져오기
+	@Override
+	public List<StaticVO> getRoomCode(String host_code) {
+		StaticsDAO dao = sqlSession.getMapper(StaticsDAO.class);
+		return dao.getRoomCode(host_code);
+	}
 	
 	// 직원(담당자)별 판매정보 목록 조회
 	@Override
@@ -34,5 +47,16 @@ public class StaticsDAOImpl implements StaticsDAO {
 		StaticsDAO dao = sqlSession.getMapper(StaticsDAO.class);
 		return dao.managerSalesChart(employee_code);
 	}
+
+	// 유형(호실)별 판매정보 목록 조회
+	@Override
+	public List<StaticVO> roomSalesList(String host_code) {
+		StaticsDAO dao = sqlSession.getMapper(StaticsDAO.class);
+		return dao.roomSalesList(host_code);
+	}
+
+	
+
+	
 
 }

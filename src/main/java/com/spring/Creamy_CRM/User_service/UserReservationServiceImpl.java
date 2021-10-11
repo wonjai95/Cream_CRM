@@ -244,7 +244,7 @@ public class UserReservationServiceImpl implements UserReservationService {
 		System.out.println("host_code : " + host_code);
 		String res_start =req.getParameter("res_start");
 		String res_end = req.getParameter("res_end");
-		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
+		int res_sales = Integer.parseInt(req.getParameter("total_payment"));
 		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
 		System.out.println("guestCount : " + guestCount);
 		String res_state = "예약완료";

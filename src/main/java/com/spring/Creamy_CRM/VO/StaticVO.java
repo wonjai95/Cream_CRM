@@ -14,7 +14,11 @@ public class StaticVO {
 	private String position;				// 담당자(직원) 직책
 	private String host_code;				// 사장님 코드
 	private Date res_date;					// 예약된 날짜(= 서비스완료로 기재된 예약건의 날짜)
-	private String res_dates;
+	private String res_dates;				// String형 예약된 날짜(= 서비스완료로 기재된 예약건의 날짜)
+	
+	private String res_code;				// 예약 코드
+	private String room_setting_code;		// 호실 코드
+	private String room_name;				// 호실 이름
 	
 	
 	private int totalSum;
@@ -97,8 +101,6 @@ public class StaticVO {
 		this.res_date = res_date;
 	}
 	
-	
-	
 	public String getRes_dates() {
 		return res_dates;
 	}
@@ -108,14 +110,26 @@ public class StaticVO {
 	
 	
 	
+	public String getRes_code() {
+		return res_code;
+	}
+	public void setRes_code(String res_code) {
+		this.res_code = res_code;
+	}
 	
+	public String getRoom_setting_code() {
+		return room_setting_code;
+	}
+	public void setRoom_setting_code(String room_setting_code) {
+		this.room_setting_code = room_setting_code;
+	}
 	
-	
-	
-	
-	
-	
-	
+	public String getRoom_name() {
+		return room_name;
+	}
+	public void setRoom_name(String room_name) {
+		this.room_name = room_name;
+	}
 	
 	
 	
