@@ -47,7 +47,7 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   
-  
+  <!-- 
   <script type="text/javascript">
 
   function kakaoPay() {
@@ -57,7 +57,7 @@
   }
 
   </script>
-  
+   -->
   
   
 </head>
@@ -240,7 +240,10 @@
 								                    <input type="button" name="cash_btn" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="bank_btn" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
-								                    <input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
+								                    <!-- <a href="sale/kakaoPay"> -->
+								                    	<button type="submit" formmethod="post" formaction="sale/kakaoPay"></button>
+								                    	<!-- <input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary"> onclick="kakaoPay();" -->
+								                    <!-- </a> -->
 							                    </td></tr> 
 							                    </table>
 							                 </div>

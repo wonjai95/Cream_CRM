@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.Creamy_CRM.VO.KakaoPayApprovalVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
 import com.spring.Creamy_CRM.VO.userVO;
 
@@ -34,6 +35,14 @@ public class SaleDAOImpl implements SaleDAO {
 	public int deletePay(String res_code) {
 		
 		return sqlSession.delete("com.spring.Creamy_CRM.User_dao.SaleDAO.deletePay", res_code);
+	}
+
+	// 카카오페이 정보 입력
+	@Override
+	public int insertKakaoPay(KakaoPayApprovalVO vo) {
+		
+		return sqlSession.insert("com.spring.Creamy_CRM.User_dao.SaleDAO.insertKakaoPay", vo);
+		
 	}      
 
 	

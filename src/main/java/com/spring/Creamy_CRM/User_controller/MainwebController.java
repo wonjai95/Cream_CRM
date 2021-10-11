@@ -48,6 +48,7 @@ import com.spring.Creamy_CRM.User_service.UserReservationServiceImpl;
 import com.spring.Creamy_CRM.User_service.UserReviewServiceImpl;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.KakaoPayReadyVO;
+import com.spring.Creamy_CRM.VO.ReservationVO;
 
 import jdk.nashorn.internal.objects.annotations.Setter;
 
@@ -502,21 +503,32 @@ public class MainwebController {
 		 logger.info("url -> kakaoPayGet");
     }
 	
-    @PostMapping("/kakaoPay")
-    public String kakaoPay() {
+	@PostMapping("/sale/kakaoPay")     
+    public String kakaoPay(HttpServletRequest req, Model model) {
     	logger.info("url -> kakaoPay");   
         
-        return "redirect:" + service_sale.kakaoPayReady();
- 
+        return "redirect:" + service_sale.kakaoPayReady(req, model);
+        
     }
 	
-    @GetMapping("/sale/kakaoPaySuccess")
-    public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
+	@GetMapping("/kakaoPaySuccess")
+    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, HttpServletRequest req, Model model) {
     	logger.info("url -> kakaoPaySuccess");
-        logger.info("kakaoPaySuccess pg_token : " + pg_token);
+        logger.info("pg_token : " + pg_token);
         
         model.addAttribute("info", service_sale.kakaoPayInfo(pg_token));
+
+		// 담당자 예약 처리
+		service.insertBooking(req, model);
+		
+		// 결제 처리
+		service_sale.insertSaleInfo(req, model);
+
+        
+        return "mainweb/sale/sale_m_action";
         
     }
+	
+   
 }
 	
