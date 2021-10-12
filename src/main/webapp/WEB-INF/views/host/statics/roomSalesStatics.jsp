@@ -27,7 +27,7 @@
 </head>
 <body>
 <div class="tab-content">
-	<div id="tab-2" class="tab-pane active">
+	<div id="tab-3" class="tab-pane active">
 		<div class="panel-body">
 			<!-- 본문 내용 시작 -->
 			<fieldset>
@@ -36,7 +36,7 @@
                     <div class="col-lg-12">
 	                    <div class="ibox ">
 	                        <div class="ibox-title">
-	                            <h5>담당자별 판매정보</h5>
+	                            <h5>유형(호실)별 판매정보</h5>
 	                            <div class="ibox-tools">
 	                            </div>
 	                        </div>
@@ -45,27 +45,25 @@
 	                            <table id="rowClick" class="table table-hover" data-page-size="15">
 									<thead>
 						            <tr style="text-align: center">
-						                <th>담당자코드</th>
-						                <th>담당자명</th>
+						                <th>유형(호실)코드</th>
+						                <th>호실명</th>
 						                <th>판매 건수</th>
 						                <th>예약상태</th>
 						                <th>매출 총 금액</th>
-						                <th>직급</th>
 						            </tr>
 						            </thead>
 						            
 						            <tbody>
 						            <c:forEach var="dto" items="${dtos}" >
 							            <tr style="text-align: center">
-							                <td >${dto.employee_code}</td>
-							                <td >${dto.employee_name}</td>
+							                <td >${dto.room_setting_code}</td>
+							                <td >${dto.room_name}</td>
 							                <td>${dto.salesCount} 건</td>
 							                <td>${dto.res_state}</td>
 							                <td > 
 								                <fmt:formatNumber value="${dto.salesSum}"
 														pattern="###,###,###" />&nbsp;원
 							                </td>
-											<td>${dto.position}</td>
 							            </tr>
 							        </c:forEach>
 						            </tbody>
@@ -79,7 +77,7 @@
 					<div class="col-lg-12">
 						<div class="ibox ">
 							<div class="ibox-title">
-								<h5>담당자별 월 판매총액</h5>
+								<h5>유형(호실)별 월 판매총액</h5>
 							</div>
 							<div class="ibox-content">
 								<div>
@@ -108,16 +106,16 @@
 				  "5월", "6월", "7월", "8월",
 				  "9월", "10월", "11월", "12월"],
     	 datasets: [
-    		 <c:forEach var="list" items="${list}">
+    		 <c:forEach var="dto" items="${dtos}">
         	 {        	
-       		    label: '${list.employee_name}',
+       		    label: '${dto.room_name}',
                 backgroundColor: 'rgba(26,179,148,0.5)',
                 borderColor: "rgba(26,179,148,0.7)",
                 pointBackgroundColor: "rgba(26,179,148,1)",
                 pointBorderColor: "#fff",
                 data: [${list.janSalesSum}, ${list.febSalesSum}, ${list.marSalesSum}, ${list.aprSalesSum},
 					${list.maySalesSum}, ${list.junSalesSum}, ${list.julSalesSum}, ${list.augSalesSum},
-					${list.sepSalesSum}, ${list.octSalesSum}, ${list.novSalesSum}, ${list.decSalesSum}]   	 
+					${dto.sepSalesSum}, ${dto.octSalesSum}, ${list.novSalesSum}, ${list.decSalesSum}]   	 
         	 },
         	 </c:forEach> 
         	 

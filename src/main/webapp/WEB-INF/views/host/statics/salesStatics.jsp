@@ -50,8 +50,12 @@
 					<div class="tabs-container">
 						<ul class="nav nav-tabs">
 							<li><a class="nav-link active" data-toggle="tab" href="#tab-1">상품별 판매 현황</a></li>
+							<c:if test="${emp_code != null}">
 							<li><a class="nav-link" data-toggle="tab" href="#tab-2">담당자별 판매 현황</a></li>
+							</c:if>
+							<c:if test="${room_setting_code != null}">
 							<li><a class="nav-link" data-toggle="tab" href="#tab-3">유형별 판매 현황</a></li>
+							</c:if>
 						</ul>
 						<div class="tab-content">
 							<div id="tab-1" class="tab-pane active">
@@ -123,9 +127,18 @@
 									<!-- 본문 내용 끝 -->
 								</div>
 							</div>
+							
+							<!-- tab-2 시작 -->
 							<div id="tab-2" class="tab-pane">
 							
 							</div>
+							<!-- tab-2 끝 -->
+							
+							<!-- tab-3 시작 -->
+							<div id="tab-3" class="tab-pane">
+							
+							</div>
+							<!-- tab-3 끝 -->
 
 						</div>
 					</div>

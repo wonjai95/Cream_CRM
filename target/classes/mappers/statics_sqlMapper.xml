@@ -25,6 +25,13 @@
 		  FROM employee_tbl
 		 WHERE host_code = #{host_code}
 	</select>
+	
+	<!-- host_code를 이용한 room_setting_code 가져오기 -->
+  	<select id="getRoomCode" parameterType="String" resultType="String">
+		SELECT room_setting_code
+		  FROM reservation_tbl
+		 WHERE host_code = #{host_code}
+	</select>
  	
  	<!-- 직원(담당자)별 판매정보 목록 조회 -->
 	<select id="managerSalesList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StaticVO">	 
@@ -42,16 +49,28 @@
 	
 	<!-- 직원(담당자)별 판매정보 차트 조회 -->
 	<select id="managerSalesChart" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StaticVO">	 
-	SELECT r.employee_code, e.employee_name, r.res_state, r.res_date, e.position
-         , COUNT(r.res_code) OVER(PARTITION BY r.res_code) AS "salesCount"
-         , SUM(rdt.res_sales) OVER(PARTITION BY rdt.res_sales) AS "salesSum"
-      FROM reservation_tbl r, host_tbl h, reservation_detail_tbl rdt, employee_tbl e
-     WHERE h.host_code = r.host_code
-       AND e.employee_code = r.employee_code
+	SELECT r.employee_code, e.employee_name, TO_CHAR(r.res_date, 'YYYY-MM')as "res_dates", SUM(rdt.res_sales) AS "salesSum"
+	  FROM reservation_tbl r, reservation_detail_tbl rdt, employee_tbl e
+	 WHERE r.res_detail_code = rdt.res_detail_code 
+	   AND r.employee_code = e.employee_code
+       AND r.res_state = '서비스 완료'
+       AND r.employee_code= #{employee_code}
+  GROUP BY r.employee_code, e.employee_name, TO_CHAR(r.res_date, 'YYYY-MM')
+  ORDER BY TO_NUMBER(SUBSTR(r.employee_code,2)) DESC
+	</select>
+	
+	<!-- 직원(담당자)별 판매정보 목록 조회 -->
+	<select id="roomSalesList" parameterType="String" resultType="com.spring.Creamy_CRM.VO.StaticVO">	 
+	SELECT rst.room_setting_code, rst.room_name, r.res_state
+         , COUNT(rst.room_setting_code) AS "salesCount"
+         , TO_CHAR(r.res_date, 'YYYY-MM') as "res_dates", SUM(rdt.res_sales) AS "salesSum"
+      FROM reservation_tbl r, reservation_detail_tbl rdt, room_setting_tbl rst
+     WHERE rst.room_setting_code = r.room_setting_code
        AND rdt.res_detail_code = r.res_detail_code
        AND r.res_state = '서비스 완료'
        AND r.host_code = #{host_code}
-  ORDER BY TO_NUMBER(SUBSTR(r.employee_code,2)) DESC
+  GROUP BY r.res_state, rst.room_setting_code, rst.room_name, TO_CHAR(r.res_date, 'YYYY-MM')
+  ORDER BY TO_NUMBER(SUBSTR(rst.room_setting_code,4)) DESC
 	</select>
   	
   
