@@ -70,16 +70,16 @@ $("document").ready(function() {
 	<!-- 직원 -->
 	<div class="row wrapper border-bottom white-bg page-heading">
 	    <div class="col-lg-8">
-	        <h2>직원관리</h2>
+	        <h2>트렌드</h2>
 	        <ol class="breadcrumb">
 	            <li class="breadcrumb-item">
 	                <a href="index.html">Home</a>
 	            </li>
 	            <li class="breadcrumb-item">
-	                Extra pages
+	                Trend
 	            </li>
 	            <li class="breadcrumb-item active">
-	                <strong>Calendar</strong>
+	                <strong>SNS</strong>
 	            </li>
 	        </ol>
 	    </div>
@@ -93,11 +93,10 @@ $("document").ready(function() {
 	                 <div class="ibox-content m-b-sm border-bottom">
 		                <div class="row">
 		                    <div class="col-sm-4">
-		                    	<form action="http://192.168.219.101:5000/instaCrawling/" method="get">
-			                        <div class="form-group">
-			                            <label class="col-form-label" for="employee_code">SNS 키워드 검색</label>
-			                            <input type="text" class="form-control" id="search_keyword" name="search_keyword" placeholder="키워드" >
-			                            <input type="button" name="snsSearchBtn" id="snsSearchBtn" value="검색">
+		                    	<form action="#" method="get">
+			                        <div class="form-group" style="display: flex;">
+			                            <input type="text" class="form-control" id="search_keyword" name="search_keyword" placeholder="SNS 키워드 검색" >
+			                            <input type="button" class="btn btn-primary dim" name="snsSearchBtn" id="snsSearchBtn" value="검색" style="width: 100px; margin-left: 10px;">
 			                        </div>
 		                        </form>
 		                    </div>
