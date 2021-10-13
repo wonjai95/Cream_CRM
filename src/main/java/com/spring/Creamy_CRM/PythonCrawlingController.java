@@ -45,7 +45,6 @@ public class PythonCrawlingController {
 		try {
 			keyword = URLEncoder.encode(strKeyword, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -73,7 +72,6 @@ public class PythonCrawlingController {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mav.addObject("test1", sb.toString()); // "test1"는 jsp파일에서 받을때 이름, 
@@ -96,5 +94,55 @@ public class PythonCrawlingController {
 		return "host/crawling/just_img";
 	}
 	
+	
+	@RequestMapping("/host/reviewML")
+	public ModelAndView reviewML(HttpServletRequest req, Model model) {
+		logger.info("url -> reviewML");
+		
+		ModelAndView mav = new ModelAndView();
+		String strReview = req.getParameter("review").trim();
+		String review = "";
+
+		try {
+			review = URLEncoder.encode(strReview, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+
+		String url = "http://127.0.0.1:5000/getReviewML/" + review;
+		String sb = "";
+		try {
+			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+
+			String line = null;
+
+			while ((line = br.readLine()) != null) { sb = sb + line + "\n"; }
+			if (sb.toString().contains("ok")) { System.out.println("test : " + sb.toString()); }
+			br.close();
+
+			System.out.println("결과 : " + sb.toString());
+			
+			
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("predict", sb.toString()); // "test1"는 jsp파일에서 받을때 이름, sb.toString은 value값(여기에선 test)
+		mav.addObject("fail", false);
+		model.addAttribute("predict", sb.toString());
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		mav.setViewName("host/review/reviewML");   // jsp파일 이름
+		
+		return mav;
+	}
 	
 }
