@@ -133,12 +133,12 @@ body {
 			+ '<td class="footable-visible">&nbsp;&nbsp;&nbsp;'
 			+ '<input type="radio" name="product_code" value="' + vo.product_code + '"></td>'
 			+ '<td class="footable-visible"><span>' + vo.product_typeOfSales + '</span></td>'
-			+ '<td class="footable-visible"><span>' + vo.product_img + '</span></td>'
+			+ '<td class="footable-visible"><span><img src=/Creamy_CRM/resources/images/productImage/' + vo.product_img + '/></span></td>'
 			+ '<td class="footable-visible"><span>' + vo.product_name + '</span></td>'
 			+ '<td class="footable-visible"><span>' + vo.product_price + '</span></td>'
 			+ '<td class="footable-visible"><span>' + vo.product_rentalPeriod + '개월</span></td>'
 			+ '<td class="footable-visible"><span>' + vo.product_content + '</span></td>'
-			+ '<td class="footable-visible"><span class="label label-primary">' + vo.product_group_code + '</span></td>'
+			+ '<td class="footable-visible"><span class="label label-primary">' + vo.product_group_name + '</span></td>'
 			+ '</tr>';
 		}
 		

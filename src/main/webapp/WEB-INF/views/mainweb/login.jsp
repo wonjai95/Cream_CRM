@@ -5,7 +5,6 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,7 +15,6 @@
 
     <link href="${path}/resources/bootstrap/css/animate.css" rel="stylesheet">
     <link href="${path}/resources/bootstrap/css/style.css" rel="stylesheet">
-
 </head>
 
 <body class="gray-bg">
@@ -42,7 +40,6 @@
                     <input type="password" name="login_PWD" class="form-control" placeholder="Password" required>
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
                 <a href="#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
                 <a class="btn btn-sm btn-white btn-block" href="signIn">Create an account</a>
