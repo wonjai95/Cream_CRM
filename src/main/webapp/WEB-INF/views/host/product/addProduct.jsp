@@ -138,7 +138,7 @@ body {
 			+ '<td class="footable-visible"><span>' + vo.product_price + '</span></td>'
 			+ '<td class="footable-visible"><span>' + vo.product_rentalPeriod + '개월</span></td>'
 			+ '<td class="footable-visible"><span>' + vo.product_content + '</span></td>'
-			+ '<td class="footable-visible"><span class="label label-primary">' + vo.product_group_name + '</span></td>'
+			+ '<td class="footable-visible"><span>' + vo.product_group_name + '</span></td>'
 			+ '</tr>';
 		}
 		
