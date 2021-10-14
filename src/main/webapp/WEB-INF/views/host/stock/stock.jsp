@@ -435,7 +435,7 @@ $("docuemnt").ready(function() {
 									
 									
 																					<td class="footable-visible">
-																						<span>${stock.trade_code}</span>
+																						<span>${stock.trade_name}</span>
 																					</td>
 																				</tr>
 																			</c:forEach>
