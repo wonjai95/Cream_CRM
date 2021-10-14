@@ -109,7 +109,7 @@ public class PythonCrawlingController {
 			e1.printStackTrace();
 		}
 
-		String url = "http://127.0.0.1:5000/getReviewML/" + review;
+		String url = "http://0.0.0.0:5000/getReviewML/" + review;
 		String sb = "";
 		try {
 			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
