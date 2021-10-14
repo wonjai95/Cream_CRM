@@ -30,5 +30,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/jython2.7.2/jython.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

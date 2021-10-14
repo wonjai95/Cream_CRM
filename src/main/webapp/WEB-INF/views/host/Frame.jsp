@@ -75,6 +75,7 @@
                  <ul class="nav nav-second-level collapse">
                     <li><a href="snsCrawling">SNS</a></li>
                     <li><a href="salesStatics">뉴스</a></li>
+                     <li><a href="playlist_py">플레이리스트</a></li>
                  </ul>
             </li>
         </ul>
