@@ -275,10 +275,6 @@ public class Android_serviceImpl implements Android_service{
 	      String covid_chk3 = req.getParameter("covid_chk3");
 	      String memo = req.getParameter("memo");
 	      String employee_id = req.getParameter("id");
-	      System.out.println("employee_id : " + employee_id);
-	      System.out.println("temperature : " + temperature);
-	      System.out.println("covid_chk1 : " + covid_chk1);
-	      System.out.println("memo : " + memo);
 	      
 	      // 해당 아이디의 employee_code 찾기
 	      String employee_code = dao_emp.getEmpCode(employee_id);
@@ -292,10 +288,6 @@ public class Android_serviceImpl implements Android_service{
 	      Calendar cal = Calendar.getInstance();
 	        cal.setTime(attendance_date);// nDate 기준으로 날짜 변경
 	        int dayNum = cal.get(Calendar.DAY_OF_WEEK); // Calendar로부터 요일상수 받음
-	      
-	      System.out.println("attendance_date : " + attendance_date);
-	      System.out.println("inout_time : " + inout_time);
-	      System.out.println("dayNum : " + dayNum);
 	      
 	      AttendanceVO vo = new AttendanceVO();
 	      vo.setEmployee_code(employee_code);
