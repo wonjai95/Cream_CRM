@@ -43,6 +43,7 @@ import org.springframework.web.client.RestTemplate;
 import com.spring.Creamy_CRM.Host_controller.MainController;
 import com.spring.Creamy_CRM.Host_service.EmployeeService;
 import com.spring.Creamy_CRM.User_service.MainwebServiceImpl;
+import com.spring.Creamy_CRM.User_service.PythonService;
 import com.spring.Creamy_CRM.User_service.SaleService;
 import com.spring.Creamy_CRM.User_service.UserReservationServiceImpl;
 import com.spring.Creamy_CRM.User_service.UserReviewServiceImpl;
@@ -76,6 +77,10 @@ public class MainwebController {
    @Autowired
    SaleService service_sale;
    
+   //test중
+   @Autowired
+   PythonService service_py;
+   
    
    //홈화면
    @RequestMapping("/home")
@@ -92,6 +97,15 @@ public class MainwebController {
 //      } else {
 //    	  return "";
 //      }
+      /*
+      try {
+		service_py.pytest(req, model);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		System.out.println("py_error");
+		e.printStackTrace();
+	}
+      */
       
       return "mainweb/home";
    }
