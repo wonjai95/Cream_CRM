@@ -29,25 +29,23 @@
 
             </div>
             <h3>Welcome to Creamy</h3>
-            <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+            <p>고객예약을 간편하고 빠르게! 매장관리를 체계적이고 품격있게!<br>
+모두의 일과를 최적의 상태로 관리해주는 간편통합시스템.
             </p>
-            <p>Login in. To see it in action.</p>
+            <p>로그인하세요. 여러분의 일과를 디자인해드립니다.</p>
             <form class="m-t" role="form" action="${path}/login_check" method="post">
             <sec:csrfInput/>
                 <div class="form-group">
-                    <input type="text" name="id" class="form-control" placeholder="Id" required>
+                    <input type="text" name="id" class="form-control" placeholder="아이디" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="login_PWD" class="form-control" placeholder="Password" required>
+                    <input type="password" name="login_PWD" class="form-control" placeholder="비밀번호" required>
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>
 
-                <a href="#"><small>Forgot password?</small></a>
-                <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="signIn">Create an account</a>
+                <a class="btn btn-sm btn-white btn-block" href="signIn">Creamy 가입하기</a>
             </form>
-            <p class="m-t"> <small>Creamy we app framework base on Bootstrap 3 &copy; 2021</small> </p>
+            <p class="m-t"> <small>© Copyright Creamy 2021</small> </p>   
         </div>
     </div>
 

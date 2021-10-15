@@ -22,38 +22,31 @@
             <div>
                 <h1 class="logo-name">Cr+</h1>
             </div>
-            <h3>Register to Creamy</h3>
-            <p>회원가입 진행 후 사업자 등록을 완료해주세요</p>
+            <h3>Easy Start With Creamy</h3>
+            <p>회원가입 진행 후 사업자 등록을 완료해주세요.</p>
             <form name="signInform" class="m-t" role="form" action="HostsignInAction" method="post" style="margin-top: 10px;">
             <sec:csrfInput/>
                 <div class="form-group" style="display: flex;">
-               		<div style="width: 20%; align-self: center;">ID </div>
-                    <div class="input-group date" style="width: 80%">
-                    	<input type="text" name="sign_id" class="form-control" placeholder="ID" required>
+                    <div class="input-group date">
+                    	<input type="text" name="sign_id" class="form-control" placeholder="아이디" required>
                     	<input type="button" onclick="" class="btn btn-primary btn-xs" style="margin: 2px 4px;" value="중복확인">
                     </div>
                 </div>
                 <div class="form-group" style="display: flex;">
-                	<div style="width: 20%; align-self: center;">PW </div>
-                    <div style="width: 80%">
-                    	<input type="password" name="sign_PWD" class="form-control" placeholder="Password" required></div>
+                    	<input type="password" name="sign_PWD" class="form-control" placeholder="비밀번호" required>
                 </div>
                 <div class="form-group" style="display: flex;">
-                	<div style="width: 20%; align-self: center;">NAME </div>
-                    <div style="width: 80%">
-                    	<input type="text" name="sign_name" class="form-control" placeholder="name" required></div>
+                    	<input type="text" name="sign_name" class="form-control" placeholder="이름" required>
                 </div>
                 <div class="form-group" style="display: flex;">
-                	<div style="width: 20%; align-self: center;">Email </div>
-                    <div class="input-group date" style="width: 80%;">
+                    <div class="input-group date">
                      	<input name="sign_Email1" type="text" class="form-control" placeholder="email">
                      	<div style="width: 20px; align-self: center;">@</div>
                      	<input name="sign_Email2" type="text" class="form-control" placeholder="gmail.com">
                     </div>
                 </div>
                 <div class="form-group" style="display: flex;">
-                	<div style="width: 20%; align-self: center;">Phone </div>
-                    <div class="input-group date" style="width: 80%;">
+                    <div class="input-group date">
                      	<input name="sign_Phone1" type="text" class="form-control" placeholder="010" onkeyup="nextHp1();" maxlength="3">
                      	<div style="width: 20px; align-self: center;">-</div>
                      	<input name="sign_Phone2" type="text" class="form-control" placeholder="1111" onkeyup="nextHp2();" maxlength="4">
@@ -62,21 +55,19 @@
                     </div>
                 </div>
                 <div class="form-group" style="display: flex;">
-                	<div style="width: 20%; align-self: center;">COMPANY </div>
-                    <div style="width: 80%">
-                    	<input type="text" name="sign_compname" class="form-control" placeholder="name" required></div>
+                    	<input type="text" name="sign_compname" class="form-control" placeholder="회사명" required>
                 </div>
                 
               <div class="form-group" style="margin-bottom: 10px; margin-top: 10px;">
-                        <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
+                        <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> 이용약관에 동의합니다. </label></div>
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+                <button type="submit" class="btn btn-primary block full-width m-b">회원가입</button>
 
 				<a href="signIn"><p class="text-muted text-center"><small>고객 회원가입</small></p></a>
 				
-                <a class="btn btn-sm btn-white btn-block" href="login">Login</a>
+                <a class="btn btn-sm btn-white btn-block" href="login">로그인</a>
             </form>
-            <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
+            <p class="m-t"> <small>© Copyright Creamy 2021</small> </p>
         </div>
     </div>
 

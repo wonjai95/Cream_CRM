@@ -165,6 +165,7 @@
 				<input type="hidden" value="0" name="product_price_hidden">
 				<input type="hidden" value="0" name="product_rentalPeriod_hidden">
 				<input type="hidden" value="0" name="cash_btn_hidden">
+				<input type="hidden" value="0" name="kakao_btn_hidden">
          	 	
          	 	
          	 	
@@ -185,13 +186,15 @@
                             </div>
                             
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black"> 
-                          		<input type="text" name="employee_code" id="employee_code" style="display: none" value="${dto.employee_code}">담당자 : ${dto.employee_name}</span>
+                          		<input type="text" name="employee_code" id="employee_code" style="display: none" value="${dto.employee_code}">담당자 : 
+                          			<input type="hidden" name="employee_name" value="${dto.employee_name}"> ${dto.employee_name}</span>
                        	  	</div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
                           		<input type="number" name="GuestCount" id="GuestCount" style="display: none" value="${dto.res_cnt}">예약 인원 : ${dto.res_cnt}</span>
                        	  	</div>
                        	  	<div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black"> 
-                          		<input type="text" name="product_code" id="product_code" style="display: none" value="${dto.product_code}">상품 명 : ${dto.product_name}</span>
+                          		<input type="text" name="product_code" id="product_code" style="display: none" value="${dto.product_code}">상품 명 : 
+                          			<input type="hidden" name="product_name" value="${dto.product_name}">${dto.product_name}</span>
                        	  	</div>
                        	  	
                             <div class="form-group" style="margin-top:30px;">
@@ -200,14 +203,10 @@
                                     style="margin-top:10px;" name="res_indiv_request" value="${dto.res_indiv_request}">${dto.res_indiv_request}</textarea>
                             </div>
                             
-                            
                             <div class="ibox-content" style="margin-top: 50px;">
                                <span style="font-size:24px;"><strong>예약한 매장 정보<br><br></strong></span>
                                					${dto.host_code}
                                <div id="map" style="width: 300; height:200px;"></div>
-                               
-                               
-                               
                             </div>
                         </div>     
                         <!-- ibox 끝 -->
@@ -228,32 +227,29 @@
 						                <label class="col-sm-3 col-form-label">결제 금액</label>
 						                    <div class="col-lg-8" id="total_payment"><input type="hidden" name="total_payment" value="${dto.res_sales}">${dto.res_sales}</div>
 						                </div>
-						                <hr>
 						                <div class="hr-line-dashed"></div>
 						                
 						                <div class="form-group  row">
 						                <label class="col-sm-3 col-form-label">납부 방법</label>
 						                	<input type="hidden" name="payment_option" value="">
 							                <div class="col-sm-8" name="">  
-							                	<table>   
+							                	<table>
 							                	<tr><td>
 								                    <input type="button" name="cash_btn" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
-								                    <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
+								                    <!-- <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" > -->
 								                    <input type="button" name="bank_btn" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
 								                    <!-- <a href="sale/kakaoPay"> -->
-								                    	<button type="submit" formmethod="post" formaction="sale/kakaoPay"></button>
-								                    	<!-- <input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary"> onclick="kakaoPay();" -->
+								                    	<input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary">
 								                    <!-- </a> -->
-							                    </td></tr> 
+							                    </td></tr>
 							                    </table>
 							                 </div>
 							            </div>
 							           
 						                <div class="hr-line-dashed"></div> 
-						                
 						                <div class="form-group row">
 						                <label class="col-sm-3 col-form-label">금융 기관</label>
-					
+											
 						                	<div id="banking" class="col-sm-8" style="display:flex;">
 							                     <div class="col-sm-6">
 							                     <select name="credit_select" id="credit_select" class="form-control">
@@ -292,7 +288,6 @@
 							                
 							            </div> 
 						                <div class="hr-line-dashed"></div> 
-						                
 						                <div class="form-group  row">
 						                <label class="col-sm-3 col-form-label">납부 메모</label>
 							                <div class="col-sm-8">
@@ -305,28 +300,23 @@
 						</div>
 								<!-- ------------------------------- 결제정보 끝 -->
                                    
-                                   
-                                   
-                                   
-                                   
-                                   
                                </div>
                            </div>
                            <!-- ibox 끝 -->
-                        
-                        
-                        
-                        
-                    
                     </div>
-               		
-						
+					<c:choose>
+						<c:when test="${kakao_btn_hidden == 1}">
+							<div class="text-center">
+				              <button type="submit" formmethod="post" formaction="sale/kakaoPay" style="font-size: 16px">예약하기</button>
+				            </div>
+						</c:when>
+						<c:otherwise>
+							<div class="text-center">
+				              <button type="submit" style="font-size: 16px">예약하기</button>
+				            </div>
+						</c:otherwise>
+					</c:choose>
 					
-					
-                    <div class="text-center">
-		              <button type="submit" style="font-size: 16px">예약하기</button>
-		            </div>
-		         
                         <!-- col-lg-6 끝 -->
 					
 			</form>

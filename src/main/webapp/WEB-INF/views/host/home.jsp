@@ -148,11 +148,9 @@
                 right: 'month,agendaWeek,agendaDay'
             },
             editable: true,
-            droppable: true, // this allows things to be dropped onto the calendar
+            droppable: true, 
             drop: function() {
-                // is the "remove after drop" checkbox checked?
                 if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
                     $(this).remove();
                 }
             },
@@ -173,21 +171,6 @@
                          textColor : "#000000"
                 },
                 </c:forEach>
-            	
-              /*   {
-                    title: 'home_test',
-                    start: new Date(y, m, d),
-                    imageurl:"https://www.accuweather.com",
-                    color : "#fcf8e3",
-                    textColor : "#000000"
-                }, 
-                {
-                    title: 'home_test',
-                    start: '2021-10-04T00:00:00',
-                    imageurl:"https://www.accuweather.com/images/weathericons/6.svg",
-                    color : "#ffffff",
-                    textColor : "#000000"
-                },  */
                 
                 <c:forEach var="vo" items="${res_list}" varStatus="i">                
            	 	{
@@ -202,7 +185,6 @@
       			</c:if>
                
                </c:forEach>
-              
             ]
             , eventClick:function(event) {
                 if(event.url) {

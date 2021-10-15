@@ -18,4 +18,10 @@ public interface SaleService {
 	// 카카오페이 결제 승인 내용
 	public KakaoPayApprovalVO kakaoPayInfo(String pg_token);
 	
+	// 카카오페이 결제 정보 입력
+	public void insertKakaoPay(HttpServletRequest req, Model model);
+
+	public String kakaoPayReady2(HttpServletRequest req, Model model);
+	
+	
 }
