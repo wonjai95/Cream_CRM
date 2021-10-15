@@ -153,6 +153,8 @@
 				<input type="hidden" value="0" name="product_price_hidden">
 				<input type="hidden" value="0" name="product_rentalPeriod_hidden">
 				<input type="hidden" value="0" name="cash_btn_hidden">
+         	 	<input type="hidden" value="0" name="kakao_btn_hidden">
+         	 	
          	 	
          	 	
          	 	
@@ -173,7 +175,8 @@
                             </div>
                             
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
-                          		<input type="text" name="room_setting_code" id="selectRoom" style="display: none" value="${dto.room_setting_code}">예약 호실 : ${dto.res_room}</span>
+                          		<input type="text" name="room_setting_code" id="selectRoom" style="display: none" value="${dto.room_setting_code}">예약 호실 : 
+                          			<input type="hidden" name="res_room" value="${dto.res_room}">${dto.res_room}</span>
                        	  	</div>
                             <div class="panel-heading" style="background-color: #e5e6e7; margin-top:15px; color: black">
                           		<input type="number" name="GuestCount" id="GuestCount" style="display: none" value="${dto.res_cnt}">예약 인원 : ${dto.res_cnt}</span>
@@ -184,14 +187,10 @@
                                     style="margin-top:10px;" name="res_indiv_request" value="${dto.res_indiv_request}">${dto.res_indiv_request}</textarea>
                             </div>
                             
-                            
                             <div class="ibox-content" style="margin-top: 50px;">
                                <span style="font-size:24px;"><strong>예약한 매장 정보<br><br></strong></span>
                                					${dto.host_code}
                                <div id="map" style="width: 300; height:200px;"></div>
-                               
-                               
-                               
                             </div>
                         </div>     
                         <!-- ibox 끝 -->
@@ -220,13 +219,15 @@
 						                <label class="col-sm-3 col-form-label">납부 방법</label>
 						                	<input type="hidden" name="payment_option" value="">
 							                <div class="col-sm-8" name="">  
-							                	<table>   
+							                	<table>
 							                	<tr><td>
 								                    <input type="button" name="cash_btn" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
-								                    <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
+								                    <!-- <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" > -->
 								                    <input type="button" name="bank_btn" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
-								                    <input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary" onclick="kakaoPay();">
-							                    </td></tr> 
+								                    <!-- <a href="sale/kakaoPay"> -->
+								                    	<input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary">
+								                    <!-- </a> -->
+							                    </td></tr>
 							                    </table>
 							                 </div>
 							            </div>
@@ -286,26 +287,26 @@
 						    </div>
 						</div>
 								<!-- ------------------------------- 결제정보 끝 -->
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
                                </div>
                            </div>
                            <!-- ibox 끝 -->
                     
                     </div>
 					
-                    <div class="text-center">
-		              <button type="submit" style="font-size: 16px">예약하기</button>
-		            </div>
-		         
+                   <c:choose>
+						<c:when test="${kakao_btn_hidden == 1}">
+							<div class="text-center">
+				              <button type="submit" formmethod="post" formaction="sale/kakaoPay" style="font-size: 16px">예약하기</button>
+				            </div>
+							 
+						</c:when>
+						<c:otherwise>
+							<div class="text-center">
+				              <button type="submit" style="font-size: 16px">예약하기</button>
+				            </div>
+						</c:otherwise>
+					</c:choose>
                         <!-- col-lg-6 끝 -->
-			</form>
-			<form method="post" action="kakaoPay">
-			    <button>카카오페이로 결제하기</button>
 			</form>
 			<!-- sale_action 폼 끝 -->
 					

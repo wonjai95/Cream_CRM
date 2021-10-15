@@ -433,8 +433,6 @@ public class MainwebController {
 	}
 	
 	
-	
-	
 	// ------------------- 회원 결제 페이지 (담당자 예약 & 결제) ------------------------
 	@RequestMapping("/salePage_m")
 	public String salePage_m(HttpServletRequest req, Model model) {
@@ -467,75 +465,9 @@ public class MainwebController {
 
 		return "mainweb/sale/sale_m_action";
 	}
-
-/*
-	// 카카오페이 결제 
-	@RequestMapping("/kakaoPay")
-	public String kakaoPay() {
-		logger.info("url -> kakaoPay");
-		
-		try {
-			URL address = new URL("https://kapi.kakao.com/v1/payment/ready");
-			HttpURLConnection serverConnection = (HttpURLConnection) address.openConnection();
-			serverConnection.setRequestMethod("POST");
-			serverConnection.setRequestProperty("Authorization", "KakaoAK a424cfe847491e516d2de1ca68efea92");
-			serverConnection.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-			serverConnection.setDoOutput(true); // connection은 생성되면 기본적으로 input은 true, output은 기본적으로 default라서 따로 지정해줘야함.
-			
-			// 파라미터 심기
-			String parameter = "cid=TC0ONETIME&"
-								+ "partner_order_id=partner_order_id&"
-								+ "partner_user_id=partner_user_id&"
-								+ "item_name=초코파이&"
-								+ "item_code=PRO302&"
-								+ "quantity=1&"
-								+ "total_amount=2200&"
-								+ "vat_amount=200&"
-								+ "tax_free_amount=0&"
-								+ "approval_url=https://developers.kakao.com/success&"
-								+ "fail_url=https://localhost/Creamy_CRM/payment/fail&"
-								+ "cancel_url=https://localhost/Creamy_CRM/payment/cancel";
-			
-			// 파라미터 서버에 전달
-			OutputStream outputStream = serverConnection.getOutputStream();
-			DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-			dataOutputStream.writeBytes(parameter); // 주기 직전 손에 쥐고 있는 상태
-			dataOutputStream.close(); // 자기가 가지고 있는 걸 비운다(flush) 실행할 수 있음
-			
-			int result = serverConnection.getResponseCode();
-			
-			InputStream inputStream;
-			// 성공이면
-			if(result == 200) { 
-				inputStream = serverConnection.getInputStream();
-			// 실패이면
-			} else {
-				inputStream = serverConnection.getErrorStream(); // 에러
-			}
-			
-			InputStreamReader inputStreamReader = new InputStreamReader(inputStream); // 받는 애를 읽는 애 생성
-			BufferedReader bufferedReader = new BufferedReader(inputStreamReader); // 형변환해서 읽음
-			
-			return bufferedReader.readLine();
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return "{\"result\":\"NO\"}";
-	}
-*/
-	
 	
 	// 카카오페이
-	@GetMapping("/kakaoPayGet")
-    public void kakaoPayGet() {
-		 logger.info("url -> kakaoPayGet");
-    }
-	
-	@PostMapping("/sale/kakaoPay")     
+	@PostMapping("/sale/kakaoPay")              
     public String kakaoPay(HttpServletRequest req, Model model) {
     	logger.info("url -> kakaoPay");   
         
@@ -550,17 +482,16 @@ public class MainwebController {
         
         model.addAttribute("info", service_sale.kakaoPayInfo(pg_token));
 
-		// 담당자 예약 처리
-		service.insertBooking(req, model);
-		
-		// 결제 처리
-		service_sale.insertSaleInfo(req, model);
-
+        // 카카오페이 정보 입력
+        service_sale.insertSaleInfo(req, model);
         
-        return "mainweb/sale/sale_m_action";
+     	if(req.getParameter("comp_res").equals("호실")) {
+     		return "mainweb/sale/sale_action";
+     	} else {
+     		return "mainweb/sale/sale_m_action";
+     	}
         
     }
-	
    
 }
 	

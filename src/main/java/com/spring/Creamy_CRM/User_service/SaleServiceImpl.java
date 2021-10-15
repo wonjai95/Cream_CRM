@@ -111,7 +111,6 @@ public class SaleServiceImpl implements SaleService {
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
  
-        
         System.out.println("total_payment : " + req.getParameter("total_payment"));
         
         // 서버로 요청할 Body
@@ -119,8 +118,15 @@ public class SaleServiceImpl implements SaleService {
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "서비스 예약");
         params.add("partner_user_id", "Creamy_CRM");
-        params.add("item_name", req.getParameter("res_hour"));
-        params.add("item_code", req.getParameter("product_code"));
+        
+        if(req.getParameter("comp_res").equals("호실")) {
+        	params.add("item_name", req.getParameter("res_room"));
+            params.add("item_code", req.getParameter("res_code"));
+        } else {
+        	params.add("item_name", req.getParameter("product_name"));
+            params.add("item_code", req.getParameter("product_code"));
+        }
+        
         params.add("total_amount", req.getParameter("total_payment"));
         params.add("quantity", "1");
         params.add("tax_free_amount", "0");
@@ -134,9 +140,10 @@ public class SaleServiceImpl implements SaleService {
         try {
         	// RestTemplate 이용 카카오페이에 데이터 보내기
             kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
-                
+
             System.out.println("kakaopay..getNext_redirect_pc_url");
             System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
+            
             return kakaoPayReadyVO.getNext_redirect_pc_url();
             
         } catch (RestClientException e) {
@@ -146,8 +153,68 @@ public class SaleServiceImpl implements SaleService {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        model.addAttribute("comp_res", req.getParameter("comp_res"));
+        model.addAttribute("total_payment", req.getParameter("total_payment"));
+        model.addAttribute("product_name", req.getParameter("product_name"));
+        
         
         return "/kakaoPaySuccess";
+	}
+	
+	
+	
+
+	// 카카오페이 결제 - 결제 정보 받으려면 vo 추가하기
+	@Override
+	public String kakaoPayReady2(HttpServletRequest req, Model model) {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		 
+        // 서버로 요청할 Header
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "KakaoAK " + "408871ccae74749e2d6962d6c45fa347");
+        headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+ 
+        System.out.println("total_payment : " + req.getParameter("total_payment"));
+        
+        // 서버로 요청할 Body
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("cid", "TC0ONETIME");
+        params.add("partner_order_id", "호실 예약");
+        params.add("partner_user_id", "Creamy_CRM");
+        params.add("item_name", req.getParameter("res_name"));
+        params.add("item_code", req.getParameter("res_code"));
+        params.add("total_amount", req.getParameter("total_payment"));
+        params.add("quantity", "1");
+        params.add("tax_free_amount", "0");
+        params.add("approval_url", "http://localhost/Creamy_CRM/kakaoPaySuccess");    
+        params.add("cancel_url", "http://localhost/Creamy_CRM/kakaoPayCancel");
+        params.add("fail_url", "http://localhost/Creamy_CRM/kakaoPaySuccessFail");
+ 
+        // header와 body 붙이기     
+        HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+ 
+        try {
+        	// RestTemplate 이용 카카오페이에 데이터 보내기
+            kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
+
+            System.out.println("kakaopay..getNext_redirect_pc_url");
+            System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
+            
+            return kakaoPayReadyVO.getNext_redirect_pc_url();
+            
+        } catch (RestClientException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        model.addAttribute("total_payment", req.getParameter("total_payment"));
+        model.addAttribute("res_room", req.getParameter("res_room"));
+        
+        return "/kakaoPaySuccess2";
 	}
 	
 	
@@ -179,11 +246,6 @@ public class SaleServiceImpl implements SaleService {
             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
             System.out.println("vo?" + kakaoPayApprovalVO);
             
-            KakaoPayApprovalVO vo = new KakaoPayApprovalVO();
-            
-            dao.insertKakaoPay(vo);
-            
-            
             return kakaoPayApprovalVO;
         
         } catch (RestClientException e) {
@@ -196,6 +258,21 @@ public class SaleServiceImpl implements SaleService {
         
         return null;
     }
+
+	// 카카오페이 결제 정보 입력
+	@Override
+	public void insertKakaoPay(HttpServletRequest req, Model model) {
+		System.out.println("service ==> insertKakaoPay");
+		
+		KakaoPayApprovalVO vo = new KakaoPayApprovalVO();
+		vo.setTid(kakaoPayReadyVO.getTid());
+		vo.setCid("TC0ONETIME");
+		
+		int insertCnt = dao.insertKakaoPay(vo);
+		
+		model.addAttribute("insertCnt", insertCnt);
+		
+	}
 
 
 }
