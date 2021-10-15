@@ -53,7 +53,9 @@ public class PythonCrawlingController {
 			e1.printStackTrace();
 		}
 
+
 		String url = "http://192.168.219.100:6000/instaCrawling/" + keyword;
+
 		String sb = "";
 		try {
 			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
@@ -79,8 +81,7 @@ public class PythonCrawlingController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		mav.addObject("test1", sb.toString()); // "test1"는 jsp파일에서 받을때 이름, 
-        									   //sb.toString은 value값(여기에선 test)
+		mav.addObject("test1", sb.toString()); // modelAddAttribute("", ) 대신 사용 
 		mav.addObject("fail", false);
 		try {
 			Thread.sleep(3000);
@@ -97,6 +98,75 @@ public class PythonCrawlingController {
 		logger.info("url -> just_img");
 		
 		return "host/crawling/just_img";
+	}
+	
+	// 뉴스
+	@RequestMapping("/host/newsCrawling")
+	public String newsCrawlingPage(HttpServletRequest req, Model model) {
+		logger.info("url -> snsCrawling");
+		
+		return "host/crawling/news_Crawling";
+	}
+	
+	@RequestMapping("/host/newsCrawling_test")
+	public ModelAndView newsCrawling_test(HttpServletRequest req, Model model) {
+		logger.info("url -> newsCrawling_test");
+		
+		ModelAndView mav = new ModelAndView();
+		String strKeyword = req.getParameter("keyword");
+		String keyword = "";
+
+		try {
+			keyword = URLEncoder.encode(strKeyword, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		String url = "http://127.0.0.1:6000/newsCrawling/" + keyword;
+		String sb = "";
+		try {
+			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+				sb = sb + line + "\n";
+			}
+			System.out.println("========br======");
+			if (sb.toString().contains("ok")) {
+				System.out.println("test : " + sb.toString());
+				
+			}
+			br.close();
+
+			System.out.println("" + sb.toString());
+			
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mav.addObject("test1", sb.toString()); // modelAddAttribute("", ) 대신 사용 
+		mav.addObject("fail", false);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		mav.setViewName("host/crawling/news_crawling_img");   // jsp파일 이름
+		
+		return mav;
+	}
+	
+	@RequestMapping("/host/simply_img")
+	public String news_img(HttpServletRequest req, Model model) {
+		logger.info("url -> simply_img");
+		
+		return "host/crawling/simply_img";
 	}
 	
 	

@@ -74,8 +74,8 @@
                 <a href=""><i class="fa fa-globe"></i> <span class="nav-label">트렌드</span><span class="fa arrow"></span></a>
                  <ul class="nav nav-second-level collapse">
                     <li><a href="snsCrawling">SNS</a></li>
-                    <li><a href="salesStatics">뉴스</a></li>
-                     <li><a href="playlist_py">플레이리스트</a></li>
+                    <li><a href="newsCrawling">뉴스</a></li>
+
                  </ul>
             </li>
         </ul>
