@@ -6,6 +6,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+$("document").ready(function() {
+	$(".reviewContent").dblclick(function() {
+		$(this).css("background", "#20c997");
+		console.log("reivew text : " +  $(this).text())
+		var url = "reviewML?review=" + $(this).text();
+		window.open(url, "reviewML", "menubar=no, width=500, height=500");	
+		
+	});
+	
+	$("body").click(function() {
+		$(".reviewContent").css("background", "");
+		
+	});
+});
+</script>
 </head>
 <body>
 	<fieldset>
@@ -103,7 +119,7 @@
 			                                            </ul>
 			                                            <br>
 			                                        <strong>후기 내용</strong>
-			                                        <p>
+			                                        <p class="reviewContent">
 			                                           	${vo2.content}
 			                                        </p>
 			                                        <hr/>

@@ -13,7 +13,23 @@ public class StockVO {
 	private Date stock_indate;
 	private String stock_status;
 	private String trade_code;
+	private String trade_name; //거래처 명
+	private Date trade_indate; //거래처 등록 날짜
 	
+	
+	
+	public String getTrade_name() {
+		return trade_name;
+	}
+	public void setTrade_name(String trade_name) {
+		this.trade_name = trade_name;
+	}
+	public Date getTrade_indate() {
+		return trade_indate;
+	}
+	public void setTrade_indate(Date trade_indate) {
+		this.trade_indate = trade_indate;
+	}
 	// 제고상세 테이블
 	private String stock_detail_code;	
 	private int stock_pur_cnt;
