@@ -95,7 +95,7 @@ $("document").ready(function() {
       
       $("input[name=kakao_btn]").val(kakao_btn);
       $("input[name=payment_option").val(kakao_btn);
-      $("input[name=kakao_btn_hidden]").val = 1;
+      $("input[name=kakao_btn_hidden]").val(1);
       $(this).css("background", "#20c997");
    });
    

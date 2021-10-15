@@ -146,17 +146,13 @@
 				<input type="hidden" name="res_start" value="${dto.res_start}">
 				<input type="hidden" name="res_end" value="${dto.res_end}">
 				<input type="hidden" name="res_room" value="${dto.res_room}">
-				     	 	
-				     	 	
+				
 				<input type="hidden" value="0" name="product_typeOfSales_hidden">
 				<input type="hidden" value="0" name="product_name_hidden">
 				<input type="hidden" value="0" name="product_price_hidden">
 				<input type="hidden" value="0" name="product_rentalPeriod_hidden">
 				<input type="hidden" value="0" name="cash_btn_hidden">
          	 	<input type="hidden" value="0" name="kakao_btn_hidden">
-         	 	
-         	 	
-         	 	
          	 	
          	 	<sec:csrfInput/>
          	 	
@@ -290,22 +286,10 @@
                                </div>
                            </div>
                            <!-- ibox 끝 -->
-                    
                     </div>
-					
-                   <c:choose>
-						<c:when test="${kakao_btn_hidden == 1}">
 							<div class="text-center">
 				              <button type="submit" formmethod="post" formaction="sale/kakaoPay" style="font-size: 16px">예약하기</button>
 				            </div>
-							 
-						</c:when>
-						<c:otherwise>
-							<div class="text-center">
-				              <button type="submit" style="font-size: 16px">예약하기</button>
-				            </div>
-						</c:otherwise>
-					</c:choose>
                         <!-- col-lg-6 끝 -->
 			</form>
 			<!-- sale_action 폼 끝 -->

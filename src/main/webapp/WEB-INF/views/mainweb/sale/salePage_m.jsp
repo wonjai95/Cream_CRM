@@ -304,18 +304,9 @@
                            </div>
                            <!-- ibox 끝 -->
                     </div>
-					<c:choose>
-						<c:when test="${kakao_btn_hidden == 1}">
 							<div class="text-center">
 				              <button type="submit" formmethod="post" formaction="sale/kakaoPay" style="font-size: 16px">예약하기</button>
 				            </div>
-						</c:when>
-						<c:otherwise>
-							<div class="text-center">
-				              <button type="submit" style="font-size: 16px">예약하기</button>
-				            </div>
-						</c:otherwise>
-					</c:choose>
 					
                         <!-- col-lg-6 끝 -->
 					
