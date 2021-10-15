@@ -93,7 +93,7 @@
           <li><a class="nav-link scrollto active" href="home">Home</a></li>
           <li class="dropdown"><a href=""><span>Reservation</span> <i class="bi bi-chevron-down"></i></a>
           	<ul>
-                  <li><a href="custBooking">고객 예약</a></li>
+                  <li><a href="selectHost">고객 예약</a></li>
           	</ul>
           </li>
           <c:if test="${sessionScope.id != null}">
