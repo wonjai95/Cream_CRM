@@ -244,7 +244,7 @@ public class UserReservationServiceImpl implements UserReservationService {
 		System.out.println("host_code : " + host_code);
 		String res_start =req.getParameter("res_start");
 		String res_end = req.getParameter("res_end");
-		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
+		int res_sales = Integer.parseInt(req.getParameter("total_payment"));
 		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
 		System.out.println("guestCount : " + guestCount);
 		String res_state = "예약완료";
@@ -291,9 +291,12 @@ public class UserReservationServiceImpl implements UserReservationService {
 		String host_code = req.getParameter("host_code");
 		String res_start = req.getParameter("res_start");
 		String res_end = req.getParameter("res_end");
+		
+		System.out.println("res_start : " + res_start);
+		System.out.println("res_end : " + res_end);
+		
 		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
 		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
-		System.out.println("guestCount : " + guestCount);
 		String res_state = "예약완료";
 		String room_setting_code = req.getParameter("room_setting_code");
 		System.out.println("chkRoomTime ==> room_setting_code : " + room_setting_code);
@@ -342,11 +345,16 @@ public class UserReservationServiceImpl implements UserReservationService {
 				
 			// 예약 시작 시간 < 예약 종료시간
 			}  else {
+				
+				if(Integer.parseInt(res_start) < 10) res_start = "0" + res_start;
+	            if(Integer.parseInt(res_end) < 10) res_end = "0" + res_end;
+				
 				res_start = res_start + ":00";
 				res_end = res_end + ":00";
 				vo.setRes_start(res_start);
 				vo.setRes_end(res_end);
-				
+
+			
 				// 예약 신청 시간 가능 여부 체크를 위한 뷰 생성를 생성해서, 그 뷰와 reservation_tbl를 조인
 				// => count(*) = 0이면 예약 가능
 				// 예약 신청 시간 가능 여부 체크를 위한 뷰 생성 sql문

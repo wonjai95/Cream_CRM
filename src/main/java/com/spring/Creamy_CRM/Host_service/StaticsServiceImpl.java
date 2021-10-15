@@ -389,6 +389,115 @@ public class StaticsServiceImpl implements StaticsService {
 		
 		
 	}
+
+	// 유형(호실)별 판매 현황(통계)
+	@Override
+	public void static_roomSales(HttpServletRequest req, Model model) {
+		System.out.println("static_roomSalesList 시작합니다");
+		
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
+		List<StaticVO> dtos = dao_statics.roomSalesList(host_code);
+		System.out.println("dtos 목록 : " + dtos);
+		
+		model.addAttribute("dtos", dtos);
+		
+		System.out.println("====================");
+		
+		System.out.println("static_roomSalesChart 시작합니다");
+		
+		
+		
+		
+		// 호실별 월 판매 총액
+		int janSalesSum = 0;
+		int febSalesSum = 0;
+		int marSalesSum = 0;
+		int aprSalesSum = 0;
+		int maySalesSum = 0;
+		int junSalesSum = 0;
+		int julSalesSum = 0;
+		int augSalesSum = 0;
+		int sepSalesSum = 0;
+		int octSalesSum = 0;
+		int novSalesSum = 0;
+		int decSalesSum = 0;
+
+		for(int i=0; i<dtos.size(); i++) {
+			
+			
+			//Date month = vo.getRes_date();
+			String months = dtos.get(i).getRes_dates();
+			String[] splitMonth = months.split("-");
+			
+			String year = splitMonth[0];
+			String month = splitMonth[1];
+
+//					for( int i = 0; i < splitMonth.length; i++) {
+//						System.out.println("splitMonth는? " + splitMonth[i]);
+//					}
+			
+			System.out.println("vo.getSalesSum() : " + dtos.get(i).getSalesSum());
+			System.out.println("months : " + months);
+			System.out.println("year : " + year);
+			System.out.println("month : " + month);
+			
+			//int intMonth = month.getMonth() + 1;
+			
+			if(month.equals("01")) 
+				dtos.get(i).setJanSalesSum(dtos.get(i).getSalesSum());		
+			else if(month.equals("02"))
+				febSalesSum += dtos.get(i).getSalesSum();
+			else if(month.equals("03"))
+				marSalesSum += dtos.get(i).getSalesSum();
+			else if(month.equals("04"))
+				aprSalesSum += dtos.get(i).getSalesSum();
+			else if(month.equals("05"))
+				maySalesSum += dtos.get(i).getSalesSum();
+			else if(month.equals("06"))
+				junSalesSum += dtos.get(i).getSalesSum();
+			else if(month.equals("07"))
+				julSalesSum += dtos.get(i).getSalesSum();
+			else if(month.equals("08"))
+				augSalesSum += dtos.get(i).getSalesSum();
+			else if(month.equals("09")) {
+				dtos.get(i).setSepSalesSum(dtos.get(i).getSalesSum());  // => 9월달 가입자 6명이 나와야한다. (10/2 22:27 기준)
+				System.out.println("sepSalesSum : " + sepSalesSum);
+			}
+			else if(month.equals("10"))
+				dtos.get(i).setOctSalesSum(dtos.get(i).getSalesSum());
+			else if(month.equals("11"))
+				novSalesSum += dtos.get(i).getSalesSum();
+			else if(month.equals("12"))
+				decSalesSum += dtos.get(i).getSalesSum();
+		}
+		
+		
+		int totalRoomSalesCnt = dtos.size();
+		System.out.println("전체 호실 판매건수 : " + totalRoomSalesCnt + "건");
+		
+		System.out.println("dtos 목록 : " + dtos);
+		System.out.println("sepSalesSum 목록 : " + sepSalesSum);
+		model.addAttribute("dtos", dtos);
+		
+		req.setAttribute("janSalesSum", janSalesSum);
+		req.setAttribute("febSalesSum", febSalesSum);
+		req.setAttribute("marSalesSum", marSalesSum);
+		req.setAttribute("aprSalesSum", aprSalesSum);
+		req.setAttribute("maySalesSum", maySalesSum);
+		req.setAttribute("junSalesSum", junSalesSum);
+		req.setAttribute("julSalesSum", julSalesSum);
+		req.setAttribute("augSalesSum", augSalesSum);
+		req.setAttribute("sepSalesSum", sepSalesSum);
+		req.setAttribute("octSalesSum", octSalesSum);
+		req.setAttribute("novSalesSum", novSalesSum);
+		req.setAttribute("decSalesSum", decSalesSum);
+		
+		System.out.println("====================");
+		
+		
+	}
 	
 	
 	

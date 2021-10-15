@@ -23,5 +23,8 @@ public interface StaticsService {
 	
 	// 담당자별 판매 현황(통계)
 	public void static_managerSales(HttpServletRequest req, Model model);
+	
+	// 유형(호실)별 판매 현황(통계)
+	public void static_roomSales(HttpServletRequest req, Model model);
 
 }

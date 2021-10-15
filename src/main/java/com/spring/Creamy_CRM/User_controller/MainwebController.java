@@ -43,12 +43,14 @@ import org.springframework.web.client.RestTemplate;
 import com.spring.Creamy_CRM.Host_controller.MainController;
 import com.spring.Creamy_CRM.Host_service.EmployeeService;
 import com.spring.Creamy_CRM.User_service.MainwebServiceImpl;
+import com.spring.Creamy_CRM.User_service.PythonService;
 import com.spring.Creamy_CRM.User_service.SaleService;
 import com.spring.Creamy_CRM.User_service.UserReservationServiceImpl;
 import com.spring.Creamy_CRM.User_service.UserReviewServiceImpl;
 import com.spring.Creamy_CRM.VO.EmployeeVO;
 import com.spring.Creamy_CRM.VO.KakaoPayReadyVO;
 import com.spring.Creamy_CRM.VO.ReservationVO;
+import com.spring.Creamy_CRM.util.FcmUtil;
 
 import jdk.nashorn.internal.objects.annotations.Setter;
 
@@ -75,6 +77,10 @@ public class MainwebController {
    @Autowired
    SaleService service_sale;
    
+   //test중
+   @Autowired
+   PythonService service_py;
+   
    
    //홈화면
    @RequestMapping("/home")
@@ -91,6 +97,15 @@ public class MainwebController {
 //      } else {
 //    	  return "";
 //      }
+      /*
+      try {
+		service_py.pytest(req, model);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		System.out.println("py_error");
+		e.printStackTrace();
+	}
+      */
       
       return "mainweb/home";
    }
@@ -405,6 +420,15 @@ public class MainwebController {
 		// 결제정보 입력해서 insert
 		service_sale.insertSaleInfo(req, model);
 		
+		// 결제가 모두 완료 후, 안드로이드에도 푸시알림을 보내기
+		String tokenId="cGH5hy_cRR-oYpPU6A9Tg4:APA91bHtnPAM057GJU8DBqRGP3YfuAo_vCRq0tW3H-2tQkGPExL6_kI8B-LiZJo70tQ5gUatZ8jyvu1eU72tvdvcJRhjNtRvVtK1uQ_jxDF5LaJQNkHPMWTm1Y4nIYHJN4HKwfzhxACe";
+        String title="[호실 예약완료건]";
+        String content="예약완료건이 있습니다.";
+        String res_room = req.getParameter("res_room");
+        
+        FcmUtil FcmUtil = new FcmUtil();
+        FcmUtil.send_FCM(tokenId, title, res_room + " " + content);
+		
 		return "mainweb/sale/sale_action";
 	}
 	
@@ -430,6 +454,14 @@ public class MainwebController {
 		
 		// 결제 처리
 		service_sale.insertSaleInfo(req, model);
+		
+		// 결제가 모두 완료 후, 안드로이드에도 푸시알림을 보내기
+		String tokenId="cGH5hy_cRR-oYpPU6A9Tg4:APA91bHtnPAM057GJU8DBqRGP3YfuAo_vCRq0tW3H-2tQkGPExL6_kI8B-LiZJo70tQ5gUatZ8jyvu1eU72tvdvcJRhjNtRvVtK1uQ_jxDF5LaJQNkHPMWTm1Y4nIYHJN4HKwfzhxACe";
+        String title="[담당자 예약완료건]";
+        String content="담당자 예약완료건이 있습니다.";
+      
+        FcmUtil FcmUtil = new FcmUtil();
+        FcmUtil.send_FCM(tokenId, title, content);
 
 		return "mainweb/sale/sale_m_action";
 	}

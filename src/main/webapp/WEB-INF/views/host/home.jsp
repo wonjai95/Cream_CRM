@@ -82,20 +82,6 @@
                     </div>
                 </div>
             </div>
-             <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>전일 수입</h5>
-                </div>
-                <div class="ibox-content">
-                    <div id='external-events'>
-                        <p>${res_today[0].res_date} 현황</p>
-                        <p class="m-t" style="border-top: 1px solid gray; padding-top: 5px;">
-                            합계 : 0원
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
         </div>
     </div>
 </div>

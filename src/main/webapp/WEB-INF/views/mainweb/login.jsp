@@ -5,7 +5,6 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -16,7 +15,6 @@
 
     <link href="${path}/resources/bootstrap/css/animate.css" rel="stylesheet">
     <link href="${path}/resources/bootstrap/css/style.css" rel="stylesheet">
-
 </head>
 
 <body class="gray-bg">
@@ -41,9 +39,11 @@
                 <div class="form-group">
                     <input type="password" name="login_PWD" class="form-control" placeholder="비밀번호" required>
                 </div>
+
                 <button type="submit" class="btn btn-primary block full-width m-b">로그인</button>
 
                 <a class="btn btn-sm btn-white btn-block" href="signIn">Creamy 가입하기</a>
+
             </form>
             <p class="m-t"> <small>© Copyright Creamy 2021</small> </p>   
         </div>

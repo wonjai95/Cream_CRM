@@ -4,6 +4,8 @@
 */
 package com.spring.Creamy_CRM.Host_controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -14,8 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.spring.Creamy_CRM.Host_dao.StaticsDAOImpl;
 import com.spring.Creamy_CRM.Host_service.CRMuserServiceImpl;
 import com.spring.Creamy_CRM.Host_service.StaticsServiceImpl;
+import com.spring.Creamy_CRM.VO.StaticVO;
 
 @Controller
 public class StaticsController {
@@ -27,6 +31,9 @@ public class StaticsController {
 	
 	@Autowired
 	StaticsServiceImpl service_statics;
+	
+	@Autowired
+	StaticsDAOImpl dao_statics;
 	
 	// 회원통계
 	@RequestMapping("host/userStatics")
@@ -52,7 +59,21 @@ public class StaticsController {
 	// 상품별 판매 현황(통계)
 	@RequestMapping("host/salesStatics")
 	public String salesStatics(HttpServletRequest req, Model model) {
-		logger.info("url -> salesStatics");
+		logger.info("url -> salesStatics");		
+		
+		String host_code = (String) req.getSession().getAttribute("code");
+		System.out.println("host_code : " + host_code);
+		
+		// employee_code 가져오기
+	    List<StaticVO> emp_code = dao_statics.getEmpCode(host_code);
+	    System.out.println("emp_code : " + emp_code);
+		
+		// room_setting_code 가져오기
+	    List<StaticVO> room_setting_code = dao_statics.getRoomCode(host_code);
+	    System.out.println("room_setting_code : " + room_setting_code);
+	    
+	    model.addAttribute("emp_code", emp_code);
+	    model.addAttribute("room_setting_code", room_setting_code);
 		
 		return "host/statics/salesStatics";
 	}
@@ -67,6 +88,18 @@ public class StaticsController {
 
 		// salesTypeStatics jsp파일 이름
 		return "host/statics/managerSalesStatics";
+	}
+	
+	// 유형별(호실별) 판매 현황(통계)
+	@RequestMapping("host/roomSalesStatics")
+	public String roomSalesStatics(HttpServletRequest req, Model model) {
+		logger.info("url -> roomSalesStatics");
+		
+		// 호실별 판매정보 목록 출력
+		service_statics.static_roomSales(req, model);
+
+		
+		return "host/statics/roomSalesStatics";
 	}
 
 }

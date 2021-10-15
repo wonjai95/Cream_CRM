@@ -24,14 +24,14 @@ $("document").ready(function() {
 		
 	});
 	
-	$("#snsSearchBtn").click(function() {
+	$("#newsSearchBtn").click(function() {
 		var keyword = $("input[name=search_keyword]").val();
 		
 		var header = $("meta[name='_csrf_header']").attr("content");
         var token = $("meta[name='_csrf']").attr("content");
         
         $.ajax({
-	       	  url : "snsCrawling_test",
+	       	  url : "newsCrawling_test",
 	       	  type : "Get",
 	       	  data : "keyword=" + keyword,
 			  beforeSend : function(jqXHR, settings) {
@@ -40,9 +40,9 @@ $("document").ready(function() {
 	       	  },
 	       	  success : function(result) {
 	       		  setTimeout(function() {
-       				  $("#snsWordCloud").html(result); 
+       				  $("#newsWordCloud").html(result); 
 	   	       		  console.log("성공");
-	   	       		  $("#snsWordCloud").ajax.reload(null, false);
+	   	       		  $("#newsWordCloud").ajax.reload(null, false);
 	       		  }, 25000);
 	       	  },
 	       	  error : function(error) {
@@ -70,7 +70,7 @@ $("document").ready(function() {
 	<!-- 직원 -->
 	<div class="row wrapper border-bottom white-bg page-heading">
 	    <div class="col-lg-8">
-	        <h2>트렌드</h2>
+	        <h2>검색어</h2>
 	        <ol class="breadcrumb">
 	            <li class="breadcrumb-item">
 	                <a href="index.html">Home</a>
@@ -79,7 +79,7 @@ $("document").ready(function() {
 	                Trend
 	            </li>
 	            <li class="breadcrumb-item active">
-	                <strong>SNS</strong>
+	                <strong>NEWS</strong>
 	            </li>
 	        </ol>
 	    </div>
@@ -96,7 +96,7 @@ $("document").ready(function() {
 		                    	<form action="#" method="get">
 			                        <div class="form-group" style="display: flex;">
 			                            <input type="text" class="form-control" id="search_keyword" name="search_keyword" placeholder="SNS 키워드 검색" >
-			                            <input type="button" class="btn btn-primary dim" name="snsSearchBtn" id="snsSearchBtn" value="검색" style="width: 100px; margin-left: 10px;">
+			                            <input type="button" class="btn btn-primary dim" name="newsSearchBtn" id="newsSearchBtn" value="검색" style="width: 100px; margin-left: 10px;">
 			                        </div>
 		                        </form>
 		                    </div>
@@ -104,8 +104,8 @@ $("document").ready(function() {
 		             <!-- 검색 끝 -->   
 	            </div>
 	            <!-- 웹 크롤링 이미지 -->
-	            <div class="ibox-content" style="border: none;" id="snsWordCloud">
-	            	<img src="" id="snsImage">
+	            <div class="ibox-content" style="border: none;" id="newsWordCloud">
+	            	<img src="" id="newsImage">
 	            </div>
 	        </div>
 	    </div>

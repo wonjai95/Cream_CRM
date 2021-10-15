@@ -39,8 +39,7 @@ $("document").ready(function() {
 </head>
 <body>
 <div class="ibox-content" style="border: none;" id="snsWordCloud">
-	<h2>플라스크 테스트</h2>
-	<img src="${path}/resources/images/crawling/Finally_wordcloud.jpg">            
+	<img src="${path}/resources/images/crawling/Finally_wordcloud.jpg" width="800px;">            
 </div>
 </body>
 </html>

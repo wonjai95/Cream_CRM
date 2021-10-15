@@ -12,6 +12,10 @@
 #p_group {
 	display: flex;
 }
+img{
+	width: 50px;
+	height: 50px;
+}
 </style>
 
 <script type="text/javascript">
@@ -497,7 +501,7 @@
 																			<td class="footable-visible"><span>${product.product_typeOfSales}</span>
 																			</td>
 
-																			<td class="footable-visible"><span>${product.product_img}</span>
+																			<td class="footable-visible"><span><img src="/Creamy_CRM/resources/images/productImage/${product.product_img}"/></span>
 																			</td>
 
 																			<td class="footable-visible"><span>${product.product_name}</span>
@@ -513,7 +517,7 @@
 																			</td>
 
 																			<td class="footable-visible">
-																			<span class="">${product.product_group_code}</span>
+																			<span class="">${product.product_group_name}</span>
 																			</td>
 																		</tr>
 																	</c:forEach>

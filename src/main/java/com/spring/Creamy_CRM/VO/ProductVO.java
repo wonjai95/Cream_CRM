@@ -15,7 +15,21 @@ public class ProductVO {
 	private String product_content;			//제품 설명  
 	private String product_group_code;		//제품 그룹코드
 	private String host_code;
+	private String product_group_name; //상품그룹명
+    private Date pg_indate; //등록 날짜     
 	
+	public String getProduct_group_name() {
+		return product_group_name;
+	}
+	public void setProduct_group_name(String product_group_name) {
+		this.product_group_name = product_group_name;
+	}
+	public Date getPg_indate() {
+		return pg_indate;
+	}
+	public void setPg_indate(Date pg_indate) {
+		this.pg_indate = pg_indate;
+	}
 	public String getProduct_code() {
 		return product_code;
 	}
