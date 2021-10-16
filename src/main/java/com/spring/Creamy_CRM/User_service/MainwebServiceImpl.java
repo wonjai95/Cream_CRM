@@ -61,7 +61,7 @@ public class MainwebServiceImpl implements MainwebService {
 		
 		// 예약 페이지에서 예약 정보 담아오기
 		String host_code = req.getParameter("host_code");
-		
+		String comp_name = req.getParameter("comp_name");
 		
 		int res_sales = Integer.parseInt(req.getParameter("res_sales"));
 		int guestCount = Integer.parseInt(req.getParameter("GuestCount"));
@@ -105,6 +105,7 @@ public class MainwebServiceImpl implements MainwebService {
 		System.out.println("getResInfo ==> res_end : " + res_end);
 		
 		vo.setHost_code(host_code);
+		vo.setComp_name(comp_name);
 		vo.setRes_state(res_state);
 		System.out.println("vo.getRes_state : " + vo.getRes_state());
 		vo.setRes_cnt(guestCount);
@@ -139,6 +140,7 @@ public class MainwebServiceImpl implements MainwebService {
 		
 		// 예약 페이지에서 예약 정보 담아오기
 		String host_code = req.getParameter("host_code");
+		String comp_name = req.getParameter("comp_name");
 		String STRres_hour = req.getParameter("selectTime");
 		// res_hour 10/1일 11:00 수정부분
 		int res_hour = Integer.parseInt(STRres_hour.split(":")[0]);
@@ -162,6 +164,7 @@ public class MainwebServiceImpl implements MainwebService {
 		ReservationVO vo = new ReservationVO();
 		
 		vo.setHost_code(host_code);
+		vo.setComp_name(comp_name);
 		vo.setRes_state(res_state);
 		System.out.println("vo.getRes_state : " + vo.getRes_state());
 		vo.setRes_cnt(guestCount);

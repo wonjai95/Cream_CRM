@@ -98,7 +98,7 @@ public class SaleServiceImpl implements SaleService {
 		
 	}
 
-
+/*
 	// 카카오페이 결제 - 결제 정보 받으려면 vo 추가하기
 	@Override
 	public String kakaoPayReady(HttpServletRequest req, Model model) {
@@ -118,6 +118,7 @@ public class SaleServiceImpl implements SaleService {
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "서비스 예약");
         params.add("partner_user_id", "Creamy_CRM");
+        
         
         if(req.getParameter("comp_res").equals("호실")) {
         	params.add("item_name", req.getParameter("res_room"));
@@ -160,13 +161,13 @@ public class SaleServiceImpl implements SaleService {
         
         return "/kakaoPaySuccess";
 	}
-	
+*/	
 	
 	
 
 	// 카카오페이 결제 - 결제 정보 받으려면 vo 추가하기
 	@Override
-	public String kakaoPayReady2(HttpServletRequest req, Model model) {
+	public String kakaoPayReady(HttpServletRequest req, Model model) {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		 
@@ -178,12 +179,12 @@ public class SaleServiceImpl implements SaleService {
  
         System.out.println("total_payment : " + req.getParameter("total_payment"));
         
-        // 서버로 요청할 Body
+        // 서버로 요청할 Body          
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "호실 예약");
         params.add("partner_user_id", "Creamy_CRM");
-        params.add("item_name", req.getParameter("res_name"));
+        params.add("item_name", req.getParameter("res_room"));
         params.add("item_code", req.getParameter("res_code"));
         params.add("total_amount", req.getParameter("total_payment"));
         params.add("quantity", "1");
@@ -214,7 +215,7 @@ public class SaleServiceImpl implements SaleService {
         model.addAttribute("total_payment", req.getParameter("total_payment"));
         model.addAttribute("res_room", req.getParameter("res_room"));
         
-        return "/kakaoPaySuccess2";
+        return "/kakaoPaySuccess";
 	}
 	
 	
