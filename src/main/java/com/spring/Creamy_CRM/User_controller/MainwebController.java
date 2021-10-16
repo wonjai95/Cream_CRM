@@ -472,26 +472,37 @@ public class MainwebController {
     	logger.info("url -> kakaoPay");   
         
         return "redirect:" + service_sale.kakaoPayReady(req, model);
-        
+                   
     }
 	
-	@GetMapping("/kakaoPaySuccess")
+	@GetMapping("/kakaoPaySuccess")                  
     public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, HttpServletRequest req, Model model) {
     	logger.info("url -> kakaoPaySuccess");
         logger.info("pg_token : " + pg_token);
         
         model.addAttribute("info", service_sale.kakaoPayInfo(pg_token));
 
-        // 카카오페이 정보 입력
+        // 카카오페이 정보 입력                         
         service_sale.insertSaleInfo(req, model);
-        
-     	if(req.getParameter("comp_res").equals("호실")) {
-     		return "mainweb/sale/sale_action";
-     	} else {
-     		return "mainweb/sale/sale_m_action";
-     	}
-        
+              
+     	return "mainweb/sale/sale_action";
+                               
     }
+	 
+	@RequestMapping("/kakaoPayCancel")
+	public String kakaoPayCancel(HttpServletRequest req, Model model) {
+		logger.info("url ==> kakaoPayCancel");
+        
+     	return "mainweb/sale/kakaoPayCancel";
+	}
+	
+	@RequestMapping("/kakaoPaySuccessFail")
+	public String kakaoPaySuccessFail(HttpServletRequest req, Model model) {
+		logger.info("url ==> kakaoPaySuccessFail");
+        
+     	return "mainweb/sale/kakaoPaySuccessFail";
+	}
+	
    
 }
 	

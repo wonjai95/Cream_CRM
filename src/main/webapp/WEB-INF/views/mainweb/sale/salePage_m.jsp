@@ -40,6 +40,10 @@
   <script type="text/javascript" src="${path}/resources/host/js/product_selling.js"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a24a16f3acffb8fc1ba508e3c65e6c76&libraries=services"></script>
   
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  
+  
   <!-- =======================================================
   * Template Name: Vlava - v4.3.0
   * Template URL: https://bootstrapmade.com/vlava-free-bootstrap-one-page-template/
@@ -205,7 +209,7 @@
                             
                             <div class="ibox-content" style="margin-top: 50px;">
                                <span style="font-size:24px;"><strong>예약한 매장 정보<br><br></strong></span>
-                               					${dto.host_code}
+                               					${dto.host_code}, ${dto.comp_name}
                                <div id="map" style="width: 300; height:200px;"></div>
                             </div>
                         </div>     

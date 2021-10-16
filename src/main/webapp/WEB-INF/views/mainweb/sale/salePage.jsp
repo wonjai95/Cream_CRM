@@ -50,15 +50,6 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   
-  <script type="text/javascript">
-
-  function kakaoPay() {
-  	
-  	var url = "kakaoPay"
-  	window.open(url, "kakaoPay", "menubar=no, width=1300, height=800");
-  }
-
-  </script>
 </head>
 <body>
 
@@ -145,7 +136,6 @@
 				<input type="hidden" name="close_sche" value="${closeTime}">
 				<input type="hidden" name="res_start" value="${dto.res_start}">
 				<input type="hidden" name="res_end" value="${dto.res_end}">
-				<input type="hidden" name="res_room" value="${dto.res_room}">
 				
 				<input type="hidden" value="0" name="product_typeOfSales_hidden">
 				<input type="hidden" value="0" name="product_name_hidden">
@@ -185,7 +175,7 @@
                             
                             <div class="ibox-content" style="margin-top: 50px;">
                                <span style="font-size:24px;"><strong>예약한 매장 정보<br><br></strong></span>
-                               					${dto.host_code}
+                               					${dto.host_code}, ${dto.comp_name}
                                <div id="map" style="width: 300; height:200px;"></div>
                             </div>
                         </div>     
@@ -218,7 +208,7 @@
 							                	<table>
 							                	<tr><td>
 								                    <input type="button" name="cash_btn" id="cash_btn" value="현금" class="btn btn-outline btn-primary" >
-								                    <!-- <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" > -->
+								                    <input type="button" name="credit_btn" id="credit_btn" value="카드" class="btn btn-outline btn-primary" >
 								                    <input type="button" name="bank_btn" id="bank_btn" value="무통장" class="btn btn-outline btn-primary" >
 								                    <!-- <a href="sale/kakaoPay"> -->
 								                    	<input type="button" name="kakao_btn" id="kakao_btn" value="카카오페이" class="btn btn-outline btn-primary">
@@ -246,7 +236,7 @@
 						                             <option value="hyundai">현대카드</option>
 						                             <option value="nonghyup">농협카드</option>
 						                             
-					                        	 </select>
+					                        	 </select>   
 					                        	 </div> 
 					                        	 <div class="col-sm-6">
 							                     <select name="credit_installment" id="credit_installment" class="form-control">
